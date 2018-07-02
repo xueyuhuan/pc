@@ -1,0 +1,11 @@
+@mixin flex($main:flex-start,$cross:center){
+  display: flex;
+  display: -webkit-flex; /* Safari */
+  justify-content: $main;
+  align-items: $cross;
+}
+%ellipsis{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
