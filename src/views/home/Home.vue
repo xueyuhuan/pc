@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <subhead>欢迎回来</subhead>
     <card>
       <header slot="header">xx<i class="fa fa-tv"></i> </header>
     </card>
@@ -7,15 +8,7 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-import Card from "../../components/card";
-
 export default {
   name: "home",
-  components: {
-    Card,
-    HelloWorld
-  }
 };
 </script>
