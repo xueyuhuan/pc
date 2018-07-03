@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <navigation></navigation>
+    <navigation v-if="this.$route.path!=='/login'"></navigation>
     <router-view/>
   </div>
 </template>
