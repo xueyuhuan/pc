@@ -4,7 +4,7 @@
             <nav>
                 <img src="../assets/logo.png"/>
                 <ul>
-                    <li v-for="i in nav" :class="{active:active===i.url}" @click="click(i.url)"><router-link :to="i.url">{{i.name}}</router-link></li>
+                    <li v-for="i in nav" @click="click(i.url)"><router-link :to="i.url">{{i.name}}</router-link></li>
                 </ul>
             </nav>
             <ul class="personal">
@@ -61,6 +61,10 @@
 
 <style scoped lang="scss">
     header{
+        .router-link-exact-active{
+            background: $skin-light;
+            border-bottom: 3px solid #f7b47f;
+        }
      background: $skin;
         .content{
             @include flex(space-between);
@@ -79,17 +83,14 @@
                     height: 100%;
                     li{
                         height: 100%;
-                        padding: 0 15px;
-                        &.active{
-                            background: $skin-light;
-                            border-bottom: 3px solid #f7b47f;
-                        }
+                        padding: 0;
                         a{
                             @include flex;
                             height: 100%;
                             font-size: 20px;
                             font-weight: 700;
                             color: #fff;
+                            padding: 0 15px;
                         }
                     }
                 }

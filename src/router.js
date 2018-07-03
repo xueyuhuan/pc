@@ -15,5 +15,10 @@ export default new Router({
       name:"login",
       component: resolve => require(['./views/Login'],resolve)
     },
+    {
+       path:"/app",
+       name:"application",
+       component: resolve => require(['./views/app/Application'],resolve)
+    }
   ]
 });
