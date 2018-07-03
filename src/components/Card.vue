@@ -5,13 +5,7 @@
     </div>
 </template>
 
-<script>
-  export default {
-    name: "card"
-  }
-</script>
-
-<style scoped lang="scss">
+<style lang="scss">
     .card{
         background: #fff;
         border-top: 3px solid $skin-card;
