@@ -9,7 +9,12 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-@mixin content{
-  padding: 15px 0;
+%content{
+  padding: 0 0 15px 0;
   margin: auto;
+  width: 1200px;
+  display: flex;
+}
+%bg1{
+  background-color: #F4F6F6;
 }
