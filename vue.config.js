@@ -10,6 +10,7 @@ module.exports = {
     }
   },
   devServer:{
+    port:1999,
     proxy:{
       '/api':{
         target:target,
