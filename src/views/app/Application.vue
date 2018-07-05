@@ -44,12 +44,14 @@
         <el-dialog :visible.sync="dialogVisible" width="900px">
             <div class="modal_head">
                 <img :src="appDetail_app.img" />
-                <div>
+                <div class="modal_head_middiv">
                     <div>{{appDetail_app.name}}
-                        <i :class="{'fa fa-star': appDetail.favoritesFlag,'fa fa-star-o': !appDetail.favoritesFlag}"></i>
+                        <i style="color:#fad733;" :class="{'fa fa-star': appDetail_app_subscribe_status,'fa fa-star-o': !appDetail_app_subscribe_status}"></i>
+                        <span>{{appDetail_app_subscribe_status ? '取消收藏' : '点击收藏'}}</span>
                     </div>
                     <div></div>
                 </div>
+                <a href="">123</a>
             </div>
             <div class="modal_body"></div>
         </el-dialog>
@@ -66,6 +68,7 @@
                 appGroups:[],//app所有类别
                 appDetail:{},//模态框里的app详情信息
                 appDetail_app:{},
+                appDetail_app_subscribe_status:false,
                 dialogVisible:false,//模态框是否显示
                 all_service_count:0,//分类->全部服务的个数
                 icon:[
@@ -110,6 +113,12 @@
                         console.log(res.data);
                         this.appDetail = res.data;
                         this.appDetail_app = res.data.app;
+                        //通过改变appDetail_app_subscribe_status这个标识符来控制订阅和非订阅状态的展示,true-订阅，false-非订阅
+                        if(this.appDetail.favoritesFlag === true){
+                            this.appDetail_app_subscribe_status = true;
+                        }else{
+                            this.appDetail_app_subscribe_status = false;
+                        }
                         this.dialogVisible = true;
                     })
             },
@@ -229,6 +238,18 @@
         }
     }
     .modal_head{
+        @include flex(space-bettween,flex-start);
+        .modal_head_middiv{
+            width: 578px;
+            margin-left: 20px;
+            padding-top: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #000;
+            i{
+
+            }
+        }
         img{
             width: 80px;
             height: 80px;
