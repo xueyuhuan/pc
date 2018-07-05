@@ -24,6 +24,10 @@
       </div>
       <div class="b">
         <notice2></notice2>
+        <todo></todo>
+        <user></user>
+        <pay></pay>
+        <ranking></ranking>
       </div>
     </div>
   </div>
@@ -36,9 +40,13 @@ import Schedule from "./Schedule";
 import Service from "./Service";
 import Notice from "./Notice";
 import Notice2 from "./Notice2";
+import Todo from "./Todo";
+import User from "./User";
+import Pay from "./Pay";
+import Ranking from "./Ranking";
 export default {
   name: "home",
-  components: {Notice2, Notice, Service, Application, Schedule,File},
+  components: {Ranking, Pay, User, Todo, Notice2, Notice, Service, Application, Schedule,File},
   data(){
     return{
       banner:[],

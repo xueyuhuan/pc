@@ -20,8 +20,8 @@
                 <li @click="click('/msg')"><router-link to="/msg">
                     <el-tooltip class="item" effect="light" content="消息中心" placement="bottom"><i class="fa fa-bell-o" :class="{active:active==='/msg'}"></i></el-tooltip>
                 </router-link></li>
-                <li><router-link to="/personal">{{user.name}}<i class="fa fa-caret-down"></i></router-link></li>
-                <li><router-link to="/personal"><img :src="user.userFace"/></router-link></li>
+                <li><router-link to="/user">{{user.name}}<i class="fa fa-caret-down"></i></router-link></li>
+                <li><router-link to="/user"><img :src="user.userFace"/></router-link></li>
             </ul>
         </div>
     </header>
