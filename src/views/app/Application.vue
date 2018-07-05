@@ -8,12 +8,12 @@
         </subhead>
         <div class="contain">
             <div class="left_div">
-                <div class="left_div_block" v-for="appGroup in appGroups" v-if="current_app_type_id === appGroup.id || current_app_type_id === ''">
+                <div class="left_div_block" v-for="appGroup in appName_filter" v-if="current_app_type_id === appGroup.id || current_app_type_id === ''">
                     <div class="block_head">{{appGroup.name}}</div>
                     <div class="block_body">
                         <div class="app" v-for="app in appGroup.apps">
                             <a :href="app.url" :title="'进入' + app.name" target="_blank">
-                                <img :src="'/resource/app?id=' + app.id + '&timestamp=' + app.timestamp"/>
+                                <img :src="'/api/resource/app?id=' + app.id + '&timestamp=' + app.timestamp"/>
                             </a>
                             <a class="app_title" :title="'进入' + app.name + '详情'" @click="showDetail(app.id)">{{app.name}}</a>
                         </div>
@@ -75,7 +75,7 @@
             return{
                 placeholder:"应用搜索",
                 input_value:'',
-                appGroups:[],//app所有类别
+                appGroups:[],//app所有类别，展示的
                 appDetail:{},//模态框里的app详情信息
                 appDetail_app:{},
                 appDetail_app_subscribe_status:false,
@@ -89,6 +89,26 @@
                 current_app_type_id:"",//当前展示的app类型id
                 app_rank:[],//app排行
 
+            }
+        },
+        computed:{
+            appName_filter(){
+                let input_value = this.input_value;
+                if(input_value.trim()){
+                    // console.log(input_value);
+                    return this.appGroups.filter((appGroup)=>{
+                        console.log(appGroup);
+                        return appGroup.apps.filter((app)=>{
+                            // console.log(app.name);
+                            // console.log(input_value);
+                            console.log(app.name.indexOf(input_value) > -1);
+                            return app.name.indexOf(input_value) > -1
+                        })
+                    })
+
+                }
+                console.log(this.appGroups);
+                return this.appGroups;
             }
         },
         methods:{
