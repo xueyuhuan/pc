@@ -20,8 +20,8 @@
                 <li @click="click('/msg')"><router-link to="/msg">
                     <el-tooltip class="item" effect="light" content="消息中心" placement="bottom"><i class="fa fa-bell-o" :class="{active:active==='/msg'}"></i></el-tooltip>
                 </router-link></li>
-                <li><router-link to="/personal">名字<i class="fa fa-caret-down"></i></router-link></li>
-                <li><router-link to="/personal"><img src="../assets/logo_mini.png"/></router-link></li>
+                <li><router-link to="/personal">{{user.name}}<i class="fa fa-caret-down"></i></router-link></li>
+                <li><router-link to="/personal"><img :src="user.userFace"/></router-link></li>
             </ul>
         </div>
     </header>
@@ -29,7 +29,7 @@
 
 <script>
   export default {
-    // name: "Navigation",
+    name: "Navigation",
     data(){
       return{
         nav:[
@@ -45,10 +45,10 @@
     },
     created(){
       this.active=this.$route.path;
-      this.$ajax.post("/user_portal/index")
+      this.$ajax.post(this.$url.getUser)
           .then(res=>{
             this.user=res.data.user;
-            console.log(this.user);
+            this.$store.commit('set_user',this.user);
           });
     },
     methods:{

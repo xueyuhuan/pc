@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    token:''
+    token:'',
+    user:{}
   },
   mutations: {
     set_token(state,token){
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     del_token(state){
       state.token="";
       sessionStorage.removeItem("token");
+    },
+    set_user(state,user){
+      state.user=user;
     }
   },
   actions: {}
