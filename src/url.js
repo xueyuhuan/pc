@@ -1,10 +1,6 @@
 export default {
   login:'/security_portal/login',//登录
   getUser:'/user_portal/index',//获取用户信息
-    //应用
-    list_app_group:'/app_portal/list_app_group',//获取所有类别的app
-    get_app_detail:'/app_portal/get',//获取app详情
-    app_rank:'/app_portal/list_top',//app排行
   /**
    * 首页
    */
@@ -45,4 +41,13 @@ export default {
   componentMsgUnread:'/msg_portal/query_unread',//未读
   /*办事中心*/
   componentMytodo:'/task_portal/get_apps',
+
+    /**
+     * 应用
+     */
+    list_app_group:'/app_portal/list_app_group',//获取所有类别的app
+    get_app_detail:'/app_portal/get',//获取app详情
+    app_rank:'/app_portal/list_top',//app排行
+    delFavorites:'/user_portal/delFavorites',//取消订阅
+    addFavorites:'/user_portal/addFavorites'//订阅
 }
