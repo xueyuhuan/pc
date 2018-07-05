@@ -16,9 +16,9 @@ export default {
   homeSchedule:'/calendar_portal/get_events_widget',//获取我的日程
   homeNotice:'/notice_portal/noticeList',//组件-工作台-校内通知
   homeNotice2:'/news_portal/news_for_widget',//组件-工作台-通知公告
-  homeTodo:'/task_portal/query_todo_all',//组件-工作台-代办
+  homeTodo:'/task_portal/query_todo_all',//组件-工作台-我的待办
   homeUser:'/user_portal/user_center_modules',//组件-工作台-个人中心
-  homePay:'/user_portal/salary',//组件-工作台-工资
+  homePay:'/user_portal/salary',//组件-工作台-工资查询
   homeServiceRank:'/service_portal/stat_usertype',//组件-工作台-服务排行
   /**
    * 导航

@@ -1,0 +1,105 @@
+<template>
+    <card>
+        <header name="header">
+            服务排行
+            <div class="btn">
+                <span @click="click(1)" :class="{active:type===1}">本周</span>
+                <span @click="click(2)" :class="{active:type===2}">本月</span>
+                <span @click="click(3)" :class="{active:type===3}">本年</span></div>
+        </header>
+        <ul>
+            <li v-for="i in data">
+                <div class="name"><i>{{i.Z_R_N}}</i><img :src='imgPath+i.ID'/>{{i.NAME}}</div>{{i.VW}}次
+            </li>
+        </ul>
+    </card>
+</template>
+
+<script>
+  export default {
+    name: "Ranking",
+    data(){
+      return{
+        data:[],
+        type:1,
+        imgPath:"/api/resource/service?id="
+      }
+    },
+    created(){
+      this.$ajax.post(this.$url.homeServiceRank,{type:this.type})
+          .then(res=>{
+            this.data=res.data.services;
+          });
+    },
+    methods:{
+      click(n){
+        this.type=n;
+      }
+    }
+  }
+</script>
+
+<style scoped lang="scss">
+    header{
+        @include flex;
+        .btn{
+            display: inline-block;
+            margin-left: 30px;
+            span{
+                display: inline-block;
+                background: #bfbfbf;
+                width: 40px;
+                height: 21px;
+                line-height: 21px;
+                font-size: 12px;
+                color: #fff;
+                text-align: center;
+                border-radius: 15px;
+                margin-right: 10px;
+                cursor: pointer;
+                &.active{
+                    background: #f08625;
+                }
+            }
+        }
+    }
+
+    ul{
+        padding: 10px 20px;
+
+        li{
+            @include flex(space-between);
+            font-size: 14px;
+            color: #000;
+            cursor: pointer;
+            margin: 0 0 14px 0;
+            .name{
+                @include flex;
+                i{
+                    display: inline-block;
+                    background: #959595;
+                    width: 20px;
+                    height: 20px;
+                    color: #eaeaea;
+                    text-align: center;
+                    border-radius:2px;
+                }
+                img{
+                    width: 30px;
+                    height: 30px;
+                    margin: 0 15px 0 25px;
+                }
+            }
+            &:nth-child(1) i{
+                background: #dd574c;
+            }
+            &:nth-child(2) i{
+                background: #f39943;
+            }
+            &:nth-child(3) i{
+                background: #4a8cac;
+            }
+        }
+    }
+
+</style>
