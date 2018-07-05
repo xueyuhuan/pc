@@ -15,20 +15,20 @@
       </el-carousel>
     </div>
     <div class="main">
-      <div class="a">
-        <application></application>
-        <file></file>
-        <service></service>
-        <schedule></schedule>
-        <notice></notice>
-      </div>
-      <div class="b">
-        <notice2></notice2>
-        <todo></todo>
-        <user></user>
-        <pay></pay>
-        <ranking></ranking>
-      </div>
+      <draggable v-model="A" :options="{group:'people'}">
+        <transition-group>
+          <div v-for="(i,index) in A" :key="index">
+            <component :is="i.componentName" keep-alive></component>
+          </div>
+        </transition-group>
+      </draggable>
+      <draggable v-model="B" :options="{group:'people'}">
+        <transition-group>
+          <div v-for="(i,index) in B" :key="index">
+            <component :is="i.componentName" keep-alive></component>
+          </div>
+        </transition-group>
+      </draggable>
     </div>
   </div>
 </template>
@@ -44,25 +44,65 @@ import Todo from "./Todo";
 import User from "./User";
 import Pay from "./Pay";
 import Ranking from "./Ranking";
+import draggable from 'vuedraggable'
 export default {
   name: "home",
-  components: {Ranking, Pay, User, Todo, Notice2, Notice, Service, Application, Schedule,File},
+  components: {draggable,Ranking, Pay, User, Todo, Notice2, Notice, Service, Application, Schedule,File},
   data(){
     return{
       banner:[],
+      page:{},
+      A:[],
+      B:[],
     }
   },
   created(){
-    this.$ajax.post(this.$url.homeBanner,{id: "dashboard"})
-        .then(res=>{
-          for(let i=0;i<res.data.space.banners.length;i++){
-            this.banner.push({
-              img:'/api'+res.data.imgUrl+res.data.space.banners[i].url,
-              url:res.data.space.banners[i].link
-            });
-          }
-        });
+    this.getBanner();
+    this.getPage();
   },
+  methods:{
+    getPage(){
+      this.$ajax.post(this.$url.homePage)
+          .then(res=>{
+            this.page=res.data.pages[0];
+            this.A=this.page.columnWidgets.A;
+            for(let i=0;i<this.A.length;i++){
+              this.A[i].componentName=this.transform(this.A[i].NAME);
+            }
+            this.B=this.page.columnWidgets.B;
+            for(let i=0;i<this.B.length;i++){
+              this.B[i].componentName=this.transform(this.B[i].NAME);
+            }
+          });
+    },
+    getBanner(){
+      this.$ajax.post(this.$url.homeBanner,{id: "dashboard"})
+          .then(res=>{
+            for(let i=0;i<res.data.space.banners.length;i++){
+              this.banner.push({
+                img:'/api'+res.data.imgUrl+res.data.space.banners[i].url,
+                url:res.data.space.banners[i].link
+              });
+            }
+          });
+    },
+    transform(name){
+      let x;
+      switch (name) {
+        case '我的日程':x='schedule';break;
+        case '我的应用':x='application';break;
+        case '我的服务':x='service';break;
+        case '服务排行':x='ranking';break;
+        case '工资查询':x='pay';break;
+        case '个人中心':x='user';break;
+        case '校内通知':x='notice';break;
+        case '通知公告':x='notice2';break;
+        case '学校公文':x='file';break;
+        case '我的待办':x='todo';break;
+      }
+      return x;
+    }
+  }
 };
 </script>
 
