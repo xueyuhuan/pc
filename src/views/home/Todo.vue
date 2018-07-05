@@ -8,6 +8,7 @@
             <li v-for="i in data">
                 <a :href="i.url" target="_blank"><p>[{{i.appName}}]{{i.title}}</p><time>{{i.currentTime}}</time></a>
             </li>
+            <li v-if="data.length===0" style="margin: 0;color: #898989;font-size: 14px;">暂无待办</li>
         </ul>
     </card>
 </template>
