@@ -42,18 +42,28 @@
         </div>
         <!--模态框-->
         <el-dialog :visible.sync="dialogVisible" width="900px">
-            <div class="modal_head">
+            <div slot="title" class="modal_head">
                 <img :src="appDetail_app.img" />
                 <div class="modal_head_middiv">
-                    <div>{{appDetail_app.name}}
-                        <i style="color:#fad733;" :class="{'fa fa-star': appDetail_app_subscribe_status,'fa fa-star-o': !appDetail_app_subscribe_status}"></i>
-                        <span>{{appDetail_app_subscribe_status ? '取消收藏' : '点击收藏'}}</span>
+                    <div class="modal_head_middiv_div1">{{appDetail_app.name}}
+                        &nbsp;<i @click="toggle_subscribe(appDetail_app_subscribe_status,appDetail_app.id)" :class="{'fa fa-star': appDetail_app_subscribe_status,'fa fa-star-o': !appDetail_app_subscribe_status}"></i>
+                        &nbsp;<span>{{appDetail_app_subscribe_status ? '(取消收藏)' : '(点击收藏)'}}</span>
                     </div>
-                    <div></div>
+                    <div class="modal_head_middiv_div2">可见用户组: <span v-for="item in appDetail_app.userGroups">{{item.PERMNAME}} </span></div>
+                    <div class="modal_head_middiv_div2">可见部门: <span v-for="item in appDetail_app.deptNames">{{item}}</span></div>
+                    <div class="modal_head_middiv_div2">可见角色: <span v-for="item in appDetail_app.roleNames">{{item}}</span></div>
+                    <div class="modal_head_middiv_div2">访问限制: <span>全网</span></div>
                 </div>
-                <a href="">123</a>
+                <a :href="appDetail_app.url" target="_blank" class="el-button el-button--success">进入应用</a>
             </div>
-            <div class="modal_body"></div>
+            <div class="modal_body">
+                <el-carousel height="250px" style="width: 500px; border: 1px solid #bfbfbf;">
+                    <el-carousel-item v-for="(item,index) in appDetail_app.screenshots" :key="index">
+                        <img :src="appDetail.imgUrl + item.path" alt="暂无图片" style="width: 100%;" />
+                    </el-carousel-item>
+                </el-carousel>
+                <div style="width: 330px; min-height: 30px;" v-html="appDetail_app.description"></div>
+            </div>
         </el-dialog>
     </div>
 </template>
@@ -125,6 +135,38 @@
             //切换展示的app类型
             toggleAppType(id){
                 this.current_app_type_id = id;
+            },
+            //切换订阅/取消订阅
+            toggle_subscribe(status,id){
+                let url;
+                if(status){//已订阅
+                    url = this.$url.addFavorites;
+                }else{
+                    url = this.$url.delFavorites;
+                }
+                this.$ajax.post(url,{thirdId:id,type:app})
+                    .then(res => {
+                        if(res.data.errcode == '0'){
+                            if(status){//之前的状态是已经订阅，点击成功改变状态后，未订阅
+                                this.appDetail_app_subscribe_status = false;
+                            }else{
+                                this.appDetail_app_subscribe_status = true;
+                            }
+                            this.$notify({
+                                title:"提示",
+                                message:res.data.errmsg,
+                                type:"success",
+                                position:"bottom-right"
+                            })
+                        }else{
+                            this.$notify({
+                                title:"提示",
+                                message:res.data.errmsg,
+                                type:"warning",
+                                position:"bottom-right"
+                            })
+                        }
+                    })
             }
         },
         created(){
@@ -233,26 +275,49 @@
                         text-align: right;
                     }
                 }
-
             }
         }
     }
+    .el-dialog__body{
+        background-color: rgb(247,247,247);
+        border-top: 1px solid black;
+    }
     .modal_head{
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #bfbfbf;
         @include flex(space-bettween,flex-start);
         .modal_head_middiv{
             width: 578px;
             margin-left: 20px;
-            padding-top: 10px;
             font-size: 16px;
             font-weight: 700;
             color: #000;
-            i{
-
+            .modal_head_middiv_div1{
+                i{
+                    color:#fad733;cursor: pointer;
+                }
+                span{
+                    font-size: 12px;
+                    color: #777;
+                }
+            }
+            .modal_head_middiv_div2{
+                padding: 3px 0px;
+                font-size: 12px;
+                color: #000;
             }
         }
         img{
             width: 80px;
             height: 80px;
         }
+        &>a{
+            color: white;
+            margin-left: 50px;
+        }
+    }
+    .modal_body{
+        @include flex(space-between,flex-start);
     }
 </style>
