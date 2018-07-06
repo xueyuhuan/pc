@@ -8,12 +8,12 @@
         </subhead>
         <div class="contain">
             <div class="left_div">
-                <div class="left_div_block" v-for="appGroup in appGroups" v-if="current_app_type_id === appGroup.id || current_app_type_id === ''">
+                <div class="left_div_block" v-for="appGroup in appName_filter" v-if="current_app_type_id === appGroup.id || current_app_type_id === ''">
                     <div class="block_head">{{appGroup.name}}</div>
                     <div class="block_body">
                         <div class="app" v-for="app in appGroup.apps">
                             <a :href="app.url" :title="'进入' + app.name" target="_blank">
-                                <img :src="'/resource/app?id=' + app.id + '&timestamp=' + app.timestamp"/>
+                                <img :src="'/api/resource/app?id=' + app.id + '&timestamp=' + app.timestamp"/>
                             </a>
                             <a class="app_title" :title="'进入' + app.name + '详情'" @click="showDetail(app.id)">{{app.name}}</a>
                         </div>
@@ -42,16 +42,28 @@
         </div>
         <!--模态框-->
         <el-dialog :visible.sync="dialogVisible" width="900px">
-            <div class="modal_head">
+            <div slot="title" class="modal_head">
                 <img :src="appDetail_app.img" />
-                <div>
-                    <div>{{appDetail_app.name}}
-                        <i :class="{'fa fa-star': appDetail.favoritesFlag,'fa fa-star-o': !appDetail.favoritesFlag}"></i>
+                <div class="modal_head_middiv">
+                    <div class="modal_head_middiv_div1">{{appDetail_app.name}}
+                        &nbsp;<i @click="toggle_subscribe(appDetail_app_subscribe_status,appDetail_app.id)" :class="{'fa fa-star': appDetail_app_subscribe_status,'fa fa-star-o': !appDetail_app_subscribe_status}"></i>
+                        &nbsp;<span>{{appDetail_app_subscribe_status ? '(取消收藏)' : '(点击收藏)'}}</span>
                     </div>
-                    <div></div>
+                    <div class="modal_head_middiv_div2">可见用户组: <span v-for="item in appDetail_app.userGroups">{{item.PERMNAME}} </span></div>
+                    <div class="modal_head_middiv_div2">可见部门: <span v-for="item in appDetail_app.deptNames">{{item}}</span></div>
+                    <div class="modal_head_middiv_div2">可见角色: <span v-for="item in appDetail_app.roleNames">{{item}}</span></div>
+                    <div class="modal_head_middiv_div2">访问限制: <span>全网</span></div>
                 </div>
+                <a :href="appDetail_app.url" target="_blank" class="el-button el-button--success">进入应用</a>
             </div>
-            <div class="modal_body"></div>
+            <div class="modal_body">
+                <el-carousel height="250px" style="width: 500px; border: 1px solid #bfbfbf;">
+                    <el-carousel-item v-for="(item,index) in appDetail_app.screenshots" :key="index">
+                        <img :src="appDetail.imgUrl + item.path" alt="暂无图片" style="width: 100%;" />
+                    </el-carousel-item>
+                </el-carousel>
+                <div style="width: 330px; min-height: 30px;" v-html="appDetail_app.description"></div>
+            </div>
         </el-dialog>
     </div>
 </template>
@@ -63,9 +75,10 @@
             return{
                 placeholder:"应用搜索",
                 input_value:'',
-                appGroups:[],//app所有类别
+                appGroups:[],//app所有类别，展示的
                 appDetail:{},//模态框里的app详情信息
                 appDetail_app:{},
+                appDetail_app_subscribe_status:false,
                 dialogVisible:false,//模态框是否显示
                 all_service_count:0,//分类->全部服务的个数
                 icon:[
@@ -78,12 +91,32 @@
 
             }
         },
+        computed:{
+            appName_filter(){
+                let input_value = this.input_value;
+                if(input_value.trim()){
+                    // console.log(input_value);
+                    return this.appGroups.filter((appGroup)=>{
+                        console.log(appGroup);
+                        return appGroup.apps.filter((app)=>{
+                            // console.log(app.name);
+                            // console.log(input_value);
+                            console.log(app.name.indexOf(input_value) > -1);
+                            return app.name.indexOf(input_value) > -1
+                        })
+                    })
+
+                }
+                console.log(this.appGroups);
+                return this.appGroups;
+            }
+        },
         methods:{
             //获取所有类别app
             getApp(){
                 this.$ajax.post(this.$url.list_app_group)
                     .then(res => {
-                        console.log(res.data);
+                        // console.log(res.data);
                         this.appGroups = res.data.groups;
                         let all_service_count=0;
                         for(let i=0;i<this.appGroups.length;i=i+1){
@@ -95,7 +128,7 @@
             getAppRank(){
                 this.$ajax.post(this.$url.app_rank)
                     .then(res => {
-                        console.log(res.data);
+                        // console.log(res.data);
                         this.app_rank = res.data.apps;
                     })
             },
@@ -107,15 +140,53 @@
             showDetail(id){
                 this.$ajax.post(this.$url.get_app_detail,{id:id})
                     .then(res => {
-                        console.log(res.data);
+                        // console.log(res.data);
                         this.appDetail = res.data;
                         this.appDetail_app = res.data.app;
+                        //通过改变appDetail_app_subscribe_status这个标识符来控制订阅和非订阅状态的展示,true-订阅，false-非订阅
+                        if(this.appDetail.favoritesFlag === true){
+                            this.appDetail_app_subscribe_status = true;
+                        }else{
+                            this.appDetail_app_subscribe_status = false;
+                        }
                         this.dialogVisible = true;
                     })
             },
             //切换展示的app类型
             toggleAppType(id){
                 this.current_app_type_id = id;
+            },
+            //切换订阅/取消订阅
+            toggle_subscribe(status,id){
+                let url;
+                if(status){//已订阅
+                    url = this.$url.addFavorites;
+                }else{
+                    url = this.$url.delFavorites;
+                }
+                this.$ajax.post(url,{thirdId:id,type:app})
+                    .then(res => {
+                        if(res.data.errcode == '0'){
+                            if(status){//之前的状态是已经订阅，点击成功改变状态后，未订阅
+                                this.appDetail_app_subscribe_status = false;
+                            }else{
+                                this.appDetail_app_subscribe_status = true;
+                            }
+                            this.$notify({
+                                title:"提示",
+                                message:res.data.errmsg,
+                                type:"success",
+                                position:"bottom-right"
+                            })
+                        }else{
+                            this.$notify({
+                                title:"提示",
+                                message:res.data.errmsg,
+                                type:"warning",
+                                position:"bottom-right"
+                            })
+                        }
+                    })
             }
         },
         created(){
@@ -224,14 +295,49 @@
                         text-align: right;
                     }
                 }
-
             }
         }
     }
+    .el-dialog__body{
+        background-color: rgb(247,247,247);
+        border-top: 1px solid black;
+    }
     .modal_head{
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #bfbfbf;
+        @include flex(space-bettween,flex-start);
+        .modal_head_middiv{
+            width: 578px;
+            margin-left: 20px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #000;
+            .modal_head_middiv_div1{
+                i{
+                    color:#fad733;cursor: pointer;
+                }
+                span{
+                    font-size: 12px;
+                    color: #777;
+                }
+            }
+            .modal_head_middiv_div2{
+                padding: 3px 0px;
+                font-size: 12px;
+                color: #000;
+            }
+        }
         img{
             width: 80px;
             height: 80px;
         }
+        &>a{
+            color: white;
+            margin-left: 50px;
+        }
+    }
+    .modal_body{
+        @include flex(space-between,flex-start);
     }
 </style>
