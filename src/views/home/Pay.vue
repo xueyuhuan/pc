@@ -25,19 +25,18 @@
   import 'echarts/lib/component/legendScroll'
   export default {
     name: "Pay",
-    data(){
-      return{
-        data:{},
-        title:""
+    watch:{
+      data(){
+        this.drawPie();
       }
     },
-    mounted(){
-      this.$ajax.post(this.$url.homePay)
-          .then(res=>{
-            this.data=res.data.salary;
-            this.title=res.data.title;
-            this.drawPie();
-          });
+    computed:{
+      data(){
+        return this.$store.state.pay.salary;
+      },
+      title(){
+        return this.$store.state.title;
+      }
     },
     methods:{
       drawPie(){

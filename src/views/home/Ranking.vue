@@ -20,20 +20,23 @@
     name: "Ranking",
     data(){
       return{
-        data:[],
-        type:1,
         imgPath:"/api/resource/service?id="
       }
     },
-    created(){
-      this.$ajax.post(this.$url.homeServiceRank,{type:this.type})
-          .then(res=>{
-            this.data=res.data.services;
-          });
+    computed:{
+      data(){
+        return this.$store.state.ranking;
+      },
+      type(){
+        return this.$store.state.type;
+      }
     },
     methods:{
       click(n){
-        this.type=n;
+        this.$store.commit('set_data',{
+          data:n,
+          name:'type'
+        });
       }
     }
   }

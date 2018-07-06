@@ -20,17 +20,11 @@
 <script>
   export default {
     name: "User",
-    data(){
-      return{
-        data:[]
+    computed:{
+      data(){
+        return this.$store.state.userModule;
       }
-    },
-    created(){
-      this.$ajax.post(this.$url.homeUser)
-          .then(res=>{
-            this.data=res.data.services;
-          });
-    },
+    }
   }
 </script>
 

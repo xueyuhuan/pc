@@ -15,18 +15,14 @@
       </el-carousel>
     </div>
     <div class="main">
-      <draggable v-model="A" :options="{group:'people'}">
+      <draggable class="drag-list" v-model="A" :options="dragOptions" @end="end">
         <transition-group>
-          <div v-for="(i,index) in A" :key="index">
-            <component :is="i.componentName" keep-alive></component>
-          </div>
+            <component :is="i.componentName" v-for="(i,index) in A" :key="index"></component>
         </transition-group>
       </draggable>
-      <draggable v-model="B" :options="{group:'people'}">
+      <draggable class="drag-list" v-model="B" :options="dragOptions" @end="end">
         <transition-group>
-          <div v-for="(i,index) in B" :key="index">
-            <component :is="i.componentName" keep-alive></component>
-          </div>
+          <component :is="i.componentName" v-for="(i,index) in B" :key="index"></component>
         </transition-group>
       </draggable>
     </div>
@@ -34,33 +30,74 @@
 </template>
 
 <script>
-import Application from "./Application";
-import File from "./File";
-import Schedule from "./Schedule";
-import Service from "./Service";
-import Notice from "./Notice";
-import Notice2 from "./Notice2";
-import Todo from "./Todo";
-import User from "./User";
-import Pay from "./Pay";
-import Ranking from "./Ranking";
 import draggable from 'vuedraggable'
+import axios from 'axios'
 export default {
   name: "home",
-  components: {draggable,Ranking, Pay, User, Todo, Notice2, Notice, Service, Application, Schedule,File},
+  components: {
+    draggable,
+    'Application': () => import('./Application'),
+    'File': () => import('./File'),
+    'Schedule': () => import('./Schedule'),
+    'Service': () => import('./Service'),
+    'Notice': () => import('./Notice'),
+    'Notice2': () => import('./Notice2'),
+    'Todo': () => import('./Todo'),
+    'User': () => import('./User'),
+    'Pay': () => import('./Pay'),
+    'Ranking': () => import('./Ranking'),
+  },
   data(){
     return{
       banner:[],
       page:{},
       A:[],
-      B:[],
+      B:[]
+    }
+  },
+  computed:{
+    dragOptions(){
+      return{
+        animation: 0,
+        group: 'description',
+        disable:true,
+        ghostClass: 'ghost'
+      }
     }
   },
   created(){
     this.getBanner();
     this.getPage();
+    axios.all([
+      this.getApp(),
+      this.getFile(),
+      this.getNotice(),
+      this.getNotice2(),
+      this.getPay(),
+      this.getRanking(),
+      this.getSchedule(),
+      this.getService(),
+      this.getTodo(),
+      this.getUser(),
+    ]);
   },
   methods:{
+    end(){
+      let A=this.A;
+      let B=this.B;
+      let layout={A,B};
+      console.log(layout);
+      this.$ajax.post(this.$url.homePageSave,{layout:JSON.stringify(layout),pageId:this.page.id})
+          .then(res=>{
+            if(res.data.errmsg==='ok'){
+              this.$notify({
+                message: '保存成功',
+                type: 'success',
+                position: 'bottom-right'
+              });
+            }
+          })
+    },
     getPage(){
       this.$ajax.post(this.$url.homePage)
           .then(res=>{
@@ -101,12 +138,110 @@ export default {
         case '我的待办':x='todo';break;
       }
       return x;
-    }
+    },
+    getApp(){
+      return this.$ajax.post(this.$url.homeApp)
+          .then(res=>{
+            this.$store.commit('set_data',{
+              data:res.data.apps,
+              name:'app'
+            })
+          });
+    },
+    getFile(){
+      return this.$ajax.post(this.$url.homeFile)
+          .then(res=>{
+            this.$store.commit('set_data',{
+              data:res.data.gongwenList.slice(0,7),
+              name:'file'
+            })
+          });
+    },
+    getNotice(){
+      return this.$ajax.post(this.$url.homeNotice)
+          .then(res=>{
+            this.$store.commit('set_data',{
+              data:res.data.xntzList.slice(0,7),
+              name:'notice'
+            })
+          });
+    },
+    getNotice2(){
+      return this.$ajax.post(this.$url.homeNotice2,{columnId:"058ac10ab4684d6aaec045196c09a9b7"})
+          .then(res=>{
+            this.$store.commit('set_data',{
+              data:res.data.news.slice(0,7),
+              name:'notice2'
+            })
+          });
+    },
+    getPay(){
+      return this.$ajax.post(this.$url.homePay)
+          .then(res=>{
+            this.$store.commit('set_data',{
+              data:res.data,
+              name:'pay'
+            })
+          });
+    },
+    getRanking(){
+      return this.$ajax.post(this.$url.homeServiceRank,{type:this.$store.state.type})
+          .then(res=>{
+            this.$store.commit('set_data',{
+              data:res.data.services,
+              name:'ranking'
+            })
+          });
+    },
+    getSchedule(){
+      return this.$ajax.post(this.$url.homeSchedule,{date:this.$store.state.date})
+          .then(res=>{
+            this.$store.commit('set_data',{
+              data:res.data.events,
+              name:'schedule'
+            })
+          });
+    },
+    getService(){
+      return this.$ajax.post(this.$url.homeService)
+          .then(res=>{
+            this.$store.commit('set_data',{
+              data:res.data.services,
+              name:'service'
+            })
+          });
+    },
+    getTodo(){
+      return this.$ajax.post(this.$url.homeTodo)
+          .then(res=>{
+            this.$store.commit('set_data',{
+              data:res.data.todoList,
+              name:'todo'
+            })
+          });
+    },
+    getUser(){
+      return this.$ajax.post(this.$url.homeUser)
+          .then(res=>{
+            this.$store.commit('set_data',{
+              data:res.data.services,
+              name:'userModule'
+            })
+          });
+    },
   }
 };
 </script>
 
 <style scoped lang="scss">
+  .ghost {
+    opacity: .5;
+  }
+  .drag-list>span{
+    display: inline-block;
+    width: 595px;
+    min-height: 50px;
+  }
   .subhead{
     font-size: 16px;
     a{
@@ -132,7 +267,7 @@ export default {
     flex-flow: wrap;
     width: 1200px;
     margin: 0 auto;
-    .card{
+    &>div{
       width: 595px;
     }
   }

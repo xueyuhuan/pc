@@ -14,17 +14,11 @@
 <script>
   export default {
     name: "Notice",
-    data(){
-      return{
-        data:[]
+    computed:{
+      data(){
+        return this.$store.state.notice;
       }
-    },
-    created(){
-      this.$ajax.post(this.$url.homeNotice)
-          .then(res=>{
-            this.data=res.data.xntzList.slice(0,7);
-          });
-    },
+    }
   }
 </script>
 

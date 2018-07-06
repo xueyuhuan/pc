@@ -19,16 +19,14 @@
     name: "Application",
     data(){
       return{
-        data:[],
         imgPath:"/api/resource/app?id="
       }
     },
-    created(){
-      this.$ajax.post(this.$url.homeApp)
-          .then(res=>{
-            this.data=res.data.apps;
-          });
-    },
+    computed:{
+      data(){
+        return this.$store.state.app;
+      }
+    }
   }
 </script>
 

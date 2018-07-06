@@ -18,7 +18,10 @@ let loading;
 instance.interceptors.request.use(
     config => {
       //在发送请求之前做些什么
-      loading=Vue.prototype.$loading({text:"拼命加载中"});
+      console.log(config.url);
+      if(config.url!=='/page_portal/save_layout'&&config.url!=='/api/page_portal/save_layout'){
+        loading=Vue.prototype.$loading({text:"拼命加载中"});
+      }
       if(config.method==="post"){
         // post传参序列化
         config.data = qs.stringify(config.data);

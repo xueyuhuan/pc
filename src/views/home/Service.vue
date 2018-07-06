@@ -19,16 +19,14 @@
     name: "Service",
     data(){
       return{
-        data:[],
         imgPath:"/api/resource/service?id="
       }
     },
-    created(){
-      this.$ajax.post(this.$url.homeService)
-          .then(res=>{
-            this.data=res.data.services;
-          });
-    },
+    computed:{
+      data(){
+        return this.$store.state.service;
+      }
+    }
   }
 </script>
 

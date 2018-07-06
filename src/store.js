@@ -6,7 +6,20 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     token:'',
-    user:{}
+    user:{},//用户信息
+    /*home的模块数据*/
+    app:[],
+    file:[],
+    notice:[],
+    notice2:[],
+    pay:{},
+    ranking:[],
+    type:1,//排行的日期
+    schedule:[],
+    date:0,//日程的日期
+    service:[],
+    todo:[],
+    userModule:[]
   },
   mutations: {
     set_token(state,token){
@@ -19,7 +32,10 @@ export default new Vuex.Store({
     },
     set_user(state,user){
       state.user=user;
-    }
+    },
+    set_data(state,data){
+      state[data.name]=data.data;
+    },
   },
   actions: {}
 });

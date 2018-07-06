@@ -22,21 +22,20 @@
 <script>
   export default {
     name: "Schedule",
-    data(){
-      return{
-        data:[],
-        date:0
+    computed:{
+      data(){
+        return this.$store.state.schedule;
+      },
+      date(){
+        return this.$store.state.date;
       }
-    },
-    created(){
-      this.$ajax.post(this.$url.homeSchedule,{date:this.date})
-          .then(res=>{
-            this.data=res.data.events;
-          });
     },
     methods:{
       click(n){
-        this.date=n;
+        this.$store.commit('set_data',{
+          data:n,
+          name:'date'
+        });
       }
     }
   }

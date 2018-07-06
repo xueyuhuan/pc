@@ -15,17 +15,11 @@
 <script>
   export default {
     name: "File",
-    data(){
-      return{
-        data:[]
+    computed:{
+      data(){
+        return this.$store.state.file;
       }
-    },
-    created(){
-      this.$ajax.post(this.$url.homeFile)
-          .then(res=>{
-            this.data=res.data.gongwenList.slice(0,7);
-          });
-    },
+    }
   }
 </script>
 

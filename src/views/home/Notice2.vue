@@ -12,17 +12,11 @@
 <script>
   export default {
     name: "Notice2",
-    data(){
-      return{
-        data:[]
+    computed:{
+      data(){
+        return this.$store.state.notice2;
       }
-    },
-    created(){
-      this.$ajax.post(this.$url.homeNotice2,{columnId:"058ac10ab4684d6aaec045196c09a9b7"})
-          .then(res=>{
-            this.data=res.data.news.slice(0,7);
-          });
-    },
+    }
   }
 </script>
 

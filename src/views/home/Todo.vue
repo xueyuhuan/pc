@@ -16,17 +16,11 @@
 <script>
   export default {
     name: "Todo",
-    data(){
-      return{
-        data:[]
+    computed:{
+      data(){
+        return this.$store.state.todo;
       }
-    },
-    created(){
-      this.$ajax.post(this.$url.homeTodo)
-          .then(res=>{
-            this.data=res.data.todoList;
-          });
-    },
+    }
   }
 </script>
 
