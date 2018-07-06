@@ -116,7 +116,7 @@
             getApp(){
                 this.$ajax.post(this.$url.list_app_group)
                     .then(res => {
-                        console.log(res.data);
+                        // console.log(res.data);
                         this.appGroups = res.data.groups;
                         let all_service_count=0;
                         for(let i=0;i<this.appGroups.length;i=i+1){
@@ -128,7 +128,7 @@
             getAppRank(){
                 this.$ajax.post(this.$url.app_rank)
                     .then(res => {
-                        console.log(res.data);
+                        // console.log(res.data);
                         this.app_rank = res.data.apps;
                     })
             },
@@ -140,7 +140,7 @@
             showDetail(id){
                 this.$ajax.post(this.$url.get_app_detail,{id:id})
                     .then(res => {
-                        console.log(res.data);
+                        // console.log(res.data);
                         this.appDetail = res.data;
                         this.appDetail_app = res.data.app;
                         //通过改变appDetail_app_subscribe_status这个标识符来控制订阅和非订阅状态的展示,true-订阅，false-非订阅

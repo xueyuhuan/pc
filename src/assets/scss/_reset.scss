@@ -20,3 +20,15 @@ a{
 em,i{
   font-style: normal;
 }
+//分页背景颜色
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+  background-color: #1295d8;
+  color: #fff;
+}
+.el-pagination li:hover{
+  color: #1295d8;
+}
+.el-pager, .el-pager li:hover{
+  color: #1295d8;
+
+}
