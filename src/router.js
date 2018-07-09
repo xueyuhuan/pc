@@ -27,8 +27,13 @@ export default new Router({
         },
         {
             path: '/news/detail',
+            name:"news_detail",
             component: resolve => require(['./views/news/NewsDetail'], resolve)
+        },
+        {
+            path: '/news/sub',
+            name:"news_sub",
+            component: resolve => require(['./views/news/NewsSub'], resolve)
         }
-
     ]
 });

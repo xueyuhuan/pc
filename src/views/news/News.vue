@@ -8,7 +8,7 @@
         </subhead>
         <div class="contain">
             <card class="left_div">
-                <header slot="header">新闻资讯</header>
+                <header slot="header">新闻资讯 <router-link to="/news/sub" class="dingyue"><i class="fa fa-plus-square-o"></i>&nbsp;订阅</router-link></header>
                 <div class="new_condition">
                     <div class="new_condition1">
                         <div class="title_div">资讯栏目：</div>
@@ -21,7 +21,7 @@
                         <div class="content_div"><span :class="{active:index + 1 === date_index}" v-for="(item,index) in date" @click="choose_date(index)">{{item}}</span></div>
                     </div>
                 </div>
-                <div class="news_div" v-for="(news,id) in newsList" @click="newsDetail(id)">
+                <div class="news_div" v-for="news in newsList" @click="newsDetail(news.id)">
                     <div class="news">
                         <div class="news_title">{{news.title}}</div>
                         <div class="source">来源：{{news.origin}}</div>
@@ -93,7 +93,7 @@
                 this.getNewsList();
             },
             newsDetail(id){
-                this.$router.push({path:"/news/detail",query:id});
+                this.$router.push({path:"/news/detail",query: {id}});
             }
         },
         created(){
@@ -102,7 +102,18 @@
         }
     }
 </script>
-
+<style lang="scss">
+    .el-pagination.is-background .el-pager li:not(.disabled).active {
+        background-color: #1295d8;
+        color: #fff;
+    }
+    .el-pagination li:hover{
+        color: #1295d8;
+    }
+    .el-pager, .el-pager li:hover{
+        color: #1295d8;
+    }
+</style>
 <style scoped lang="scss">
     .bg_color {
         @extend %bg1;
@@ -117,6 +128,12 @@
             margin-bottom: 20px;
             font-size: 14px;
             color: rgb(0,0,0);
+            .dingyue{
+                font-size: 14px;
+                color: #363f44;
+                text-decoration: none;
+                line-height: 25px;
+            }
             .new_condition{
                 padding: 13px 23px;
                 border-bottom: 1px dashed #eaeaea;
