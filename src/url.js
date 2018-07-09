@@ -55,5 +55,8 @@ export default {
      * 资讯
      */
     columns_subscribe:'/news_portal/columns_subscribe',//所有已订阅和未订阅的栏目
-    news_list:'/news_portal/news_subscribe',//新闻列表及其详情
+    news_list:'/news_portal/news_subscribe',//新闻列表
+    news_detail:'/news_portal/get',//新闻详情
+    cancelNews:'/news_portal/cancelUserNews',//取消订阅
+    saveNews:'/news_portal/saveUserNews',//订阅
 }

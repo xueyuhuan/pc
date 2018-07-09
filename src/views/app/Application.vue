@@ -164,7 +164,7 @@
                 }else{
                     url = this.$url.delFavorites;
                 }
-                this.$ajax.post(url,{thirdId:id,type:app})
+                this.$ajax.post(url,{thirdId:id,type:'app'})
                     .then(res => {
                         if(res.data.errcode == '0'){
                             if(status){//之前的状态是已经订阅，点击成功改变状态后，未订阅
