@@ -26,15 +26,18 @@
         </transition-group>
       </draggable>
     </div>
+    <AppSet></AppSet>
   </div>
 </template>
 
 <script>
 import draggable from 'vuedraggable'
 import axios from 'axios'
+import AppSet from "./AppSet";
 export default {
   name: "home",
   components: {
+    AppSet,
     draggable,
     'Application': () => import('./Application'),
     'File': () => import('./File'),
@@ -63,6 +66,20 @@ export default {
         disable:true,
         ghostClass: 'ghost'
       }
+    },
+    type(){
+      return this.$store.state.type;
+    },
+    date(){
+      return this.$store.state.date;
+    }
+  },
+  watch:{
+    type(){
+      this.getRanking();
+    },
+    date(){
+      this.getSchedule();
     }
   },
   created(){
@@ -83,10 +100,7 @@ export default {
   },
   methods:{
     end(){
-      let A=this.A;
-      let B=this.B;
-      let layout={A,B};
-      console.log(layout);
+      let layout={A:this.A,B:this.B};
       this.$ajax.post(this.$url.homePageSave,{layout:JSON.stringify(layout),pageId:this.page.id})
           .then(res=>{
             if(res.data.errmsg==='ok'){
@@ -185,7 +199,7 @@ export default {
           });
     },
     getRanking(){
-      return this.$ajax.post(this.$url.homeServiceRank,{type:this.$store.state.type})
+      return this.$ajax.post(this.$url.homeServiceRank,{type:this.type})
           .then(res=>{
             this.$store.commit('set_data',{
               data:res.data.services,
@@ -194,7 +208,7 @@ export default {
           });
     },
     getSchedule(){
-      return this.$ajax.post(this.$url.homeSchedule,{date:this.$store.state.date})
+      return this.$ajax.post(this.$url.homeSchedule,{date:this.date})
           .then(res=>{
             this.$store.commit('set_data',{
               data:res.data.events,
@@ -271,4 +285,5 @@ export default {
       width: 595px;
     }
   }
+
 </style>

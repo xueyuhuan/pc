@@ -8,6 +8,9 @@ export default {
   homePageSave:'/page_portal/save_layout',//保存工作台布局
   homeBanner:'/banner_portal/get',//获取轮播图
   homeApp:'/app_portal/list_for_widget',//组件-工作台-我的应用
+  homeAppAll:'/app_portal/list_setting',//获取所有应用列表
+  homeAppHas:'/app_portal/list_user_app',//获取已有应用
+  homeAppSave:'/app_portal/save_user_app',//保存应用选择设置
   homeFile:'/gongwen_portal/gongwenList',//组件-工作台-学校公文
   homeService:'/service_portal/list_for_widget',//组件-工作台-服务
   homeSchedule:'/calendar_portal/get_events_widget',//获取我的日程

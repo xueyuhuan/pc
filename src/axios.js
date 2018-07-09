@@ -18,7 +18,7 @@ let loading;
 instance.interceptors.request.use(
     config => {
       //在发送请求之前做些什么
-      console.log(config.url);
+      //保存布局时不加载loading
       if(config.url!=='/page_portal/save_layout'&&config.url!=='/api/page_portal/save_layout'){
         loading=Vue.prototype.$loading({text:"拼命加载中"});
       }
