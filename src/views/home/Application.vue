@@ -2,7 +2,7 @@
     <card>
         <header name="header">我的应用
             <div class="right">
-                <i class="fa fa-cog"></i>
+                <i class="fa fa-cog" @click="popup"></i>
                 <router-link to="/schedule"><i class="fa fa-ellipsis-h"></i></router-link>
             </div>
         </header>
@@ -26,6 +26,18 @@
       data(){
         return this.$store.state.app;
       }
+    },
+    methods:{
+      popup(){
+        this.$store.commit('set_data',{
+          data:true,
+          name:'popupShow'
+        });
+        this.$store.commit('set_data',{
+          data:"app",
+          name:'popupType'
+        });
+      }
     }
   }
 </script>
@@ -34,6 +46,7 @@
     .right{
         i{
             margin-left: 5px;
+            cursor: pointer;
         }
     }
     ul{

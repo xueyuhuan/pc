@@ -7,13 +7,20 @@ export default {
   homePage:'/page_portal/get',//获取工作台布局
   homePageSave:'/page_portal/save_layout',//保存工作台布局
   homeBanner:'/banner_portal/get',//获取轮播图
+  //应用
   homeApp:'/app_portal/list_for_widget',//组件-工作台-我的应用
   homeAppAll:'/app_portal/list_setting',//获取所有应用列表
   homeAppHas:'/app_portal/list_user_app',//获取已有应用
   homeAppSave:'/app_portal/save_user_app',//保存应用选择设置
-  homeFile:'/gongwen_portal/gongwenList',//组件-工作台-学校公文
+  //服务
   homeService:'/service_portal/list_for_widget',//组件-工作台-服务
+  homeServiceAll:'/service_portal/list_for_setting',//获取所有服务列表
+  homeServiceType:'/service_portal/list_manage_dept',//获取所有服务类型
+  homeServiceSave:'/service_portal/save_user_service',//保存服务设置
+
+
   homeSchedule:'/calendar_portal/get_events_widget',//获取我的日程
+  homeFile:'/gongwen_portal/gongwenList',//组件-工作台-学校公文
   homeNotice:'/notice_portal/noticeList',//组件-工作台-校内通知
   homeNotice2:'/news_portal/news_for_widget',//组件-工作台-通知公告
   homeTodo:'/task_portal/query_todo_all',//组件-工作台-我的待办
