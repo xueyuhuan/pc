@@ -9,7 +9,7 @@
         </header>
         <ul>
             <li v-for="i in data">
-                <div class="name"><i>{{i.Z_R_N}}</i><img :src='imgPath+i.ID'/>{{i.NAME}}</div>{{i.VW}}次
+                <div class="name"><i>{{i.Z_R_N}}</i><img :src='imgPath+i.ID'/>{{i.NAME.substring(0,10)}}</div>{{i.VW}}次
             </li>
         </ul>
     </card>
@@ -66,15 +66,17 @@
             }
         }
     }
-
     ul{
+        @include flex;
+        flex-flow: wrap;
         padding: 10px 20px;
-
         li{
             @include flex(space-between);
+            width: 50%;
             font-size: 14px;
             color: #000;
             cursor: pointer;
+            padding-right: 20px;
             margin: 0 0 14px 0;
             .name{
                 @include flex;
@@ -90,7 +92,7 @@
                 img{
                     width: 30px;
                     height: 30px;
-                    margin: 0 15px 0 25px;
+                    margin: 0 15px;
                 }
             }
             &:nth-child(1) i{
