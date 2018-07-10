@@ -62,4 +62,10 @@ export default {
     news_detail:'/news_portal/get',//新闻详情
     cancelNews:'/news_portal/cancelUserNews',//取消订阅
     saveNews:'/news_portal/saveUserNews',//订阅
+    rank_news:'/news_portal/rank_news',//阅读排行
+    /**
+     * 日程
+     */
+    getCalendarObjs:'/calendar_portal/getCalendarObjs',//获取日历事件的类型，OA/个人日程/校历
+    getCalendar:'/calendar_portal/getCalendar',//具体每个日子
 }

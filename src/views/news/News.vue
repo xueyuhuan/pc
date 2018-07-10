@@ -40,7 +40,14 @@
                 </div>
             </card>
             <card class="right_div">
-                <header slot="header">阅读排行</header>
+                <header slot="header">
+                    <span>阅读排行</span>
+                    <div class="date_div">
+                        <div :class="{'rank_date_active':rank_date_value === item.value}" v-for="item in rank_date" @click="toggle_rank(item.value)">{{item.name}}</div>
+                    </div>
+                </header>
+                <div v-for="item in rank_news">{{item.title}}</div>
+                <div class="nodata" v-if="rank_news.length == 0">暂无数据</div>
             </card>
         </div>
     </div>
@@ -60,18 +67,23 @@
                 newsList:[],//新闻列表
                 newsList_length:0,
                 page:1,
+                rank_date:[{name:'今日',value:'day'},{name:'本周',value:'week'},{name:'本月',value:'month'}],//阅读排行
+                rank_date_value:'day',//阅读排行值
+                rank_news:[]
             }
         },
         methods:{
             searchTitle(){
 
             },
+            //获取所有咨询栏目
             get_zxlm(){
                 this.$ajax.post(this.$url.columns_subscribe)
                     .then(res => {
                         this.zxlm = res.data.categorys;
                     })
             },
+            //选择咨询栏目
             choose_zxlm(id){
                 this.id = id;
                 this.getNewsList();
@@ -80,6 +92,7 @@
                 this.date_index = index + 1;
                 this.getNewsList();
             },
+            //新闻列表
             getNewsList(){
                 this.$ajax.post(this.$url.news_list,{page:this.page,columnId:this.id,dateIndex:this.date_index})
                     .then(res => {
@@ -88,17 +101,33 @@
                         this.newsList = res.data.news;
                     })
             },
+            //选择页码
             handleCurrentChange(page){
                 this.page = page;
                 this.getNewsList();
             },
+            //新闻详情
             newsDetail(id){
                 this.$router.push({path:"/news/detail",query: {id}});
+            },
+            //获取阅读排行
+            get_rank(){
+                this.$ajax.post(this.$url.rank_news,{type:this.rank_date_value})
+                    .then(res => {
+                        console.log(res.data);
+                       this.rank_news = res.data.news;
+                    })
+            },
+            //切换阅读排行
+            toggle_rank(value){
+                this.rank_date_value = value;
+                this.get_rank();
             }
         },
         created(){
             this.get_zxlm();//获取所有咨询栏目
             this.getNewsList();
+            this.get_rank();
         }
     }
 </script>
@@ -117,6 +146,10 @@
 <style scoped lang="scss">
     .bg_color {
         @extend %bg1;
+    }
+    .nodata{
+        font-size: 14px;
+        padding: 10px;
     }
     .contain {
         @extend %content;
@@ -197,6 +230,25 @@
         }
         .right_div {
             width: 399px;
+            .date_div{
+                @include flex(flex-start,justify-content);
+                margin-right: 100px;
+                div{
+                    font-size: 12px;
+                    background-color: #bfbfbf;
+                    color: #fff;
+                    margin-right: 10px;
+                    border-radius: 15px;
+                    height: 21px;
+                    line-height: 21px;
+                    width: 40px;
+                    text-align: center;
+                    cursor: pointer;
+                }
+            }
+            .rank_date_active{
+                background-color: #f08625 !important;
+            }
         }
     }
 </style>
