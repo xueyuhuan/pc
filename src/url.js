@@ -75,4 +75,5 @@ export default {
      */
     getCalendarObjs:'/calendar_portal/getCalendarObjs',//获取日历事件的类型，OA/个人日程/校历
     getCalendar:'/calendar_portal/getCalendar',//具体每个日子
+    getEvents:'/calendar_portal/get_events_date',//获取该天日程信息
 }
