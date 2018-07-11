@@ -17,8 +17,7 @@ export default {
   homeServiceAll:'/service_portal/list_for_setting',//获取所有服务列表
   homeServiceType:'/service_portal/list_manage_dept',//获取所有服务类型
   homeServiceSave:'/service_portal/save_user_service',//保存服务设置
-
-
+  //其他
   homeSchedule:'/calendar_portal/get_events_widget',//获取我的日程
   homeFile:'/gongwen_portal/gongwenList',//组件-工作台-学校公文
   homeNotice:'/notice_portal/noticeList',//组件-工作台-校内通知
@@ -33,11 +32,23 @@ export default {
   /*日程*/
   componentCalendar:'/calendar_portal/getCalendar',
   componentCalendarEvents:'/calendar_portal/get_events_date',
-  /*服务*/
-  componentServiceCenter_fwly:'/service_portal/query_service_type_all',//服务领域
-  componentServiceCenter_fzbm:'/service_portal/list_manage_dept',//负责部门
-  componentServiceCenter_fwdx:'/service_portal/list_user_group',//服务对象
-  componentServiceCenter_list:'/service_portal/list',//拉取列表
+  /**
+   * 服务
+   */
+  serviceRecommend:'/service_portal/list_recommend',//推荐服务
+  serviceHot:'/service_portal/list_hot_for_user',//热门服务
+  serviceDeadline:'/service_portal/list_deadline_for_user',//限时办理
+  serviceType:'/service_portal/query_service_fwlx',//服务类型（纵向一级目录）
+  serviceType2:'/service_portal/query_service_type',//服务类型（横向二级目录）
+  serviceList:'/service_portal/list_for_user',//查询具体服务列表
+  serviceDetail:'/service_portal/get',//查询具体服务详情
+  serviceDetailComment:'/service_portal/get_comments',//查询详情评论
+  serviceFWLY:'/service_portal/query_service_type_all',//服务领域
+  serviceFZBM:'/service_portal/list_manage_dept',//负责部门
+  serviceFWDX:'/service_portal/list_user_group',//服务对象
+  serviceSearch:'/service_portal/list',//搜索服务列表
+  serviceHotAll:'/service_portal/hot_list',//热门服务（对所有）
+  serviceNewest:'/service_portal/newest_list',//最新服务
   /*应用*/
   componentAppCenter:'/app_portal/list_app_group',
   /***
