@@ -6,28 +6,31 @@
         <div class="contain">
             <card>
                 <header>已订阅</header>
-            </card>
-            <div class="content" v-for="item in zxlm">
-                <div class="content_title">{{item.COLUMN_CATEGORY}}</div>
-                <div class="content_block">
-                    <div class="block" v-for="b in item.subscribe">
-                        <div class="block_title"><span>{{b.COLUMN_NAME}}</span></div>
-                        <div class="block_hover" @click="cancelSub(b.ID)"><span><i class="fa fa-minus-circle"></i>&nbsp;取消订阅</span></div>
+                <!--<div class="content_body">-->
+                    <div class="content" v-for="item in zxlm">
+                        <div class="content_title">{{item.COLUMN_CATEGORY}}</div>
+                        <div class="content_block">
+                            <div class="block" v-for="b in item.subscribe">
+                                <div class="block_title"><span>{{b.COLUMN_NAME}}</span></div>
+                                <div class="block_hover" @click="cancelSub(b)"><span><i class="fa" :class="{'fa-plus-circle': (b.SCOPE === 'user'),'fa-ban' : b.SCOPE === 'all'}"></i>&nbsp;{{b.SCOPE === 'all' ? '强制订阅' : '取消订阅'}}</span></div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                <!--</div>-->
+            </card>
+
             <card>
                 <header>未订阅</header>
-            </card>
-            <div class="content" v-for="item in zxlm">
-                <div class="content_title">{{item.COLUMN_CATEGORY}}</div>
-                <div class="content_block">
-                    <div class="block" v-for="b in item.unsubscribe">
-                        <div class="block_title"><span>{{b.COLUMN_NAME}}</span></div>
-                        <div class="block_hover" @click="saveSub(b.ID)"><span><i class="fa fa-plus-circle"></i>&nbsp;我要订阅</span></div>
+                <div class="content" v-for="item in zxlm">
+                    <div class="content_title">{{item.COLUMN_CATEGORY}}</div>
+                    <div class="content_block">
+                        <div class="block" v-for="b in item.unsubscribe">
+                            <div class="block_title"><span>{{b.COLUMN_NAME}}</span></div>
+                            <div class="block_hover" @click="saveSub(b.ID)"><span><i class="fa fa-plus-circle"></i>&nbsp;我要订阅</span></div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </card>
         </div>
     </div>
 </template>
@@ -50,17 +53,21 @@
                         this.zxlm = res.data.categorys;
                     })
             },
-            cancelSub(id){//退订已订阅的栏目
-                this.$ajax.post(this.$url.cancelNews,{columnId:id})
-                    .then(res => {
-                        this.$notify({
-                            title:"提示",
-                            message:res.data.errmsg,
-                            type:"success",
-                            position:"bottom-right"
+            cancelSub(b){//退订已订阅的栏目
+                if(b.SCOPE === 'all'){
+                    return;
+                }else{
+                    this.$ajax.post(this.$url.cancelNews,{columnId:b.ID})
+                        .then(res => {
+                            this.$notify({
+                                title:"提示",
+                                message:res.data.errmsg,
+                                type:"success",
+                                position:"bottom-right"
+                            })
+                            this.getData();
                         })
-                        this.getData();
-                    })
+                }
             },
             saveSub(id){//订阅栏目
                 this.$ajax.post(this.$url.saveNews,{columnId:id})
@@ -88,8 +95,11 @@
     .contain{
         width: 1200px;
         margin: 20px auto 0 auto;
-        background-color: white;
         font-size: 14px;
+        .content_body{
+            margin-bottom: 20px;
+            background-color: white;
+        }
         .content{
             padding: 20px 23px 0;
             .content_title{
