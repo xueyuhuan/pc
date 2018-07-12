@@ -25,7 +25,7 @@
             </el-pagination>
             <h4>已选择的{{name}}<span>（拖拽排序）</span></h4>
             <ul class="has">
-                <draggable class="drag" v-model="listHas" :options="dragOptions" @end="end">
+                <draggable class="drag" v-model="listHas" :options="dragOptions">
                     <transition-group>
                         <li v-for="(i,index) in listHas" :key="index">
                             <div class="select" @click="cancel(i,index)"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;取消选择</div>
