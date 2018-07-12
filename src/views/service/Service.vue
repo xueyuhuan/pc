@@ -26,23 +26,38 @@
             </card>
         </div>
         <card class="bottom">
-            <header>服务目录</header>
+            <header>服务目录
+                <ul v-show="type!==-1">
+                    <li @click="clickType2('',-1)" :class="{active:type2===-1}">全部</li>
+                    <li v-for="(i,index) in list.type2" @click="clickType2(i.id,index)" :class="{active:type2===index}">{{i.name}}</li>
+                </ul>
+            </header>
             <div class="content">
                 <ul class="catalog">
-                    <li>热门服务</li>
-                    <li>热门服务</li>
+                    <li @click="getHot" :class="{active:type===-1}">热门服务</li>
+                    <li v-for="(i,index) in list.type" @click="clickType1(i.id,index)" :class="{active:type===index}">{{i.name}}</li>
                 </ul>
-                <ul class="list"><li v-for="i in list.hot">
-                    <a>
-                        <img :src="imgPath+i.id"/>
-                        <div class="info">
-                            <p>{{i.name}}</p>
-                            <span>{{i.type2Name}}</span>
-                            <el-rate v-model="i.score" disabled show-score score-template=" {value}.00分"></el-rate>
-                        </div>
-                    </a>
-                    <a><i class="fa fa-question-circle"></i></a>
-                </li></ul>
+                <div>
+                    <ul class="list"><li v-for="i in list.list">
+                        <a>
+                            <img :src="imgPath+i.id"/>
+                            <div class="info">
+                                <p>{{i.name}}</p>
+                                <span>{{i.type2Name}}</span>
+                                <el-rate v-model="i.score" disabled show-score score-template=" {value}.00分"></el-rate>
+                            </div>
+                        </a>
+                        <a><i class="fa fa-question-circle"></i></a>
+                    </li></ul>
+                    <el-pagination v-show="type!==-1&&this.total>1"
+                            background
+                            layout="prev, pager, next"
+                            @current-change="handlePageChange"
+                            @prev-click="handlePageChange"
+                            @next-click="handlePageChange"
+                            :page-count="this.total">
+                    </el-pagination>
+                </div>
             </div>
         </card>
     </div>
@@ -54,18 +69,66 @@
     data(){
       return{
         key:'',
+        page:1,
+        limit:12,
+        total:1,
         imgPath:'/api/resource/service?id=',
+        type:-1,//一级目录选中标识
+        typeID:"",
+        type2:-1,//二级目录选中标识
+        type2ID:"",
         list:{
           recommend:[],//推荐服务列表
-          hot:[],//热门服务列表
+          type:[],//纵向一级目录
+          type2:[],//横向二级目录
+          list:[],
         }
       }
     },
     created(){
       this.getRecommend();
       this.getHot();
+      this.getType();
     },
     methods:{
+      clickType2(id,index){//点击二级目录
+        this.page=1;
+        this.type2ID=id;
+        this.type2=index;
+        this.getList();
+      },
+      clickType1(id,index){//点击一级目录
+        this.page=1;
+        this.type2ID="";
+        this.type2=-1;
+        this.typeID=id;
+        this.type=index;
+        this.getType2();
+        this.getList();
+      },
+      handlePageChange(n){//监听页数改变
+        this.page=n;
+        this.getList();
+      },
+      getList(){//获取列表
+        this.$ajax.post(this.$url.serviceList,{page:this.page, limit:this.limit, serviceType:this.type2ID, serviceFwlx:this.typeID,})
+            .then(res=>{
+              this.total=res.data.page.total;
+              this.list.list=res.data.page.rows;
+            })
+      },
+      getType2(){//获取二级目录
+        this.$ajax.post(this.$url.serviceType2,{fwlx:this.typeID})
+            .then(res=>{
+              this.list.type2=res.data.serviceTypeList;
+            })
+      },
+      getType(){//获取一级目录
+        this.$ajax.post(this.$url.serviceType)
+            .then(res=>{
+              this.list.type=res.data.serviceFwlxList;
+            })
+      },
       getRecommend(){//获取推荐服务
         this.$ajax.post(this.$url.serviceRecommend)
             .then(res=>{
@@ -73,9 +136,10 @@
             })
       },
       getHot(){//获取热门服务（对个人）
+        this.type=-1;
         this.$ajax.post(this.$url.serviceHot)
             .then(res=>{
-              this.list.hot=res.data.services.slice(0,12);
+              this.list.list=res.data.services.slice(0,12);
             })
       }
     }
@@ -156,17 +220,44 @@
         .bottom{
             width: 1200px;
             margin: 0 auto;
+            header{
+                @include flex(flex-start);
+                font-size: 20px;
+                ul{
+                    @include flex;
+                    height: 100%;
+                    padding: 1px 0;
+                    margin: 0 0 0 40px;
+                    li{
+                        @include flex;
+                        height: 100%;
+                        font-size: 14px;
+                        font-weight: normal;
+                        color: #363f44;
+                        padding: 0 10px;
+                        cursor: pointer;
+                        &.active{
+                            color: #fb8c00;
+                            border-bottom: 3px solid #fb8c00;
+                        }
+                    }
+                }
+            }
             .content{
                 @include flex(space-between,flex-start);
                 ul.catalog{
                     li{
                         background-color: #2aa8e9;
                         width: 127px;
-                        text-align: center;
+                        line-height: 43px;
                         font-size: 15px;
                         color: #fff;
-                        line-height: 43px;
+                        text-align: center;
                         margin-bottom: 1px;
+                        cursor: pointer;
+                        &.active{
+                            background: #0683c3;
+                        }
                     }
                 }
                 ul.list{
@@ -181,6 +272,9 @@
                         border: 1px solid #e5e5e5;
                         margin: 0 0 10px 10px;
                         a:first-child{
+                            &:hover{
+                                background-color: #eee;
+                            }
                             @include flex;
                             width: 270px;
                             padding: 15px 20px;
@@ -202,7 +296,12 @@
                             }
                         }
                         a:last-child{
+                            &:hover{
+                                background-color: #eee;
+                            }
                             flex: 1;
+                            @include flex(center);
+                            height: 100%;
                             font-size: 20px;
                             color: #2aa8e9;
                             text-align: center;
