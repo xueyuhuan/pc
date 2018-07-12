@@ -49,7 +49,7 @@
                         </a>
                         <a><i class="fa fa-question-circle"></i></a>
                     </li></ul>
-                    <el-pagination v-show="type!==-1&&this.total>1"
+                    <el-pagination v-show="type!==-1&&this.total>1" :current-page=page;
                             background
                             layout="prev, pager, next"
                             @current-change="handlePageChange"

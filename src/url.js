@@ -29,9 +29,6 @@ export default {
   /**
    * 导航
    */
-  /*日程*/
-  componentCalendar:'/calendar_portal/getCalendar',
-  componentCalendarEvents:'/calendar_portal/get_events_date',
   /**
    * 服务
    */
@@ -49,8 +46,6 @@ export default {
   serviceSearch:'/service_portal/list',//搜索服务列表
   serviceHotAll:'/service_portal/hot_list',//热门服务（对所有）
   serviceNewest:'/service_portal/newest_list',//最新服务
-  /*应用*/
-  componentAppCenter:'/app_portal/list_app_group',
   /***
    * 设置
    */
