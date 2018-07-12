@@ -1,49 +1,56 @@
 import Vue from "vue";
 import Router from "vue-router";
-
+const home = () => import('./views/home/Home');
+const service = () => import('./views/service/Service');
+const serviceDetail = () => import('./views/service/Detail');
+const login = () => import('./views/Login');
+const application = () => import('./views/app/Application');
+const news = () => import('./views/news/News');
+const newsDetail = () => import('./views/news/NewsDetail');
+const newsSub = () => import('./views/news/NewsSub');
+const schedule = () => import('./views/schedule/Schedule');
 Vue.use(Router);
 
 export default new Router({
     routes: [
-        {
-            path: "/",
-            name: "home",
-            component: resolve => require(['./views/home/Home'], resolve)
-        },
-        {
-            path: "/service",
-            name: "service",
-            component: resolve => require(['./views/service/Service'], resolve)
-        },
-        {
-            path: "/login",
-            name: "login",
-            component: resolve => require(['./views/Login'], resolve)
-        },
-        {
-            path: "/app",
-            name: "application",
-            component: resolve => require(['./views/app/Application'], resolve)
-        },
-        {
-            path: "/news",
-            name: "news",
-            component: resolve => require(['./views/news/News'], resolve)
-        },
-        {
-            path: '/news/detail',
-            name:"news_detail",
-            component: resolve => require(['./views/news/NewsDetail'], resolve)
-        },
-        {
-            path: '/news/sub',
-            name:"news_sub",
-            component: resolve => require(['./views/news/NewsSub'], resolve)
-        },
-        {
-            path: '/schedule',
-            name:"schedule",
-            component: resolve => require(['./views/schedule/Schedule'], resolve)
-        }
+      {
+        path: "/",
+        component: home
+      },
+      {
+        path: "/service",
+        component: service
+      },
+      {
+        path: "/service/detail/:id",
+        component: serviceDetail
+      },
+      {
+        path: "/login",
+        component: login
+      },
+      {
+        path: "/app",
+        component: application
+      },
+      {
+        path: "/news",
+        component: news,
+      },
+      {
+        path: '/news/detail',
+        name:"news_detail",
+        component: newsDetail
+      },
+      {
+        path: '/news/sub',
+        name:"news_sub",
+        component: newsSub
+      },
+      {
+        path: '/schedule',
+        name:"schedule",
+        component: schedule
+      }
     ]
 });
