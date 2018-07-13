@@ -12,7 +12,7 @@
                         <div class="content_block">
                             <div class="block" v-for="b in item.subscribe">
                                 <div class="block_title"><span>{{b.COLUMN_NAME}}</span></div>
-                                <div class="block_hover" @click="cancelSub(b)"><span><i class="fa" :class="{'fa-plus-circle': (b.SCOPE === 'user'),'fa-ban' : b.SCOPE === 'all'}"></i>&nbsp;{{b.SCOPE === 'all' ? '强制订阅' : '取消订阅'}}</span></div>
+                                <div class="block_hover" @click="cancelSub(b)"><span><i class="fa" :class="{'fa-minus-circle': (b.SCOPE === 'user'),'fa-ban' : b.SCOPE === 'all'}"></i>&nbsp;{{b.SCOPE === 'all' ? '强制订阅' : '取消订阅'}}</span></div>
                             </div>
                         </div>
                     </div>
