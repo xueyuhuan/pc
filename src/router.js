@@ -11,7 +11,8 @@ const news = () => import('./views/news/News');
 const newsDetail = () => import('./views/news/NewsDetail');
 const newsSub = () => import('./views/news/NewsSub');
 const schedule = () => import('./views/schedule/Schedule');
-const scheduleSub = () => import('./views/schedule/MySub')
+const scheduleSub = () => import('./views/schedule/MySub');
+const todo = () =>import('./views/todo/Todo');
 Vue.use(Router);
 
 export default new Router({
