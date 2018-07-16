@@ -5,19 +5,19 @@
                 <i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;服务中心&nbsp;<span>Service&nbsp;Center</span>
             </div>
             <div class="right">
-                <input v-model="key" placeholder="服务搜索"/><button><i class="fa fa-search"></i></button>
+                <input v-model="key" placeholder="服务搜索"/><router-link to="/service/search"><button><i class="fa fa-search"></i></button></router-link>
             </div>
         </subhead>
         <div class="top">
             <card class="recommend">
                 <header>推荐服务</header>
                 <ul>
-                    <li v-for="i in list.recommend"><a>
+                    <li v-for="i in list.recommend"><router-link :to="'/service/detail/'+i.id">
                         <img :src="imgPath+i.id"/>
                         <p>{{i.name}}</p>
                         <span>{{i.type2Name}}</span>
                         <el-rate v-model="i.score" disabled></el-rate>
-                    </a></li>
+                    </router-link></li>
                 </ul>
             </card>
             <card class="deadline">
@@ -39,23 +39,23 @@
                 </ul>
                 <div>
                     <ul class="list"><li v-for="i in list.list">
-                        <a>
+                        <a :href="i.url" target="_blank">
                             <img :src="imgPath+i.id"/>
                             <div class="info">
                                 <p>{{i.name}}</p>
                                 <span>{{i.type2Name}}</span>
-                                <el-rate v-model="i.score" disabled show-score score-template=" {value}.00分"></el-rate>
+                                <el-rate v-model="i.score" disabled show-score score-template=" {value}分"></el-rate>
                             </div>
                         </a>
-                        <a><i class="fa fa-question-circle"></i></a>
+                        <router-link :to="'/service/detail/'+i.id"><i class="fa fa-question-circle"></i></router-link>
                     </li></ul>
-                    <el-pagination v-show="type!==-1&&this.total>1" :current-page=page
+                    <el-pagination v-show="type!==-1&&total>1"
                             background
                             layout="prev, pager, next"
                             @current-change="handlePageChange"
                             @prev-click="handlePageChange"
                             @next-click="handlePageChange"
-                            :page-count="this.total">
+                            :page-count="total">
                     </el-pagination>
                 </div>
             </div>

@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 const home = () => import('./views/home/Home');
 const service = () => import('./views/service/Service');
+const serviceSearch = () => import('./views/service/Search');
 const serviceDetail = () => import('./views/service/Detail');
 const login = () => import('./views/Login');
 const application = () => import('./views/app/Application');
@@ -20,6 +21,10 @@ export default new Router({
       {
         path: "/service",
         component: service
+      },
+      {
+        path: "/service/search",
+        component: serviceSearch
       },
       {
         path: "/service/detail/:id",
