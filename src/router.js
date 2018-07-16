@@ -10,6 +10,7 @@ const news = () => import('./views/news/News');
 const newsDetail = () => import('./views/news/NewsDetail');
 const newsSub = () => import('./views/news/NewsSub');
 const schedule = () => import('./views/schedule/Schedule');
+const scheduleSub = () => import('./views/schedule/MySub')
 Vue.use(Router);
 
 export default new Router({
@@ -56,6 +57,11 @@ export default new Router({
         path: '/schedule',
         name:"schedule",
         component: schedule
+      },
+      {
+        path: '/schedule/MySub',
+        name: "schedule_mySub",
+        component: scheduleSub
       }
     ]
 });

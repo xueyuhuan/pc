@@ -82,4 +82,12 @@ export default {
     getCalendarObjs:'/calendar_portal/getCalendarObjs',//获取日历事件的类型，OA/个人日程/校历
     getCalendar:'/calendar_portal/getCalendar',//具体每个日子
     getEvents:'/calendar_portal/get_events_date',//获取该天日程信息
+    add_private_event:'/calendar_portal/add_private_event',//添加个人日程
+    get_private_event:'/calendar_portal/get_private_event',//修改前先获取某个个人日程
+    edit_private_event:'/calendar_portal/edit_private_event',//编辑个人日程
+    remove_private_events:'/calendar_portal/remove_private_events',//删除个人日程
+    get_cals_sub:'/calendar_portal/get_cals_sub',//获取日程订阅所有栏目
+    saveUserCalendar:'/calendar_portal/saveUserCalendar',//订阅
+    cancelUserCalendar:'/calendar_portal/cancelUserCalendar',//取消订阅
+    subscription_private:'/calendar_portal/subscription_private',//手机二维码
 }
