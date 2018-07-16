@@ -65,6 +65,7 @@ export default {
     list_app_group:'/app_portal/list_app_group',//获取所有类别的app
     get_app_detail:'/app_portal/get',//获取app详情
     app_rank:'/app_portal/list_top',//app排行
+    list_app_query:'/app_portal/list_app_query',//应用搜索
     delFavorites:'/user_portal/delFavorites',//取消订阅
     addFavorites:'/user_portal/addFavorites',//订阅
     /**
@@ -90,4 +91,8 @@ export default {
     saveUserCalendar:'/calendar_portal/saveUserCalendar',//订阅
     cancelUserCalendar:'/calendar_portal/cancelUserCalendar',//取消订阅
     subscription_private:'/calendar_portal/subscription_private',//手机二维码
+    /**
+     * 待办
+     */
+    getTodoResource:'/task_portal/get_apps',//待办来源
 }
