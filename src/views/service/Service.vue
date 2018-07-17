@@ -5,7 +5,7 @@
                 <i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;服务中心&nbsp;<span>Service&nbsp;Center</span>
             </div>
             <div class="right">
-                <input v-model="key" placeholder="服务搜索"/><router-link to="/service/search"><button><i class="fa fa-search"></i></button></router-link>
+                <input v-model="key" placeholder="服务搜索"/><router-link to="/service/search/icon"><button><i class="fa fa-search"></i></button></router-link>
             </div>
         </subhead>
         <div class="top">
