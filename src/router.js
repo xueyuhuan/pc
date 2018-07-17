@@ -13,6 +13,7 @@ const newsSub = () => import('./views/news/NewsSub');
 const schedule = () => import('./views/schedule/Schedule');
 const scheduleSub = () => import('./views/schedule/MySub');
 const todo = () =>import('./views/todo/Todo');
+const collections = () => import('./views/collections/Collections');
 Vue.use(Router);
 
 export default new Router({
@@ -69,6 +70,11 @@ export default new Router({
             path: '/todo',
             name: "todo",
             component: todo
+        },
+        {
+            path: '/collections',
+            name: 'collections',
+            component: collections
         }
     ]
 });

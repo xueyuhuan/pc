@@ -95,4 +95,10 @@ export default {
      * 待办
      */
     getTodoResource:'/task_portal/get_apps',//待办来源
+    /**
+     * 收藏
+     */
+    collectionService:'/service_portal/get_user_favorites',//服务
+    collectionApp:'/app_portal/get_user_favorites',//应用
+    collectionNews:'/news_portal/getMyNews',//新闻
 }

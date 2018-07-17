@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <navigation v-if="this.$route.path!=='/login'"></navigation>
-    <keep-alive :exclude="exclude_name">
       <router-view/>
-    </keep-alive>
     <!--回到顶部按钮-->
     <a href="javascript:;" v-show="top > 200" title="回到顶部" @click="toTop" class="toTop"><i class="fa fa-chevron-up"></i></a>
   </div>
