@@ -23,7 +23,10 @@ export default new Vuex.Store({
     /*home的模块数据end*/
     /*设置弹框*/
     popupShow:false,//是否显示
-    popupType:''//应用或服务
+    popupType:'',//应用或服务
+    /*设置弹框end*/
+    /*服务*/
+    search:''
   },
   mutations: {
     set_token(state,token){
