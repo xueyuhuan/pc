@@ -74,7 +74,7 @@
         },
         methods:{
             searchTitle(){
-
+                this.getNewsList();
             },
             //获取所有咨询栏目
             get_zxlm(){
@@ -94,7 +94,7 @@
             },
             //新闻列表
             getNewsList(){
-                this.$ajax.post(this.$url.news_list,{page:this.page,columnId:this.id,dateIndex:this.date_index})
+                this.$ajax.post(this.$url.news_list,{page:this.page,columnId:this.id,dateIndex:this.date_index,key:this.input_value})
                     .then(res => {
                         console.log(res.data);
                         this.newsList_length = res.data.count;

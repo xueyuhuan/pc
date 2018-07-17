@@ -8,7 +8,7 @@
         </subhead>
         <div class="contain">
             <div class="left_div">
-                <div class="left_div_block" v-for="appGroup in appName_filter" v-if="current_app_type_id === appGroup.id || current_app_type_id === ''">
+                <div class="left_div_block" v-for="appGroup in appGroups" v-if="current_app_type_id === appGroup.id || current_app_type_id === ''">
                     <div class="block_head">{{appGroup.name}}</div>
                     <div class="block_body">
                         <div class="app" v-for="app in appGroup.apps">
@@ -75,7 +75,7 @@
             return{
                 placeholder:"应用搜索",
                 input_value:'',
-                appGroups:[],//app所有类别，展示的
+                appGroups:[],//app所有类别，展示的数据
                 appDetail:{},//模态框里的app详情信息
                 appDetail_app:{},
                 appDetail_app_subscribe_status:false,
@@ -91,32 +91,12 @@
 
             }
         },
-        computed:{
-            appName_filter(){
-                let input_value = this.input_value;
-                if(input_value.trim()){
-                    // console.log(input_value);
-                    return this.appGroups.filter((appGroup)=>{
-                        console.log(appGroup);
-                        return appGroup.apps.filter((app)=>{
-                            // console.log(app.name);
-                            // console.log(input_value);
-                            console.log(app.name.indexOf(input_value) > -1);
-                            return app.name.indexOf(input_value) > -1
-                        })
-                    })
-
-                }
-                console.log(this.appGroups);
-                return this.appGroups;
-            }
-        },
         methods:{
             //获取所有类别app
             getApp(){
                 this.$ajax.post(this.$url.list_app_group)
                     .then(res => {
-                        // console.log(res.data);
+                        console.log(res.data);
                         this.appGroups = res.data.groups;
                         let all_service_count=0;
                         for(let i=0;i<this.appGroups.length;i=i+1){
@@ -125,6 +105,7 @@
                         this.all_service_count = all_service_count;
                     })
             },
+            //app排行
             getAppRank(){
                 this.$ajax.post(this.$url.app_rank)
                     .then(res => {
@@ -134,7 +115,11 @@
             },
             //搜索应用
             searchApp(){
-
+                this.$ajax.post(this.$url.list_app_query,{name:this.input_value})
+                    .then(res => {
+                        console.log(res.data);
+                        this.appGroups = res.data.groups;
+                    })
             },
             //进入应用详情
             showDetail(id){

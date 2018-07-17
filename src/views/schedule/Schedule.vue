@@ -342,7 +342,7 @@
                 if (this.openModalFlag === 1) {//新增日程
                     this.$ajax.post(this.$url.add_private_event, this.formData)
                         .then(res => {
-                            console.log(res.data);
+                            // console.log(res.data);
                             if (res.data.errcode == '0') {
                                 this.$notify({
                                     title: "提示",
@@ -374,7 +374,7 @@
                     data.location = this.formData.location;
                     this.$ajax.post(this.$url.edit_private_event, data)
                         .then(res => {
-                            console.log(res.data);
+                            // console.log(res.data);
                             if (res.data.errcode == '0') {
                                 this.$notify({
                                     title: "提示",
