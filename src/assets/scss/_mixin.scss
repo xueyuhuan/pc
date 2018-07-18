@@ -9,6 +9,10 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+%width{
+  width: 1200px;
+  margin: 0 auto;
+}
 %content{
   padding: 0 0 15px 0;
   margin: auto;
