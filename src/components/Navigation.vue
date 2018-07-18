@@ -40,15 +40,18 @@
           {name:'日程',url:'/schedule'}
         ],
         active:"",
-        user:{}
+      }
+    },
+    computed:{
+      user(){
+        return this.$store.state.user;
       }
     },
     created(){
       this.active=this.$route.path;
       this.$ajax.post(this.$url.getUser)
           .then(res=>{
-            this.user=res.data.user;
-            this.$store.commit('set_user',this.user);
+            this.$store.commit('set_user',res.data.user);
           });
     },
     methods:{
