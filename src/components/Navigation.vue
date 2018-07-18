@@ -2,7 +2,7 @@
     <header>
         <div class="content">
             <nav>
-                <img src="../assets/logo.png"/>
+                <img src="../assets/logo_ccnu.png"/>
                 <ul>
                     <li v-for="i in nav" :class="{active:active===i.url}" @click="click(i.url)"><router-link :to="i.url">{{i.name}}</router-link></li>
                 </ul>
