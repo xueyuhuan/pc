@@ -16,8 +16,8 @@ const schedule = () => import('./views/schedule/Schedule');
 const scheduleSub = () => import('./views/schedule/MySub');
 const todo = () =>import('./views/todo/Todo');
 const collections = () => import('./views/collections/Collections');
-const user = () => import("./views/user/info");
-const userHead = () => import("./views/user/head");
+const user = () => import("./views/user/Info");
+const userHead = () => import("./views/user/Head");
 Vue.use(Router);
 
 export default new Router({
