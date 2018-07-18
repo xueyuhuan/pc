@@ -9,7 +9,7 @@
                 <div class="band">
                     <div class="band_block">
                         <div class="band_title">全部收藏</div>
-                        <div class="band_num" style="color: #6254b2;">{{service.length + app.length + news.length}}</div>
+                        <div class="band_num" style="color: #6254b2;">{{sum}}</div>
                     </div>
                     <div class="band_block">
                         <div class="band_title">&nbsp;</div>
@@ -82,9 +82,14 @@
         name: "Collections",
         data(){
             return{
-                service:{},
-                app:{},
-                news:{}
+                service:[],
+                app:[],
+                news:[]
+            }
+        },
+        computed:{
+            sum(){
+                return this.service.length + this.app.length + this.news.length;
             }
         },
         methods:{

@@ -14,10 +14,11 @@ const newsDetail = () => import('./views/news/NewsDetail');
 const newsSub = () => import('./views/news/NewsSub');
 const schedule = () => import('./views/schedule/Schedule');
 const scheduleSub = () => import('./views/schedule/MySub');
-const todo = () =>import('./views/todo/Todo');
+const todo = () => import('./views/todo/Todo');
 const collections = () => import('./views/collections/Collections');
 const user = () => import("./views/user/Info");
 const userHead = () => import("./views/user/Head");
+const message = () => import('./views/message/message');
 Vue.use(Router);
 
 export default new Router({
@@ -42,5 +43,6 @@ export default new Router({
       {path: '/collections', name: 'collections', component: collections},
       {path: "/user", component: user},
       {path: "/user/head", component: userHead},
+      {path:'/message',name:'message',component: message}
     ]
 });

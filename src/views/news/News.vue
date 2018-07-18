@@ -131,18 +131,6 @@
         }
     }
 </script>
-<style lang="scss">
-    .el-pagination.is-background .el-pager li:not(.disabled).active {
-        background-color: #1295d8;
-        color: #fff;
-    }
-    .el-pagination li:hover{
-        color: #1295d8;
-    }
-    .el-pager, .el-pager li:hover{
-        color: #1295d8;
-    }
-</style>
 <style scoped lang="scss">
     .bg_color {
         @extend %bg1;
