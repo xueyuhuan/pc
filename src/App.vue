@@ -34,6 +34,11 @@
         }
     }
 </script>
+<style>
+  [v-cloak] {
+    display: none;
+  }
+</style>
 <style scoped lang="scss">
     .toTop{
       display:block;

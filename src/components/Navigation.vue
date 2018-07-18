@@ -17,8 +17,8 @@
                 <li @click="click('/collections')"><router-link to="/collections">
                     <el-tooltip class="item" effect="light" content="收藏中心" placement="bottom"><i class="fa fa-star-o" :class="{active:active==='/collections'}"></i></el-tooltip>
                 </router-link></li>
-                <li @click="click('/msg')"><router-link to="/msg">
-                    <el-tooltip class="item" effect="light" content="消息中心" placement="bottom"><i class="fa fa-bell-o" :class="{active:active==='/msg'}"></i></el-tooltip>
+                <li @click="click('/message')"><router-link to="/message">
+                    <el-tooltip class="item" effect="light" content="消息中心" placement="bottom"><i class="fa fa-bell-o" :class="{active:active==='/message'}"></i></el-tooltip>
                 </router-link></li>
                 <li><router-link to="/user">{{user.name}}<i class="fa fa-caret-down"></i></router-link></li>
                 <li><router-link to="/user"><img :src="user.userFace"/></router-link></li>

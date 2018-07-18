@@ -14,72 +14,78 @@ const newsDetail = () => import('./views/news/NewsDetail');
 const newsSub = () => import('./views/news/NewsSub');
 const schedule = () => import('./views/schedule/Schedule');
 const scheduleSub = () => import('./views/schedule/MySub');
-const todo = () =>import('./views/todo/Todo');
+const todo = () => import('./views/todo/Todo');
 const collections = () => import('./views/collections/Collections');
+const message = () => import('./views/message/message');
 Vue.use(Router);
 
 export default new Router({
     routes: [
-      {
-        path: "/",
-        component: home
-      },
-      {
-        path: "/service",
-        component: service
-      },
-      {
-        path: "/service/search", component: serviceSearch,
-        children:[
-          {path:'icon', component:serviceSearchIcon},
-          {path:'list', component:serviceSearchList},
-        ]
-      },
-      {
-        path: "/service/detail/:id",
-        component: serviceDetail
-      },
-      {
-        path: "/login",
-        component: login
-      },
-      {
-        path: "/app",
-        component: application
-      },
-      {
-        path: "/news",
-        component: news,
-      },
-      {
-        path: '/news/detail',
-        name:"news_detail",
-        component: newsDetail
-      },
-      {
-        path: '/news/sub',
-        name:"news_sub",
-        component: newsSub
-      },
-      {
-        path: '/schedule',
-        name:"schedule",
-        component: schedule
-      },
-      {
-        path: '/schedule/MySub',
-        name: "schedule_mySub",
-        component: scheduleSub
-      },
-      {
-        path: '/todo',
-        name: "todo",
-        component: todo
-      },
+        {
+            path: "/",
+            component: home
+        },
+        {
+            path: "/service",
+            component: service
+        },
+        {
+            path: "/service/search", component: serviceSearch,
+            children: [
+                {path: 'icon', component: serviceSearchIcon},
+                {path: 'list', component: serviceSearchList},
+            ]
+        },
+        {
+            path: "/service/detail/:id",
+            component: serviceDetail
+        },
+        {
+            path: "/login",
+            component: login
+        },
+        {
+            path: "/app",
+            component: application
+        },
+        {
+            path: "/news",
+            component: news,
+        },
+        {
+            path: '/news/detail',
+            name: "news_detail",
+            component: newsDetail
+        },
+        {
+            path: '/news/sub',
+            name: "news_sub",
+            component: newsSub
+        },
+        {
+            path: '/schedule',
+            name: "schedule",
+            component: schedule
+        },
+        {
+            path: '/schedule/MySub',
+            name: "schedule_mySub",
+            component: scheduleSub
+        },
+        {
+            path: '/todo',
+            name: "todo",
+            component: todo
+        },
         {
             path: '/collections',
             name: 'collections',
             component: collections
+        },
+        {
+            path:'/message',
+            name:'message',
+            component: message
         }
     ]
 });

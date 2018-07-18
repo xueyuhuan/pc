@@ -101,4 +101,11 @@ export default {
     collectionService:'/service_portal/get_user_favorites',//服务
     collectionApp:'/app_portal/get_user_favorites',//应用
     collectionNews:'/news_portal/getMyNews',//新闻
+    /**
+     * 消息中心
+     */
+    query_unread:'/msg_portal/query_unread',//未读
+    query:'/msg_portal/query',//全部消息
+    set_read:'/msg_portal/set_read',//将未读消息标识为已读
+    msgDetail:'/msg_portal/detail',//获取消息详情
 }
