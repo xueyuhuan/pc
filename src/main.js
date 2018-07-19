@@ -5,6 +5,8 @@ import router from "./router";
 import store from "./store";
 import axios from './axios';
 import url from './url'
+import ccnu from './ccnu'
+import hit from './hit'
 
 import 'element-ui/lib/theme-chalk/index.css';
 import 'font-awesome/css/font-awesome.css';
@@ -35,6 +37,7 @@ requireComponent.keys().forEach(fileName => {
 
 Vue.prototype.$ajax=axios;
 Vue.prototype.$url=url;
+Vue.prototype.$school=process.env.VUE_APP_SCHOOL==='hit'?hit:ccnu;
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
 
