@@ -19,7 +19,7 @@ export default new Vuex.Store({
     date:0,//日程的日期
     service:[],
     todo:[],
-    userModule:[],
+    userModule:{},
     /*home的模块数据end*/
     /*设置弹框*/
     popupShow:false,//是否显示

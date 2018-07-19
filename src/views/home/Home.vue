@@ -237,8 +237,30 @@ export default {
     getUser(){
       return this.$ajax.post(this.$url.homeUser)
           .then(res=>{
+              let userModule = res.data.services;
+              let obj= {
+                  email: {},
+                  ecard: {},
+                  tsg: {},
+                  network: {}
+              }
+              for (let i = 0; i < userModule.length; i++) {
+                  if (userModule[i].id === 'email') {
+                      obj.email = userModule[i].infos;
+                  }
+                  if (userModule[i].id === 'ecard') {
+                      obj.ecard = userModule[i].infos;
+                  }
+                  if (userModule[i].id === 'tsg') {
+                      obj.tsg = userModule[i].infos;
+                  }
+                  if (userModule[i].id === 'network') {
+                      obj.network = userModule[i].infos;
+                  }
+              }
+              console.log(res.data.services);
             this.$store.commit('set_data',{
-              data:res.data.services,
+              data:obj,
               name:'userModule'
             })
           });
