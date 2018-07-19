@@ -2,7 +2,7 @@
     <header>
         <div class="content">
             <nav>
-                <img src="../assets/logo_ccnu.png"/>
+                <img :src="$school.logo"/>
                 <ul>
                     <li v-for="i in nav" :class="{active:active===i.url}" @click="click(i.url)"><router-link :to="i.url">{{i.name}}</router-link></li>
                 </ul>
@@ -32,13 +32,7 @@
     name: "Navigation",
     data(){
       return{
-        nav:[
-          {name:'工作台',url:'/'},
-          {name:'服务',url:'/service'},
-          {name:'资讯',url:'/news'},
-          {name:'应用',url:'/app'},
-          {name:'日程',url:'/schedule'}
-        ],
+        nav:this.$school.nav,
         active:"",
       }
     },
