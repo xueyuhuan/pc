@@ -97,6 +97,10 @@ export default {
      * 待办
      */
     getTodoResource:'/task_portal/get_apps',//待办来源
+    //哈工大
+    getSelect:'/task_portal/get_myStarted_apps',//我发起的-来源备选项
+    //我的已办
+    get_myDone_apps:'/task_portal/get_myDone_apps',//拿左侧来源下拉框备选项
     /**
      * 收藏
      */
