@@ -2,7 +2,7 @@
     <div class="search">
         <subhead>
             <div class="left">
-                <i class="fa fa-arrow-left" style="cursor: pointer" @click="routerBack"></i>&nbsp;&nbsp;&nbsp;服务中心&nbsp;<span>Service&nbsp;Center</span>
+                <i class="fa" :class="[{'fa-arrow-left':$school.school==='ccnu'},{'fa-list':$school.school==='hit'}]" style="cursor: pointer" @click="routerBack"></i>&nbsp;&nbsp;&nbsp;服务中心&nbsp;<span>Service&nbsp;Center</span>
             </div>
             <div class="right">
                 <input v-model="searchData.key" placeholder="服务搜索"/><button @click="getList"><i class="fa fa-search"></i></button>
@@ -25,23 +25,29 @@
                     <li v-for="(i,index) in FWFS"><span :class="{active:index===active.lineAble}" @click="conditionSelect(i,index,'lineAble')">{{i.name}}</span></li>
                 </ul>
             </section>
+            <section v-if="$school.school==='hit'"><div class="name">服务地点：</div><span class="all" :class="{active:active.isJzdt===-1}" @click="conditionSelect('',-1,'isJzdt')">全部</span>
+                <ul>
+                    <li v-for="(i,index) in FWDD"><span :class="{active:index===active.isJzdt}" @click="conditionSelect(i,index,'isJzdt')"><i v-if="index===0" class="fa fa-building-o">&nbsp;</i>{{i.name}}</span></li>
+                </ul>
+            </section>
             <section><div class="name">服务对象：</div><span class="all" :class="{active:active.userGroupId===-1}" @click="conditionSelect('',-1,'userGroupId')">全部</span>
                 <ul>
                     <li v-for="(i,index) in FWDX"><span :class="{active:index===active.userGroupId}" @click="conditionSelect(i,index,'userGroupId')">{{i.groupName}}</span></li>
                 </ul>
             </section>
         </card>
-        <div class="condition" v-show="condition.type2||condition.managerDeptId||condition.lineAble||condition.userGroupId||searchData.key">检索条件：
+        <div class="condition" v-show="condition.type2||condition.managerDeptId||condition.lineAble||condition.isJzdt||condition.userGroupId||searchData.key">检索条件：
             <span class="item" v-show="condition.type2">服务领域：{{condition.type2}}</span>
             <span class="item" v-show="condition.managerDeptId">负责部门：{{condition.managerDeptId}}</span>
             <span class="item" v-show="condition.lineAble">服务方式：{{condition.lineAble}}</span>
+            <span class="item" v-show="condition.isJzdt">服务地点：{{condition.isJzdt}}</span>
             <span class="item" v-show="condition.userGroupId">服务对象：{{condition.userGroupId}}</span>
             <span class="item" v-show="searchData.key">检索词：{{searchData.key}}</span>
             <span class="clear" @click="conditionClear"><i class="fa fa-close"></i>&nbsp;清空检索条件</span>
         </div>
         <card class="list">
             <header>
-                <div class="left">共为您检索到<em>{{data.lineCount}}</em>项服务，<em>{{data.lineCount}}</em>项可部分或全部线上办理</div>
+                <div class="left">共为您检索到<em>{{data.page.records}}</em>项服务，<template v-if="$school.school==='hit'"><em>{{data.jzdtCount}}</em>项已经进驻师生服务中心, </template><em>{{data.lineCount}}</em>项可部分或全部线上办理</div>
                 <div class="right">
                     排序：<i class="fa fa-eye" @click="order('view')" :class="{active:searchData.orderBy==='view'}">&nbsp;热度</i><i class="fa fa-star" @click="order('fav')" :class="{active:searchData.orderBy==='fav'}">&nbsp;收藏</i>
                     <span></span>
@@ -57,7 +63,7 @@
                            @prev-click="handlePageChange"
                            @next-click="handlePageChange"
                            :page-size=searchData.limit
-                           :total="data.lineCount">
+                           :total="data.page.records">
             </el-pagination>
         </card>
     </div>
@@ -71,17 +77,20 @@
         FWLY:[],
         FZBM:[],
         FWFS:[{name:"线上服务",id:"1"}, {name:"线下服务",id:"0"},],
+        FWDD:[{name:"进驻师生服务中心",id:"1"}, {name:"未进驻师生服务中心",id:"0"},],
         FWDX:[],
         active:{//检索项选中状态
           type2:-1,
           managerDeptId:-1,
           lineAble:-1,
+          isJzdt:-1,
           userGroupId:-1,
         },
         condition:{//检索条件
           type2:"",
           managerDeptId:"",
           lineAble:"",
+          isJzdt:"",
           userGroupId:"",
         },
         searchData:{//请求列表数据格式
@@ -128,6 +137,7 @@
         this.conditionSelect('',-1,'type2',"y");
         this.conditionSelect('',-1,'managerDeptId',"y");
         this.conditionSelect('',-1,'lineAble',"y");
+        this.conditionSelect('',-1,'isJzdt',"y");
         this.conditionSelect('',-1,'userGroupId',"y");
         this.searchData.key='';
         this.getList();
