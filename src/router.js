@@ -14,6 +14,7 @@ const newsDetail = () => import('./views/news/NewsDetail');
 const newsSub = () => import('./views/news/NewsSub');
 const schedule = () => import('./views/schedule/Schedule');
 const scheduleSub = () => import('./views/schedule/MySub');
+const feedback = () => import('./views/icon/feedback');
 const todo = () => import('./views/todo/Todo');
 const collections = () => import('./views/collections/Collections');
 const user = () => import("./views/user/Info");
@@ -40,6 +41,7 @@ export default new Router({
       {path: '/news/sub', name:"news_sub", component: newsSub},
       {path: '/schedule', name:"schedule", component: schedule},
       {path: '/schedule/MySub', name: "schedule_mySub", component: scheduleSub},
+      {path: '/feedback',component:feedback},
       {path: '/todo', name: "todo", component: todo},
       {path: '/collections', name: 'collections', component: collections},
       {path: "/user", component: user},

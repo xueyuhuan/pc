@@ -29,7 +29,10 @@
                 this.$ajax.post(this.$url.login, {username: this.name, password: this.password})
                     .then(res => {
                         this.$store.commit('set_token', res.data.token);//在store.js中设置token
-                        this.$router.push({path: '/'});
+                      if(this.$school.school==='hit'){
+                        this.$router.push({path: '/index'});
+                      }
+                      else this.$router.push({path: '/home'});
                     });
             }
         }

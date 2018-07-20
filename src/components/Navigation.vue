@@ -10,6 +10,13 @@
                 </ul>
             </nav>
             <ul class="personal">
+                <li @click="click('/feedback')">
+                    <router-link to="/feedback">
+                        <el-tooltip class="item" effect="light" content="意见反馈" placement="bottom">
+                            <i class="fa fa-star-o" :class="{active:active==='/feedback'}"></i>
+                        </el-tooltip>
+                    </router-link>
+                </li>
                 <li>
                     <a href="#">
                         <el-dropdown trigger="click">
@@ -64,7 +71,7 @@
         data() {
             return {
                 nav: this.$school.nav,
-                active: "",
+                active: this.$route.path,
                 todoCount:0,//待办数
                 UnreadCount:0,//未读消息数
             }
@@ -75,7 +82,7 @@
             }
         },
         created() {
-            this.active = this.$route.path;
+
             this.$ajax.post(this.$url.getUser)
                 .then(res => {
                     this.$store.commit('set_user', res.data.user);
