@@ -47,7 +47,7 @@
         </div>
         <card class="list">
             <header>
-                <div class="left">共为您检索到<em>{{data.page.records}}</em>项服务，<template v-if="$school.school==='hit'"><em>{{data.jzdtCount}}</em>项已经进驻师生服务中心, </template><em>{{data.lineCount}}</em>项可部分或全部线上办理</div>
+                <div class="left">共为您检索到<em>{{data.count}}</em>项服务，<template v-if="$school.school==='hit'"><em>{{data.jzdtCount}}</em>项已经进驻师生服务中心, </template><em>{{data.lineCount}}</em>项可部分或全部线上办理</div>
                 <div class="right">
                     排序：<i class="fa fa-eye" @click="order('view')" :class="{active:searchData.orderBy==='view'}">&nbsp;热度</i><i class="fa fa-star" @click="order('fav')" :class="{active:searchData.orderBy==='fav'}">&nbsp;收藏</i>
                     <span></span>
@@ -56,14 +56,14 @@
                 </div>
             </header>
             <router-view></router-view>
-            <el-pagination v-show="data.lineCount>12"
+            <el-pagination v-show="data.count>12"
                            background
                            layout="prev, pager, next"
                            @current-change="handlePageChange"
                            @prev-click="handlePageChange"
                            @next-click="handlePageChange"
                            :page-size=searchData.limit
-                           :total="data.page.records">
+                           :total="data.count">
             </el-pagination>
         </card>
     </div>
@@ -104,12 +104,22 @@
           userGroupId:"",
           isJzdt:""
         },
-        data:"",
+        data:{
+          count:0,//总数
+          jzdtCount:0,//进驻数
+          lineCount:0,//线上数
+          list:[],//列表
+        },
       }
     },
     computed:{
-      show(){//排列显示方式list or icon
-        return this.$route.path.indexOf('icon')>0?'icon':'list';
+      show:{//排列显示方式list or icon
+        get() {
+          return this.$route.path.indexOf('icon')>0?'icon':'list';
+        },
+        set() {
+
+        }
       }
     },
     created(){
@@ -173,7 +183,10 @@
               localStorage.active=JSON.stringify(this.active);
               localStorage.condition=JSON.stringify(this.condition);
               localStorage.searchData=JSON.stringify(this.searchData);
-              this.data=res.data;
+              this.data.count=res.data.page.records;
+              this.data.jzdtCount=res.data.jzdtCount;
+              this.data.lineCount=res.data.lineCount;
+              this.data.list=res.data.page.rows;
               this.$store.commit('set_data',{
                 data:res.data.page,
                 name:'search'
