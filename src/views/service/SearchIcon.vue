@@ -1,6 +1,7 @@
 <template>
     <ul class="icon">
         <li v-for="i in data.rows"><router-link :to="'/service/detail/'+i.id">
+            <div class="xs" v-show="i.lineAble==='0'"><span>线下</span></div>
             <img :src="imgPath+i.id"/>
             <p class="name" :title="i.name"><i class="fa fa-building-o" v-if="i.isJzdt==='1'"></i>{{i.name}}</p>
             <p class="type">服务类别：{{i.type2Name}}</p>
@@ -34,6 +35,24 @@
         li{
             &:hover{
                 background: #eee;
+            }
+            position: relative;
+            .xs{
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 0;
+                height: 0;
+                border-left: 38px solid transparent;
+                border-top: 38px solid #e5e5e5;
+                span{
+                    position: absolute;
+                    top: -36px;
+                    right: -8px;
+                    font-size: 12px;
+                    width: 38px;
+                    color: #959595;
+                }
             }
             width: 220px;
             text-align: center;
