@@ -10,7 +10,7 @@
                 </ul>
             </nav>
             <ul class="personal">
-                <li @click="click('/feedback')">
+                <li @click="click('/feedback')" v-if="$school==='hit'">
                     <router-link to="/feedback">
                         <el-tooltip class="item" effect="light" content="意见反馈" placement="bottom">
                             <i class="fa fa-star-o" :class="{active:active==='/feedback'}"></i>
@@ -45,7 +45,7 @@
                             <i class="fa fa-star-o" :class="{active:active==='/collections'}"></i></el-tooltip>
                     </router-link>
                 </li>
-                <li @click="click('/message')">
+                <li @click="click('/message')" v-if="$school==='ccnu'">
                     <router-link to="/message">
                         <el-tooltip class="item" effect="light" content="消息中心" placement="bottom">
                             <el-badge :value="UnreadCount" :max="9" class="item" :hidden="UnreadCount === 0">
