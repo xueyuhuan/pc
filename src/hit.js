@@ -1,7 +1,9 @@
 export default {
   school:'hit',
   logo:'logo_hit.png',
-  nav:[
+    copyright:'Copyright © 2015-2018 哈尔滨工业大学网络与信息中心',
+    loginTitle:'哈尔滨工业大学大学校园门户',
+    nav:[
     {name:'首页',url:'/home'},
     {name:'服务',url:'/service'},
     {name:'资讯',url:'/news'},

@@ -88,15 +88,8 @@
                 this.active = url;
             },
             toggleColor(command) {
-                if (command === 'blue') {
-
-                }
-                if (command === 'green') {
-
-                }
-                if (command === 'orange') {
-
-                }
+                console.log(command);
+                document.getElementById('app').className ='theme'+command ;
             },
             getTodoCount(){
                 this.$ajax.post(this.$url.getTodoCount)
