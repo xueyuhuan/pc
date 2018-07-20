@@ -6,14 +6,16 @@
         <div class="content">
             <card>
                 <header slot="header">
-                    <div class="head_left">
-                        <i class="fa fa-chevron-left" @click="prevMonth"></i>
-                        <span>{{year}}年{{month}}月</span>
-                        <i class="fa fa-chevron-right" @click="nextMonth"></i>
-                    </div>
-                    <div class="head_mid">
-                        <div class="eventType" v-for="item in eventType">
-                            <span :style="'background-color:' + item.color + ';'"></span>&nbsp;{{item.name}}
+                    <div style="width: 758px;">
+                        <div class="head_left">
+                            <i class="fa fa-chevron-left" @click="prevMonth"></i>
+                            <span>{{year}}年{{month}}月</span>
+                            <i class="fa fa-chevron-right" @click="nextMonth"></i>
+                        </div>
+                        <div class="head_mid">
+                            <div class="eventType" v-for="item in eventType">
+                                <span :style="`background-color:${item.color};`"></span>&nbsp;{{item.name}}
+                            </div>
                         </div>
                     </div>
                     <div class="head_right">
@@ -495,7 +497,7 @@
     .head_mid {
         @include flex(flex-start, center);
         flex-direction: row-reverse;
-        width: 460px;
+        flex-wrap: wrap;
         .eventType {
             margin-left: 10px;
             color: #101010;
