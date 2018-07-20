@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-
+const index = () => import('./views/index/Index');
 const home = () => import('./views/home/Home');
 const service = () => import('./views/service/Service');
 const serviceSearch = () => import('./views/service/Search');
@@ -23,7 +23,8 @@ Vue.use(Router);
 
 export default new Router({
     routes: [
-      {path: "/", component: home},
+      {path: "/index", component: index},
+      {path: "/home", component: home},
       {path: "/service", component: service},
       {path: "/service/search", component: serviceSearch,
         children:[

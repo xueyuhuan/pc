@@ -1,0 +1,109 @@
+<template>
+    <card class="user">
+        <header name="header">个人中心
+            <router-link to="/user"><i class="fa fa-ellipsis-h"></i></router-link>
+        </header>
+        <ul>
+            <li v-for="i in user" v-if="i.id==='email'"><a :href="i.infos.url" target="_blank">
+                <div class="left">
+                    <img :src="proxy+'/img/email.png'"/>
+                    <p>邮件<br/><span>{{i.infos.email}}</span></p>
+                </div>
+                <div class="right">
+                    未读：{{i.infos.unread}}，今日：{{i.infos.todayCount}}
+                </div>
+            </a></li>
+            <li v-for="i in user" v-if="i.id==='ecard'"><a>
+                <div class="left">
+                    <img :src="proxy+'/img/school_card.png'"/>
+                    <p>校园卡<br/><span>今日消费<i v-if="ecardFlag">{{i.infos.todayAmt}}</i><i v-else>…</i>元</span></p>
+                </div>
+                <div class="right">
+                    <template v-if="ecardFlag">余额：{{i.infos.balance}}</template>
+                    <i class="fa" :class="[{'fa-eye-slash':!ecardFlag},{'fa-eye':ecardFlag}]" @click="ecardFlag=!ecardFlag"></i>
+                </div>
+            </a></li>
+            <li v-for="i in user" v-if="i.id==='teacherPage'"><a :href="i.infos.url" target="_blank">
+                <div class="left">
+                    <img :src="proxy+'/img/teacher_page.png'"/>
+                    <p>教师个人主页<br/><span>{{i.infos.department}}&nbsp;{{i.infos.name}}</span></p>
+                </div>
+                <div class="right">
+                    今日访问：{{i.infos.cnt_today}}次
+                </div>
+            </a></li>
+            <li v-for="i in user" v-if="i.id==='salary'"><router-link :to="'/service/detail/'+i.infos.salaryServiceId">
+                <div class="left">
+                    <img :src="proxy+'/img/salary.png'"/>
+                    <p>工资查询<br/><span>{{i.infos.desc}}</span></p>
+                </div>
+                <div class="right">
+                    <template v-if="salaryFlag">{{i.infos.je}}元</template>
+                    <i class="fa" :class="[{'fa-eye-slash':!salaryFlag},{'fa-eye':salaryFlag}]" @click="salaryFlag=!salaryFlag"></i>
+                </div>
+            </router-link></li>
+        </ul>
+    </card>
+</template>
+
+<script>
+  export default {
+    name: "User",
+    data(){
+      return{
+        proxy:process.env.VUE_APP_PROXY,
+        user:[],
+        ecardFlag:false,
+        salaryFlag:false
+      }
+    },
+    created(){
+      this.getData(this.$url.homeUser,'user','services');//个人中心
+    },
+    methods:{
+      getData(url,store,name){
+        this.$ajax.post(url)
+            .then(res=>{
+              this[store]=res.data[name];
+            })
+      },
+    }
+  }
+</script>
+
+<style scoped lang="scss">
+    .user{
+        a{
+            @include flex(space-between);
+            padding: 15px;
+            border-bottom: 1px solid #e7ecee;
+            .left{
+                @include flex;
+                img{
+                    width: 31px;
+                    height: 31px;
+                    border-radius: 50%;
+                    margin-right: 10px;
+                }
+                p{
+                    font-size: 14px;
+                    margin: 0;
+                    span{
+                        color: #98a6ad;
+                        font-size: 12px;
+                    }
+                }
+            }
+            .right{
+                font-size: 14px;
+                color: #27c24c;
+                i{
+                    font-size: 14px;
+                    color: #000;
+                    padding-left: 10px;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+</style>
