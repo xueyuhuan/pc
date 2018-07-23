@@ -1,9 +1,22 @@
 <template>
-    <div class="card">
-        <slot name="header"></slot>
+    <div class="card" :class="skinCard">
+        <header :class="skinCardFont"><slot name="header"></slot></header>
         <slot></slot>
     </div>
 </template>
+
+<script>
+    export default {
+        computed:{
+            skinCard(){
+                return this.$store.state.skinCard;
+            },
+            skinCardFont(){
+                return this.$store.state.skinCardFont;
+            }
+        }
+    }
+</script>
 
 <style lang="scss">
     .card{

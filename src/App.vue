@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="theme_blue">
     <navigation v-if="this.$route.path!=='/login'"></navigation>
       <router-view/>
     <!--回到顶部按钮-->
@@ -8,6 +8,7 @@
 </template>
 
 <script>
+    import '@/assets/scss/color.scss';
     export default {
       data(){
           return{
@@ -35,6 +36,15 @@
     }
 </script>
 <style scoped lang="scss">
+    .theme_blue{
+        color: #1390d3;
+    }
+    .theme_green{
+        color: #00697e;
+    }
+    .theme_orange{
+        color: #f18b2e;
+    }
     .toTop{
       display:block;
       width: 50px;

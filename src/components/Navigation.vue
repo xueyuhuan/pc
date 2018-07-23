@@ -1,5 +1,5 @@
 <template>
-    <header>
+    <header :class="skin">
         <div class="content">
             <nav>
                 <img :src="$school.logo"/>
@@ -19,10 +19,10 @@
                 </li>
                 <li>
                     <a href="#">
-                        <el-dropdown trigger="click">
+                        <el-dropdown trigger="click" @command="toggleColor">
                             <el-tooltip class="item" effect="light" content="主题" placement="bottom"><i
                                     class="fa fa-universal-access"></i></el-tooltip>
-                            <el-dropdown-menu slot="dropdown" @command="toggleColor">
+                            <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item command="blue">蓝色</el-dropdown-item>
                                 <el-dropdown-item command="green">绿色</el-dropdown-item>
                                 <el-dropdown-item command="orange">橙色</el-dropdown-item>
@@ -74,12 +74,22 @@
                 active: this.$route.path,
                 todoCount:0,//待办数
                 UnreadCount:0,//未读消息数
+                // skin:'skin-1390d3'
             }
         },
         computed: {
             user() {
                 return this.$store.state.user;
+            },
+            skin(){
+                return this.$store.state.skin;
+            },
+            skinLight(){
+                return this.$store.state.skinLight;
             }
+        },
+        mounted(){
+
         },
         created() {
             this.$ajax.post(this.$url.getUser)
@@ -94,8 +104,7 @@
                 this.active = url;
             },
             toggleColor(command) {
-                console.log(command);
-                document.getElementById('app').className ='theme'+command ;
+                this.$store.commit('setThemeColor',command);
             },
             getTodoCount(){
                 this.$ajax.post(this.$url.getTodoCount)
@@ -116,8 +125,8 @@
 <style scoped lang="scss">
     header {
         nav {
-            .active {
-                background: $skin-light;
+            li.active {
+                background: rgba(255,255,255,0.2);
                 border-bottom: 3px solid #f7b47f;
             }
         }

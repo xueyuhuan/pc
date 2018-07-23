@@ -1,8 +1,8 @@
 <template>
     <card>
-        <header name="header">个人中心
+        <template slot="header">个人中心
             <router-link to="/user"><i class="fa fa-ellipsis-h"></i></router-link>
-        </header>
+        </template>
         <ul>
             <li class="border_bottom1">
                 <a>

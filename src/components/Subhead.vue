@@ -1,11 +1,21 @@
 <template>
-    <div class="subhead">
+    <div class="subhead" :class="skinDarker">
         <div class="content">
             <slot></slot>
         </div>
 
     </div>
 </template>
+
+<script>
+    export default {
+        computed:{
+            skinDarker(){
+                return this.$store.state.skinDarker;
+            }
+        }
+    }
+</script>
 
 <style lang="scss">
     .subhead{

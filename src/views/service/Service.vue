@@ -10,7 +10,7 @@
         </subhead>
         <div class="top">
             <card class="recommend">
-                <header>推荐服务</header>
+                <template slot="header">推荐服务</template>
                 <ul>
                     <li v-for="i in list.recommend"><router-link :to="'/service/detail/'+i.id">
                         <img :src="imgPath+i.id"/>
@@ -21,17 +21,17 @@
                 </ul>
             </card>
             <card class="deadline">
-                <header>限时办理</header>
+                <template slot="header">限时办理</template>
                 <img src="/api/img/no_data.png"/>
             </card>
         </div>
         <card class="bottom">
-            <header>服务目录
+            <template slot="header">服务目录
                 <ul v-show="type!==-1">
                     <li @click="clickType2('',-1)" :class="{active:type2===-1}">全部</li>
                     <li v-for="(i,index) in list.type2" @click="clickType2(i.id,index)" :class="{active:type2===index}">{{i.name}}</li>
                 </ul>
-            </header>
+            </template>
             <div class="content">
                 <ul class="catalog">
                     <li @click="getHot" :class="{active:type===-1}">热门服务</li>
@@ -207,6 +207,7 @@
                     }
                     p{
                         font-size: 14px;
+                        color: #000;
                         margin: 15px 0 0 0;
                         @extend %ellipsis;
                     }
@@ -287,6 +288,7 @@
                             p{
                                 width: 152px;
                                 font-size: 14px;
+                                color: #000;
                                 margin: 0;
                                 @extend %ellipsis;
                             }

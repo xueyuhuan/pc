@@ -1,9 +1,9 @@
 <template>
     <card>
-        <header name="header">
+        <template slot="header">
             我的待办
             <router-link to="/todo"><i class="fa fa-ellipsis-h"></i></router-link>
-        </header>
+        </template>
         <ul>
             <li v-for="i in data">
                 <a :href="i.url" target="_blank"><p>[{{i.appName}}]{{i.title}}</p><time>{{i.currentTime}}</time></a>

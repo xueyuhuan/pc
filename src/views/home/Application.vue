@@ -1,11 +1,11 @@
 <template>
     <card>
-        <header name="header">我的应用
+        <template slot="header">我的应用
             <div class="right">
                 <i class="fa fa-cog" @click="popup"></i>
                 <router-link to="/schedule"><i class="fa fa-ellipsis-h"></i></router-link>
             </div>
-        </header>
+        </template>
         <ul>
             <li v-for="i in data">
                 <a :href="i.url" target="_blank"><img :src="imgPath+i.id"/>{{i.name}}</a>

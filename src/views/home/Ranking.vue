@@ -1,12 +1,12 @@
 <template>
     <card>
-        <header name="header">
+        <template slot="header">
             服务排行
             <div class="btn">
                 <span @click="click(1)" :class="{active:type===1}">本周</span>
                 <span @click="click(2)" :class="{active:type===2}">本月</span>
                 <span @click="click(3)" :class="{active:type===3}">本年</span></div>
-        </header>
+        </template>
         <ul>
             <li v-for="i in data">
                 <div class="name"><i>{{i.Z_R_N}}</i><img :src='imgPath+i.ID'/>{{i.NAME.substring(0,10)}}</div>{{i.VW}}次

@@ -1,6 +1,6 @@
 <template>
     <card>
-        <header name="header">
+        <template slot="header">
             <div class="left">
                 我的日程
                 <div class="btn">
@@ -9,7 +9,7 @@
                     <span @click="click(2)" :class="{active:date===2}">后天</span></div>
             </div>
             <router-link to="/schedule"><i class="fa fa-ellipsis-h"></i></router-link>
-        </header>
+        </template>
         <ul>
             <li v-for="i in data">
                 <p><span>{{i.title}}</span><span>{{i.info}}</span></p><time>{{i.dtstart}}</time>

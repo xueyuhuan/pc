@@ -1,6 +1,6 @@
 <template>
     <card>
-        <header name="header">通知公告</header>
+        <template slot="header">通知公告</template>
         <ul>
             <li v-for="i in data">
                 <a :href="i.url" target="_blank"><p>{{i.title}}</p><time>{{i.publishDate}}</time></a>

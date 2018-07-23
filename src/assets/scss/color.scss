@@ -1,0 +1,27 @@
+@import "./test.scss";
+
+@for $i from 1 to 4{
+  .skin-#{nth($skin-value,$i)}{
+    background:nth($skin,$i)!important;
+  }
+}
+@for $i from 1 to 4{
+  .skin-light-#{nth($skin-light-value,$i)}{
+    background:nth($skin-light,$i)!important;
+  }
+}
+@for $i from 1 to 4{
+  .skin-darker-#{nth($skin-darker-value,$i)}{
+    background:nth($skin-darker,$i)!important;
+  }
+}
+@for $i from 1 to 4{
+  .skin-card-#{nth($skin-card-value,$i)}{
+    border-top:3px solid nth($skin-card,$i)!important;
+  }
+}
+@for $i from 1 to 4{
+  .skin-card-font-#{nth($skin-card-value,$i)}{
+    color:nth($skin-card,$i)!important;
+  }
+}

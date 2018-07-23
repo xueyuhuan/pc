@@ -1,8 +1,8 @@
 <template>
     <card>
-        <header name="header">工资查询
+        <template slot="header">工资查询
             <router-link to="/pay"><i class="fa fa-ellipsis-h"></i></router-link>
-        </header>
+        </template>
         <div class="pay">
             <div class="text">
                 <p>{{title}}</p>

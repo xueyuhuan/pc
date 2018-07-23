@@ -1,8 +1,8 @@
 <template>
     <card>
-        <header name="header">校内通知
+        <template slot="header">校内通知
             <a href="http://fw.ccnu.edu.cn/notice/notify/notifyList" target="_blank"><i class="fa fa-ellipsis-h"></i></a>
-        </header>
+        </template>
         <ul>
             <li v-for="i in data">
                 <a :href="i.url" target="_blank"><p>{{i.title}}</p><time>{{i.when_created}}</time></a>
