@@ -101,6 +101,10 @@ export default {
     getSelect:'/task_portal/get_myStarted_apps',//我发起的-来源备选项
     //我的已办
     get_myDone_apps:'/task_portal/get_myDone_apps',//拿左侧来源下拉框备选项
+    query_done:'/task_portal/query_done',//明细
+  //我发起的
+  get_myStarted_apps:'/task_portal/get_myStarted_apps',//拿左侧条件
+  query_myStarted:'/task_portal/query_myStarted',//拿右侧明细
     /**
      * 收藏
      */
