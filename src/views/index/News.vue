@@ -1,8 +1,8 @@
 <template>
     <card class="news">
-        <header name="header">校园资讯
+        <template slot="header">校园资讯
             <router-link to="/news"><i class="fa fa-ellipsis-h"></i></router-link>
-        </header>
+        </template>
         <div class="content">
             <div class="left">
                 <el-carousel trigger="click" height="200px">

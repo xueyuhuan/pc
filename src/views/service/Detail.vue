@@ -4,8 +4,8 @@
             <div><i class="fa fa-arrow-left" style="cursor: pointer" @click="routerBack"></i>&nbsp;&nbsp;&nbsp;服务详情</div>
         </subhead>
         <div class="content">
-            <card>
-                <header>
+            <card class="left">
+                <template slot="header">
                     <div class="left">
                         <img :src="proxy+imgPath.head+data.service.id"/>
                         <div class="info">
@@ -15,7 +15,7 @@
                         </div>
                     </div>
                     <a>进入服务</a>
-                </header>
+                </template>
                 <div class="explain">
                     <p v-if="data.service.managerDeptname"><i class="fa fa-info-circle"></i>本服务由<em>{{data.service.managerDeptname}}</em>提供</p>
                     <p v-else><i class="fa fa-info-circle"></i>暂无服务部门</p>
@@ -87,18 +87,18 @@
             </card>
             <div class="right">
                 <card>
-                    <header><i class="fa fa-info-circle"></i>基本信息</header>
+                    <template slot="header"><div class="left"><i class="fa fa-info-circle"></i>基本信息</div></template>
                     <p v-if="data.service.place"><i class="fa fa-location-arrow"></i>{{data.service.place}}</p>
                     <p v-if="data.service.handleTime"><i class="fa fa-clock-o"></i>{{data.service.handleTime}}</p>
                     <p v-if="data.service.managerTel"><i class="fa fa-phone"></i>{{data.service.managerTel}} {{data.service.manager}}</p>
                 </card>
                 <card>
-                    <header><i class="fa fa-info-circle"></i>注意事项</header>
+                    <template slot="header"><div class="left"><i class="fa fa-info-circle"></i>注意事项</div></template>
                     <div v-if="data.service.notice" style="font-size: 14px;padding: 0 15px;" v-html="data.service.notice"></div>
                     <p class="no" v-else>暂无数据</p>
                 </card>
                 <card>
-                    <header><i class="fa fa-info-circle"></i>收费信息</header>
+                    <template slot="header"><div class="left"><i class="fa fa-info-circle"></i>收费信息</div></template>
                     <div v-if="data.service.sfbz&&data.service.sfyj">
                         <p>收费标准{{data.service.sfbz}}</p>
                         <p>收费依据{{data.service.sfyj}}</p>
@@ -106,7 +106,7 @@
                     <p class="no" v-else>暂无数据</p>
                 </card>
                 <card>
-                    <header><i class="fa fa-info-circle"></i>服务依据</header>
+                    <template slot="header"><div class="left"><i class="fa fa-info-circle"></i>服务依据</div></template>
                     <div v-if="data.fwyjs">
                         <a v-for="i in data.fwyjs" :href="i.path.indexOf('http')?'i.path':filePath+i.path" target="_blank">{{i.fileName}}</a>
                     </div>
@@ -190,6 +190,7 @@
     }
   }
 </script>
+
 <style>
     .el-collapse-item__header{
         font-size: 18px;
@@ -212,8 +213,8 @@
             .card:first-child{
                 width: 784px;
                 header{
-                    height: auto;
-                    padding: 10px 20px;
+                    height: auto!important;
+                    padding: 10px 20px!important;
                     .left{
                         @include flex;
                         img{
@@ -381,12 +382,14 @@
                     width: 100%;
                     padding: 0 0 15px 0;
                     header{
-                        @include flex(flex-start);
-                        font-size: 18px;
-                        font-weight: normal;
-                        i{
-                            font-size: 19px;
-                            margin-right: 10px;
+                        .left{
+                            @include flex(flex-start);
+                            font-size: 18px;
+                            font-weight: normal;
+                            i{
+                                font-size: 19px;
+                                margin-right: 10px;
+                            }
                         }
                     }
                     p{

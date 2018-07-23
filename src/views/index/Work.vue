@@ -1,6 +1,6 @@
 <template>
     <card class="work">
-        <header name="header">工作台</header>
+        <template slot="header">工作台</template>
         <ul class="nav">
             <li v-for="(i,index) in work" @click="clickWork(index)" :class="{active:index===workActive}">
                 <img :src="i.img"/>{{i.name}}<em v-show="index===1">{{email.unreadCntAll}}</em>

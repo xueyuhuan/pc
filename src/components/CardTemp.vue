@@ -1,6 +1,6 @@
 <template>
     <div class="card" :class="skinCard">
-        <header :class="skinCardFont"><slot name="header"></slot></header>
+        <slot name="header"></slot>
         <slot></slot>
     </div>
 </template>
