@@ -1,5 +1,5 @@
 <template>
-    <div class="subhead" :class="skinDarker">
+    <div class="subhead _theme_darker">
         <div class="content">
             <slot></slot>
         </div>

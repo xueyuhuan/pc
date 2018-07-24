@@ -1,8 +1,11 @@
+$blue-card:#1295d8;
+$green-card:#00697e;
+$orange-card:#f18b2e;
 ._theme_blue{
   ._theme{
     background: #1390d3!important;
   }
-  ._theme_light{
+  ._theme_light.active{
     background: #2aa8e9!important;
   }
   ._theme_darker{
@@ -10,13 +13,42 @@
   }
   ._theme_card{
     border-top:3px solid #1295d8!important;
+    header{
+      color: #1295d8!important;
+    }
+  }
+  ._theme_card_a{
+    border-left: 2px solid $blue-card;
+  }
+  ._theme_card_span.active{
+    background: $blue-card;
+  }
+  ._theme_input{
+    input{
+      background: #069!important;
+    }
+    button{
+      background: #069!important;
+      i{
+        color: #1295d8!important;
+      }
+    }
+  }
+  ._theme_service_bg{
+    background: #2aa8e9!important;
+  }
+  ._theme_service_bg.active{
+    background: #0683c3!important;
+  }
+  ._theme_service_font{
+    color: #2aa8e9!important;
   }
 }
 ._theme_green{
   ._theme{
     background: #00697e!important;
   }
-  ._theme_light{
+  ._theme_light.active{
     background: #008099!important;
   }
   ._theme_darker{
@@ -24,5 +56,77 @@
   }
   ._theme_card{
     border-top:3px solid #00697e!important;
+    header{
+      color: #00697e!important;
+    }
+  }
+  ._theme_card_a{
+    border-left: 2px solid $green-card;
+  }
+  ._theme_card_span.active{
+    background: $green-card;
+  }
+  ._theme_input{
+    input{
+      background: #00697e!important;
+    }
+    button{
+      background: #00697e!important;
+      i{
+        color: #008099!important;
+      }
+    }
+  }
+  ._theme_service_bg{
+    background: #00697e!important;
+  }
+  ._theme_service_bg.active{
+    background: #005768!important;
+  }
+  ._theme_service_font{
+    color: #00697e!important;
   }
 }
+._theme_orange{
+   ._theme{
+     background: #f18b2e!important;
+   }
+   ._theme_light.active{
+     background: #fc9e48!important;
+   }
+   ._theme_darker{
+     background: #ed760a!important;
+   }
+   ._theme_card{
+     border-top:3px solid #f18b2e!important;
+     header{
+       color: #f18b2e!important;
+     }
+   }
+  ._theme_card_a{
+    border-left: 2px solid $orange-card;
+  }
+  ._theme_card_span.active{
+    background: $orange-card;
+  }
+  ._theme_input{
+    input{
+      background: #f18b2e;
+    }
+    button{
+      background: #f18b2e;
+      i{
+        color: #fc9e48;
+      }
+    }
+  }
+  ._theme_service_bg{
+    background: #f18b2e!important;
+  }
+  ._theme_service_bg.active{
+    background: #ed760a!important;
+  }
+  ._theme_service_font{
+    color: #f18b2e!important;
+  }
+ }

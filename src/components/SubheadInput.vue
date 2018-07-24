@@ -1,5 +1,5 @@
 <template>
-    <div class="subhead-input">
+    <div class="subhead-input _theme_input">
         <slot name="input"></slot>
         <slot></slot>
     </div>

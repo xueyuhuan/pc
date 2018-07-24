@@ -4,35 +4,39 @@
             <div class="left">
                 <i class="fa" :class="[{'fa-arrow-left':$school.school==='ccnu'},{'fa-list':$school.school==='hit'}]" style="cursor: pointer" @click="routerBack"></i>&nbsp;&nbsp;&nbsp;服务中心&nbsp;<span>Service&nbsp;Center</span>
             </div>
-            <div class="right">
-                <input v-model="searchData.key" placeholder="服务搜索"/><button @click="getList"><i class="fa fa-search"></i></button>
-            </div>
+            <SubheadInput>
+                <input slot="input" v-model="searchData.key" placeholder="服务搜索"/><button @click="getList"><i class="fa fa-search"></i></button>
+            </SubheadInput>
         </subhead>
         <CardTemp class="menu">
             <section><div class="name">服务领域：</div>
-                <span class="all" :class="{active:active.type2===-1}" @click="conditionSelect('',-1,'type2')">全部</span>
+                <span class="all _theme_card_span" :class="{active:active.type2===-1}" @click="conditionSelect('',-1,'type2')">全部</span>
                 <ul>
-                    <li v-for="(i,index) in FWLY"><span :class="{active:index===active.type2}" @click="conditionSelect(i,index,'type2')">{{i.name}}</span></li>
+                    <li v-for="(i,index) in FWLY"><span class="_theme_card_span" :class="{active:index===active.type2}" @click="conditionSelect(i,index,'type2')">{{i.name}}</span></li>
                 </ul>
             </section>
-            <section><div class="name">负责部门：</div><span class="all" :class="{active:active.managerDeptId===-1}" @click="conditionSelect('',-1,'managerDeptId')">全部</span>
+            <section><div class="name">负责部门：</div>
+                <span class="all _theme_card_span" :class="{active:active.managerDeptId===-1}" @click="conditionSelect('',-1,'managerDeptId')">全部</span>
                 <ul>
-                    <li v-for="(i,index) in FZBM"><span :class="{active:index===active.managerDeptId}" @click="conditionSelect(i,index,'managerDeptId')">{{i.name}}</span></li>
+                    <li v-for="(i,index) in FZBM"><span class="_theme_card_span" :class="{active:index===active.managerDeptId}" @click="conditionSelect(i,index,'managerDeptId')">{{i.name}}</span></li>
                 </ul>
             </section>
-            <section><div class="name">服务方式：</div><span class="all" :class="{active:active.lineAble===-1}" @click="conditionSelect('',-1,'lineAble')">全部</span>
+            <section><div class="name">服务方式：</div>
+                <span class="all _theme_card_span" :class="{active:active.lineAble===-1}" @click="conditionSelect('',-1,'lineAble')">全部</span>
                 <ul>
-                    <li v-for="(i,index) in FWFS"><span :class="{active:index===active.lineAble}" @click="conditionSelect(i,index,'lineAble')">{{i.name}}</span></li>
+                    <li v-for="(i,index) in FWFS"><span class="_theme_card_span" :class="{active:index===active.lineAble}" @click="conditionSelect(i,index,'lineAble')">{{i.name}}</span></li>
                 </ul>
             </section>
-            <section v-if="$school.school==='hit'"><div class="name">服务地点：</div><span class="all" :class="{active:active.isJzdt===-1}" @click="conditionSelect('',-1,'isJzdt')">全部</span>
+            <section v-if="$school.school==='hit'"><div class="name">服务地点：</div>
+                <span class="all _theme_card_span" :class="{active:active.isJzdt===-1}" @click="conditionSelect('',-1,'isJzdt')">全部</span>
                 <ul>
-                    <li v-for="(i,index) in FWDD"><span :class="{active:index===active.isJzdt}" @click="conditionSelect(i,index,'isJzdt')"><i v-if="index===0" class="fa fa-building-o">&nbsp;</i>{{i.name}}</span></li>
+                    <li v-for="(i,index) in FWDD"><span class="_theme_card_span" :class="{active:index===active.isJzdt}" @click="conditionSelect(i,index,'isJzdt')"><i v-if="index===0" class="fa fa-building-o">&nbsp;</i>{{i.name}}</span></li>
                 </ul>
             </section>
-            <section><div class="name">服务对象：</div><span class="all" :class="{active:active.userGroupId===-1}" @click="conditionSelect('',-1,'userGroupId')">全部</span>
+            <section><div class="name">服务对象：</div>
+                <span class="all _theme_card_span" :class="{active:active.userGroupId===-1}" @click="conditionSelect('',-1,'userGroupId')">全部</span>
                 <ul>
-                    <li v-for="(i,index) in FWDX"><span :class="{active:index===active.userGroupId}" @click="conditionSelect(i,index,'userGroupId')">{{i.groupName}}</span></li>
+                    <li v-for="(i,index) in FWDX"><span class="_theme_card_span" :class="{active:index===active.userGroupId}" @click="conditionSelect(i,index,'userGroupId')">{{i.groupName}}</span></li>
                 </ul>
             </section>
         </CardTemp>
