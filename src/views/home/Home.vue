@@ -4,7 +4,7 @@
       {{$store.state.user.name}}，欢迎回来!
       <div class="right">
         <a href="#" target="_blank"><i class="fa fa-question-circle-o"></i>&nbsp;帮助</a>&nbsp;&nbsp;&nbsp;&nbsp;
-        <button><i class="fa fa-cog"></i>&nbsp;工作台设置</button>
+        <button @click="popup"><i class="fa fa-cog"></i>&nbsp;工作台设置</button>
       </div>
     </subhead>
     <div class="banner">
@@ -99,6 +99,16 @@ export default {
     ]);
   },
   methods:{
+    popup(){
+      this.$store.commit('set_data',{
+        data:true,
+        name:'popupShow'
+      });
+      this.$store.commit('set_data',{
+        data:"home",
+        name:'popupType'
+      });
+    },
     end(){
       let layout={A:this.A,B:this.B};
       this.$ajax.post(this.$url.homePageSave,{layout:JSON.stringify(layout),pageId:this.page.id})
@@ -243,7 +253,7 @@ export default {
                   ecard: {},
                   tsg: {},
                   network: {}
-              }
+              };
               for (let i = 0; i < userModule.length; i++) {
                   if (userModule[i].id === 'email') {
                       obj.email = userModule[i].infos;
@@ -258,7 +268,6 @@ export default {
                       obj.network = userModule[i].infos;
                   }
               }
-              console.log(res.data.services);
             this.$store.commit('set_data',{
               data:obj,
               name:'userModule'
