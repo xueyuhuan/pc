@@ -20,7 +20,7 @@ instance.interceptors.request.use(
       //在发送请求之前做些什么
       //保存布局时不加载loading
       if(config.url!=='/page_portal/save_layout'&&config.url!=='/api/page_portal/save_layout'){
-        loading=Vue.prototype.$loading({text:"拼命加载中",background: 'rgba(255, 255, 255, 0.2)'});
+        loading=Vue.prototype.$loading({text:"",background: 'rgba(0, 0, 0, 0.3)'});
       }
       if(config.method==="post"){
         // post传参序列化
@@ -35,7 +35,7 @@ instance.interceptors.request.use(
       },
     error => {
       //对错误请求做些什么
-      loading=Vue.prototype.$loading({text:"拼命加载中",background: 'rgba(255, 255, 255, 0.2)'});
+      loading=Vue.prototype.$loading({text:"",background: 'rgba(0, 0, 0, 0.3)'});
       Vue.prototype.$message({
         type:'info',
         message:'加载超时'

@@ -3,7 +3,7 @@
     <navigation v-if="this.$route.path!=='/login'"></navigation>
       <router-view/>
     <!--回到顶部按钮-->
-    <a href="javascript:;" v-show="top > 200" title="回到顶部" @click="toTop" class="toTop"><i class="fa fa-chevron-up"></i></a>
+    <a href="javascript:;" v-show="top > 200" title="回到顶部" @click="toTop" class="toTop _theme_toTop_bgcolor"><i class="fa fa-chevron-up"></i></a>
   </div>
 </template>
 
@@ -50,7 +50,6 @@
       -webkit-border-radius: 50%;
       -moz-border-radius: 50%;
       border-radius: 50%;
-      background-color: #1390d3;
       position: fixed;
       right: 20px;
       bottom: 80px;

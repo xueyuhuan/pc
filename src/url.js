@@ -119,4 +119,5 @@ export default {
     query:'/msg_portal/query',//全部消息
     set_read:'/msg_portal/set_read',//将未读消息标识为已读
     msgDetail:'/msg_portal/detail',//获取消息详情
+    set_read_all:'/msg_portal/set_read_all',//将消息全部标记为已读
 }
