@@ -1,10 +1,10 @@
 <template>
-    <header :class="skin" class="_theme">
+    <header class="_theme">
         <div class="content">
             <nav>
                 <img :src="$school.logo"/>
                 <ul>
-                    <li v-for="i in nav" :class="{active:active===i.url}" @click="click(i.url)">
+                    <li v-for="i in nav" class="_theme_light" :class="{active:active===i.url}" @click="click(i.url)">
                         <router-link :to="i.url">{{i.name}}</router-link>
                     </li>
                 </ul>
@@ -74,18 +74,11 @@
                 active: this.$route.path,
                 todoCount:0,//待办数
                 UnreadCount:0,//未读消息数
-                // skin:'skin-1390d3'
             }
         },
         computed: {
             user() {
                 return this.$store.state.user;
-            },
-            skin(){
-                return this.$store.state.skin;
-            },
-            skinLight(){
-                return this.$store.state.skinLight;
             }
         },
         mounted(){
@@ -104,7 +97,6 @@
                 this.active = url;
             },
             toggleColor(command) {
-                // this.$store.commit('setThemeColor',command);
               document.getElementById('app').className='_theme_'+command;
             },
             getTodoCount(){
@@ -127,7 +119,6 @@
     header {
         nav {
             li.active {
-                background: rgba(255,255,255,0.2);
                 border-bottom: 3px solid #f7b47f;
             }
         }

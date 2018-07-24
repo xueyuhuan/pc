@@ -1,7 +1,7 @@
 <template>
     <card>
         <template slot="header">
-            <div class="left">学校公文<a href="http://oa.ccnu.edu.cn/seeyon/caslogin.jsp?type=queryDoc" target="_blank">历史公文</a></div>
+            <div class="left">学校公文<a class="_theme_card_a" href="http://oa.ccnu.edu.cn/seeyon/caslogin.jsp?type=queryDoc" target="_blank">历史公文</a></div>
             <a href="http://oa.ccnu.edu.cn/seeyon/caslogin.jsp?type=newBulletin" target="_blank"><i class="fa fa-ellipsis-h"></i></a>
         </template>
         <ul>
@@ -27,7 +27,7 @@
     .left{
         a{
             padding-left: 10px;
-            border-left: 2px solid #1295d8;
+
             margin-left: 10px;
         }
     }
