@@ -1,8 +1,8 @@
 <template>
     <card class="application">
-        <header name="header">应用中心
+        <template slot="header">应用中心
             <router-link to="/app"><i class="fa fa-ellipsis-h"></i></router-link>
-        </header>
+        </template>
         <ul><li v-for="i in app"><a :href="i.url">
             <img :src="proxy+imgPath+i.id"/><p>{{i.shortName}}</p>
         </a></li></ul>

@@ -8,7 +8,7 @@
                 <input v-model="searchData.key" placeholder="服务搜索"/><button @click="getList"><i class="fa fa-search"></i></button>
             </div>
         </subhead>
-        <card class="menu">
+        <CardTemp class="menu">
             <section><div class="name">服务领域：</div>
                 <span class="all" :class="{active:active.type2===-1}" @click="conditionSelect('',-1,'type2')">全部</span>
                 <ul>
@@ -35,7 +35,7 @@
                     <li v-for="(i,index) in FWDX"><span :class="{active:index===active.userGroupId}" @click="conditionSelect(i,index,'userGroupId')">{{i.groupName}}</span></li>
                 </ul>
             </section>
-        </card>
+        </CardTemp>
         <div class="condition" v-show="condition.type2||condition.managerDeptId||condition.lineAble||condition.isJzdt||condition.userGroupId||searchData.key">检索条件：
             <span class="item" v-show="condition.type2">服务领域：{{condition.type2}}</span>
             <span class="item" v-show="condition.managerDeptId">负责部门：{{condition.managerDeptId}}</span>
@@ -46,7 +46,7 @@
             <span class="clear" @click="conditionClear"><i class="fa fa-close"></i>&nbsp;清空检索条件</span>
         </div>
         <card class="list">
-            <header>
+            <template slot="header">
                 <div class="left">共为您检索到<em>{{data.count}}</em>项服务，<template v-if="$school.school==='hit'"><em>{{data.jzdtCount}}</em>项已经进驻师生服务中心, </template><em>{{data.lineCount}}</em>项可部分或全部线上办理</div>
                 <div class="right">
                     排序：<i class="fa fa-eye" @click="order('view')" :class="{active:searchData.orderBy==='view'}">&nbsp;热度</i><i class="fa fa-star" @click="order('fav')" :class="{active:searchData.orderBy==='fav'}">&nbsp;收藏</i>
@@ -54,7 +54,7 @@
                     排列：<router-link to="/service/search/list"><i class="fa fa-align-justify" :class="{active:show==='list'}" @click="show='list'">&nbsp;列表方式</i></router-link>
                     <router-link to="/service/search/icon"><i class="fa fa-th" :class="{active:show==='icon'}" @click="show='icon'">&nbsp;图标方式</i></router-link>
                 </div>
-            </header>
+            </template>
             <router-view></router-view>
             <el-pagination v-show="data.count>12"
                            background
@@ -235,6 +235,7 @@
             section{
                 @include flex(flex-start,flex-start);
                 font-size: 14px;
+                color: #000;
                 padding: 10px 0;
                 .name{
                     flex: 0 0 80px;
@@ -286,15 +287,18 @@
             padding: 0 0 30px 0;
             margin: 20px auto;
             header{
-                font-size: 14px;
-                font-weight: normal;
-                color: #000;
                 .left{
+                    font-size: 14px;
+                    font-weight: normal;
+                    color: #000;
                     em{
                         color: #f39b42;
                     }
                 }
                 .right{
+                    font-size: 14px;
+                    font-weight: normal;
+                    color: #000;
                     span{
                         border-right: 1px solid #cecece;
                         margin: 0 0 0 15px;

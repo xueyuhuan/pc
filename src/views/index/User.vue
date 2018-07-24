@@ -1,8 +1,8 @@
 <template>
     <card class="user">
-        <header name="header">个人中心
+        <template slot="header">个人中心
             <router-link to="/user"><i class="fa fa-ellipsis-h"></i></router-link>
-        </header>
+        </template>
         <ul>
             <li v-for="i in user" v-if="i.id==='email'"><a :href="i.infos.url" target="_blank">
                 <div class="left">

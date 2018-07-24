@@ -1,6 +1,6 @@
 <template>
     <card class="collect">
-        <header name="header">
+        <template slot="header">
             <div class="left">
                 我的收藏
                 <div class="btn">
@@ -9,7 +9,7 @@
                     <span @click="click('news')" :class="{active:active==='news'}">资讯</span></div>
             </div>
             <router-link to="/collections"><i class="fa fa-ellipsis-h"></i></router-link>
-        </header>
+        </template>
         <ul class="list service" v-show="active==='service'">
             <template v-if="service&&service.length">
                 <li v-for="i in service"><router-link :to="'/service/detail/'+i.id"><img :src="proxy+imgPath+i.id"/><p>{{i.name}}</p></router-link></li>

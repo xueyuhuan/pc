@@ -1,6 +1,6 @@
 <template>
     <card class="service">
-        <header name="header">
+        <template slot="header">
             <div class="left">
                 服务
                 <div class="btn">
@@ -8,7 +8,7 @@
                     <span @click="click('newest')" :class="{active:active==='newest'}">最新</span></div>
             </div>
             <router-link to="/service/search/icon"><i class="fa fa-ellipsis-h"></i></router-link>
-        </header>
+        </template>
         <ul><li v-for="i in list.slice(0,8)"><router-link :to="'/service/detail/'+i.id">
             <img :src="proxy+imgPath+i.id"/>
             <p>{{i.name}}<br/><span>{{i.type2Name}}</span></p>
