@@ -40,7 +40,7 @@
             </section>
             <section class="other">
                 <header>绑定一卡通
-                    <i v-if="user.cardNo!==''">友情提示:您的工号/学号{{user.usernumber}}对应的一卡通(饭卡)账号为{{user.cardNo}}</i>
+                    <i v-if="user.cardNo==''">友情提示:您的工号/学号{{user.usernumber}}对应的一卡通(饭卡)账号为{{user.cardNo}}</i>
                     <i v-else>友情提示:一卡通(饭卡)账号并非您的学号/职工号,您可以通过分布在校园内的一卡通自助查询设备或网费自助缴费机进行查询,一般为5位数字。</i>
                 </header>
                 <label v-if="user.cardNo!==''">
@@ -260,6 +260,7 @@
                     color: #555;
                     border: 1px #cfdadd solid;
                     border-radius: 2px;
+                    margin-right: 15px;
                 }
                 input.disabled{
                     background: #eee;
@@ -273,7 +274,7 @@
                     padding: 6px 12px;
                     border: 1px solid #cfdadd;
                     border-radius: 2px;
-                    margin: 0 30px 0 15px;
+                    margin-right: 30px;
                 }
                 button{
                     background: #067ebe;
@@ -282,7 +283,6 @@
                     padding: 6px 12px;
                     border: 1px #067ebe solid;
                     border-radius: 2px;
-                    margin: 0 15px;
                 }
             }
         }
