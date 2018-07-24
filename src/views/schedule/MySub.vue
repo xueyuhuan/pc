@@ -6,7 +6,7 @@
         </subhead>
         <div class="contain">
             <card>
-                <header>已订阅</header>
+                <template slot="header">已订阅</template>
                 <div class="content">
                     <div v-for="item in zxlm" v-if="item.subFlag === '1'" class="block">
                         <div class="block_title"><span>{{item.name}}</span></div>
@@ -17,7 +17,7 @@
             </card>
 
             <card>
-                <header>未订阅</header>
+                <template slot="header">未订阅</template>
                 <div class="content">
                     <div v-for="item in zxlm" v-if="item.subFlag === '0'" class="block">
                         <div class="block_title"><span>{{item.name}}</span></div>

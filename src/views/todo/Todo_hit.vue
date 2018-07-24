@@ -5,17 +5,19 @@
         </subhead>
         <div class="contain">
             <card>
-                <div style="padding-left: 20px;">
-                    <span class="head_btn" :class="{btn_choosen:flag === 0}" @click="chooseType(0)">我的待办</span>
-                    <span class="head_btn" :class="{btn_choosen:flag === 1}" @click="chooseType(1)">我的已办</span>
-                    <span class="head_btn" :class="{btn_choosen:flag === 2}" @click="chooseType(2)">我发起的</span>
-                </div>
+                <template slot="header">
+                    <div style="padding-left: 20px;">
+                        <span class="head_btn" :class="{btn_choosen:flag === 0}" @click="chooseType(0)">我的待办</span>
+                        <span class="head_btn" :class="{btn_choosen:flag === 1}" @click="chooseType(1)">我的已办</span>
+                        <span class="head_btn" :class="{btn_choosen:flag === 2}" @click="chooseType(2)">我发起的</span>
+                    </div>
+                </template>
             </card>
             <!--我的代办-->
             <div v-show="flag === 0" class="content">
                 <div class="content_left">
                     <card>
-                        <header name="header">通知公告</header>
+                        <template slot="header">通知公告</template>
                         <div class="menuDiv" :class="{todoSourceActive:todoSourceId === ''}"
                              @click="switchTodoSource('')">全部
                         </div>
@@ -28,7 +30,7 @@
                 </div>
                 <div class="content_right">
                     <card>
-                        <header name="header">待办来源</header>
+                        <template slot="header">待办来源</template>
                         <div v-for="item in todomenu">
                             <div v-for="i in item.todoList" @click="openTodo(i.url)" class="block"
                                  v-if="todoSourceId === i.appId || todoSourceId ===''">
@@ -50,7 +52,7 @@
             <div v-show="flag === 1" class="content">
                 <div class="content_left">
                     <card>
-                        <header name="header">条件过滤</header>
+                        <template slot="header">条件过滤</template>
                         <div class="menuDiv_input">
                             <el-form label-position="right" label-width="80px">
                                 <el-form-item label="来源:">
@@ -88,7 +90,7 @@
                 </div>
                 <div class="content_right">
                     <card>
-                        <header name="header">明细</header>
+                        <template slot="header">明细</template>
                         <div v-for="item in doneList" @click="" class="block">
                             <div class="blockLeft">
                                 <div class="title"> <span>【{{item.appname}}】</span>{{item.title}} </div>
@@ -121,7 +123,7 @@
             <div v-show="flag === 2" class="content">
                 <div class="content_left">
                     <card>
-                        <header name="header">条件过滤</header>
+                        <template slot="header">条件过滤</template>
                         <div class="menuDiv_input">
                             <el-form label-position="right" label-width="80px">
                                 <el-form-item label="来源:">
@@ -158,7 +160,7 @@
                 </div>
                 <div class="content_right">
                     <card>
-                        <header name="header">明细</header>
+                        <template slot="header">明细</template>
                         <div v-for="item in myList" @click="" class="block">
                             <div class="blockLeft">
                                 <div class="title"> <span>【{{item.appname}}】</span>{{item.title}} </div>

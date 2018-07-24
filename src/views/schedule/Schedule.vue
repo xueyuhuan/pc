@@ -5,7 +5,7 @@
         </subhead>
         <div class="content">
             <card>
-                <header slot="header">
+                <template slot="header">
                     <div style="width: 758px;">
                         <div class="head_left">
                             <i class="fa fa-chevron-left" @click="prevMonth"></i>
@@ -23,7 +23,7 @@
                         <span @click="qrDialog"><i class="fa fa-mobile"></i>&nbsp;手机订阅</span>
                         <span @click="subscribe"><i class="fa fa-plus-square-o"></i>&nbsp;订阅</span>
                     </div>
-                </header>
+                </template>
                 <div class="body">
                     <div class="body_left">
                         <table border="1" cellpadding="0" cellspacing="0" bordercolor="#e4e4e4">

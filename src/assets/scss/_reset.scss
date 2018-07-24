@@ -24,7 +24,7 @@ em,i{
   text-indent: 28px;
 }
 .el-pagination.is-background .el-pager li:not(.disabled).active {
-  background-color: #1295d8;
+  background-color: #65637b;
   color: #fff;
 }
 .el-pagination li:hover{
@@ -35,4 +35,11 @@ em,i{
 }
 .el-badge__content{
   border: none;
+}
+//导航部分，换主题色下拉菜单
+.theme_dropdown{
+  .el-dropdown-menu__item{
+    padding-left:20px;
+    padding-right: 20px;
+  }
 }
