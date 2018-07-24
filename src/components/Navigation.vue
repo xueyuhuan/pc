@@ -24,8 +24,8 @@
                                     class="fa fa-cube" style="color:#fff;"></i></el-tooltip>
                             <el-dropdown-menu slot="dropdown" class="theme_dropdown">
                                 <el-dropdown-item command="blue">蓝色</el-dropdown-item>
-                                <el-dropdown-item command="green">绿色</el-dropdown-item>
-                                <el-dropdown-item command="orange">橙色</el-dropdown-item>
+                                <el-dropdown-item v-if="$school.school==='ccnu'" command="green">绿色</el-dropdown-item>
+                                <el-dropdown-item v-if="$school.school==='ccnu'" command="orange">橙色</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
                     </a>

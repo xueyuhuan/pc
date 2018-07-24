@@ -9,13 +9,17 @@
         <ul class="list" v-show="workActive===0">
             <template v-if="todoList&&todoList.length>0">
                 <li v-for="i in todoList.slice(0,5)"><a :href="i.url" target="_blank">
-                    <p>暂无数据</p>
+                    <div class="left">
+                        <p><em>【{{i.appName}}】</em>{{i.title}}</p>
+                        <span>当前环节：{{i.currentNode}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发起人：{{i.startUser}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发起时间：{{i.currentTime}}</span>
+                    </div>
+                    <div class="right"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;办理</div>
                 </a></li>
             </template>
             <li v-else><a><p>暂无待办</p></a></li>
-            <li class="more"><router-link to="/todo">查看更多</router-link></li>
+            <li class="more"><router-link to="/todo">进入办事中心</router-link></li>
         </ul>
-        <ul class="list" v-show="workActive===1">
+        <ul class="list email" v-show="workActive===1">
             <template v-if="emailList&&emailList.length>0">
                 <li v-for="i in emailList.slice(0,5)"><a :href="i.url" target="_blank">
                     <div class="left">
@@ -32,14 +36,14 @@
             <template v-if="myStartedList&&myStartedList.length>0">
                 <li v-for="i in myStartedList.slice(0,5)"><a :href="i.url" target="_blank">
                     <div class="left">
-                        <p>{{i.title}}</p>
-                        <span>{{i.appName}}&nbsp;{{i.currentNode}}</span>
+                        <p><em>【{{i.appname}}】</em>{{i.title}}</p>
+                        <span>当前环节：{{i.currentnode}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发起时间：{{i.createtime}}</span>
                     </div>
-                    <div class="right">查看</div>
+                    <div class="right"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;查看</div>
                 </a></li>
             </template>
             <li v-else><a><p>暂无数据</p></a></li>
-            <li class="more"><router-link to="/todo">查看更多</router-link></li>
+            <li class="more"><router-link to="/todo">进入办事中心</router-link></li>
         </ul>
     </card>
 </template>
@@ -124,6 +128,7 @@
                     display: block;
                     padding: 10px 15px !important;
                     font-size: 12px;
+                    color: #0683c3;
                     text-align: right;
                 }
             }
@@ -132,6 +137,9 @@
                 padding: 15px;
                 border-top: 1px solid #edf1f2;
                 p{
+                    em{
+                        color: #0683c3;
+                    }
                     font-size: 14px;
                     color: #363f44;
                     margin: 0;
@@ -143,7 +151,7 @@
                 .right{
                     flex: 0 0 150px;
                     font-size: 14px;
-                    color: #27c24c;
+                    color: #f7b47f;
                     text-align: right;
                 }
             }

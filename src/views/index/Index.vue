@@ -2,7 +2,7 @@
     <div id="index">
         <subhead>
             {{$store.state.user.name}}，欢迎回来!
-            <div class="right">{{week.termName}}第<em>{{week.name}}</em>教学周</div>
+            <div class="week">{{week.termName}}第<em>{{week.name}}</em>教学周</div>
         </subhead>
         <div class="content">
             <div class="left">

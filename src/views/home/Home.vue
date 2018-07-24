@@ -3,7 +3,7 @@
     <subhead>
       {{$store.state.user.name}}，欢迎回来!
       <div class="right">
-        <a href="#" target="_blank"><i class="fa fa-question-circle-o"></i>&nbsp;帮助</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://one.ccnu.edu.cn/help" target="_blank"><i class="fa fa-question-circle-o"></i>&nbsp;帮助</a>&nbsp;&nbsp;&nbsp;&nbsp;
         <button @click="popup"><i class="fa fa-cog"></i>&nbsp;工作台设置</button>
       </div>
     </subhead>

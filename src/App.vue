@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-cloak>
+  <div id="app" class="_theme_blue" v-cloak>
     <navigation v-if="this.$route.path!=='/login'"></navigation>
       <router-view/>
     <!--回到顶部按钮-->
