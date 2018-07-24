@@ -4,7 +4,7 @@
       {{$store.state.user.name}}，欢迎回来!
       <div class="right">
         <a href="#" target="_blank"><i class="fa fa-question-circle-o"></i>&nbsp;帮助</a>&nbsp;&nbsp;&nbsp;&nbsp;
-        <button><i class="fa fa-cog"></i>&nbsp;工作台设置</button>
+        <button @click="popup"><i class="fa fa-cog"></i>&nbsp;工作台设置</button>
       </div>
     </subhead>
     <div class="banner">
@@ -99,7 +99,17 @@ export default {
     ]);
   },
   methods:{
-    end(){
+    popup(){//打开工作台设置
+      this.$store.commit('set_data',{
+        data:true,
+        name:'popupShow'//弹框显示
+      });
+      this.$store.commit('set_data',{
+        data:"home",
+        name:'popupType'//设置弹框类型
+      });
+    },
+    end(){//拖拽结束保存布局
       let layout={A:this.A,B:this.B};
       this.$ajax.post(this.$url.homePageSave,{layout:JSON.stringify(layout),pageId:this.page.id})
           .then(res=>{
@@ -112,9 +122,13 @@ export default {
             }
           })
     },
-    getPage(){
+    getPage(){//获取页面布局
       this.$ajax.post(this.$url.homePage)
           .then(res=>{
+            this.$store.commit('set_data',{
+              data:res.data.pages[0],
+              name:'home'
+            });
             this.page=res.data.pages[0];
             this.A=this.page.columnWidgets.A;
             for(let i=0;i<this.A.length;i++){
@@ -126,7 +140,7 @@ export default {
             }
           });
     },
-    getBanner(){
+    getBanner(){//获取banner
       this.$ajax.post(this.$url.homeBanner,{id: "dashboard"})
           .then(res=>{
             for(let i=0;i<res.data.space.banners.length;i++){
@@ -137,7 +151,7 @@ export default {
             }
           });
     },
-    transform(name){
+    transform(name){//根据名字转换组件
       let x;
       switch (name) {
         case '我的日程':x='schedule';break;
@@ -153,6 +167,9 @@ export default {
       }
       return x;
     },
+    /**
+    每个组件数据获取
+     **/
     getApp(){
       return this.$ajax.post(this.$url.homeApp)
           .then(res=>{

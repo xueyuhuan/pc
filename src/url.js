@@ -5,7 +5,8 @@ export default {
   /**
    * 首页
    */
-  homePage:'/page_portal/get',//获取工作台布局
+  homePage:'/page_portal/get',//获取工作台布局（已有组件）
+  homePageAll:'/page_portal/get_user_widgets',//获取所有组件
   homePageSave:'/page_portal/save_layout',//保存工作台布局
   homeBanner:'/banner_portal/get',//获取轮播图
   //应用

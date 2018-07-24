@@ -1,5 +1,5 @@
 <template>
-    <header :class="skin">
+    <header :class="skin" class="_theme">
         <div class="content">
             <nav>
                 <img :src="$school.logo"/>
@@ -104,7 +104,8 @@
                 this.active = url;
             },
             toggleColor(command) {
-                this.$store.commit('setThemeColor',command);
+                // this.$store.commit('setThemeColor',command);
+              document.getElementById('app').className='_theme_'+command;
             },
             getTodoCount(){
                 this.$ajax.post(this.$url.getTodoCount)

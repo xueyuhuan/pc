@@ -8,6 +8,7 @@ export default new Vuex.Store({
     token:'',
     user:{},//用户信息
     /*home的模块数据*/
+    home:{},//home布局
     app:[],
     file:[],
     notice:[],
@@ -26,7 +27,7 @@ export default new Vuex.Store({
     /*home的模块数据end*/
     /*设置弹框*/
     popupShow:false,//是否显示
-    popupType:'',//应用或服务
+    popupType:'',//应用或服务或home
     /*设置弹框end*/
     /*服务*/
     search:'',

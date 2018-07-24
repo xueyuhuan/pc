@@ -2,7 +2,7 @@
     <div class="popup" v-if="popupShow">
         <div class="content">
             <h3>{{name}}设置</h3>
-            <div class="search" v-if="popupType!=='app'">
+            <div class="search" v-if="popupType==='service'">
                 <select v-model="typeID">
                     <option value ="">请选择</option>
                     <option :value ="i.id" v-for="i in listServiceType">{{i.name}}</option>
@@ -13,7 +13,8 @@
             <ul class="all">
                 <li v-for="(i,index) in list">
                     <div class="select" v-show="i.selectFlag==='N'" @click="add(i,index)"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;点击选择</div>
-                    <div class="flag" v-show="i.selectFlag==='Y'"><i>已选</i></div><img :src="imgPath+i.id"/>{{i.name}}</li>
+                    <div class="flag" v-show="i.selectFlag==='Y'"><i>已选</i></div>
+                    <img v-show="popupType!=='home'" :src="imgPath+i.id"/>{{i.name}}</li>
             </ul>
             <el-pagination
                     background
@@ -24,12 +25,30 @@
                     :page-count="this.total">
             </el-pagination>
             <h4>已选择的{{name}}<span>（拖拽排序）</span></h4>
-            <ul class="has">
+            <ul class="has" v-show="popupType!=='home'">
                 <draggable class="drag" v-model="listHas" :options="dragOptions">
                     <transition-group>
                         <li v-for="(i,index) in listHas" :key="index">
                             <div class="select" @click="cancel(i,index)"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;取消选择</div>
                             <img :src="imgPath+i.id"/>{{i.name}}
+                        </li>
+                    </transition-group>
+                </draggable>
+            </ul>
+            <ul class="has" v-show="popupType==='home'">
+                <draggable class="drag drag-list" v-model="listHasA" :options="dragHome">
+                    <transition-group>
+                        <li v-for="(i,index) in listHasA" :key="index">
+                            <div class="select" @click="cancel(i,index)"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;取消选择</div>
+                            {{i.NAME}}
+                        </li>
+                    </transition-group>
+                </draggable>
+                <draggable class="drag drag-list" v-model="listHasB" :options="dragHome">
+                    <transition-group>
+                        <li v-for="(i,index) in listHasB" :key="index">
+                            <div class="select" @click="cancel(i,index)"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;取消选择</div>
+                            {{i.NAME}}
                         </li>
                     </transition-group>
                 </draggable>
@@ -53,6 +72,8 @@
         total:1,
         list:[],//所有
         listHas:[],//已选择
+        listHasA:[],
+        listHasB:[],
         listServiceType:[],//服务类型
         key:"",//搜索关键字
         typeID:"",//搜索类型id
@@ -63,7 +84,8 @@
           save:'',//保存
           all:'',//全部
           has:''//已有
-        }
+        },
+        pageId:''
       }
     },
     computed:{
@@ -74,11 +96,22 @@
           ghostClass: 'ghost'
         }
       },
+      dragHome(){
+        return{
+          animation: 0,
+          group: 'home',
+          disable:true,
+          ghostClass: 'ghost'
+        }
+      },
       popupShow(){
         return this.$store.state.popupShow;
       },
       popupType(){
         return this.$store.state.popupType;
+      },
+      home(){
+        return this.$store.state.home;
       }
     },
     watch:{
@@ -92,21 +125,28 @@
           this.url.save=this.$url.homeAppSave;
           this.url.all=this.$url.homeAppAll;
           this.url.has=this.$url.homeAppHas;
+          this.getAll();
+          this.getHas();
         }
-        else {
+        else if(this.popupType==='service') {
           this.name="服务";
           this.imgPath="/api/resource/service?id=";
           this.url.save=this.$url.homeServiceSave;
           this.url.all=this.$url.homeServiceAll;
           this.url.has=this.$url.homeService;
           this.getServiceType();
+          this.getAll();
+          this.getHas();
         }
-        this.getAll();
-        this.getHas();
-      }
-    },
-    created(){
+        else{
+          this.url.save=this.$url.homePageSave;
+          this.url.all=this.$url.homePageAll;
+          this.url.has=this.$url.homePage;
+          this.getAllPage();
+          this.getHasPage();
+        }
 
+      }
     },
     methods:{
       add(i,index){//点击选择
@@ -131,21 +171,36 @@
         })
       },
       save(){
-        this.$ajax.post(this.url.save,{layout:JSON.stringify(this.listHas)})
-            .then(res=>{
-              if(res.data.errmsg==='ok'){
-                this.$store.commit('set_data',{
-                  data:this.listHas,
-                  name:this.popupType
-                });
-                this.$notify({
-                  message: '保存成功',
-                  type: 'success',
-                  position: 'bottom-right'
-                });
-                this.close();
-              }
-            })
+        if(this.popupType==='home'){
+          let layout={A:this.listHasA,B:this.listHasB};
+          this.$ajax.post(this.$url.homePageSave,{layout:JSON.stringify(layout),pageId:this.pageId})
+              .then(res=>{
+                if(res.data.errmsg==='ok'){
+                  this.$notify({
+                    message: '保存成功',
+                    type: 'success',
+                    position: 'bottom-right'
+                  });
+                }
+              })
+        }
+        else{
+          this.$ajax.post(this.url.save,{layout:JSON.stringify(this.listHas)})
+              .then(res=>{
+                if(res.data.errmsg==='ok'){
+                  this.$store.commit('set_data',{
+                    data:this.listHas,
+                    name:this.popupType
+                  });
+                  this.$notify({
+                    message: '保存成功',
+                    type: 'success',
+                    position: 'bottom-right'
+                  });
+                }
+              })
+        }
+        this.close();
       },
       close(){
         this.$store.commit('set_data',{
@@ -175,7 +230,21 @@
             .then(res=>{
               this.listServiceType=res.data.depts;
             })
-      }
+      },
+      getAllPage(){
+        this.$ajax.post(this.url.all)
+            .then(res=>{
+              this.list=res.data.widgets;
+            })
+      },
+      getHasPage(){
+        this.$ajax.post(this.url.has)
+            .then(res=>{
+              this.pageId=res.data.pages[0].id;
+              this.listHasA=res.data.pages[0].columnWidgets.A;
+              this.listHasB=res.data.pages[0].columnWidgets.B;
+            })
+      },
     }
   }
 </script>
@@ -185,6 +254,12 @@
 <style scoped lang="scss">
     .drag{
         width: 100%;
+    }
+    .drag-list{
+        flex: 1;
+        li{
+            padding: 0 10px;
+        }
     }
     .drag>span{
         display: flex;
@@ -244,7 +319,7 @@
                 }
             }
             ul{
-                @include flex(space-between);
+                @include flex(space-between,flex-start);
                 flex-flow: wrap;
                 padding: 15px;
                 &.has li{
