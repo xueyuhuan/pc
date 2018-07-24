@@ -4,9 +4,9 @@
             <div class="left">
                 <i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;服务中心&nbsp;<span>Service&nbsp;Center</span>
             </div>
-            <div class="right">
-                <input v-model="key" placeholder="服务搜索"/><router-link to="/service/search/icon"><button><i class="fa fa-search"></i></button></router-link>
-            </div>
+            <SubheadInput>
+                <input slot="input" v-model="key" placeholder="服务搜索"/><router-link to="/service/search/icon"><button><i class="fa fa-search"></i></button></router-link>
+            </SubheadInput>
         </subhead>
         <div class="top">
             <card class="recommend">
@@ -154,29 +154,29 @@
 <style scoped lang="scss">
     .service{
         .subhead{
-            .right{
-                height: 30px;
-                input{
-                    background: #069;
-                    width: 160px;
-                    height: 100%;
-                    font-size: 12px;
-                    padding: 5px 15px;
-                    border-radius: 30px 0 0 30px;
-                    border: none;
-                }
-                button{
-                    background: #069;
-                    height: 100%;
-                    font-size: 12px;
-                    padding: 5px 10px;
-                    border-radius: 0 30px 30px 0;
-                    border: none;
-                    i{
-                        color: #1295d8;
-                    }
-                }
-            }
+            /*.right{*/
+                /*height: 30px;*/
+                /*input{*/
+                    /*background: #069;*/
+                    /*width: 160px;*/
+                    /*height: 100%;*/
+                    /*font-size: 12px;*/
+                    /*padding: 5px 15px;*/
+                    /*border-radius: 30px 0 0 30px;*/
+                    /*border: none;*/
+                /*}*/
+                /*button{*/
+                    /*background: #069;*/
+                    /*height: 100%;*/
+                    /*font-size: 12px;*/
+                    /*padding: 5px 10px;*/
+                    /*border-radius: 0 30px 30px 0;*/
+                    /*border: none;*/
+                    /*i{*/
+                        /*color: #1295d8;*/
+                    /*}*/
+                /*}*/
+            /*}*/
         }
         .top{
             @include flex(space-between,stretch);

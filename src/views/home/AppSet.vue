@@ -109,6 +109,9 @@
       },
       popupType(){
         return this.$store.state.popupType;
+      },
+      home(){
+        return this.$store.state.home;
       }
     },
     watch:{
@@ -144,9 +147,6 @@
         }
 
       }
-    },
-    created(){
-
     },
     methods:{
       add(i,index){//点击选择
