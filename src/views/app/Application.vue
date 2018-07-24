@@ -7,9 +7,9 @@
             </el-input>
         </subhead>
         <div class="contain">
-            <div class="left_div">
+            <div class="left_div _theme_app_bordertop">
                 <div class="left_div_block" v-for="appGroup in appGroups" v-if="current_app_type_id === appGroup.id || current_app_type_id === ''">
-                    <div class="block_head">{{appGroup.name}}</div>
+                    <div class="block_head _theme_app_block_head_color">{{appGroup.name}}</div>
                     <div class="block_body">
                         <div class="app" v-for="app in appGroup.apps">
                             <a :href="app.url" :title="'进入' + app.name" target="_blank">
@@ -191,14 +191,12 @@
         .left_div{
             width: 784px;
             background: #fff;
-            border-top: 3px solid $skin-card;
             margin-bottom: 20px;
             .block_head{
                 height: 46px;
                 line-height: 46px;
                 font-size: 18px;
                 font-weight: 700;
-                color: $skin-card;
                 padding: 0 20px;
                 border-bottom: 1px dashed #bfbfbf;
             }

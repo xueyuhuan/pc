@@ -43,6 +43,27 @@ $orange-card:#f18b2e;
   ._theme_service_font{
     color: #2aa8e9!important;
   }
+  ._theme_news_choosen{
+    background-color: #1295d8 !important;
+  }
+  ._theme_news_borderleft{
+    border-left: 3px solid #1295d8 !important;
+  }
+  ._theme_news_fontcolor{
+    color: #1295d8;
+  }
+  ._theme_toTop_bgcolor{
+    background-color: #1295d8;
+  }
+  ._theme_app_block_head_color,.el-tabs__item.is-active,.el-tabs__item:hover{
+    color: #1295d8;
+  }
+  ._theme_app_bordertop{
+    border-top: 3px solid #1295d8;
+  }
+  .el-tabs__active-bar{
+    background-color: #1295d8;
+  }
 }
 ._theme_green{
   ._theme{
@@ -86,6 +107,27 @@ $orange-card:#f18b2e;
   ._theme_service_font{
     color: #00697e!important;
   }
+  ._theme_news_choosen{
+    background-color: #00697e !important;
+  }
+  ._theme_news_borderleft{
+    border-left: 3px solid #00697e !important;
+  }
+  ._theme_news_fontcolor{
+    color: #00697e;
+  }
+  ._theme_toTop_bgcolor{
+    background-color: #00697e;
+  }
+  ._theme_app_block_head_color,.el-tabs__item.is-active,.el-tabs__item:hover{
+    color: #00697e;
+  }
+  ._theme_app_bordertop{
+    border-top: 3px solid #00697e;
+  }
+  .el-tabs__active-bar{
+    background-color: #00697e;
+  }
 }
 ._theme_orange{
    ._theme{
@@ -128,5 +170,26 @@ $orange-card:#f18b2e;
   }
   ._theme_service_font{
     color: #f18b2e!important;
+  }
+  ._theme_news_choosen{
+    background-color: #f18b2e !important;
+  }
+  ._theme_news_borderleft{
+    border-left: 3px solid #f18b2e !important;
+  }
+  ._theme_news_fontcolor{
+    color: #f18b2e;
+  }
+  ._theme_toTop_bgcolor{
+    background-color: #f18b2e;
+  }
+  ._theme_app_block_head_color,.el-tabs__item.is-active,.el-tabs__item:hover{
+    color: #f18b2e;
+  }
+  ._theme_app_bordertop{
+    border-top: 3px solid #f18b2e;
+  }
+  .el-tabs__active-bar{
+    background-color: #f18b2e ;
   }
  }

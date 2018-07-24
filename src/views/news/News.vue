@@ -12,17 +12,17 @@
                 <div class="new_condition">
                     <div class="new_condition1">
                         <div class="title_div">资讯栏目：</div>
-                        <span class="span_all" :class="{active:id === ''}" @click="choose_zxlm('')">全部</span>
-                        <div class="content_div"><label v-for="item in zxlm"><span :class="{active:id === i.ID}" v-for="i in item.subscribe" @click="choose_zxlm(i.ID)">{{i.COLUMN_NAME}}</span></label></div>
+                        <span class="span_all" :class="{_theme_news_choosen:id === ''}" @click="choose_zxlm('')">全部</span>
+                        <div class="content_div"><label v-for="item in zxlm"><span :class="{_theme_news_choosen:id === i.ID}" v-for="i in item.subscribe" @click="choose_zxlm(i.ID)">{{i.COLUMN_NAME}}</span></label></div>
                     </div>
                     <div class="new_condition1">
                         <div class="title_div">发布时间：</div>
-                        <span class="span_all" :class="{active: date_index === 0}" @click="choose_date(-1)">全部</span>
-                        <div class="content_div"><span :class="{active:index + 1 === date_index}" v-for="(item,index) in date" @click="choose_date(index)">{{item}}</span></div>
+                        <span class="span_all" :class="{_theme_news_choosen: date_index === 0}" @click="choose_date(-1)">全部</span>
+                        <div class="content_div"><span :class="{_theme_news_choosen:index + 1 === date_index}" v-for="(item,index) in date" @click="choose_date(index)">{{item}}</span></div>
                     </div>
                 </div>
                 <div class="news_div" v-for="news in newsList" @click="newsDetail(news.id)">
-                    <div class="news">
+                    <div class="news _theme_news_borderleft">
                         <div class="news_title">{{news.title}}</div>
                         <div class="source">来源：{{news.origin}}</div>
                     </div>
@@ -180,7 +180,7 @@
                         padding: 3px 5px;
                         cursor: pointer;
                     }
-                    .active{
+                    ._theme_news_choosen{
                         color: #fff;
                         background-color: #65637b;
                         border-radius: 2px;
@@ -197,7 +197,6 @@
                     cursor: pointer;
                 }
                 .news{
-                    border-left: 3px solid #1295d8;
                     padding-left: 10px;
                     .news_title{
                         width: 650px;

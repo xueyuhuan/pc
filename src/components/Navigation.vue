@@ -1,5 +1,5 @@
 <template>
-    <header class="_theme">
+    <header class="_theme position_fixed">
         <div class="content">
             <nav>
                 <img :src="$school.logo"/>
@@ -116,6 +116,13 @@
 </script>
 
 <style scoped lang="scss">
+    .position_fixed{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+    }
     header {
         nav {
             li.active {

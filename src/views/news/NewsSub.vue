@@ -11,7 +11,7 @@
                         <div class="content_block">
                             <div class="block" v-for="b in item.subscribe">
                                 <div class="block_title"><span>{{b.COLUMN_NAME}}</span></div>
-                                <div class="block_hover" @click="cancelSub(b)"><span><i class="fa" :class="{'fa-minus-circle': (b.SCOPE === 'user'),'fa-ban' : b.SCOPE === 'all'}"></i>&nbsp;{{b.SCOPE === 'all' ? '强制订阅' : '取消订阅'}}</span></div>
+                                <div class="block_hover _theme_news_fontcolor" @click="cancelSub(b)"><span><i class="fa" :class="{'fa-minus-circle': (b.SCOPE === 'user'),'fa-ban' : b.SCOPE === 'all'}"></i>&nbsp;{{b.SCOPE === 'all' ? '强制订阅' : '取消订阅'}}</span></div>
                             </div>
                         </div>
                     </div>
@@ -24,7 +24,7 @@
                     <div class="content_block">
                         <div class="block" v-for="b in item.unsubscribe">
                             <div class="block_title"><span>{{b.COLUMN_NAME}}</span></div>
-                            <div class="block_hover" @click="saveSub(b.ID)"><span><i class="fa fa-plus-circle"></i>&nbsp;我要订阅</span></div>
+                            <div class="block_hover _theme_news_fontcolor" @click="saveSub(b.ID)"><span><i class="fa fa-plus-circle"></i>&nbsp;我要订阅</span></div>
                         </div>
                     </div>
                 </div>
@@ -137,7 +137,7 @@
                         text-align: center;
                         span{
                             font-size: 14px;
-                            color: #1295d8;
+                            /*color: #1295d8;*/
                             font-weight: 700;
                         }
                     }

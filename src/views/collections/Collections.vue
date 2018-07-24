@@ -4,7 +4,7 @@
             <div><i class="fa fa-file-word-o"></i>&nbsp;&nbsp;&nbsp;我的收藏 <span>My Collections</span></div>
         </subhead>
         <div class="contain">
-            <div class="myCollections">
+            <div class="myCollections _theme_app_bordertop">
                 <div class="title">我的收藏概况</div>
                 <div class="band">
                     <div class="band_block">
@@ -36,7 +36,7 @@
             <div class="serviceApp">
                 <div class="service">
                     <card>
-                        <header name="header"><span><i class="fa fa-star starColor"></i>&nbsp;&nbsp;服务</span></header>
+                        <template slot="header"><span><i class="fa fa-star starColor"></i>&nbsp;&nbsp;服务</span></template>
                         <div class="service_body">
                             <div v-for="item in service" @click="openService(item.url)" class="service_block">
                                 <img :src="item.img" />
@@ -48,7 +48,7 @@
                 </div>
                 <div class="app">
                     <card>
-                        <header name="header"><span><i class="fa fa-star starColor"></i>&nbsp;&nbsp;应用</span></header>
+                        <template slot="header"><span><i class="fa fa-star starColor"></i>&nbsp;&nbsp;应用</span></template>
                         <div class="service_body">
                             <div v-for="item in app" @click="openApp(item.url)" class="service_block">
                                 <img :src="`/api/resource/app?id=${item.id}&timestamp=${item.timestamp}`"/>
@@ -61,7 +61,7 @@
             </div>
             <div class="news">
                 <card>
-                    <header name="header"><span><i class="fa fa-star starColor"></i>&nbsp;&nbsp;资讯</span></header>
+                    <template slot="header"><span><i class="fa fa-star starColor"></i>&nbsp;&nbsp;资讯</span></template>
                     <div class="">
                         <div v-for="item in news" class="news_block">
                             <div class="news_title" @click="openNews(item.id)">{{item.title}}</div>
@@ -171,7 +171,6 @@
             cursor: pointer;
         }
         .myCollections{
-            border-top: 3px solid #1295d8;
             background-color: #fff;
             padding: 12px 0;
             margin-bottom: 20px;

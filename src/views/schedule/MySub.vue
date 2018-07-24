@@ -10,7 +10,7 @@
                 <div class="content">
                     <div v-for="item in zxlm" v-if="item.subFlag === '1'" class="block">
                         <div class="block_title"><span>{{item.name}}</span></div>
-                        <div class="block_hover" @click="cancelSub(item.id)"><span><i class="fa fa-minus-circle"></i>&nbsp;取消订阅</span>
+                        <div class="block_hover _theme_news_fontcolor" @click="cancelSub(item.id)"><span><i class="fa fa-minus-circle"></i>&nbsp;取消订阅</span>
                         </div>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                 <div class="content">
                     <div v-for="item in zxlm" v-if="item.subFlag === '0'" class="block">
                         <div class="block_title"><span>{{item.name}}</span></div>
-                        <div class="block_hover" @click="saveSub(item.id)"><span><i class="fa fa-plus-circle"></i>&nbsp;我要订阅</span>
+                        <div class="block_hover _theme_news_fontcolor" @click="saveSub(item.id)"><span><i class="fa fa-plus-circle"></i>&nbsp;我要订阅</span>
                         </div>
                     </div>
                 </div>
@@ -130,7 +130,6 @@
                     text-align: center;
                     span {
                         font-size: 14px;
-                        color: #1295d8;
                         font-weight: 700;
                     }
                 }
