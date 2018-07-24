@@ -342,6 +342,8 @@
             //提交个人日程表单
             submitFormData() {// 1-新增 2-编辑
                 if (this.openModalFlag === 1) {//新增日程
+                    // console.log(this.formData);
+                    // return;
                     this.$ajax.post(this.$url.add_private_event, this.formData)
                         .then(res => {
                             // console.log(res.data);
