@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="theme_blue">
+  <div id="app" class="theme_blue" v-cloak>
     <navigation v-if="this.$route.path!=='/login'"></navigation>
       <router-view/>
     <!--回到顶部按钮-->
@@ -35,6 +35,11 @@
         }
     }
 </script>
+<style>
+  [v-cloak]{
+    display: none;
+  }
+</style>
 <style scoped lang="scss">
     .theme_blue{
         color: #1390d3;

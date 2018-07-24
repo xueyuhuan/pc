@@ -5,8 +5,7 @@
         </subhead>
         <div class="contain">
             <card>
-                <header>已订阅</header>
-                <!--<div class="content_body">-->
+                <template slot="header">已订阅</template>
                     <div class="content" v-for="item in zxlm">
                         <div class="content_title">{{item.COLUMN_CATEGORY}}</div>
                         <div class="content_block">
@@ -16,11 +15,10 @@
                             </div>
                         </div>
                     </div>
-                <!--</div>-->
             </card>
 
             <card>
-                <header>未订阅</header>
+                <template slot="header">未订阅</template>
                 <div class="content" v-for="item in zxlm">
                     <div class="content_title">{{item.COLUMN_CATEGORY}}</div>
                     <div class="content_block">

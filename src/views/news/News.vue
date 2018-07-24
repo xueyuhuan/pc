@@ -8,7 +8,7 @@
         </subhead>
         <div class="contain">
             <card class="left_div">
-                <header slot="header">新闻资讯 <router-link to="/news/sub" class="dingyue"><i class="fa fa-plus-square-o"></i>&nbsp;订阅</router-link></header>
+                <template slot="header">新闻资讯 <router-link to="/news/sub" class="dingyue"><i class="fa fa-plus-square-o"></i>&nbsp;订阅</router-link></template>
                 <div class="new_condition">
                     <div class="new_condition1">
                         <div class="title_div">资讯栏目：</div>
@@ -40,12 +40,12 @@
                 </div>
             </card>
             <card class="right_div">
-                <header slot="header">
+                <template slot="header">
                     <span>阅读排行</span>
                     <div class="date_div">
                         <div :class="{'rank_date_active':rank_date_value === item.value}" v-for="item in rank_date" @click="toggle_rank(item.value)">{{item.name}}</div>
                     </div>
-                </header>
+                </template>
                 <div v-for="item in rank_news">{{item.title}}</div>
                 <div class="nodata" v-if="rank_news.length == 0">暂无数据</div>
             </card>
@@ -182,7 +182,7 @@
                     }
                     .active{
                         color: #fff;
-                        background-color: #1295d8;
+                        background-color: #65637b;
                         border-radius: 2px;
                     }
                 }

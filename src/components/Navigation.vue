@@ -21,8 +21,8 @@
                     <a href="#">
                         <el-dropdown trigger="click" @command="toggleColor">
                             <el-tooltip class="item" effect="light" content="主题" placement="bottom"><i
-                                    class="fa fa-universal-access"></i></el-tooltip>
-                            <el-dropdown-menu slot="dropdown">
+                                    class="fa fa-cube" style="color:#fff;"></i></el-tooltip>
+                            <el-dropdown-menu slot="dropdown" class="theme_dropdown">
                                 <el-dropdown-item command="blue">蓝色</el-dropdown-item>
                                 <el-dropdown-item command="green">绿色</el-dropdown-item>
                                 <el-dropdown-item command="orange">橙色</el-dropdown-item>
@@ -194,6 +194,7 @@
                         }
                     }
                 }
+
             }
         }
     }

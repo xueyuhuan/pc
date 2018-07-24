@@ -8,8 +8,8 @@
                 <a>
                     <img src="/api/img/email.png"/>
                     <div class="right">
-                        <div class="name">邮件<br/><span class="pointer">{{userModule.email.email}}</span><span class="pointer">解绑</span></div>
-                        <div class="info">未读：{{userModule.email.unread}}，今日：{{userModule.email.todayCount}}</div>
+                        <div class="name">邮件<br/><span class="pointer">{{email.email}}</span><span class="pointer">解绑</span></div>
+                        <div class="info">未读：{{email.unread}}，今日：{{email.todayCount}}</div>
                     </div>
                 </a>
             </li>
@@ -17,9 +17,9 @@
                 <a>
                     <img src="/api/img/school_card.png"/>
                     <div class="right">
-                        <div class="name">校园卡<br/><span class="pointer">再用</span></div>
+                        <div class="name">校园卡<br/><span class="pointer">在用</span></div>
                         <div class="info">
-                            <i v-show="showEcard">余额：{{userModule.ecard.balance}}</i>&nbsp;&nbsp;
+                            <i v-show="showEcard">余额：{{ecard.balance}}</i>&nbsp;&nbsp;
                             <i class="fa pointer" :class="{'fa-eye':showEcard,'fa-eye-slash':!showEcard}" @click.stop="showEcard = !showEcard"></i>
                         </div>
                     </div>
@@ -29,9 +29,9 @@
                 <a>
                     <img src="/api/img/book.png"/>
                     <div class="right">
-                        <div class="name">图书馆<br/><span class="pointer">{{ userModule.tsg.bookCount === 0 ? '暂无节约图书' : `在借${userModule.tsg.bookCount}本`}}</span></div>
+                        <div class="name">图书馆<br/><span class="pointer">{{ tsg.bookCount === 0 ? '暂无借阅图书' : `在借${tsg.bookCount}本`}}</span></div>
                         <div class="info">
-                            <i>{{userModule.tsg.qfje === 0 ? '无欠费' : `欠费${userModule.tsg.qfje}元`}}</i>
+                            <i>{{tsg.qfje === 0 ? '无欠费' : `欠费${tsg.qfje}元`}}</i>
                         </div>
                     </div>
                 </a>
@@ -40,9 +40,9 @@
                 <a>
                     <img src="/api/img/school_card.png"/>
                     <div class="right">
-                        <div class="name">网络流量<br/><span class="pointer">{{ userModule.network.status}}</span></div>
+                        <div class="name">网络流量<br/><span class="pointer">{{ network.status}}</span></div>
                         <div class="info">
-                            <i>本月使用流量&nbsp;{{userModule.network.bqljll}}</i>
+                            <i>本月使用流量&nbsp;{{network.bqljll}}</i>
                         </div>
                     </div>
                 </a>
@@ -60,8 +60,17 @@
             }
         },
         computed: {
-            userModule() {
-                return this.$store.state.userModule;
+            email() {
+                return this.$store.state.email;
+            },
+            ecard() {
+                return this.$store.state.ecard;
+            },
+            tsg() {
+                return this.$store.state.tsg;
+            },
+            network() {
+                return this.$store.state.network;
             }
         }
     }

@@ -238,31 +238,33 @@ export default {
       return this.$ajax.post(this.$url.homeUser)
           .then(res=>{
               let userModule = res.data.services;
-              let obj= {
-                  email: {},
-                  ecard: {},
-                  tsg: {},
-                  network: {}
-              }
               for (let i = 0; i < userModule.length; i++) {
                   if (userModule[i].id === 'email') {
-                      obj.email = userModule[i].infos;
+                      this.$store.commit('set_data',{
+                          data:userModule[i].infos,
+                          name:'email'
+                      })
                   }
                   if (userModule[i].id === 'ecard') {
-                      obj.ecard = userModule[i].infos;
+                      this.$store.commit('set_data',{
+                          data:userModule[i].infos,
+                          name:'ecard'
+                      })
                   }
                   if (userModule[i].id === 'tsg') {
-                      obj.tsg = userModule[i].infos;
+                      this.$store.commit('set_data',{
+                          data:userModule[i].infos,
+                          name:'tsg'
+                      })
                   }
                   if (userModule[i].id === 'network') {
-                      obj.network = userModule[i].infos;
+                      this.$store.commit('set_data',{
+                          data:userModule[i].infos,
+                          name:'network'
+                      })
                   }
               }
-              console.log(res.data.services);
-            this.$store.commit('set_data',{
-              data:obj,
-              name:'userModule'
-            })
+              // console.log(res.data.services);
           });
     },
   }

@@ -22,14 +22,14 @@
             </div>
             <div class="right_div">
                 <card>
-                    <header slot="header">分类</header>
+                    <template slot="header">分类</template>
                     <div class="fenlei">
                         <div @click="toggleAppType('')"><i class="fa fa-search" style="color: rgb(255, 227, 218);"></i>&nbsp;&nbsp;全部服务({{all_service_count}})</div>
                         <div v-for="(item,index) in appGroups" @click="toggleAppType(item.id)"><i :class="icon[index].class" :style="'color:' + icon[index].color + ';'"></i>&nbsp;&nbsp;{{item.name}}({{item.apps.length}})</div>
                     </div>
                 </card>
                 <card>
-                    <header slot="header">应用排行</header>
+                    <template slot="header">应用排行</template>
                     <div class="paihang">
                         <div v-for="(item,index) in app_rank" @click="showDetail(item.id)">
                             <span class="span1" :class="{color0:index === 0,color1:index === 1,color2:index === 2,}">{{index + 1}}</span>
