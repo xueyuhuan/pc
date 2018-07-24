@@ -46,14 +46,14 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     res => {
       loading.close();
-      if(res.data.errcode !== '0'){//非正常
-          if(res.data.errmsg){
-            Vue.prototype.$message({
-              type:'info',
-              message:res.data.errmsg
-            });
-          }
-        }
+      // if(res.data.errcode !== '0'){//非正常
+      //     if(res.data.errmsg){
+      //       Vue.prototype.$message({
+      //         type:'info',
+      //         message:res.data.errmsg
+      //       });
+      //     }
+      //   }
       return res;
     },
     err => {
