@@ -4,6 +4,7 @@
             <div><i class="fa fa-th-large"></i>&nbsp;&nbsp;&nbsp;消息中心 <span>Message Center</span></div>
         </subhead>
         <div class="contain">
+            <div class="read_btn" @click="ReadAll">全部标为已读</div>
             <el-tabs v-model="activeName" @tab-click="">
                 <el-tab-pane label="未读" name="unread" class="tabs_head">
                     <div class="list_contain">
@@ -127,6 +128,15 @@
             handleCurrentChange(page){
                 this.page = page;
                 this.getAll();
+            },
+            ReadAll(){
+                this.$ajax.post(this.$url.set_read_all)
+                    .then(res => {
+                        if(res.data.errcode == '0'){
+                            this.getUnread();
+                            this.getAll();
+                        }
+                    })
             }
         },
         created(){
@@ -142,6 +152,16 @@
         margin: 0 auto;
         background-color: white;
         padding: 0 20px;
+        position: relative;
+    }
+    .read_btn{
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        z-index: 999;
     }
     .tabs_head{
         color: #333;

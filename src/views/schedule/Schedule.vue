@@ -83,7 +83,7 @@
                 title=""
                 :visible.sync="personalSchedule"
                 width="900px">
-            <div slot="title"><h3>添加日程</h3></div>
+            <div slot="title"><h3 style="color: #000;">添加日程</h3></div>
             <div class="form_body">
                 <el-form :model="formData" :rules="rules" label-position="right"
                          label-width="150px">
@@ -180,7 +180,7 @@
                 title=""
                 :visible.sync="qrDialogShow"
                 width="900px">
-            <div slot="title"><h3>订阅日程</h3></div>
+            <div slot="title"><h3 style="color: #000;">订阅日程</h3></div>
             <div> <i class="fa fa-info-circle"></i>通过订阅功能，在手机、平板电脑或者其他日历软件中查看日程</div>
             <div class="qr_div">
                 <div>
