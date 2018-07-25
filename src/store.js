@@ -36,7 +36,6 @@ export default new Vuex.Store({
     jumpName:''//跳转的名字
   },
   mutations: {
-
     set_token(state,token){
       state.token=token;
       sessionStorage.token=token;
