@@ -12,7 +12,7 @@
             </div>
             <div class="right">
                 <user></user>
-                <div class="ad">
+                <div class="ad" v-if="banner.length>0">
                     <el-carousel trigger="click" height="211px">
                         <el-carousel-item v-for="i in banner">
                             <a :href="i.link" :title="i.title" target="_blank"><img :src="proxy+imgUrl+i.url"/></a>
@@ -59,7 +59,9 @@
         this.$ajax.post('/banner_portal/get',{id:'dashboard'})
             .then(res=>{
               this.imgUrl=res.data.imgUrl;
-              this.banner=res.data.space.banners;
+              if(res.data.space){
+                this.banner=res.data.space.banners;
+              }
             })
       }
     }

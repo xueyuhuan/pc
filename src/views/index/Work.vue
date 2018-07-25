@@ -3,7 +3,10 @@
         <template slot="header">工作台</template>
         <ul class="nav">
             <li v-for="(i,index) in work" @click="clickWork(index)" :class="{active:index===workActive}">
-                <img :src="i.img"/>{{i.name}}<em v-show="index===1">{{email.unreadCntAll}}</em>
+                <img :src="i.img"/>{{i.name}}
+                <em v-show="index===0&&todoList.length>0">{{todoList.length}}</em>
+                <em v-show="index===1&&email">{{email.unreadCntAll}}</em>
+                <em v-show="index===2&&myStartedList.length>0">{{myStartedList.length}}</em>
             </li>
         </ul>
         <ul class="list" v-show="workActive===0">
@@ -78,9 +81,11 @@
       getData(url,store,name,store2,name2){
         this.$ajax.post(url)
             .then(res=>{
-              this[store]=res.data[name];
-              if(store2){
-                this[store2]=res.data[name2];
+              if(res.data[name]){
+                this[store]=res.data[name];
+                if(res.data[name2]&&store2){
+                  this[store2]=res.data[name2];
+                }
               }
             })
       }
