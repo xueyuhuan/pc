@@ -4,36 +4,43 @@
             <div><i class="fa fa-desktop"></i>&nbsp;&nbsp;&nbsp;办事中心 <span>Todo List</span></div>
         </subhead>
         <div class="contain">
-            <card>
-                <template slot="header">
-                    <div style="padding-left: 20px;">
-                        <span class="head_btn" :class="{btn_choosen:flag === 0}" @click="chooseType(0)">我的待办</span>
-                        <span class="head_btn" :class="{btn_choosen:flag === 1}" @click="chooseType(1)">我的已办</span>
-                        <span class="head_btn" :class="{btn_choosen:flag === 2}" @click="chooseType(2)">我发起的</span>
-                    </div>
-                </template>
-            </card>
-            <!--我的代办-->
+            <CardTemp class="head">
+                <span class="head_btn" :class="{btn_choosen:flag === 0}" @click="chooseType(0)">我的待办</span>
+                <span class="head_btn" :class="{btn_choosen:flag === 1}" @click="chooseType(1)">我的已办</span>
+                <span class="head_btn" :class="{btn_choosen:flag === 2}" @click="chooseType(2)">我发起的</span>
+            </CardTemp>
+            <!--我的待办-->
             <div v-show="flag === 0" class="content">
                 <div class="content_left">
-                    <card>
-                        <template slot="header">通知公告</template>
-                        <div class="menuDiv" :class="{todoSourceActive:todoSourceId === ''}"
-                             @click="switchTodoSource('')">全部
-                        </div>
-                        <div class="menuDiv" :class="{todoSourceActive:todoSourceId === item.id}"
-                             v-for="item in todomenu" @click="switchTodoSource(item.id)">
-                            {{item.name}}
+                    <ul>
+                        <li class="title">待办来源</li>
+                        <li :class="{todoSourceActive:todoSourceId === ''}"
+                             @click="switchTodoSource('')"><i class="fa fa-bell-o"></i>全部
+                        </li>
+                        <li :class="{todoSourceActive:todoSourceId === item.id}"
+                             v-for="item in todomenu" @click="switchTodoSource(item.id)"><i class="fa fa-bell-o"></i>{{item.name}}
                             <span>（{{item.todoList.length}}）</span>
-                        </div>
-                    </card>
+                        </li>
+                    </ul>
+                    <!--<card>-->
+                        <!--<template slot="header">通知公告</template>-->
+                        <!--<div class="menuDiv" :class="{todoSourceActive:todoSourceId === ''}"-->
+                             <!--@click="switchTodoSource('')">全部-->
+                        <!--</div>-->
+                        <!--<div class="menuDiv" :class="{todoSourceActive:todoSourceId === item.id}"-->
+                             <!--v-for="item in todomenu" @click="switchTodoSource(item.id)">-->
+                            <!--{{item.name}}-->
+                            <!--<span>（{{item.todoList.length}}）</span>-->
+                        <!--</div>-->
+                    <!--</card>-->
                 </div>
                 <div class="content_right">
+                    <ul></ul>
                     <card>
                         <template slot="header">待办来源</template>
                         <div v-for="item in todomenu">
                             <div v-for="i in item.todoList" @click="openTodo(i.url,i.appName)" class="block"
-                                 v-if="todoSourceId === i.appId || todoSourceId ===''">
+                                 v-if="i.appId=== todoSourceId|| todoSourceId ===''">
                                 <div class="blockLeft">
                                     <div class="title">[{{i.appName}}]{{i.title}}</div>
                                     <div class="time">{{i.currentTime}}</div>
@@ -190,28 +197,31 @@
             </div>
         </div>
         <!--我的待办弹出框-->
-        <el-dialog title=""
-                   :visible.sync="dialogVisible"
-                   width="898px"
-                   left>
-            <div slot="title"><h3 class="dialog_h3">跳转至{{appName}}</h3></div>
-            <div class="dialog_content">
-                <img src="data:image/png;base64,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"/>
-                <div>
-                    <div class="content_title">即将进入{{appName}}的待办,请在新打开的窗口内继续完成的发起工作。</div>
-                    <div class="content_desc">若办理页面不能自动弹出，请修改浏览器配置</div>
-                </div>
-            </div>
-            <span slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="dialogVisible = false">确定</el-button>
-            </span>
-        </el-dialog>
+        <!--<el-dialog title=""-->
+                   <!--:visible.sync="dialogVisible"-->
+                   <!--width="898px"-->
+                   <!--left>-->
+            <!--<div slot="title"><h3 class="dialog_h3">跳转至{{appName}}</h3></div>-->
+            <!--<div class="dialog_content">-->
+
+                <!--<div>-->
+                    <!--<div class="content_title">即将进入{{appName}}的待办,请在新打开的窗口内继续完成的发起工作。</div>-->
+                    <!--<div class="content_desc">若办理页面不能自动弹出，请修改浏览器配置</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<span slot="footer" class="dialog-footer">-->
+                <!--<el-button type="primary" @click="dialogVisible = false">确定</el-button>-->
+            <!--</span>-->
+        <!--</el-dialog>-->
+        <Jump></Jump>
     </div>
 </template>
 
 <script>
+  import Jump from "./Jump";
   export default {
     name: "Todo_hit",
+    components: {Jump},
     data() {
       return {
         flag: 0,//0-我的待办，1-我的已办，2-我发起的
@@ -255,8 +265,11 @@
         total:0,//数据总条数
         limit:10,//一页的数据条数
         myList:[],//我发起的列表
-          appName:""
+          // appName:""
       }
+    },
+    created() {
+      this.getTodoSource();
     },
     methods: {
       //选择待办类型
@@ -289,9 +302,18 @@
         console.log(id);
         this.todoSourceId = id;
       },
+      //打开跳转弹窗
       openTodo(url,appName) {
-        this.dialogVisible = true;
-        this.appName = appName;
+        this.$store.commit('set_data',{
+          data:true,
+          name:'jumpShow'
+        });
+        this.$store.commit('set_data',{
+          data:appName,
+          name:'jumpName'
+        });
+        // this.dialogVisible = true;
+        // this.appName = appName;
         window.open(url);
       },
       //我的已办-左侧下拉框备选项
@@ -380,9 +402,6 @@
       }
     },
 
-    created() {
-      this.getTodoSource();
-    }
   }
 </script>
 
@@ -390,22 +409,25 @@
     .contain {
         width: 1200px;
         margin: 0 auto;
-        .card {
+        .head{
+            padding: 10px 28px;
             margin-bottom: 10px;
-        }
-        .head_btn {
-            display: inline-block;
-            background-color: #BFBFBF;
-            color: white;
-            -webkit-border-radius: 15px;
-            -moz-border-radius: 15px;
-            border-radius: 15px;
-            padding: 5px 15px;
-            margin: 5px;
-            cursor: pointer;
-        }
-        .btn_choosen {
-            background-color: #F08625;
+            .head_btn{
+                display: inline-block;
+                background: #BFBFBF;
+                height: 30px;
+                line-height: 30px;
+                width: 90px;
+                font-size: 16px;
+                color: white;
+                text-align: center;
+                border-radius: 15px;
+                margin-right: 10px;
+                cursor: pointer;
+            }
+            .btn_choosen {
+                background: #F08625;
+            }
         }
         .content {
             .card {
@@ -414,15 +436,30 @@
             @include flex(space-between, flex-start);
             .content_left {
                 width: 386px;
-                background-color: white;
-                .menuDiv {
-                    cursor: pointer;
-                    padding: 12px 23px;
-                    font-size: 14px;
-                    border-bottom: 1px dashed #eaeaea;
+                background: white;
+                ul{
+                    li{
+                        &.title{
+                            font-size: 18px;
+                            font-weight: 700;
+                            color: #0683c3;
+                            cursor: auto;
+                        }
+                        cursor: pointer;
+                        padding: 12px 23px;
+                        font-size: 14px;
+                        color: #363f44;
+                        border-bottom: 1px dashed #eaeaea;
+                        &:last-child{
+                            border: none;
+                        }
+                        i{
+                            margin-right: 8px;
+                        }
+                    }
                 }
                 .todoSourceActive {
-                    background-color: #efefef;
+                    background: #efefef;
                 }
                 .menuDiv_input {
                     padding: 20px;

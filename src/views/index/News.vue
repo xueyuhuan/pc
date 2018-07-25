@@ -11,7 +11,7 @@
                     </el-carousel-item>
                 </el-carousel>
                 <ul class="nav">
-                    <li v-for="(i,index) in columns" @click="clickNav(i,index)" :class="{active:index===active}"><i class="fa fa-newspaper-o"></i><p>{{i.columnName}}</p></li>
+                    <li v-for="(i,index) in columns.slice(0,3)" @click="clickNav(i,index)" :class="{active:index===active}"><i class="fa fa-newspaper-o"></i><p>{{i.columnName}}</p></li>
                     <li><router-link to="/news"><i class="fa fa-newspaper-o"></i><p>资讯中心</p></router-link></li>
                 </ul>
             </div>
@@ -31,22 +31,27 @@
         columns:[],
         active:0,
         news:[],
-        id:'69ad91ec6c424766b6ac384fdd567cb8',
+        id:'',
       }
     },
     created(){
-      this.getData('/news_portal/hit_focus','banner','result','imgNews');//轮播图
-      this.getData('/news_portal/columns_for_widget','columns','columns');//轮播图下分类导航
+      this.getBanner();
+      this.getNav();//获取轮播图下导航
       this.getNews();
     },
     methods:{
-      getData(url,store,name,name2,){
-        this.$ajax.post(url)
+
+      getBanner(){
+        this.$ajax.post('/news_portal/hit_focus')
             .then(res=>{
-              this[store]=res.data[name];
-              if(name2){
-                this[store]=res.data[name][name2];
-              }
+              this.banner=res.data.result.imgNews;
+            })
+      },
+      getNav(){
+        this.$ajax.post('/news_portal/columns_for_widget')
+            .then(res=>{
+              this.columns=res.data.columns;
+              this.id=res.data.columns[0].id;
             })
       },
       getNews(){

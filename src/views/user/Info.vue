@@ -25,7 +25,7 @@
                 <header>绑定邮箱<i>用于收取个人邮件<em>( 仅支持工大邮箱（@*.hit.edu.cn）的绑定 )</em></i></header>
                 <label v-if="user.schoolEmail!==''">
                     <span>已绑邮箱：</span>
-                    <input class="disabled" :value="user.email" disabled/><button @click="delEmail">解除绑定</button>
+                    <input class="disabled" :value="user.schoolEmail" disabled/><button @click="delEmail">解除绑定</button>
                 </label>
                 <label v-else>
                     <span>邮箱地址：</span><input v-model="email" placeholder="邮箱名称"/>
@@ -40,7 +40,7 @@
             </section>
             <section class="other">
                 <header>绑定一卡通
-                    <i v-if="user.cardNo!==''">友情提示:您的工号/学号{{user.usernumber}}对应的一卡通(饭卡)账号为{{user.cardNo}}</i>
+                    <i v-if="user.cardNo===''">友情提示:您的工号/学号{{user.usernumber}}对应的一卡通(饭卡)账号为{{user.cardNo}}</i>
                     <i v-else>友情提示:一卡通(饭卡)账号并非您的学号/职工号,您可以通过分布在校园内的一卡通自助查询设备或网费自助缴费机进行查询,一般为5位数字。</i>
                 </header>
                 <label v-if="user.cardNo!==''">
@@ -78,12 +78,19 @@
       delEmail(){
         this.$ajax.post('/email_portal/unbindEmail')
             .then(res=>{
-              if(res.data.err.code==='0'){
+              if(res.data.errcode==='0'){
                 this.$notify({
                   title: '成功',
                   message: '解绑成功',
                   type: 'success'
                 });
+                this.email='';
+                this.type='';
+                this.password='';
+                this.$ajax.post(this.$url.getUser)
+                    .then(res => {
+                      this.$store.commit('set_user', res.data.user);
+                    });
               }
             })
       },
@@ -115,6 +122,10 @@
                     message: '绑定成功',
                     type: 'success'
                   });
+                  this.$ajax.post(this.$url.getUser)
+                      .then(res => {
+                        this.$store.commit('set_user', res.data.user);
+                      });
                 }
                 else{
                   this.$notify.error({
@@ -128,12 +139,18 @@
       delCard(){
         this.$ajax.post('/ecard_portal/unbindCard')
             .then(res=>{
-              if(res.data.err.code==='0'){
+              if(res.data.errcode==='0'){
                 this.$notify({
                   title: '成功',
                   message: '解绑成功',
                   type: 'success'
                 });
+                this.cardNo='';
+                this.cardPassword='';
+                this.$ajax.post(this.$url.getUser)
+                    .then(res => {
+                      this.$store.commit('set_user', res.data.user);
+                    });
               }
             })
       },
@@ -159,6 +176,10 @@
                     message: '绑定成功',
                     type: 'success'
                   });
+                  this.$ajax.post(this.$url.getUser)
+                      .then(res => {
+                        this.$store.commit('set_user', res.data.user);
+                      });
                 }
                 else{
                   this.$notify.error({
@@ -260,6 +281,7 @@
                     color: #555;
                     border: 1px #cfdadd solid;
                     border-radius: 2px;
+                    margin-right: 15px;
                 }
                 input.disabled{
                     background: #eee;
@@ -273,7 +295,7 @@
                     padding: 6px 12px;
                     border: 1px solid #cfdadd;
                     border-radius: 2px;
-                    margin: 0 30px 0 15px;
+                    margin-right: 30px;
                 }
                 button{
                     background: #067ebe;
@@ -282,7 +304,6 @@
                     padding: 6px 12px;
                     border: 1px #067ebe solid;
                     border-radius: 2px;
-                    margin: 0 15px;
                 }
             }
         }
