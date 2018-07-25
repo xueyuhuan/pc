@@ -74,6 +74,9 @@
                             </div>
                             <div class="noData" v-show="item.events.length === 0">暂无信息</div>
                         </div>
+                        <div v-if="showNoData" style="color: #000;
+    font-size: 14px;
+    font-family: 'Microsoft YaHei','Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;">暂无数据</div>
                     </div>
                 </div>
             </card>
@@ -105,7 +108,8 @@
                                 type="datetime"
                                 placeholder="选择结束时间"
                                 format="yyyy-MM-dd HH:mm"
-                                value-format="yyyy-MM-dd HH:mm">
+                                value-format="yyyy-MM-dd HH:mm"
+                        >
                         </el-date-picker>
                     </el-form-item>
                     <el-form-item label="地点" prop="location">
@@ -239,14 +243,15 @@
                         {required: true, message: '请输入日程主题', trigger: 'blur'}
                     ],
                     start: [
-                        {type: 'date', required: true, message: '请选择开始时间', trigger: 'change'}
+                        {type: 'string', required: true, message: '请选择开始时间', trigger: 'change'}
                     ],
                     end: [
-                        {type: 'date', required: true, message: '请选择结束日期', trigger: 'change'}
+                        {type: 'string', required: true, message: '请选择结束日期', trigger: 'change'}
                     ]
                 },
                 string:"",//二维码连接
-                qrUrl:""//二维码图片的src
+                qrUrl:"",//二维码图片的src
+                showNoData:true//右侧如果没数据
             }
 
         },
@@ -303,7 +308,17 @@
             getDayEvent() {
                 this.$ajax.post(this.$url.getEvents, {year: this.year, month: this.month, day: this.day})
                     .then(res => {
+                        console.log(res.data);
                         this.date_events = res.data.calObjs;
+                        let totalEvents = 0;
+                        for(let i=0;i<this.date_events.length;i++){
+                            totalEvents += this.date_events[i].events.length;
+                        }
+                        if(totalEvents === 0){
+                            this.showNoData = true;
+                        }else{
+                            this.showNoData = false;
+                        }
                     })
             },
             //选择某天,并且更新该天日程数据
@@ -344,6 +359,18 @@
                 if (this.openModalFlag === 1) {//新增日程
                     // console.log(this.formData);
                     // return;
+                    if(!this.formData.title){
+                        this.$alert('请输入日程主题','提示',{confirmButtonText: '确定',type:'warning'});
+                        return;
+                    }
+                    if(!this.formData.start){
+                        this.$alert('请输入日程开始时间','提示',{confirmButtonText: '确定',type:'warning'});
+                        return;
+                    }
+                    if(!this.formData.end){
+                        this.$alert('请输入日程结束时间','提示',{confirmButtonText: '确定',type:'warning'});
+                        return;
+                    }
                     this.$ajax.post(this.$url.add_private_event, this.formData)
                         .then(res => {
                             // console.log(res.data);
@@ -376,6 +403,18 @@
                     data.end = this.formData.end;
                     data.info = this.formData.info;
                     data.location = this.formData.location;
+                    if(!this.formData.title){
+                        this.$alert('请输入日程主题','提示',{confirmButtonText: '确定'});
+                        return;
+                    }
+                    if(!this.formData.start){
+                        this.$alert('请输入日程开始时间','提示',{confirmButtonText: '确定'});
+                        return;
+                    }
+                    if(!this.formData.end){
+                        this.$alert('请输入日程结束时间','提示',{confirmButtonText: '确定'});
+                        return;
+                    }
                     this.$ajax.post(this.$url.edit_private_event, data)
                         .then(res => {
                             // console.log(res.data);

@@ -1,9 +1,9 @@
 <template>
     <div class="bg_color">
         <subhead>
-            <div><i class="fa fa-th-large"></i>&nbsp;&nbsp;&nbsp;资讯中心 <span>News Center</span></div>
-            <el-input :placeholder="placeholder" v-model="input_value" size="small">
-                <el-button slot="append" icon="el-icon-search" @click="searchTitle"></el-button>
+            <div><i class="fa fa-newspaper-o"></i>&nbsp;&nbsp;&nbsp;资讯中心 <span>News Center</span></div>
+            <el-input :placeholder="placeholder" v-model="input_value" size="small" @keyup.enter.native="searchTitle">
+                <el-button slot="append" icon="el-icon-search" @click.native="searchTitle"></el-button>
             </el-input>
         </subhead>
         <div class="contain">
@@ -21,9 +21,9 @@
                         <div class="content_div"><span :class="{_theme_news_choosen:index + 1 === date_index}" v-for="(item,index) in date" @click="choose_date(index)">{{item}}</span></div>
                     </div>
                 </div>
-                <div class="news_div" v-for="news in newsList" @click="newsDetail(news.id)">
+                <div class="news_div" v-for="news in newsList" @click="newsDetail(news.id,news.columnType,news.url)">
                     <div class="news _theme_news_borderleft">
-                        <div class="news_title">{{news.title}}</div>
+                        <div class="news_title" v-html="ruleTitle(news.title)"></div>
                         <div class="source">来源：{{news.origin}}</div>
                     </div>
                     <div class="time">{{news.publishDate.substring(5,10)}}</div>
@@ -75,6 +75,7 @@
         methods:{
             searchTitle(){
                 this.getNewsList();
+                this.ruleTitle();
             },
             //获取所有咨询栏目
             get_zxlm(){
@@ -86,10 +87,12 @@
             //选择咨询栏目
             choose_zxlm(id){
                 this.id = id;
+                this.page = 1;
                 this.getNewsList();
             },
             choose_date(index){
                 this.date_index = index + 1;
+                this.page = 1;
                 this.getNewsList();
             },
             //新闻列表
@@ -107,8 +110,12 @@
                 this.getNewsList();
             },
             //新闻详情
-            newsDetail(id){
-                this.$router.push({path:"/news/detail",query: {id}});
+            newsDetail(id,type,url){
+                if(type === 'rss'){
+                    window.open(url)
+                }else{
+                    this.$router.push({path:"/news/detail",query: {id}});
+                }
             },
             //获取阅读排行
             get_rank(){
@@ -122,6 +129,21 @@
             toggle_rank(value){
                 this.rank_date_value = value;
                 this.get_rank();
+            },
+            ruleTitle(value) {
+                let titleString = value;
+                if (!titleString) {
+                    return value;
+                }
+                if (this.input_value && this.input_value.length > 0) {
+                    // 匹配关键字正则
+                    let replaceReg = new RegExp(this.input_value, 'g');
+                    // 高亮替换v-html值
+                    let replaceString = '<span class="_theme_news_fontcolor">' + this.input_value + '</span>';
+                    // 开始替换
+                    titleString = titleString.replace(replaceReg, replaceString);
+                }
+                return titleString;
             }
         },
         created(){
@@ -138,6 +160,9 @@
     .nodata{
         font-size: 14px;
         padding: 10px;
+    }
+    .search-text{
+        color: red;
     }
     .contain {
         @extend %content;

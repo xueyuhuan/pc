@@ -104,6 +104,7 @@
             text-align: center;
             font-size: 14px;
             color: #000;
+            margin-bottom: 25px;
             &>a{
                 max-width: 100px;
                 color: blue;
@@ -114,6 +115,7 @@
             border-bottom: 1px solid #dee5e7;
         }
         .news_foot{
+            padding: 20px 0;
             a{
                 display: inline-block;
                 height: 100%;
