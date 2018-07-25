@@ -23,6 +23,7 @@
                 <application></application>
             </div>
         </div>
+        <Jump></Jump>
     </div>
 </template>
 
@@ -33,9 +34,10 @@
   import User from "./User";
   import Collect from "./Collect";
   import Application from "./Application";
+  import Jump from "../todo/Jump";
   export default {
     name: "Index",
-    components: {Application, Collect, User, Service, News, Work},
+    components: {Jump, Application, Collect, User, Service, News, Work},
     data(){
       return{
         proxy:process.env.VUE_APP_PROXY,

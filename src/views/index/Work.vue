@@ -11,7 +11,7 @@
         </ul>
         <ul class="list" v-show="workActive===0">
             <template v-if="todoList&&todoList.length>0">
-                <li v-for="i in todoList.slice(0,5)"><a :href="i.url" target="_blank">
+                <li v-for="i in todoList.slice(0,5)" @click="openTodo(i.url,i.appName)"><a>
                     <div class="left">
                         <p><em>【{{i.appName}}】</em>{{i.title}}</p>
                         <span>当前环节：{{i.currentNode}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发起人：{{i.startUser}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发起时间：{{i.currentTime}}</span>
@@ -52,8 +52,10 @@
 </template>
 
 <script>
+  import Jump from "../todo/Jump";
   export default {
     name: "Work",
+    components: {Jump},
     data(){
       return{
         work:[
@@ -77,6 +79,18 @@
     methods:{
       clickWork(index){
         this.workActive=index;
+      },
+      //打开跳转弹窗
+      openTodo(url,appName) {
+        this.$store.commit('set_data',{
+          data:true,
+          name:'jumpShow'
+        });
+        this.$store.commit('set_data',{
+          data:appName,
+          name:'jumpName'
+        });
+        window.open(url);
       },
       getData(url,store,name,store2,name2){
         this.$ajax.post(url)
@@ -137,27 +151,30 @@
                     text-align: right;
                 }
             }
-            a{
-                @include flex(space-between);
-                padding: 15px;
-                border-top: 1px solid #edf1f2;
-                p{
-                    em{
-                        color: #0683c3;
+            li{
+                cursor: pointer;
+                a{
+                    @include flex(space-between);
+                    padding: 15px;
+                    border-top: 1px solid #edf1f2;
+                    p{
+                        em{
+                            color: #0683c3;
+                        }
+                        font-size: 14px;
+                        color: #363f44;
+                        margin: 0;
                     }
-                    font-size: 14px;
-                    color: #363f44;
-                    margin: 0;
-                }
-                span{
-                    color: #98a6ad;
-                    font-size: 12px;
-                }
-                .right{
-                    flex: 0 0 150px;
-                    font-size: 14px;
-                    color: #f7b47f;
-                    text-align: right;
+                    span{
+                        color: #98a6ad;
+                        font-size: 12px;
+                    }
+                    .right{
+                        flex: 0 0 150px;
+                        font-size: 14px;
+                        color: #f7b47f;
+                        text-align: right;
+                    }
                 }
             }
         }

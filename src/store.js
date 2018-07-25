@@ -31,38 +31,12 @@ export default new Vuex.Store({
     /*设置弹框end*/
     /*服务*/
     search:'',
-    /*颜色*/
-    skin:'1390d3',
-    skinLight:'2aa8e9',
-    skinDarker:'067ebe',
-    skinCard:'00697e',
-    skinCardFont:'',
+    /*i哈工大*/
+    jumpShow:false,//跳转是否显示
+    jumpName:''//跳转的名字
   },
   mutations: {
-    //更换主题颜色
-    setThemeColor(state,color){
-      if(color==='blue'){
-          this.state.skin='skin-'+'1390d3';
-          this.state.skinLight='skin-light-'+'2aa8e9';
-          this.state.skinDarker='skin-darker-'+'067ebe';
-          this.state.skinCard='skin-card-'+'1295d8';
-          this.state.skinCardFont='skin-card-font-'+'1295d8';
-      }
-      if(color==='green'){
-        this.state.skin='skin-'+'00697e';
-        this.state.skinLight='skin-light-'+'008099';
-        this.state.skinDarker='skin-darker-'+'005768';
-        this.state.skinCard='skin-card-'+'00697e';
-        this.state.skinCardFont='skin-card-font-'+'00697e';
-      }
-      if(color==='orange'){
-        this.state.skin='skin-'+'f18b2e';
-        this.state.skinLight='skin-light-'+'fc9e48';
-        this.state.skinDarker='skin-darker-'+'ed760a';
-        this.state.skinCard='skin-card-'+'f18b2e';
-        this.state.skinCardFont='skin-card-font-'+'f18b2e';
-      }
-    },
+
     set_token(state,token){
       state.token=token;
       sessionStorage.token=token;
