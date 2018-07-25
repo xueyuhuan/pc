@@ -4,36 +4,43 @@
             <div><i class="fa fa-desktop"></i>&nbsp;&nbsp;&nbsp;办事中心 <span>Todo List</span></div>
         </subhead>
         <div class="contain">
-            <card>
-                <template slot="header">
-                    <div style="padding-left: 20px;">
-                        <span class="head_btn" :class="{btn_choosen:flag === 0}" @click="chooseType(0)">我的待办</span>
-                        <span class="head_btn" :class="{btn_choosen:flag === 1}" @click="chooseType(1)">我的已办</span>
-                        <span class="head_btn" :class="{btn_choosen:flag === 2}" @click="chooseType(2)">我发起的</span>
-                    </div>
-                </template>
-            </card>
+            <CardTemp class="head">
+                <span class="head_btn" :class="{btn_choosen:flag === 0}" @click="chooseType(0)">我的待办</span>
+                <span class="head_btn" :class="{btn_choosen:flag === 1}" @click="chooseType(1)">我的已办</span>
+                <span class="head_btn" :class="{btn_choosen:flag === 2}" @click="chooseType(2)">我发起的</span>
+            </CardTemp>
             <!--我的待办-->
             <div v-show="flag === 0" class="content">
                 <div class="content_left">
-                    <card>
-                        <template slot="header">通知公告</template>
-                        <div class="menuDiv" :class="{todoSourceActive:todoSourceId === ''}"
-                             @click="switchTodoSource('')">全部
-                        </div>
-                        <div class="menuDiv" :class="{todoSourceActive:todoSourceId === item.id}"
-                             v-for="item in todomenu" @click="switchTodoSource(item.id)">
-                            {{item.name}}
+                    <ul>
+                        <li class="title">待办来源</li>
+                        <li :class="{todoSourceActive:todoSourceId === ''}"
+                             @click="switchTodoSource('')"><i class="fa fa-bell-o"></i>全部
+                        </li>
+                        <li :class="{todoSourceActive:todoSourceId === item.id}"
+                             v-for="item in todomenu" @click="switchTodoSource(item.id)"><i class="fa fa-bell-o"></i>{{item.name}}
                             <span>（{{item.todoList.length}}）</span>
-                        </div>
-                    </card>
+                        </li>
+                    </ul>
+                    <!--<card>-->
+                        <!--<template slot="header">通知公告</template>-->
+                        <!--<div class="menuDiv" :class="{todoSourceActive:todoSourceId === ''}"-->
+                             <!--@click="switchTodoSource('')">全部-->
+                        <!--</div>-->
+                        <!--<div class="menuDiv" :class="{todoSourceActive:todoSourceId === item.id}"-->
+                             <!--v-for="item in todomenu" @click="switchTodoSource(item.id)">-->
+                            <!--{{item.name}}-->
+                            <!--<span>（{{item.todoList.length}}）</span>-->
+                        <!--</div>-->
+                    <!--</card>-->
                 </div>
                 <div class="content_right">
+                    <ul></ul>
                     <card>
                         <template slot="header">待办来源</template>
                         <div v-for="item in todomenu">
                             <div v-for="i in item.todoList" @click="openTodo(i.url,i.appName)" class="block"
-                                 v-if="todoSourceId === i.appId || todoSourceId ===''">
+                                 v-if="i.appId=== todoSourceId|| todoSourceId ===''">
                                 <div class="blockLeft">
                                     <div class="title">[{{i.appName}}]{{i.title}}</div>
                                     <div class="time">{{i.currentTime}}</div>
@@ -402,22 +409,25 @@
     .contain {
         width: 1200px;
         margin: 0 auto;
-        .card {
+        .head{
+            padding: 10px 28px;
             margin-bottom: 10px;
-        }
-        .head_btn {
-            display: inline-block;
-            background-color: #BFBFBF;
-            color: white;
-            -webkit-border-radius: 15px;
-            -moz-border-radius: 15px;
-            border-radius: 15px;
-            padding: 5px 15px;
-            margin: 5px;
-            cursor: pointer;
-        }
-        .btn_choosen {
-            background-color: #F08625;
+            .head_btn{
+                display: inline-block;
+                background: #BFBFBF;
+                height: 30px;
+                line-height: 30px;
+                width: 90px;
+                font-size: 16px;
+                color: white;
+                text-align: center;
+                border-radius: 15px;
+                margin-right: 10px;
+                cursor: pointer;
+            }
+            .btn_choosen {
+                background: #F08625;
+            }
         }
         .content {
             .card {
@@ -426,15 +436,30 @@
             @include flex(space-between, flex-start);
             .content_left {
                 width: 386px;
-                background-color: white;
-                .menuDiv {
-                    cursor: pointer;
-                    padding: 12px 23px;
-                    font-size: 14px;
-                    border-bottom: 1px dashed #eaeaea;
+                background: white;
+                ul{
+                    li{
+                        &.title{
+                            font-size: 18px;
+                            font-weight: 700;
+                            color: #0683c3;
+                            cursor: auto;
+                        }
+                        cursor: pointer;
+                        padding: 12px 23px;
+                        font-size: 14px;
+                        color: #363f44;
+                        border-bottom: 1px dashed #eaeaea;
+                        &:last-child{
+                            border: none;
+                        }
+                        i{
+                            margin-right: 8px;
+                        }
+                    }
                 }
                 .todoSourceActive {
-                    background-color: #efefef;
+                    background: #efefef;
                 }
                 .menuDiv_input {
                     padding: 20px;
