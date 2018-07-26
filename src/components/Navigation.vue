@@ -85,24 +85,6 @@
                     </div>
                 </el-collapse-transition>
             </template>
-            <!--<el-collapse-transition>-->
-                <!--<div class="panel panel-ccnu" v-show="$school.school==='ccnu'&&panelShow">-->
-                    <!--<ul>-->
-                        <!--<li><router-link @click.native="panelShow=false" to="/user"><i class="fa fa-user-o"></i>个人中心</router-link></li>-->
-                        <!--<li><a @click="panelShow=false" href="http://bigdata.ccnu.edu.cn" target="_blank"><i class="fa fa-user-o"></i>我的华师足迹</a></li>-->
-                        <!--<li><a @click="logout"><i class="fa fa-user-o"></i>注销</a></li>-->
-                    <!--</ul>-->
-                <!--</div>-->
-                <!--<div class="panel panel-hit" v-show="$school.school==='hit'&&panelShow">-->
-                    <!--<div class="name">-->
-                        <!--<span>{{user.name}}<i class="fa" :class="{'fa-venus':user.xb==='女','fa-mars':user.xb!=='女'}"></i></span>-->
-                        <!--<router-link @click.native="panelShow=false" to="/user"><i class="fa fa-cog"></i>门户设置</router-link>-->
-                    <!--</div>-->
-                    <!--<div class="number">职工号：{{user.username}}</div>-->
-                    <!--<div class="type">{{user.deptName}}</div>-->
-                    <!--<div class="other"><a @click="panelShow=false" href="http://ids.hit.edu.cn/authserver" target="_blank"><i class="fa fa-user-plus"></i>统一身份认证设置</a><button @click="logout">退出登录</button></div>-->
-                <!--</div>-->
-            <!--</el-collapse-transition>-->
         </div>
     </header>
 </template>
@@ -119,8 +101,11 @@
             }
         },
         computed: {
-          active(){
-            return this.$route.path;
+          active:{
+            set() {},
+            get(){
+              return this.$route.path;
+            }
           },
           user() {
             return this.$store.state.user;

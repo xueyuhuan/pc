@@ -131,6 +131,7 @@
         this.active=JSON.parse(localStorage.active);
         this.condition=JSON.parse(localStorage.condition);
         this.searchData=JSON.parse(localStorage.searchData);
+        this.searchData.page=1;
       }
       this.getFWLY();
       this.getFZBM();

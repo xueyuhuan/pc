@@ -38,6 +38,7 @@ requireComponent.keys().forEach(fileName => {
 Vue.prototype.$ajax=axios;
 Vue.prototype.$url=url;
 Vue.prototype.$school=process.env.VUE_APP_SCHOOL==='hit'?hit:ccnu;
+Vue.prototype.$proxy=process.env.VUE_APP_PROXY;
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
 

@@ -11,6 +11,7 @@
             <li v-for="i in data">
                 <div class="name"><i>{{i.Z_R_N}}</i><img :src='imgPath+i.ID'/>{{i.NAME.substring(0,10)}}</div>{{i.VW}}次
             </li>
+            <li class="no" v-if="data.length===0">暂无数据</li>
         </ul>
     </card>
 </template>
@@ -104,6 +105,10 @@
             &:nth-child(3) i{
                 background: #4a8cac;
             }
+        }
+        li.no{
+            color: rgb(137, 137, 137);
+            margin: 0;
         }
     }
 

@@ -14,7 +14,7 @@
             <li v-for="i in data">
                 <p><span>{{i.title}}</span><span>{{i.info}}</span></p><time>{{i.dtstart}}</time>
             </li>
-            <li v-if="data.length===0" style="margin: 0;color: #898989">暂无个人日程安排</li>
+            <li class="no" v-if="data.length===0">暂无个人日程安排</li>
         </ul>
     </card>
 </template>
@@ -89,6 +89,10 @@
                     @extend %ellipsis;
                 }
             }
+        }
+        li.no{
+            color: #898989;
+            margin: 0;
         }
     }
 
