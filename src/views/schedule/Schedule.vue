@@ -38,7 +38,8 @@
                             </tr>
                             <tr v-for="item in calendars.days">
                                 <td v-for="i in item"
-                                    @click="chooseDay(i.day)"
+                                    @click.passive="chooseDay(i.day)"
+                                    @dblclick="addSchedule(i)"
                                     :class="{today : calendars.year === current_year && calendars.month === current_month && i.day === current_day , chooseDay : i.day === day}">
                                     <div v-if="i.day !== 0" class="num">{{i.day}}</div>
                                     <div class="dot"><span :style="'background-color:' + b.color + ';'"
@@ -256,6 +257,12 @@
 
         },
         methods: {
+            test1(){
+                console.log('test1');
+            },
+            test2(){
+                console.log('test2');
+            },
             //获取事件类型
             getEventType() {
                 this.$ajax.post(this.$url.getCalendarObjs)
@@ -350,9 +357,23 @@
                 }
             },
             //点击添加日程
-            addSchedule() {
+            addSchedule(i) {
                 this.personalSchedule = true;
                 this.openModalFlag = 1;
+                //通过双击事件新增日程，则默认选中当天的8点-9点
+                if(i){
+                    console.log(i);
+                    let month = i.month + '';
+                    if(month.length === 1){
+                        month = '0' + month;
+                    }
+                    let startTime = `${i.year}-${month}-${i.day} 08:00`;
+                    let endTime = `${i.year}-${month}-${i.day} 09:00`;
+                    console.log(startTime);
+                    console.log(endTime);
+                    this.formData.start = startTime;
+                    this.formData.end = endTime;
+                };
             },
             //提交个人日程表单
             submitFormData() {// 1-新增 2-编辑
@@ -385,6 +406,7 @@
                                 this.personalSchedule = false;
                                 this.getDayEvent();
                                 this.getCalendar();
+                                this.clear();
                             } else {
                                 this.$notify({
                                     title: "提示",
@@ -429,6 +451,7 @@
                                 this.personalSchedule = false;
                                 this.getDayEvent();
                                 this.getCalendar();
+                                this.clear();
                             } else {
                                 this.$notify({
                                     title: "提示",
@@ -506,6 +529,15 @@
                         }
 
                     })
+            },
+            //表单提交成功后，需要清除表单的数据
+            clear(){
+                this.formData.title = "";
+                this.formData.start = "";
+                this.formData.end = "";
+                this.formData.info = "";
+                this.formData.location = "";
+                this.formData.id = "";
             }
         },
         created() {

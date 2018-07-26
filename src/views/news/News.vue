@@ -2,9 +2,12 @@
     <div class="bg_color">
         <subhead>
             <div><i class="fa fa-newspaper-o"></i>&nbsp;&nbsp;&nbsp;资讯中心 <span>News Center</span></div>
-            <el-input :placeholder="placeholder" v-model="input_value" size="small" @keyup.enter.native="searchTitle">
-                <el-button slot="append" icon="el-icon-search" @click.native="searchTitle"></el-button>
-            </el-input>
+            <!--<el-input :placeholder="placeholder" v-model="input_value" size="small" @keyup.enter.native="searchTitle">-->
+                <!--<el-button slot="append" icon="el-icon-search" @click.native="searchTitle"></el-button>-->
+            <!--</el-input>-->
+            <SubheadInput>
+                <input slot="input" v-model="input_value" :placeholder="placeholder" @keyup.enter="searchTitle"/><button @click="searchTitle"><i class="fa fa-search"></i></button>
+            </SubheadInput>
         </subhead>
         <div class="contain">
             <card class="left_div">
@@ -58,7 +61,7 @@
         name: "News",
         data(){
             return{
-                placeholder:"",
+                placeholder:"标题搜索",
                 input_value:"",
                 zxlm:[],//资讯栏目所有内容
                 id:"",//资讯栏目的id
