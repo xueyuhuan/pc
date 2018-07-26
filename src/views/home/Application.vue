@@ -1,18 +1,18 @@
 <template>
-    <card>
-        <template slot="header">我的应用
+    <CardTemp>
+        <header slot="header" class="drag">我的应用
             <div class="right">
                 <i class="fa fa-cog" @click="popup"></i>
                 <router-link to="/schedule"><i class="fa fa-ellipsis-h"></i></router-link>
             </div>
-        </template>
-        <ul>
+        </header>
+        <ul class="noDrag">
             <li v-for="i in data">
                 <a :href="i.url" target="_blank"><img :src="imgPath+i.id"/>{{i.name}}</a>
             </li>
             <li class="no" v-if="data.length===0">暂无应用</li>
         </ul>
-    </card>
+    </CardTemp>
 </template>
 
 <script>
@@ -44,6 +44,9 @@
 </script>
 
 <style scoped lang="scss">
+    header{
+        cursor: move;
+    }
     .right{
         i{
             margin-left: 5px;
@@ -64,7 +67,6 @@
                 img{
                     width: 30px;
                     height: 30px;
-                    border-radius: 50%;
                     margin-right: 20px;
                 }
             }

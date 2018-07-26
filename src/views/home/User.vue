@@ -1,8 +1,8 @@
 <template>
-    <card>
-        <template slot="header">个人中心
+    <CardTemp>
+        <header class="drag" slot="header">个人中心
             <router-link to="/user"><i class="fa fa-ellipsis-h"></i></router-link>
-        </template>
+        </header>
         <ul>
             <li class="border_bottom1">
                 <a>
@@ -48,7 +48,7 @@
                 </a>
             </li>
         </ul>
-    </card>
+    </CardTemp>
 </template>
 
 <script>
@@ -77,6 +77,9 @@
 </script>
 
 <style scoped lang="scss">
+    header{
+        cursor: move;
+    }
     .pointer{
         cursor: pointer;
     }
@@ -97,7 +100,6 @@
                 img {
                     width: 30px;
                     height: 30px;
-                    border-radius: 50%;
                     margin-right: 20px;
                 }
                 .right {
@@ -105,7 +107,6 @@
                     @include flex(space-between);
                     span {
                         font-size: 12px;
-                        color: $skin-card;
                         margin-right: 10px;
                     }
                 }

@@ -1,19 +1,19 @@
 <template>
-    <card>
-        <template slot="header">
+    <CardTemp>
+        <header class="drag" slot="header">
             服务排行
             <div class="btn">
                 <span @click="click(1)" :class="{active:type===1}">本周</span>
                 <span @click="click(2)" :class="{active:type===2}">本月</span>
                 <span @click="click(3)" :class="{active:type===3}">本年</span></div>
-        </template>
+        </header>
         <ul>
             <li v-for="i in data">
                 <div class="name"><i>{{i.Z_R_N}}</i><img :src='imgPath+i.ID'/>{{i.NAME.substring(0,10)}}</div>{{i.VW}}次
             </li>
             <li class="no" v-if="data.length===0">暂无数据</li>
         </ul>
-    </card>
+    </CardTemp>
 </template>
 
 <script>
@@ -45,7 +45,8 @@
 
 <style scoped lang="scss">
     header{
-        @include flex;
+        @include flex(flex-start);
+        cursor: move;
         .btn{
             display: inline-block;
             margin-left: 30px;

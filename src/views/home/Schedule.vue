@@ -1,6 +1,6 @@
 <template>
-    <card>
-        <template slot="header">
+    <CardTemp>
+        <header class="drag" slot="header">
             <div class="left">
                 我的日程
                 <div class="btn">
@@ -9,14 +9,14 @@
                     <span @click="click(2)" :class="{active:date===2}">后天</span></div>
             </div>
             <router-link to="/schedule"><i class="fa fa-ellipsis-h"></i></router-link>
-        </template>
+        </header>
         <ul>
             <li v-for="i in data">
                 <p><span>{{i.title}}</span><span>{{i.info}}</span></p><time>{{i.dtstart}}</time>
             </li>
             <li class="no" v-if="data.length===0">暂无个人日程安排</li>
         </ul>
-    </card>
+    </CardTemp>
 </template>
 
 <script>
@@ -42,6 +42,9 @@
 </script>
 
 <style scoped lang="scss">
+    header{
+        cursor: move;
+    }
     .left{
         @include flex;
         .btn{

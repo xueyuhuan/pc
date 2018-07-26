@@ -1,16 +1,16 @@
 <template>
-    <card>
-        <template slot="header">
+    <CardTemp>
+        <header slot="header" class="drag">
             <div class="left">学校公文<a class="_theme_card_a" href="http://oa.ccnu.edu.cn/seeyon/caslogin.jsp?type=queryDoc" target="_blank">历史公文</a></div>
             <a href="http://oa.ccnu.edu.cn/seeyon/caslogin.jsp?type=newBulletin" target="_blank"><i class="fa fa-ellipsis-h"></i></a>
-        </template>
+        </header>
         <ul>
             <li v-for="i in data">
                 <a href="'http://oa.ccnu.edu.cn/seeyon/caslogin.jsp?type='+i.url" target="_blank"><p>[{{i.type}}]{{i.title}}</p><time>{{i.createDate}}</time></a>
             </li>
             <li class="no" v-if="data.length===0">暂无数据</li>
         </ul>
-    </card>
+    </CardTemp>
 </template>
 
 <script>
@@ -25,6 +25,9 @@
 </script>
 
 <style scoped lang="scss">
+    header{
+        cursor: move;
+    }
     .left{
         a{
             padding-left: 10px;
