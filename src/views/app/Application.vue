@@ -2,9 +2,12 @@
     <div class="bg_color">
         <subhead>
             <div><i class="fa fa-th-large"></i>&nbsp;&nbsp;&nbsp;应用中心 <span>App Center</span></div>
-            <el-input :placeholder="placeholder" v-model="input_value" size="small">
-                <el-button slot="append" icon="el-icon-search" @click="searchApp"></el-button>
-            </el-input>
+            <!--<el-input :placeholder="placeholder" v-model="input_value" size="small">-->
+                <!--<el-button slot="append" icon="el-icon-search" @click="searchApp"></el-button>-->
+            <!--</el-input>-->
+            <SubheadInput>
+                <input slot="input" v-model="input_value" :placeholder="placeholder"/><button @click="searchApp"><i class="fa fa-search"></i></button>
+            </SubheadInput>
         </subhead>
         <div class="contain">
             <div class="left_div _theme_app_bordertop">

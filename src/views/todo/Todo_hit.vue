@@ -37,7 +37,7 @@
                 <div class="content_right">
                     <ul></ul>
                     <card>
-                        <template slot="header">待办来源</template>
+                        <template slot="header">待办明细</template>
                         <div v-for="item in todomenu">
                             <div v-for="i in item.todoList" @click="openTodo(i.url,i.appName)" class="block"
                                  v-if="i.appId=== todoSourceId|| todoSourceId ===''">
