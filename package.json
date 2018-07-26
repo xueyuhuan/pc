@@ -7,6 +7,8 @@
     "serve-ccnu": "vue-cli-service serve --mode ccnu",
     "serve-hit": "vue-cli-service serve --mode hit",
     "build": "vue-cli-service build",
+    "build-ccnu": "vue-cli-service build --mode bccnu",
+    "build-hit": "vue-cli-service build --mode bhit",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },

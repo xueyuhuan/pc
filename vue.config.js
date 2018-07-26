@@ -5,6 +5,8 @@ const target=process.env.VUE_APP_SCHOOL==='hit'?'http://192.168.57.53:8081':'htt
 // const target='http://192.168.0.8:88/portal';
 // const target='http://192.168.0.19:8080';
 module.exports = {
+  outputDir:process.env.outputDir,
+  assetsDir:'static',
   css:{
     loaderOptions:{
       sass:{
