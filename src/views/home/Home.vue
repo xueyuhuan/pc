@@ -100,7 +100,9 @@ export default {
       this.getTodo(),
       this.getUser(),
     ]);
-    this.bannerShow=JSON.parse(localStorage.bannerShow);
+    if(localStorage.bannerShow){
+      this.bannerShow=localStorage.bannerShow;
+    }
   },
   methods:{
     popup(){//打开工作台设置
@@ -115,13 +117,15 @@ export default {
     },
     closeBanner(){
       this.bannerShow=false;
-      localStorage.bannerShow=JSON.stringify(this.bannerShow);
+      localStorage.bannerShow=this.bannerShow;
     },
     end(){//拖拽结束保存布局
       let layout={A:this.A,B:this.B};
       this.$ajax.post(this.$url.homePageSave,{layout:JSON.stringify(layout),pageId:this.page.id})
           .then(res=>{
-            if(res.data.errmsg==='ok'){}
+            if(res.data.errmsg==='ok'){
+
+            }
           })
     },
     getPage(){//获取页面布局

@@ -15,7 +15,7 @@
                 <div class="ad" v-if="banner.length>0">
                     <el-carousel trigger="click" height="211px">
                         <el-carousel-item v-for="i in banner">
-                            <a :href="i.link" :title="i.title" target="_blank"><img :src="proxy+imgUrl+i.url"/></a>
+                            <a :href="i.link" :title="i.title" target="_blank"><img :src="$proxy+imgUrl+i.url"/></a>
                         </el-carousel-item>
                     </el-carousel>
                 </div>
@@ -40,7 +40,6 @@
     components: {Jump, Application, Collect, User, Service, News, Work},
     data(){
       return{
-        proxy:process.env.VUE_APP_PROXY,
         week:'',
         imgUrl:'',
         banner:[]

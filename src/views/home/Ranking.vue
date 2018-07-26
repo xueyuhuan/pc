@@ -9,7 +9,7 @@
         </header>
         <ul>
             <li v-for="i in data">
-                <div class="name"><i>{{i.Z_R_N}}</i><img :src='imgPath+i.ID'/>{{i.NAME.substring(0,10)}}</div>{{i.VW}}次
+                <div class="name"><i>{{i.Z_R_N}}</i><img :src='$proxy+imgPath+i.ID'/>{{i.NAME.substring(0,10)}}</div>{{i.VW}}次
             </li>
             <li class="no" v-if="data.length===0">暂无数据</li>
         </ul>
@@ -21,7 +21,7 @@
     name: "Ranking",
     data(){
       return{
-        imgPath:"/api/resource/service?id="
+        imgPath:"/resource/service?id="
       }
     },
     computed:{

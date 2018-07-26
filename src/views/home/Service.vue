@@ -8,7 +8,7 @@
         </header>
         <ul>
             <li v-for="i in data">
-                <a :href="i.url" target="_blank"><img :src="imgPath+i.id"/>{{i.name}}</a>
+                <a :href="i.url" target="_blank"><img :src="$proxy+imgPath+i.id"/>{{i.name}}</a>
             </li>
             <li class="no" v-if="data.length===0">暂无数据</li>
         </ul>
@@ -20,7 +20,7 @@
     name: "Service",
     data(){
       return{
-        imgPath:"/api/resource/service?id="
+        imgPath:"/resource/service?id="
       }
     },
     computed:{

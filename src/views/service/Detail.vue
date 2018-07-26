@@ -7,7 +7,7 @@
             <card class="left">
                 <template slot="header">
                     <div class="left">
-                        <img :src="proxy+imgPath.head+data.service.id"/>
+                        <img :src="$proxy+imgPath.head+data.service.id"/>
                         <div class="info">
                             <p>{{data.service.name}}<button>{{data.service.lineAble==="1"?"线上":"线下"}}</button><button>{{data.service.type1Name}}</button><button>{{data.service.type2Name}}</button></p>
                             <span v-show="!isFavorite" @click="favorite('add')"><i class="fa fa-star-o"></i>点击收藏</span>
@@ -36,12 +36,12 @@
                                 <el-carousel v-if="data.fwlcs.length>1">
                                     <el-carousel-item v-for="i in data.fwlcs" >
                                         <a v-if="[i.path].indexOf('http')>0" :href="i.path" target="_blank"><img :src="i.path"/></a>
-                                        <a :href="proxy+imgPath.fwlc+i.path" target="_blank"><img :src="proxy+imgPath.fwlc+i.path"/></a>
+                                        <a :href="proxy+imgPath.fwlc+i.path" target="_blank"><img :src="$proxy+imgPath.fwlc+i.path"/></a>
                                     </el-carousel-item>
                                 </el-carousel>
                                 <template v-else>
                                     <a v-if="data.fwlcs[0].path.indexOf('http')>0" :href="data.fwlcs[0].path" target="_blank"><img :src="data.fwlcs[0].path"/></a>
-                                    <a v-else :href="proxy+imgPath.fwlc+data.fwlcs[0].path" target="_blank"><img :src="proxy+imgPath.fwlc+data.fwlcs[0].path"/></a>
+                                    <a v-else :href="proxy+imgPath.fwlc+data.fwlcs[0].path" target="_blank"><img :src="$proxy+imgPath.fwlc+data.fwlcs[0].path"/></a>
                                 </template>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                         <template slot="title"><i class="fa fa-file-text-o"></i>用户评价<a class="comment">评价</a></template>
                         <div class="content" v-if="comment.length>0">
                             <ul>
-                                <li v-for="i in comment"><img :src="i.PATH?i.PATH:'img/a0.jpg'"/>
+                                <li v-for="i in comment"><img :src="i.PATH?i.PATH:$proxy+'/img/a0.jpg'"/>
                                     <div class="text">{{i.USERNAME}}&nbsp;&nbsp;<el-rate class="rate" v-model="i.SCORE" disabled></el-rate><br/><span>{{i.COMMENT_TEXT}}</span></div>
                                 </li>
                             </ul>
@@ -122,7 +122,6 @@
     name: "Detail",
     data(){
       return {
-        proxy:process.env.NODE_ENV==='production'?'':'/api',
         imgPath:{
           head:'/resource/service?id=',
           fwlc:'/resource/file/show?path='

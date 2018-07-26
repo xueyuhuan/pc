@@ -16,7 +16,7 @@
                     <div class="block_body">
                         <div class="app" v-for="app in appGroup.apps">
                             <a :href="app.url" :title="'进入' + app.name" target="_blank">
-                                <img :src="'/api/resource/app?id=' + app.id + '&timestamp=' + app.timestamp"/>
+                                <img :src="$proxy+'/resource/app?id=' + app.id + '&timestamp=' + app.timestamp"/>
                             </a>
                             <a class="app_title" :title="'进入' + app.name + '详情'" @click="showDetail(app.id)">{{app.name}}</a>
                         </div>

@@ -12,13 +12,13 @@
         </template>
         <ul class="list service" v-show="active==='service'">
             <template v-if="service&&service.length">
-                <li v-for="i in service"><router-link :to="'/service/detail/'+i.id"><img :src="proxy+imgPath+i.id"/><p>{{i.name}}</p></router-link></li>
+                <li v-for="i in service"><router-link :to="'/service/detail/'+i.id"><img :src="$proxy+imgPath+i.id"/><p>{{i.name}}</p></router-link></li>
             </template>
             <li v-else class="no">温馨提示:您一个收藏也没有哦，进入服务的详情页面，点击五角星就可以收藏啦！</li>
         </ul>
         <ul class="list app" v-show="active==='app'">
             <template v-if="app&&app.length">
-                <li v-for="i in app"><a><img :src="proxy+imgPath2+i.id"/><p>{{i.name}}</p></a></li>
+                <li v-for="i in app"><a><img :src="$proxy+imgPath2+i.id"/><p>{{i.name}}</p></a></li>
             </template>
             <li v-else class="no">温馨提示:您一个收藏也没有哦，进入应用的详情页面，点击五角星就可以收藏啦！</li>
         </ul>
@@ -36,7 +36,6 @@
     name: "Collect",
     data(){
       return{
-        proxy:process.env.VUE_APP_PROXY,
         imgPath:'/resource/service?id=',
         imgPath2:'/resource/app?id=',
         active:'service',

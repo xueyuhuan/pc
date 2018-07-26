@@ -13,7 +13,7 @@
                 <template slot="header">推荐服务</template>
                 <ul>
                     <li v-for="i in list.recommend"><router-link :to="'/service/detail/'+i.id">
-                        <img :src="imgPath+i.id"/>
+                        <img :src="$proxy+imgPath+i.id"/>
                         <p>{{i.name}}</p>
                         <span>{{i.type2Name}}</span>
                         <el-rate v-model="i.score" disabled></el-rate>
@@ -22,16 +22,16 @@
             </card>
             <card class="deadline">
                 <template slot="header">限时办理</template>
-                <img src="/api/img/no_data.png"/>
+                <img :src="$proxy+'/img/no_data.png'"/>
             </card>
         </div>
-        <card class="bottom">
-            <template slot="header">服务目录
+        <CardTemp class="bottom">
+            <header slot="header">服务目录
                 <ul v-show="type!==-1">
                     <li @click="clickType2('',-1)" :class="{active:type2===-1}">全部</li>
                     <li v-for="(i,index) in list.type2" @click="clickType2(i.id,index)" :class="{active:type2===index}">{{i.name}}</li>
                 </ul>
-            </template>
+            </header>
             <div class="content">
                 <ul class="catalog">
                     <li class="_theme_service_bg" @click="getHot" :class="{active:type===-1}">热门服务</li>
@@ -40,7 +40,7 @@
                 <div>
                     <ul class="list"><li v-for="i in list.list">
                         <a :href="i.url" target="_blank">
-                            <img :src="imgPath+i.id"/>
+                            <img :src="$proxy+imgPath+i.id"/>
                             <div class="info">
                                 <p>{{i.name}}</p>
                                 <span>{{i.type2Name}}</span>
@@ -59,7 +59,7 @@
                     </el-pagination>
                 </div>
             </div>
-        </card>
+        </CardTemp>
     </div>
 </template>
 
@@ -72,7 +72,7 @@
         page:1,
         limit:12,
         total:1,
-        imgPath:'/api/resource/service?id=',
+        imgPath:'/resource/service?id=',
         type:-1,//一级目录选中标识
         typeID:"",
         type2:-1,//二级目录选中标识

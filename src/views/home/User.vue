@@ -6,7 +6,7 @@
         <ul>
             <li class="border_bottom1">
                 <a>
-                    <img src="/api/img/email.png"/>
+                    <img :src="$proxy+'/img/email.png'"/>
                     <div class="right">
                         <div class="name">邮件<br/><span class="pointer _theme_news_fontcolor">{{email.email}}</span><span class="pointer _theme_news_fontcolor">解绑</span></div>
                         <div class="info">未读：{{email.unread}}，今日：{{email.todayCount}}</div>
@@ -15,7 +15,7 @@
             </li>
             <li class="border_bottom1">
                 <a>
-                    <img src="/api/img/school_card.png"/>
+                    <img :src="$proxy+'/img/school_card.png'"/>
                     <div class="right">
                         <div class="name">校园卡<br/><span class="pointer _theme_news_fontcolor">在用</span></div>
                         <div class="info">
@@ -27,7 +27,7 @@
             </li>
             <li class="border_bottom1">
                 <a>
-                    <img src="/api/img/book.png"/>
+                    <img :src="$proxy+'/img/book.png'"/>
                     <div class="right">
                         <div class="name">图书馆<br/><span class="pointer _theme_news_fontcolor">{{ tsg.bookCount === 0 ? '暂无借阅图书' : `在借${tsg.bookCount}本`}}</span></div>
                         <div class="info">
@@ -38,7 +38,7 @@
             </li>
             <li>
                 <a>
-                    <img src="/api/img/school_card.png"/>
+                    <img :src="$proxy+'/img/school_card.png'"/>
                     <div class="right">
                         <div class="name">网络流量<br/><span class="pointer _theme_news_fontcolor">{{ network.status}}</span></div>
                         <div class="info">
