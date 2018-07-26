@@ -6,7 +6,7 @@
         <div class="contain">
             <card>
                 <template slot="header">已订阅</template>
-                    <div class="content" v-for="item in zxlm">
+                    <div class="content" v-for="item in zxlm" v-if="item.subscribe.length > 0">
                         <div class="content_title">{{item.COLUMN_CATEGORY}}</div>
                         <div class="content_block">
                             <div class="block" v-for="b in item.subscribe">
@@ -19,7 +19,7 @@
 
             <card>
                 <template slot="header">未订阅</template>
-                <div class="content" v-for="item in zxlm">
+                <div class="content" v-for="item in zxlm" v-if="item.unsubscribe.length > 0">
                     <div class="content_title">{{item.COLUMN_CATEGORY}}</div>
                     <div class="content_block">
                         <div class="block" v-for="b in item.unsubscribe">
