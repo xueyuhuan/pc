@@ -7,7 +7,8 @@
         <button @click="popup"><i class="fa fa-cog"></i>&nbsp;工作台设置</button>
       </div>
     </subhead>
-    <div class="banner">
+    <div class="banner" v-show="bannerShow">
+      <img class="close" @click="closeBanner" :src="$proxy+'/img/banner-close.png'"/>
       <el-carousel trigger="click" height="300px">
         <el-carousel-item v-for="i in banner" >
           <a :href="i.url" target="_blank"><img :src="i.img"/></a>
@@ -55,7 +56,8 @@ export default {
       banner:[],
       page:{},
       A:[],
-      B:[]
+      B:[],
+      bannerShow:true
     }
   },
   computed:{
@@ -97,6 +99,7 @@ export default {
       this.getTodo(),
       this.getUser(),
     ]);
+    this.bannerShow=JSON.parse(localStorage.bannerShow);
   },
   methods:{
     popup(){//打开工作台设置
@@ -109,6 +112,10 @@ export default {
         name:'popupType'//设置弹框类型
       });
     },
+    closeBanner(){
+      this.bannerShow=false;
+      localStorage.bannerShow=JSON.stringify(this.bannerShow);
+    },
     end(){//拖拽结束保存布局
       let layout={A:this.A,B:this.B};
       this.$ajax.post(this.$url.homePageSave,{layout:JSON.stringify(layout),pageId:this.page.id})
@@ -117,7 +124,6 @@ export default {
               this.$notify({
                 message: '保存成功',
                 type: 'success',
-                position: 'bottom-right'
               });
             }
           })
@@ -309,9 +315,24 @@ export default {
       background: none;
     }
   }
+  .home{
+    .card:hover{
+      box-shadow: 0 0 30px rgba(0,0,0,.25);
+    }
+  }
   .banner{
+    position: relative;
     width: 1200px;
     margin: 0 auto 20px;
+    .close{
+      position: absolute;
+      top:10px;
+      right: 10px;
+      z-index: 999;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+    }
     img{
       height: 300px;
       width: 1200px;

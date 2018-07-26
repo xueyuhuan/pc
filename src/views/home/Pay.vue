@@ -4,17 +4,19 @@
             <router-link to="/pay"><i class="fa fa-ellipsis-h"></i></router-link>
         </template>
         <div class="pay">
-            <div class="text">
-                <p>{{title}}</p>
-                <p>当月总收入：{{data.currentMonthTotal}}</p>
-                <p>上月津贴：{{data.XNJT}}</p>
-                <p>应发工资：{{data.YFHJ}}</p>
-                <p>扣款合计：{{data.KKHJ}}</p>
-                <p>实发工资：{{data.SFGZ}}</p>
-            </div>
-            <div id="pie"></div>
+            <span class="no">{{data.errmsg}}</span>
+            <template v-if="data.salary">
+                <div class="text">
+                    <p>{{data.title}}</p>
+                    <p>当月总收入：{{data.salary.currentMonthTotal}}</p>
+                    <p>上月津贴：{{data.salary.XNJT}}</p>
+                    <p>应发工资：{{data.salary.YFHJ}}</p>
+                    <p>扣款合计：{{data.salary.KKHJ}}</p>
+                    <p>实发工资：{{data.salary.SFGZ}}</p>
+                </div>
+                <div id="pie"></div>
+            </template>
         </div>
-
     </card>
 </template>
 
@@ -25,22 +27,24 @@
   import 'echarts/lib/component/legendScroll'
   export default {
     name: "Pay",
-    watch:{
-      data(){
-        this.drawPie();
-      }
-    },
+    // watch:{
+    //   data(){
+    //     this.drawPie();
+    //   }
+    // },
     computed:{
       data(){
-        return this.$store.state.pay.salary;
+        return this.$store.state.pay;
       },
-      title(){
-        return this.$store.state.title;
+    },
+    mounted(){
+      if(this.data.salary){
+        this.drawPie();
       }
     },
     methods:{
       drawPie(){
-        const vm=this;
+        let salary=this.data.salary;
         let pie=echarts.init(document.getElementById("pie"));
         pie.setOption({
           tooltip: {
@@ -64,12 +68,12 @@
                 show:false
               },
               data:[
-                {value:vm.data.GWGZ, name:'岗位工资：'+vm.data.GWGZ},
-                {value:vm.data.XJGZ, name:'薪级工资：'+vm.data.XJGZ},
-                {value:vm.data.JXGZ, name:'绩效：'+vm.data.JXGZ},
-                {value:vm.data.BFHJ, name:'补发：'+vm.data.BFHJ},
-                {value:vm.data.other, name:'其他：'+vm.data.other},
-                {value:vm.data.XNJT, name:'上月津贴：'+vm.data.XNJT}
+                {value:salary.GWGZ, name:'岗位工资：'+salary.GWGZ},
+                {value:salary.XJGZ, name:'薪级工资：'+salary.XJGZ},
+                {value:salary.JXGZ, name:'绩效：'+salary.JXGZ},
+                {value:salary.BFHJ, name:'补发：'+salary.BFHJ},
+                {value:salary.other, name:'其他：'+salary.other},
+                {value:salary.XNJT, name:'上月津贴：'+salary.XNJT}
               ]
             }
           ],
@@ -84,6 +88,12 @@
     .pay{
         @include flex;
         padding: 0 20px;
+        .no{
+            display: inline-block;
+            color: rgb(137, 137, 137);
+            font-size: 14px;
+            padding: 10px 0;
+        }
         .text{
             flex: 1;
             :first-child{

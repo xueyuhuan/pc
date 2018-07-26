@@ -8,6 +8,7 @@
             <li v-for="i in data">
                 <a href="'http://oa.ccnu.edu.cn/seeyon/caslogin.jsp?type='+i.url" target="_blank"><p>[{{i.type}}]{{i.title}}</p><time>{{i.createDate}}</time></a>
             </li>
+            <li class="no" v-if="data.length===0">暂无数据</li>
         </ul>
     </card>
 </template>
@@ -46,7 +47,11 @@
                 }
             }
         }
-
+        li.no{
+            font-size: 14px;
+            color: rgb(137, 137, 137);
+            margin: 0;
+        }
     }
 
 </style>

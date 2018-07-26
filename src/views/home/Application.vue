@@ -10,6 +10,7 @@
             <li v-for="i in data">
                 <a :href="i.url" target="_blank"><img :src="imgPath+i.id"/>{{i.name}}</a>
             </li>
+            <li class="no" v-if="data.length===0">暂无应用</li>
         </ul>
     </card>
 </template>
@@ -68,7 +69,11 @@
                 }
             }
         }
-
+        li.no{
+            font-size: 14px;
+            color: rgb(137, 137, 137);
+            margin: 0;
+        }
     }
 
 </style>
