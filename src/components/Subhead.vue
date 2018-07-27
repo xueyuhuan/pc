@@ -19,10 +19,8 @@
 
 <style lang="scss">
     .subhead{
-        background: $skin-darker;
         margin-bottom: 15px;
         font-size: 16px;
-        margin-top: 90px;
         span{
             font-size: 12px;
         }

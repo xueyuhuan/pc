@@ -21,6 +21,7 @@ const collections = () => import('./views/collections/Collections');
 const user = () => import("./views/user/Info");
 const userHead = () => import("./views/user/Head");
 const message = () => import('./views/message/message');
+const log = () => import('./views/version/log');
 Vue.use(Router);
 
 export default new Router({
@@ -47,6 +48,7 @@ export default new Router({
       {path: '/collections', name: 'collections', component: collections},
       {path: "/user", component: user},
       {path: "/user/head", component: userHead},
-      {path:'/message',name:'message',component: message}
+      {path:'/message',name:'message',component: message},
+      {path:'/log',name:'log',component: log}
     ]
 });
