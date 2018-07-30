@@ -87,7 +87,13 @@
                 icon:[
                     {class:'fa fa-pencil-square-o',color:'rgb(139, 202, 139)'},
                     {class:'fa fa-bell-o',color:'rgb(255, 223, 175)'},
-                    {class:'fa fa-calendar',color:'rgb(255, 227, 218)'}
+                    {class:'fa fa-calendar',color:'rgb(255, 227, 218)'},
+                    {class:'fa fa-book',color:'rgb(139, 202, 139)'},
+                    {class:'fa fa-bookmark-o',color:'rgb(255, 223, 175)'},
+                    {class:'fa fa-cog',color:'rgb(255, 227, 218)'},
+                    {class:'fa fa-edit',color:'rgb(139, 202, 139)'},
+                    {class:'fa fa-envelope-o',color:'rgb(255, 223, 175)'},
+                    {class:'fa fa-life-buoy',color:'rgb(255, 227, 218)'}
                     ],
                 current_app_type_id:"",//当前展示的app类型id
                 app_rank:[],//app排行
