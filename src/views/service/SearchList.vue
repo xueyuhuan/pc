@@ -1,7 +1,7 @@
 <template>
     <div class="listing">
         <div class="left">
-            <h4>热门服务</h4>
+            <h4 class="_theme_card_font">热门服务</h4>
             <ul><li v-for="i in hot"><router-link :to="'/service/detail/'+i.id">
                 <img :src="$proxy+imgPath+i.id"/>
                 <div class="text">
@@ -10,7 +10,7 @@
                     <span class="number"><i class="fa fa-eye"></i>&nbsp;{{i.viewCount}}<i class="fa fa-star" :class="{yellow:i.favCount>0}"></i>&nbsp;{{i.favCount}}</span>
                 </div>
             </router-link></li></ul>
-            <h4 style="padding: 10px 0 0 0">最新服务</h4>
+            <h4 class="_theme_card_font" style="padding: 10px 0 0 0">最新服务</h4>
             <ul><li v-for="i in newest"><router-link :to="'/service/detail/'+i.id">
                 <img :src="$proxy+imgPath+i.id"/>
                 <div class="text">
@@ -25,7 +25,7 @@
             <div class="left">
                 <img :src="$proxy+imgPath+i.id"/>
                 <div class="text">
-                    <p class="name">{{i.name}}</p>
+                    <p class="name" :title="i.name"><i class="fa fa-building-o" v-if="i.isJzdt==='1'"></i><span v-html="ruleTitle(i.name)"></span></p>
                     <p class="type">服务类型：{{i.type2Name}}</p>
                     <span class="number"><i class="fa fa-eye"></i>&nbsp;{{i.viewCount}}<i class="fa fa-star" :class="{yellow:i.favCount>0}"></i>&nbsp;{{i.favCount}}</span>
                 </div>
@@ -49,6 +49,9 @@
       }
     },
     computed:{
+      key(){
+        return this.$store.state.searchKey;
+      },
       data(){
         return this.$store.state.search;
       }
@@ -69,6 +72,21 @@
             .then(res=>{
               this.newest=res.data.newestServices;
             })
+      },
+      ruleTitle(value) {
+        let titleString = value;
+        if (!titleString) {
+          return value;
+        }
+        if (this.key) {
+          // 匹配关键字正则
+          let replaceReg = new RegExp(this.key, 'g');
+          // 高亮替换v-html值
+          let replaceString = '<em style="color: #FF9800">' + this.key + '</em>';
+          // 开始替换
+          titleString = titleString.replace(replaceReg, replaceString);
+        }
+        return titleString;
       }
     }
   }
@@ -120,7 +138,6 @@
             h4{
                 font-size: 16px;
                 font-weight: normal;
-                color: $skin-card;
                 margin: 0;
             }
             ul{
@@ -148,9 +165,13 @@
                 margin-bottom: 10px;
                 .left{
                     @include flex;
-                    p.name{
-                        width: auto;
+                    .text{
+                        flex: 0 0 280px;
+                        p.name{
+                            width: 280px;
+                        }
                     }
+
                 }
                 .right{
                     p{

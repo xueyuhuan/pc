@@ -3,7 +3,7 @@
         <li v-for="i in data.rows"><router-link :to="'/service/detail/'+i.id">
             <div class="xs" v-show="i.lineAble==='0'"><span>线下</span></div>
             <img :src="$proxy+imgPath+i.id"/>
-            <p class="name" :title="i.name"><i class="fa fa-building-o" v-if="i.isJzdt==='1'"></i>{{i.name}}</p>
+            <p class="name" :title="i.name"><i class="fa fa-building-o" v-if="i.isJzdt==='1'"></i><span v-html="ruleTitle(i.name)"></span></p>
             <p class="type">服务类别：{{i.type2Name}}</p>
             <span class="number"><i class="fa fa-eye"></i>&nbsp;{{i.viewCount}}<i class="fa fa-star" :class="{yellow:i.favCount>0}"></i>&nbsp;{{i.favCount}}</span>
         </router-link></li>
@@ -15,14 +15,34 @@
     name: "SearchIcon",
     data(){
       return{
-        imgPath:"/resource/service?id="
+        imgPath:"/resource/service?id=",
       }
     },
     computed:{
+      key(){
+        return this.$store.state.searchKey;
+      },
       data(){
         return this.$store.state.search;
       }
     },
+    methods:{
+      ruleTitle(value) {
+        let titleString = value;
+        if (!titleString) {
+          return value;
+        }
+        if (this.key) {
+          // 匹配关键字正则
+          let replaceReg = new RegExp(this.key, 'g');
+          // 高亮替换v-html值
+          let replaceString = '<em style="color: #FF9800">' + this.key + '</em>';
+          // 开始替换
+          titleString = titleString.replace(replaceReg, replaceString);
+        }
+        return titleString;
+      }
+    }
   }
 </script>
 

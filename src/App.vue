@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="_theme_blue" v-cloak>
+  <div id="app" :class="skin" v-cloak>
     <navigation v-if="this.$route.path!=='/login'"></navigation>
     <div style="padding-bottom: 50px;"><router-view/></div>
     <!--回到顶部按钮-->
@@ -17,27 +17,31 @@
     export default {
       data(){
           return{
-              exclude_name:'NewsDetail',
-              top:0
+            exclude_name:'NewsDetail',
+            top:0,
+            skin:'_theme_blue',
           }
       },
-        methods:{
-            //滚动条回顶部
-            toTop(){
-                scroll(0,0);
-            },
-            //监听滚动条位置
-            bindScroll(){
-                window.onscroll = () => {
-                    //获取滚动条的滚动高度
-                    let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                    this.top = scrollTop;
-                }
-            }
-        },
-        created(){
-          this.bindScroll();
+      created(){
+        if(localStorage.skin){
+          this.skin=localStorage.skin;
         }
+        this.bindScroll();
+      },
+      methods:{
+        //滚动条回顶部
+        toTop(){
+          scroll(0,0);
+        },
+        //监听滚动条位置
+        bindScroll(){
+          window.onscroll = () => {
+            //获取滚动条的滚动高度
+            let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            this.top = scrollTop;
+          }
+        }
+      },
     }
 </script>
 <style>

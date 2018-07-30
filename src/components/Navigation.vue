@@ -125,6 +125,7 @@
           },
           toggleColor(command) {//换肤
             document.getElementById('app').className='_theme_'+command;
+            localStorage.skin='_theme_'+command;
           },
           logout(){//注销
             this.panelShow=false;

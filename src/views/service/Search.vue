@@ -195,6 +195,10 @@
               this.$store.commit('set_data',{
                 data:res.data.page,
                 name:'search'
+              });
+              this.$store.commit('set_data',{
+                data:this.searchData.key,
+                name:'searchKey'
               })
             })
       },
