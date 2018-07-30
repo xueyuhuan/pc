@@ -2,7 +2,7 @@
     <header class="_theme position_fixed">
         <div class="content">
             <nav>
-                <img :src="$school.logo"/>
+                <router-link :to="$school.url"><img :src="$school.logo"/></router-link>
                 <ul>
                     <li v-for="i in nav" class="_theme_light" :class="{active:active===i.url}" @click="click(i.url)">
                         <router-link :to="i.url">{{i.name}}</router-link>
@@ -13,7 +13,7 @@
                 <li @click="click('/feedback')" v-if="$school.school==='hit'">
                     <router-link to="/feedback">
                         <el-tooltip class="item" effect="light" content="意见反馈" placement="bottom">
-                            <i class="fa fa-star-o" :class="{active:active==='/feedback'}"></i>
+                            <i class="fa fa-map-o" :class="{active:active==='/feedback'}"></i>
                         </el-tooltip>
                     </router-link>
                 </li>
@@ -125,6 +125,7 @@
           },
           toggleColor(command) {//换肤
             document.getElementById('app').className='_theme_'+command;
+            localStorage.skin='_theme_'+command;
           },
           logout(){//注销
             this.panelShow=false;

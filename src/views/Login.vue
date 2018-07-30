@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="top"><img :src="$school.logo" /></div>
+        <div class="top"><img :src="$school.school==='hit'?$proxy+'img/hit/logo_blue.png':$proxy+'img/ccnu/logo_blue.png'" /></div>
         <div class="mid">
             <div class="title">{{$school.loginTitle}}</div>
             <div class="login">

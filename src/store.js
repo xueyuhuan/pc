@@ -31,6 +31,7 @@ export default new Vuex.Store({
     /*设置弹框end*/
     /*服务*/
     search:'',
+    searchKey:'',
     /*i哈工大*/
     jumpShow:false,//跳转是否显示
     jumpName:''//跳转的名字

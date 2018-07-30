@@ -50,7 +50,7 @@
                     </div>
                 </template>
                 <div v-for="item in rank_news">{{item.title}}</div>
-                <div class="nodata" v-if="rank_news.length == 0">暂无数据</div>
+                <div class="nodata" v-if="rank_news.length === 0">暂无数据</div>
             </card>
         </div>
     </div>
@@ -102,7 +102,7 @@
             getNewsList(){
                 this.$ajax.post(this.$url.news_list,{page:this.page,columnId:this.id,dateIndex:this.date_index,key:this.input_value})
                     .then(res => {
-                        console.log(res.data);
+                        // console.log(res.data);
                         this.newsList_length = res.data.count;
                         this.newsList = res.data.news;
                     })

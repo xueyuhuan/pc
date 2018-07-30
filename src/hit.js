@@ -1,5 +1,6 @@
 export default {
   school:'hit',
+  url:'/index',
   logo:'logo_hit.png',
   title:'哈尔滨工业大学校园门户',
   enterName:'师生服务中心',

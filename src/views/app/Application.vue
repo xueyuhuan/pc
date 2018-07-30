@@ -11,7 +11,7 @@
         </subhead>
         <div class="contain">
             <div class="left_div _theme_app_bordertop">
-                <div class="left_div_block" v-for="appGroup in appGroups" v-if="current_app_type_id === appGroup.id || current_app_type_id === ''">
+                <div class="left_div_block" v-for="appGroup in appGroups" v-show="appGroup.apps.length>0" v-if="current_app_type_id === appGroup.id || current_app_type_id === ''">
                     <div class="block_head _theme_app_block_head_color">{{appGroup.name}}</div>
                     <div class="block_body">
                         <div class="app" v-for="app in appGroup.apps">
@@ -28,7 +28,7 @@
                     <template slot="header">分类</template>
                     <div class="fenlei">
                         <div @click="toggleAppType('')"><i class="fa fa-search" style="color: rgb(255, 227, 218);"></i>&nbsp;&nbsp;全部服务({{all_service_count}})</div>
-                        <div v-for="(item,index) in appGroups" @click="toggleAppType(item.id)"><i :class="icon[index].class" :style="'color:' + icon[index].color + ';'"></i>&nbsp;&nbsp;{{item.name}}({{item.apps.length}})</div>
+                        <div v-for="(item,index) in appGroups" @click="toggleAppType(item.id)"><i :class="icon[index%3].class" :style="'color:' + icon[index%3].color + ';'"></i>&nbsp;&nbsp;{{item.name}}({{item.apps.length}})</div>
                     </div>
                 </card>
                 <card>
