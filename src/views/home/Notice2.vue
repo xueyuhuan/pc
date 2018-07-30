@@ -1,13 +1,13 @@
 <template>
-    <card>
-        <template slot="header">通知公告</template>
+    <CardTemp>
+        <header class="drag" slot="header">通知公告</header>
         <ul>
             <li v-for="i in data">
                 <a :href="i.url" target="_blank"><p>{{i.title}}</p><time>{{i.publishDate}}</time></a>
             </li>
             <li class="no" v-if="data.length===0">暂无数据</li>
         </ul>
-    </card>
+    </CardTemp>
 </template>
 
 <script>
@@ -22,6 +22,9 @@
 </script>
 
 <style scoped lang="scss">
+    header{
+        cursor: move;
+    }
     ul{
         padding: 10px 20px;
         li{

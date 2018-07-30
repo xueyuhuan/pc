@@ -1,8 +1,8 @@
 <template>
-    <card>
-        <template slot="header">工资查询
+    <CardTemp>
+        <header class="drag" slot="header">工资查询
             <router-link to="/pay"><i class="fa fa-ellipsis-h"></i></router-link>
-        </template>
+        </header>
         <div class="pay">
             <span class="no">{{data.errmsg}}</span>
             <template v-if="data.salary">
@@ -17,7 +17,7 @@
                 <div id="pie"></div>
             </template>
         </div>
-    </card>
+    </CardTemp>
 </template>
 
 <script>
@@ -85,6 +85,9 @@
 </script>
 
 <style scoped lang="scss">
+    header{
+        cursor: move;
+    }
     .pay{
         @include flex;
         padding: 0 20px;

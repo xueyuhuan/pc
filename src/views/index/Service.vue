@@ -10,7 +10,7 @@
             <router-link to="/service/search/icon"><i class="fa fa-ellipsis-h"></i></router-link>
         </template>
         <ul><li v-for="i in list.slice(0,8)"><router-link :to="'/service/detail/'+i.id">
-            <img :src="proxy+imgPath+i.id"/>
+            <img :src="$proxy+imgPath+i.id"/>
             <p>{{i.name}}<br/><span>{{i.type2Name}}</span></p>
         </router-link></li></ul>
     </card>
@@ -21,7 +21,6 @@
     name: "Service",
     data(){
       return{
-        proxy:process.env.VUE_APP_PROXY,
         imgPath:'/resource/service?id=',
         active:'hot',
         list:[],

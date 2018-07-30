@@ -1,16 +1,16 @@
 <template>
-    <card>
-        <template slot="header">
+    <CardTemp>
+        <header class="drag" slot="header">
             我的待办
             <router-link to="/todo"><i class="fa fa-ellipsis-h"></i></router-link>
-        </template>
+        </header>
         <ul>
             <li v-for="i in data">
                 <a :href="i.url" target="_blank"><p>[{{i.appName}}]{{i.title}}</p><time>{{i.currentTime}}</time></a>
             </li>
             <li class="no" v-if="data.length===0">暂无待办</li>
         </ul>
-    </card>
+    </CardTemp>
 </template>
 
 <script>
@@ -25,6 +25,9 @@
 </script>
 
 <style scoped lang="scss">
+    header{
+        cursor: move;
+    }
     ul{
         padding: 10px 20px;
         li{

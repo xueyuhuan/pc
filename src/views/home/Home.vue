@@ -63,9 +63,10 @@ export default {
   computed:{
     dragOptions(){
       return{
-        animation: 0,
+        animation: 100,
         group: 'description',
         disable:true,
+        handle:'.drag',
         ghostClass: 'ghost'
       }
     },
@@ -99,7 +100,9 @@ export default {
       this.getTodo(),
       this.getUser(),
     ]);
-    this.bannerShow=JSON.parse(localStorage.bannerShow);
+    if(localStorage.bannerShow){
+      this.bannerShow=localStorage.bannerShow;
+    }
   },
   methods:{
     popup(){//打开工作台设置
@@ -114,17 +117,14 @@ export default {
     },
     closeBanner(){
       this.bannerShow=false;
-      localStorage.bannerShow=JSON.stringify(this.bannerShow);
+      localStorage.bannerShow=this.bannerShow;
     },
     end(){//拖拽结束保存布局
       let layout={A:this.A,B:this.B};
       this.$ajax.post(this.$url.homePageSave,{layout:JSON.stringify(layout),pageId:this.page.id})
           .then(res=>{
             if(res.data.errmsg==='ok'){
-              this.$notify({
-                message: '保存成功',
-                type: 'success',
-              });
+
             }
           })
     },
@@ -146,17 +146,6 @@ export default {
             }
           });
     },
-    getBanner(){//获取banner
-      this.$ajax.post(this.$url.homeBanner,{id: "dashboard"})
-          .then(res=>{
-            for(let i=0;i<res.data.space.banners.length;i++){
-              this.banner.push({
-                img:'/api'+res.data.imgUrl+res.data.space.banners[i].url,
-                url:res.data.space.banners[i].link
-              });
-            }
-          });
-    },
     transform(name){//根据名字转换组件
       let x;
       switch (name) {
@@ -172,6 +161,17 @@ export default {
         case '我的待办':x='todo';break;
       }
       return x;
+    },
+    getBanner(){//获取banner
+      this.$ajax.post(this.$url.homeBanner,{id: "dashboard"})
+          .then(res=>{
+            for(let i=0;i<res.data.space.banners.length;i++){
+              this.banner.push({
+                img:'/api'+res.data.imgUrl+res.data.space.banners[i].url,
+                url:res.data.space.banners[i].link
+              });
+            }
+          });
     },
     /**
     每个组件数据获取
@@ -303,6 +303,14 @@ export default {
     width: 595px;
     min-height: 50px;
   }
+  .home{
+    .card:hover{
+      box-shadow: 0 0 30px rgba(0,0,0,.25);
+    }
+    .drag{
+      cursor: pointer!important;
+    }
+  }
   .subhead{
     font-size: 16px;
     a{
@@ -313,11 +321,6 @@ export default {
       color: #fff;
       border: none;
       background: none;
-    }
-  }
-  .home{
-    .card:hover{
-      box-shadow: 0 0 30px rgba(0,0,0,.25);
     }
   }
   .banner{
@@ -347,5 +350,4 @@ export default {
       width: 595px;
     }
   }
-
 </style>

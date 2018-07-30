@@ -17,6 +17,9 @@ $orange-card:#f18b2e;
       color: #1295d8!important;
     }
   }
+  ._theme_card_font{
+    color: $blue-card;
+  }
   ._theme_card_a{
     border-left: 2px solid $blue-card;
   }
@@ -80,6 +83,9 @@ $orange-card:#f18b2e;
     header{
       color: #00697e!important;
     }
+  }
+  ._theme_card_font{
+    color: $green-card;
   }
   ._theme_card_a{
     border-left: 2px solid $green-card;
@@ -145,6 +151,9 @@ $orange-card:#f18b2e;
        color: #f18b2e!important;
      }
    }
+  ._theme_card_font{
+    color: $orange-card;
+  }
   ._theme_card_a{
     border-left: 2px solid $orange-card;
   }

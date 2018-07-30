@@ -51,7 +51,7 @@
                         <template slot="header"><span><i class="fa fa-star starColor"></i>&nbsp;&nbsp;应用</span></template>
                         <div class="service_body">
                             <div v-for="item in app" @click="openApp(item.url)" class="service_block">
-                                <img :src="`/api/resource/app?id=${item.id}&timestamp=${item.timestamp}`"/>
+                                <img :src="$proxy+`/resource/app?id=${item.id}&timestamp=${item.timestamp}`"/>
                                 <div>{{item.name}}</div>
                                 <i @click.stop="delFavorites(item.id,'app')" class="fa fa-star starColor"></i>
                             </div>

@@ -1,15 +1,15 @@
 <template>
-    <card>
-        <template slot="header">校内通知
+    <CardTemp>
+        <header class="drag" slot="header">校内通知
             <a href="http://fw.ccnu.edu.cn/notice/notify/notifyList" target="_blank"><i class="fa fa-ellipsis-h"></i></a>
-        </template>
+        </header>
         <ul>
             <li v-for="i in data">
                 <a :href="i.url" target="_blank"><p>{{i.title}}</p><time>{{i.when_created}}</time></a>
             </li>
             <li class="no" v-if="data.length===0">暂无数据</li>
         </ul>
-    </card>
+    </CardTemp>
 </template>
 
 <script>
@@ -24,6 +24,9 @@
 </script>
 
 <style scoped lang="scss">
+    header{
+        cursor: move;
+    }
     ul{
         padding: 10px 20px;
         li{

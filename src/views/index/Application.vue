@@ -4,7 +4,7 @@
             <router-link to="/app"><i class="fa fa-ellipsis-h"></i></router-link>
         </template>
         <ul><li v-for="i in app"><a :href="i.url">
-            <img :src="proxy+imgPath+i.id"/><p>{{i.shortName}}</p>
+            <img :src="$proxy+imgPath+i.id"/><p>{{i.shortName}}</p>
         </a></li></ul>
     </card>
 </template>
@@ -14,7 +14,6 @@
     name: "Application",
     data(){
       return{
-        proxy:process.env.VUE_APP_PROXY,
         imgPath:'/resource/app?id=',
         app:[]
       }

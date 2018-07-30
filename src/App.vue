@@ -1,13 +1,13 @@
 <template>
   <div id="app" class="_theme_blue" v-cloak>
     <navigation v-if="this.$route.path!=='/login'"></navigation>
-      <router-view/>
+    <div style="padding-bottom: 50px;"><router-view/></div>
     <!--回到顶部按钮-->
     <a href="javascript:;" v-show="top > 200" title="回到顶部" @click="toTop" class="toTop _theme_toTop_bgcolor"><i class="fa fa-chevron-up"></i></a>
     <div class="footContain" v-if="this.$route.path!=='/login'">
       <div class="foot">
         <span>© 2015-2017 Wuhan Sibe. All rights reserved.</span>
-        <router-link to="">升级日志</router-link>
+        <router-link to="/log">升级日志</router-link>
       </div>
     </div>
   </div>
@@ -46,6 +46,11 @@
   }
 </style>
 <style scoped lang="scss">
+  #app{
+    position: relative;
+    min-height: 100%;
+    padding-top: 90px;
+  }
     .toTop{
       display:block;
       width: 50px;
@@ -67,13 +72,14 @@
     transform: scale(1.2,1.2);
   }
   .footContain{
-    /*position: fixed;*/
-    /*left: 0;*/
-    /*right: 0;*/
-    /*bottom: 0;*/
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
     min-width: 1200px;
     background-color: #747474;
+    margin-top: 20px;
     color: #fff;
     .foot{
       width: 1200px;

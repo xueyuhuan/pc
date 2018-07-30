@@ -14,7 +14,7 @@
                 <li v-for="(i,index) in list">
                     <div class="select" v-show="i.selectFlag==='N'" @click="add(i,index)"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;点击选择</div>
                     <div class="flag" v-show="i.selectFlag==='Y'"><i>已选</i></div>
-                    <img v-show="popupType!=='home'" :src="imgPath+i.id"/>{{i.name}}</li>
+                    <img v-show="popupType!=='home'" :src="$proxy+imgPath+i.id"/>{{i.name}}</li>
             </ul>
             <el-pagination
                     background
@@ -30,7 +30,7 @@
                     <transition-group>
                         <li v-for="(i,index) in listHas" :key="index">
                             <div class="select" @click="cancel(i,index)"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;取消选择</div>
-                            <img :src="imgPath+i.id"/>{{i.name}}
+                            <img :src="$proxy+imgPath+i.id"/>{{i.name}}
                         </li>
                     </transition-group>
                 </draggable>
@@ -121,7 +121,7 @@
         this.typeID='';
         if(this.popupType==='app'){
           this.name="应用";
-          this.imgPath="/api/resource/app?id=";
+          this.imgPath="/resource/app?id=";
           this.url.save=this.$url.homeAppSave;
           this.url.all=this.$url.homeAppAll;
           this.url.has=this.$url.homeAppHas;
@@ -130,7 +130,7 @@
         }
         else if(this.popupType==='service') {
           this.name="服务";
-          this.imgPath="/api/resource/service?id=";
+          this.imgPath="/resource/service?id=";
           this.url.save=this.$url.homeServiceSave;
           this.url.all=this.$url.homeServiceAll;
           this.url.has=this.$url.homeService;

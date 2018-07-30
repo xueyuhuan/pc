@@ -3,7 +3,7 @@
         <div class="left">
             <h4>热门服务</h4>
             <ul><li v-for="i in hot"><router-link :to="'/service/detail/'+i.id">
-                <img :src="imgPath+i.id"/>
+                <img :src="$proxy+imgPath+i.id"/>
                 <div class="text">
                     <p class="name">{{i.name}}</p>
                     <p class="type">服务类型：{{i.type2Name}}</p>
@@ -12,7 +12,7 @@
             </router-link></li></ul>
             <h4 style="padding: 10px 0 0 0">最新服务</h4>
             <ul><li v-for="i in newest"><router-link :to="'/service/detail/'+i.id">
-                <img :src="imgPath+i.id"/>
+                <img :src="$proxy+imgPath+i.id"/>
                 <div class="text">
                     <p class="name">{{i.name}}</p>
                     <p class="type">服务类型：{{i.type2Name}}</p>
@@ -23,7 +23,7 @@
         <ul class="right"><li v-for="i in data.rows">
             <router-link :to="'/service/detail/'+i.id">
             <div class="left">
-                <img :src="imgPath+i.id"/>
+                <img :src="$proxy+imgPath+i.id"/>
                 <div class="text">
                     <p class="name">{{i.name}}</p>
                     <p class="type">服务类型：{{i.type2Name}}</p>
@@ -43,7 +43,7 @@
     name: "SearchList",
     data(){
       return{
-        imgPath:process.env.VUE_APP_PROXY+"/resource/service?id=",
+        imgPath:"/resource/service?id=",
         hot:[],
         newest:[]
       }

@@ -1,18 +1,18 @@
 <template>
-    <card>
-        <template slot="header">我的服务
+    <CardTemp>
+        <header class="drag" slot="header">我的服务
             <div class="right">
                 <i class="fa fa-cog" @click="popup"></i>
                 <router-link to="/schedule"><i class="fa fa-ellipsis-h"></i></router-link>
             </div>
-        </template>
+        </header>
         <ul>
             <li v-for="i in data">
-                <a :href="i.url" target="_blank"><img :src="imgPath+i.id"/>{{i.name}}</a>
+                <a :href="i.url" target="_blank"><img :src="$proxy+imgPath+i.id"/>{{i.name}}</a>
             </li>
             <li class="no" v-if="data.length===0">暂无数据</li>
         </ul>
-    </card>
+    </CardTemp>
 </template>
 
 <script>
@@ -20,7 +20,7 @@
     name: "Service",
     data(){
       return{
-        imgPath:"/api/resource/service?id="
+        imgPath:"/resource/service?id="
       }
     },
     computed:{
@@ -44,6 +44,9 @@
 </script>
 
 <style scoped lang="scss">
+    header{
+        cursor: move;
+    }
     .right{
         i{
             margin-left: 5px;
@@ -63,7 +66,6 @@
                 img{
                     width: 30px;
                     height: 30px;
-                    border-radius: 50%;
                     margin-right: 20px;
                 }
             }

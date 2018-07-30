@@ -4,69 +4,84 @@
             <div><i class="fa fa-arrow-left" style="cursor: pointer" @click="routerBack"></i>&nbsp;&nbsp;&nbsp;服务详情</div>
         </subhead>
         <div class="content">
+            <!--左侧-->
             <card class="left">
+                <!--头部-->
                 <template slot="header">
                     <div class="left">
-                        <img :src="proxy+imgPath.head+data.service.id"/>
+                        <img :src="$proxy+imgPath.head+service.id"/>
                         <div class="info">
-                            <p>{{data.service.name}}<button>{{data.service.lineAble==="1"?"线上":"线下"}}</button><button>{{data.service.type1Name}}</button><button>{{data.service.type2Name}}</button></p>
+                            <p>{{service.name}}<button>{{service.lineAble==="1"?"线上":"线下"}}</button><button>{{service.type1Name}}</button><button>{{service.type2Name}}</button></p>
                             <span v-show="!isFavorite" @click="favorite('add')"><i class="fa fa-star-o"></i>点击收藏</span>
                             <span v-show="isFavorite" @click="favorite('del')"><i class="fa fa-star"></i>点击取消</span>
                         </div>
                     </div>
-                    <a>进入服务</a>
+                    <a class="online" v-if="service.lineAble==='1'">进入服务</a>
+                    <a class="underline" v-else>该项服务为线下服务<br/>请仔细查看办理流程</a>
                 </template>
+                <!--服务提供和对象说明-->
                 <div class="explain">
-                    <p v-if="data.service.managerDeptname"><i class="fa fa-info-circle"></i>本服务由<em>{{data.service.managerDeptname}}</em>提供</p>
+                    <p v-if="service.managerDeptname"><i class="fa fa-info-circle"></i>本服务由<em>{{service.managerDeptname}}</em>提供</p>
                     <p v-else><i class="fa fa-info-circle"></i>暂无服务部门</p>
-                    <p v-if="data.service.fwdxsm"><i class="fa fa-info-circle"></i>本服务的服务对象为<em>{{data.service.fwdxsm}}</em></p>
+                    <p v-if="service.fwdxsm"><i class="fa fa-info-circle"></i>本服务的服务对象为<em>{{service.fwdxsm}}</em></p>
                     <p v-else><i class="fa fa-info-circle"></i>暂无服务对象</p>
                 </div>
+                <!--四个折叠面板-->
                 <el-collapse class="collapse" v-model="activeName">
+                    <!--办理说明-->
                     <el-collapse-item name="1">
                         <template slot="title"><i class="fa fa-file-text-o"></i>办理说明</template>
-                        <div v-if="data.service.description" class="content" v-html="data.service.description"></div>
+                        <div v-if="service.description" class="content" v-html="service.description"></div>
                         <p v-else class="no">暂无数据</p>
                     </el-collapse-item>
+                    <!--服务流程-->
                     <el-collapse-item name="2">
                         <template slot="title"><i class="fa fa-file-text-o"></i>服务流程</template>
                         <div class="content">
-                            <div class="text"><p class="no" v-if="data.service.fwlcsm===''">暂无数据</p><div v-else v-html="data.service.fwlcsm"></div></div>
+                            <div class="text"><p class="no" style="padding:0;margin-bottom: 14px;" v-if="service.fwlcsm===''">暂无数据</p><div v-else v-html="service.fwlcsm"></div></div>
+                            <!--右侧图片-->
                             <div class="img" v-if="data.fwlcs&&data.fwlcs.length>0">
+                                <!--图片大于1时轮播-->
                                 <el-carousel v-if="data.fwlcs.length>1">
                                     <el-carousel-item v-for="i in data.fwlcs" >
-                                        <a v-if="[i.path].indexOf('http')>0" :href="i.path" target="_blank"><img :src="i.path"/></a>
-                                        <a :href="proxy+imgPath.fwlc+i.path" target="_blank"><img :src="proxy+imgPath.fwlc+i.path"/></a>
+                                        <a v-if="i.path.indexOf('http')>-1" :href="i.path" target="_blank"><img title="点击查看大图" :src="i.path"/></a>
+                                        <a v-else :href="$proxy+imgPath.fwlc+i.path" target="_blank"><img title="点击查看大图" :src="$proxy+imgPath.fwlc+i.path"/></a>
                                     </el-carousel-item>
                                 </el-carousel>
+                                <!--否则单图片-->
                                 <template v-else>
-                                    <a v-if="data.fwlcs[0].path.indexOf('http')>0" :href="data.fwlcs[0].path" target="_blank"><img :src="data.fwlcs[0].path"/></a>
-                                    <a v-else :href="proxy+imgPath.fwlc+data.fwlcs[0].path" target="_blank"><img :src="proxy+imgPath.fwlc+data.fwlcs[0].path"/></a>
+                                    <a v-if="data.fwlcs[0].path.indexOf('http')>-1" :href="data.fwlcs[0].path" target="_blank"><img title="点击查看大图" :src="data.fwlcs[0].path"/></a>
+                                    <a v-else :href="$proxy+imgPath.fwlc+data.fwlcs[0].path" target="_blank"><img title="点击查看大图" :src="$proxy+imgPath.fwlc+data.fwlcs[0].path"/></a>
                                 </template>
                             </div>
                         </div>
-
                     </el-collapse-item>
+                    <!--所需材料-->
                     <el-collapse-item name="3">
                         <template slot="title"><i class="fa fa-file-text-o"></i>所需材料</template>
                         <div class="content" v-if="data.sxcls&&data.sxcls.length>0">
                             <table>
-                                <thead><tr><th></th><th>材料名称</th><th>下载</th></tr></thead>
+                                <thead><tr><th colspan="1"></th><th colspan="10">材料名称</th><th colspan="2">下载</th></tr></thead>
                                 <tr v-for="(i,index) in data.sxcls">
-                                    <td>{{index+1}}</td>
-                                    <td>{{i.fileName}}</td>
-                                    <td><a v-if="i.path.indexOf('http')>0" :href="i.path" target="_blank"><i class="fa fa-download"></i></a>
-                                        <a v-else :href="proxy+i.path" target="_blank"><i class="fa fa-download"></i></a></td>
+                                    <td colspan="1">{{index+1}}</td>
+                                    <td colspan="10">{{i.fileName}}</td>
+                                    <td colspan="2">
+                                        <template v-if="i.path!==''">
+                                            <a v-if="i.path.indexOf('http')>-1" :href="i.path" target="_blank"><i class="fa fa-download"></i></a>
+                                            <a v-else :href="$proxy+i.path" target="_blank"><i class="fa fa-download"></i></a>
+                                        </template>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
                         <p class="no" v-else>暂无数据</p>
                     </el-collapse-item>
-                    <el-collapse-item name="4" v-if="data.service.isKfpj==='1'">
+                    <!--用户评价-->
+                    <el-collapse-item name="4" v-if="service.isKfpj==='1'">
                         <template slot="title"><i class="fa fa-file-text-o"></i>用户评价<a class="comment">评价</a></template>
                         <div class="content" v-if="comment.length>0">
                             <ul>
-                                <li v-for="i in comment"><img :src="i.PATH?i.PATH:'img/a0.jpg'"/>
+                                <li v-for="i in comment"><img :src="i.PATH?i.PATH:$proxy+'/img/a0.jpg'"/>
                                     <div class="text">{{i.USERNAME}}&nbsp;&nbsp;<el-rate class="rate" v-model="i.SCORE" disabled></el-rate><br/><span>{{i.COMMENT_TEXT}}</span></div>
                                 </li>
                             </ul>
@@ -74,6 +89,7 @@
                         <p class="no" v-else>暂无数据</p>
                     </el-collapse-item>
                 </el-collapse>
+                <!--分页-->
                 <el-pagination v-show="this.total>1"
                                background
                                layout="prev, pager, next"
@@ -83,33 +99,67 @@
                                :page-size=pageSize
                                :total=total>
                 </el-pagination>
-                <footer>监督电话：{{data.service.jddh}} | 更新时间 : {{data.service.whenModifiedStr}} | 更新人：{{data.service.createUserxm}}</footer>
+                <!--底部信息-->
+                <footer>监督电话：{{service.jddh}} | 更新时间 : {{service.whenModifiedStr}} | 更新人：{{service.createUserxm}}</footer>
             </card>
+            <!--右侧-->
             <div class="right">
-                <card>
+                <!--基本信息-->
+                <card class="basic">
                     <template slot="header"><div class="left"><i class="fa fa-info-circle"></i>基本信息</div></template>
-                    <p v-if="data.service.place"><i class="fa fa-location-arrow"></i>{{data.service.place}}</p>
-                    <p v-if="data.service.handleTime"><i class="fa fa-clock-o"></i>{{data.service.handleTime}}</p>
-                    <p v-if="data.service.managerTel"><i class="fa fa-phone"></i>{{data.service.managerTel}} {{data.service.manager}}</p>
+                    <div class="enter" v-if="service.isJzdt==='1'">
+                        <img :src="$school.school==='ccnu'?$proxy+'/img/fwdt.jpg':$proxy+'/img/hitJzdt.png'"/>
+                        <div class="text">
+                            <span>当前服务已经入驻</span>
+                            <p>{{$school.enterName}}</p>
+                            <span v-if="$school.enterNameEn">{{$school.enterNameEn}}</span>
+                        </div>
+                    </div>
+                    <template v-if="service.isJzdt!=='1'&&$school.school==='hit'">
+                        <div class="enter">
+                            <img :src="$proxy+'img/mouse.png'"/>
+                            <div class="text">
+                                <span>本服务由<a :href="service.fwlyUrl" target="_blank">{{service.fwlymc}}</a>提供</span>
+                                <p>线上办理</p>
+                                <span>Online Services</span>
+                            </div>
+                        </div>
+                    </template>
+                    <template v-if="service.isJzdt==='1'">
+                        <p v-if="$school.enterPlace"><i class="fa fa-map-marker"></i><span v-html="$school.enterPlace"></span></p>
+                        <p v-if="$school.enterTime" style="margin: 0 0 15px 0;"><i class="fa fa-clock-o"></i><span v-html="$school.enterTime"></span></p>
+                    </template>
+                    <div class="hr">
+                        <p v-if="service.place"><i class="fa fa-location-arrow"></i>{{service.place}}</p>
+                        <p v-if="service.handleTime"><i class="fa fa-clock-o"></i>{{service.handleTime}}</p>
+                        <p v-if="service.managerTel"><i class="fa fa-phone"></i>{{service.managerTel}} {{service.manager}}</p>
+                    </div>
                 </card>
+                <!--注意事项-->
                 <card>
                     <template slot="header"><div class="left"><i class="fa fa-info-circle"></i>注意事项</div></template>
-                    <div v-if="data.service.notice" style="font-size: 14px;padding: 0 15px;" v-html="data.service.notice"></div>
+                    <div v-if="service.notice" style="font-size: 14px;padding: 0 15px;" v-html="service.notice"></div>
                     <p class="no" v-else>暂无数据</p>
                 </card>
+                <!--收费信息-->
                 <card>
                     <template slot="header"><div class="left"><i class="fa fa-info-circle"></i>收费信息</div></template>
-                    <div v-if="data.service.sfbz&&data.service.sfyj">
-                        <p>收费标准{{data.service.sfbz}}</p>
-                        <p>收费依据{{data.service.sfyj}}</p>
+                    <div style="font-weight: 600;" v-if="service.sfbz&&service.sfyj">
+                        <p>收费标准：{{service.sfbz}}</p>
+                        <p>收费依据：{{service.sfyj}}</p>
                     </div>
                     <p class="no" v-else>暂无数据</p>
                 </card>
+                <!--服务依据-->
                 <card>
                     <template slot="header"><div class="left"><i class="fa fa-info-circle"></i>服务依据</div></template>
-                    <div v-if="data.fwyjs">
-                        <a v-for="i in data.fwyjs" :href="i.path.indexOf('http')?'i.path':filePath+i.path" target="_blank">{{i.fileName}}</a>
-                    </div>
+                    <p v-if="data.fwyjs">
+                        <template v-for="i in data.fwyjs">
+                            <span v-if="i.path===''">{{i.fileName}}</span>
+                            <a v-else :href="i.path.indexOf('http')>-1?i.path:filePath+i.path" target="_blank">{{i.fileName}}</a>
+                        </template>
+
+                    </p>
                     <p class="no" v-else>暂无数据</p>
                 </card>
             </div>
@@ -122,24 +172,19 @@
     name: "Detail",
     data(){
       return {
-        proxy:process.env.NODE_ENV==='production'?'':'/api',
         imgPath:{
           head:'/resource/service?id=',
           fwlc:'/resource/file/show?path='
         },
         filePath:'',
         data:"",
-        isFavorite:true,
+        isFavorite:true,//收藏标识
+        service:'',//服务详情
         activeName:['1','2','3','4'],
         comment:[],
         page:1,
         total:0,
         pageSize:10
-      }
-    },
-    computed:{
-      id(){
-        return this.$route.params.id;
       }
     },
     watch:{
@@ -154,14 +199,15 @@
     },
     methods:{
       getData(){
-        this.$ajax.post(this.$url.serviceDetail,{id:this.id})
+        this.$ajax.post(this.$url.serviceDetail,{id:this.$route.params.id})
             .then(res=>{
               this.isFavorite=res.data.favoritesFlag;
               this.data=res.data;
+              this.service=res.data.service;
             })
       },
       getComment(){
-        this.$ajax.post(this.$url.serviceDetailComment,{id:this.id,page:this.page})
+        this.$ajax.post(this.$url.serviceDetailComment,{id:this.$route.params.id,page:this.page})
             .then(res=>{
               this.comment=res.data.comments;
               this.total=res.data.count;
@@ -174,15 +220,14 @@
       routerBack(){
         this.$router.go(-1);
       },
-      favorite(type){
-        this.$ajax.post(type==='add'?this.$url.addFavorites:this.$url.delFavorites,{thirdId:this.id,type:"service"})
+      favorite(type){//收藏
+        this.$ajax.post(type==='add'?this.$url.addFavorites:this.$url.delFavorites,{thirdId:this.$route.params.id,type:"service"})
             .then(res=>{
               if(res.data.errcode==='0'){
                 this.isFavorite=!this.isFavorite;
                 this.$notify({
                   message: res.data.errmsg,
                   type: 'success',
-                  position: 'bottom-right'
                 });
               }
             })
@@ -217,14 +262,15 @@
                     padding: 10px 20px!important;
                     .left{
                         @include flex;
+                        width: 600px;
                         img{
+                            flex: 0 0 60px;
                             width: 60px;
                             height: 60px;
                             margin-right: 20px;
                         }
                         .info{
                             p{
-                                @include flex;
                                 font-size: 16px;
                                 font-weight: 700;
                                 color: #000;
@@ -257,7 +303,7 @@
                             }
                         }
                     }
-                    a{
+                    a.online{
                         background: #1390d3;
                         font-size: 14px;
                         font-weight: normal;
@@ -265,6 +311,11 @@
                         padding: 5px 10px;
                         border-radius: 5px;
                         cursor: pointer;
+                    }
+                    a.underline{
+                        font-size: 14px;
+                        font-weight: normal;
+                        color: #a0a0a0;
                     }
                 }
                 .explain{
@@ -309,9 +360,9 @@
                             }
                         }
                         table {
-                            width: 500px;
+                            width: 80%;
                             border-collapse: collapse;
-                            margin: 0 auto;
+                            margin: 20px auto 0;
                             text-align: center;
                             td,th{
                                 border: 1px solid #cad9ea;
@@ -330,7 +381,6 @@
                              {
                                  background: #F5FAFA;
                              }
-
                         }
                         ul{
                             li{
@@ -363,6 +413,7 @@
                         font-size: 14px;
                         color: #bfbfbf;
                         padding: 0 15px;
+                        margin-bottom: -10px;
                     }
                 }
                 .el-pagination{
@@ -392,9 +443,14 @@
                             }
                         }
                     }
+                    .hr{
+                        border-top: 1px dashed #bfbfbf;
+                    }
                     p{
+                        @include flex(flex-start,flex-start);
                         i{
-                            margin-right: 10px;
+                            color: #a6a6a6;
+                            margin: 3px 10px 0 0;
                         }
                         font-size: 14px;
                         color: #646361;
@@ -403,6 +459,33 @@
                     }
                     p.no{
                         color:#bfbfbf;
+                    }
+                }
+                .basic{
+                    .enter{
+                        @include flex;
+                        padding: 15px;
+                        img{
+                            flex: 0 0 70px;
+                            width: 70px;
+                            height: 70px;
+                            margin-right: 10px;
+                        }
+                        .text{
+                            span{
+                                font-size: 12px;
+                                color: #a0a0a0;
+                                a{
+                                    color: #0683c3;
+                                }
+                            }
+                            p{
+                                font-size: 18px;
+                                color: #646361;
+                                padding: 0;
+                                margin: 5px 0 0 0;
+                            }
+                        }
                     }
                 }
             }
