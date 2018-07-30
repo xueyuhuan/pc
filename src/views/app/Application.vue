@@ -11,7 +11,7 @@
         </subhead>
         <div class="contain">
             <div class="left_div _theme_app_bordertop">
-                <div class="left_div_block" v-for="appGroup in appGroups" v-if="current_app_type_id === appGroup.id || current_app_type_id === ''">
+                <div class="left_div_block" v-for="appGroup in appGroups" v-show="appGroup.apps.length>0" v-if="current_app_type_id === appGroup.id || current_app_type_id === ''">
                     <div class="block_head _theme_app_block_head_color">{{appGroup.name}}</div>
                     <div class="block_body">
                         <div class="app" v-for="app in appGroup.apps">
