@@ -1,6 +1,6 @@
 <template>
   <div id="app" :class="skin" v-cloak>
-    <navigation v-if="this.$route.path!=='/login'"></navigation>
+    <navigation></navigation>
     <div style="padding-bottom: 50px;"><router-view/></div>
     <!--回到顶部按钮-->
     <a href="javascript:;" v-show="top > 200" title="回到顶部" @click="toTop" class="toTop _theme_toTop_bgcolor"><i class="fa fa-chevron-up"></i></a>
@@ -20,15 +20,36 @@
             exclude_name:'NewsDetail',
             top:0,
             skin:'_theme_blue',
+            token:'',
           }
       },
       created(){
         if(localStorage.skin){
           this.skin=localStorage.skin;
         }
+        this.token=this.getCookie('PORTAL_TOKEN');
+        this.$ajax.post('/security_portal/validate_login',{token:this.token})
+            .then(res=>{
+              if(res.data.loginFlag==='true'){
+                this.$store.commit('set_token', res.data.token);//在store.js中设置token
+                this.$router.push({path: this.$school.url});
+              }
+              else{
+                // window.location.href='http://one.ccnu.edu.cn/index#/app/home/main';
+                this.$router.push({path: '/login'});
+              }
+            });
         this.bindScroll();
       },
       methods:{
+        //获取cookie
+        getCookie(name){
+          let arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+          if(arr=document.cookie.match(reg))
+            return decodeURIComponent(arr[2]);
+          else
+            return false;
+        },
         //滚动条回顶部
         toTop(){
           scroll(0,0);

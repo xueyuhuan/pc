@@ -4,6 +4,13 @@
   justify-content: $main;
   align-items: $cross;
 }
+@mixin ellipsis($row){
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $row;
+  -webkit-box-orient: vertical;
+}
 %ellipsis{
   overflow: hidden;
   text-overflow: ellipsis;

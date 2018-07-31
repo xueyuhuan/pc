@@ -2,6 +2,7 @@
     <div class="popup" v-if="popupShow">
         <div class="content">
             <h3>{{name}}设置</h3>
+            <!--服务的搜索框-->
             <div class="search" v-if="popupType==='service'">
                 <select v-model="typeID">
                     <option value ="">请选择</option>
@@ -10,37 +11,44 @@
                 <input v-model="key" placeholder="服务名称"/>
                 <button @click="getAll">查询</button>
             </div>
+            <!--所有项列表-->
             <ul class="all">
                 <li v-for="(i,index) in list">
                     <div class="select" v-show="i.selectFlag==='N'" @click="add(i,index)"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;点击选择</div>
                     <div class="flag" v-show="i.selectFlag==='Y'"><i>已选</i></div>
-                    <img v-show="popupType!=='home'" :src="$proxy+imgPath+i.id"/>{{i.name}}</li>
+                    <img :src="popupType!=='home'?$proxy+imgPath+i.id:$proxy+'/img/ccnu/logo_mini.png'"/><p>{{i.name}}</p>
+                </li>
             </ul>
+            <!--分页-->
             <el-pagination
                     background
                     layout="prev, pager, next"
                     @current-change="handlePageChange"
                     @prev-click="handlePageChange"
                     @next-click="handlePageChange"
+                    :page-size=this.limit
                     :page-count="this.total">
             </el-pagination>
+            <!--排序列表-->
+            <!--应用和服务-->
             <h4>已选择的{{name}}<span>（拖拽排序）</span></h4>
             <ul class="has" v-show="popupType!=='home'">
                 <draggable class="drag" v-model="listHas" :options="dragOptions">
                     <transition-group>
                         <li v-for="(i,index) in listHas" :key="index">
                             <div class="select" @click="cancel(i,index)"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;取消选择</div>
-                            <img :src="$proxy+imgPath+i.id"/>{{i.name}}
+                            <img :src="$proxy+imgPath+i.id"/><p>{{i.name}}</p>
                         </li>
                     </transition-group>
                 </draggable>
             </ul>
+            <!--工作台有两列-->
             <ul class="has" v-show="popupType==='home'">
                 <draggable class="drag drag-list" v-model="listHasA" :options="dragHome">
                     <transition-group>
                         <li v-for="(i,index) in listHasA" :key="index">
                             <div class="select" @click="cancel(i,index)"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;取消选择</div>
-                            {{i.NAME}}
+                            <img :src="$proxy+'/img/ccnu/logo_mini.png'"/>{{i.NAME}}
                         </li>
                     </transition-group>
                 </draggable>
@@ -48,7 +56,7 @@
                     <transition-group>
                         <li v-for="(i,index) in listHasB" :key="index">
                             <div class="select" @click="cancel(i,index)"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;取消选择</div>
-                            {{i.NAME}}
+                            <img :src="$proxy+'/img/ccnu/logo_mini.png'"/>{{i.NAME}}
                         </li>
                     </transition-group>
                 </draggable>
@@ -69,7 +77,7 @@
       return{
         page:1,
         limit:12,
-        total:1,
+        total:1,//总页数
         list:[],//所有
         listHas:[],//已选择
         listHasA:[],
@@ -89,6 +97,7 @@
       }
     },
     computed:{
+      // 拖拽参数
       dragOptions(){
         return{
           animation: 0,
@@ -104,10 +113,10 @@
           ghostClass: 'ghost'
         }
       },
-      popupShow(){
+      popupShow(){// 设置组件是否显示
         return this.$store.state.popupShow;
       },
-      popupType(){
+      popupType(){//显示类型
         return this.$store.state.popupType;
       },
       home(){
@@ -158,13 +167,12 @@
           this.$notify({
             message: '只能选择10个',
             type: 'warning',
-            position: 'bottom-right'
           });
         }
       },
       cancel(i,index){//取消选择
-        this.listHas.splice(index,1);
-        this.list.forEach(function (v) {
+        this.listHas.splice(index,1);//从已有列表删除该项
+        this.list.forEach(function (v) {//在所有列表中查找其修改为未选中
           if(v.id===i.id){
             v.selectFlag='N';
           }
@@ -179,7 +187,6 @@
                   this.$notify({
                     message: '保存成功',
                     type: 'success',
-                    position: 'bottom-right'
                   });
                 }
               })
@@ -195,7 +202,6 @@
                   this.$notify({
                     message: '保存成功',
                     type: 'success',
-                    position: 'bottom-right'
                   });
                 }
               })
@@ -257,9 +263,6 @@
     }
     .drag-list{
         flex: 1;
-        li{
-            padding: 0 10px;
-        }
     }
     .drag>span{
         display: flex;
@@ -375,8 +378,11 @@
                     img{
                         width: 40px;
                         height: 40px;
-                        border-radius: 50%;
                         margin: 0 10px;
+                    }
+                    p{
+                        @include ellipsis(2);
+                        margin: 0;
                     }
                 }
             }

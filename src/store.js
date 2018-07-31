@@ -9,7 +9,7 @@ export default new Vuex.Store({
     user:{},//用户信息
     /*home的模块数据*/
     home:{},//home布局
-    app:[],
+    app:[],//应用布局
     file:[],
     notice:[],
     notice2:[],
@@ -18,7 +18,7 @@ export default new Vuex.Store({
     type:1,//排行的日期
     schedule:[],
     date:0,//日程的日期
-    service:[],
+    service:[],//服务布局
     todo:[],
       email:{},
       ecard:{},

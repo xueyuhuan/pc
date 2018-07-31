@@ -30,10 +30,7 @@
                     .then(res => {
                       if(res.data.errcode==='0'){
                         this.$store.commit('set_token', res.data.token);//在store.js中设置token
-                        if(this.$school.school==='hit'){
-                          this.$router.push({path: '/index'});
-                        }
-                        else this.$router.push({path: '/home'});
+                        this.$router.push({path: this.$school.url});
                       }
                       else{
                         this.$message.error(res.data.errmsg);

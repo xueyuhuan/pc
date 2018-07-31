@@ -5,7 +5,7 @@
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .card{
         background: #fff;
         margin-bottom: 20px;
