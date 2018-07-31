@@ -257,12 +257,6 @@
 
         },
         methods: {
-            test1(){
-                console.log('test1');
-            },
-            test2(){
-                console.log('test2');
-            },
             //获取事件类型
             getEventType() {
                 this.$ajax.post(this.$url.getCalendarObjs)
@@ -315,7 +309,7 @@
             getDayEvent() {
                 this.$ajax.post(this.$url.getEvents, {year: this.year, month: this.month, day: this.day})
                     .then(res => {
-                        console.log(res.data);
+                        // console.log(res.data);
                         this.date_events = res.data.calObjs;
                         let totalEvents = 0;
                         for(let i=0;i<this.date_events.length;i++){
@@ -362,15 +356,12 @@
                 this.openModalFlag = 1;
                 //通过双击事件新增日程，则默认选中当天的8点-9点
                 if(i){
-                    console.log(i);
                     let month = i.month + '';
                     if(month.length === 1){
                         month = '0' + month;
                     }
                     let startTime = `${i.year}-${month}-${i.day} 08:00`;
                     let endTime = `${i.year}-${month}-${i.day} 09:00`;
-                    console.log(startTime);
-                    console.log(endTime);
                     this.formData.start = startTime;
                     this.formData.end = endTime;
                 };

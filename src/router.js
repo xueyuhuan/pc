@@ -44,7 +44,7 @@ export default new Router({
       {path: '/schedule', name:"schedule", component: schedule},
       {path: '/schedule/MySub', name: "schedule_mySub", component: scheduleSub},
       {path: '/feedback',component:feedback},
-      {path: '/todo', name: "todo", component: todo_hit},
+      {path: '/todo', name: "todo", component: process.env.VUE_APP_SCHOOL==='hit'? todo_hit : todo},
       {path: '/collections', name: 'collections', component: collections},
       {path: "/user", component: user},
       {path: "/user/head", component: userHead},
