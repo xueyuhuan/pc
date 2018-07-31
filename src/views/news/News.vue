@@ -124,7 +124,7 @@
             get_rank(){
                 this.$ajax.post(this.$url.rank_news,{type:this.rank_date_value})
                     .then(res => {
-                        console.log(res.data);
+                        // console.log(res.data);
                        this.rank_news = res.data.news;
                     })
             },
