@@ -1,5 +1,6 @@
 export default {
   school:'ccnu',
+  isWebsocket:true,
   url:'/home',
   logo:'/img/ccnu/logo.png',
   enterName:'服务中心',

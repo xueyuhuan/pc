@@ -95,8 +95,8 @@
         data() {
             return {
               nav: this.$school.nav,
-              navShow:false,
-              panelShow:false,
+              navShow:false,//导航标识
+              panelShow:false,//个人中心面板标识
               todoCount:0,//待办数
               UnreadCount:0,//未读消息数
             }
@@ -108,7 +108,7 @@
               return this.$route.path;
             }
           },
-          user() {
+          user() {//用户信息
             return this.$store.state.user;
           },
           token() {
@@ -162,18 +162,27 @@
 
             })
           },
-            getTodoCount(){
-                this.$ajax.post(this.$url.getTodoCount)
-                    .then(res => {
-                        this.todoCount = res.data.todoCount;
-                    });
-            },
-            getUnreadCount(){
-                this.$ajax.post(this.$url.query_unread)
-                    .then(res => {
-                        this.UnreadCount = res.data.unreadMessages.length;
-                    });
+          getTodoCount(){
+            this.$ajax.post(this.$url.getTodoCount)
+                .then(res => {
+                  this.todoCount = res.data.todoCount;
+                });
+          },
+          getUnreadCount(){
+            // this.$ajax.post(this.$url.query_unread)
+            //     .then(res => {
+            //         this.UnreadCount = res.data.unreadMessages.length;
+            //     });
+            if(this.$school.isWebsocket){
+              this.websocket();
             }
+          },
+          websocket () {
+            let ws = new WebSocket('ws://msg.ccnu.edu.cn:8080/msgsocket/websocket?token='+this.token);
+            ws.onmessage = evt => {
+              this.UnreadCount=JSON.parse(evt.data).unReadTotal;
+            };
+          }
         }
     }
 </script>
