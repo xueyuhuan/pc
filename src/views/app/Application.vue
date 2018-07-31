@@ -105,7 +105,7 @@
             getApp(){
                 this.$ajax.post(this.$url.list_app_group)
                     .then(res => {
-                        console.log(res.data);
+                        // console.log(res.data);
                         this.appGroups = res.data.groups;
                         let all_service_count=0;
                         for(let i=0;i<this.appGroups.length;i=i+1){
