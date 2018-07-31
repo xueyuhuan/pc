@@ -4,12 +4,7 @@
     <div style="padding-bottom: 50px;"><router-view/></div>
     <!--回到顶部按钮-->
     <a href="javascript:;" v-show="top > 200" title="回到顶部" @click="toTop" class="toTop _theme_toTop_bgcolor"><i class="fa fa-chevron-up"></i></a>
-    <div class="footContain" v-if="this.$route.path!=='/login'">
-      <div class="foot">
-        <span>© 2015-2017 Wuhan Sibe. All rights reserved.</span>
-        <router-link to="/log">升级日志</router-link>
-      </div>
-    </div>
+    <Footer></Footer>
   </div>
 </template>
 
@@ -70,7 +65,7 @@
     display: none;
   }
 </style>
-<style scoped lang="scss">
+<style lang="scss">
   #app{
     position: relative;
     min-height: 100%;
@@ -95,27 +90,5 @@
     }
   .toTop:hover{
     transform: scale(1.2,1.2);
-  }
-  .footContain{
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    min-width: 1200px;
-    background-color: #747474;
-    margin-top: 20px;
-    color: #fff;
-    .foot{
-      width: 1200px;
-      height: 51px;
-      margin: 0 auto;
-      font-size: 14px;
-      font-family: "Microsoft YaHei","Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
-      @include flex(space-between,center);
-      span{
-
-      }
-    }
   }
 </style>
