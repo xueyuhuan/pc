@@ -50,6 +50,7 @@
     .right{
         i{
             margin-left: 5px;
+            cursor: pointer;
         }
     }
     ul{
@@ -71,6 +72,7 @@
             }
         }
         li.no{
+            font-size: 14px;
             color: rgb(137, 137, 137);
             margin: 0;
         }

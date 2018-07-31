@@ -58,15 +58,15 @@ instance.interceptors.response.use(
     },
     err => {
       loading.close();
-      if (err.response) {
-        switch (err.response.status) {
-          case 403:
-            router.replace({
-              path: '/login',
-              query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
-            })
-        }
-      }
+      // if (err.response) {
+      //   switch (err.response.status) {
+      //     case 403:
+      //       router.replace({
+      //         path: '/login',
+      //         query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
+      //       })
+      //   }
+      // }
       return Promise.reject(err)
     });
 export default instance;

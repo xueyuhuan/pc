@@ -1,5 +1,5 @@
 <template>
-    <header class="_theme position_fixed">
+    <header class="_theme position_fixed" v-show="navShow">
         <div class="content">
             <nav>
                 <router-link :to="$school.url"><img :src="$proxy+$school.logo"/></router-link>
@@ -95,6 +95,7 @@
         data() {
             return {
               nav: this.$school.nav,
+              navShow:false,
               panelShow:false,
               todoCount:0,//待办数
               UnreadCount:0,//未读消息数
@@ -109,15 +110,36 @@
           },
           user() {
             return this.$store.state.user;
-          }
+          },
+          token() {
+            return this.$store.state.token;
+          },
         },
-        created() {
+      watch:{
+        token(curVal){
+          if(curVal!==''){
+            this.navShow=true;
+            console.log("token值："+curVal);
             this.$ajax.post(this.$url.getUser)
                 .then(res => {
-                    this.$store.commit('set_user', res.data.user);
+                  this.$store.commit('set_user', res.data.user);
                 });
             this.getUnreadCount();
             this.getTodoCount();
+          }
+          else this.navShow=false;
+        }
+      },
+        created() {
+          if (this.token!==''){
+            this.navShow=true;
+            this.$ajax.post(this.$url.getUser)
+                .then(res => {
+                  this.$store.commit('set_user', res.data.user);
+                });
+            this.getUnreadCount();
+            this.getTodoCount();
+          }
         },
         methods: {
           click(url) {

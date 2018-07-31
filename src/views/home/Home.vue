@@ -53,11 +53,12 @@ export default {
   },
   data(){
     return{
-      banner:[],
-      page:{},
+      banner:[],//banner列表
+      bannerShow:true,//banner是否显示
+      home:{},//工作台布局
       A:[],
       B:[],
-      bannerShow:true
+
     }
   },
   computed:{
@@ -70,10 +71,10 @@ export default {
         ghostClass: 'ghost'
       }
     },
-    type(){
+    type(){//排行的日期
       return this.$store.state.type;
     },
-    date(){
+    date(){//日程的日期
       return this.$store.state.date;
     }
   },
@@ -87,7 +88,7 @@ export default {
   },
   created(){
     this.getBanner();
-    this.getPage();
+    this.getHome();
     axios.all([
       this.getApp(),
       this.getFile(),
@@ -115,32 +116,32 @@ export default {
         name:'popupType'//设置弹框类型
       });
     },
-    closeBanner(){
+    closeBanner(){//关闭banner
       this.bannerShow=false;
       localStorage.bannerShow=this.bannerShow;
     },
     end(){//拖拽结束保存布局
       let layout={A:this.A,B:this.B};
-      this.$ajax.post(this.$url.homePageSave,{layout:JSON.stringify(layout),pageId:this.page.id})
+      this.$ajax.post(this.$url.homePageSave,{layout:JSON.stringify(layout),pageId:this.home.id})
           .then(res=>{
             if(res.data.errmsg==='ok'){
-
+              this.$notify.success('布局已保存');
             }
           })
     },
-    getPage(){//获取页面布局
+    getHome(){//获取页面布局
       this.$ajax.post(this.$url.homePage)
           .then(res=>{
             this.$store.commit('set_data',{
               data:res.data.pages[0],
               name:'home'
             });
-            this.page=res.data.pages[0];
-            this.A=this.page.columnWidgets.A;
+            this.home=res.data.pages[0];
+            this.A=this.home.columnWidgets.A;
             for(let i=0;i<this.A.length;i++){
               this.A[i].componentName=this.transform(this.A[i].NAME);
             }
-            this.B=this.page.columnWidgets.B;
+            this.B=this.home.columnWidgets.B;
             for(let i=0;i<this.B.length;i++){
               this.B[i].componentName=this.transform(this.B[i].NAME);
             }
@@ -331,7 +332,7 @@ export default {
       position: absolute;
       top:10px;
       right: 10px;
-      z-index: 998;
+      z-index: 99;
       width: 32px;
       height: 32px;
       cursor: pointer;
