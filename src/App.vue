@@ -1,10 +1,12 @@
 <template>
   <div id="app" :class="skin" v-cloak>
-    <navigation></navigation>
+    <!--<navigation></navigation>-->
+    <router-view name="nav"></router-view>
     <div style="padding-bottom: 50px;"><router-view/></div>
     <!--回到顶部按钮-->
     <a href="javascript:;" v-show="top > 200" title="回到顶部" @click="toTop" class="toTop _theme_toTop_bgcolor"><i class="fa fa-chevron-up"></i></a>
-    <Footer></Footer>
+    <!--<Footer></Footer>-->
+    <router-view name="foo"></router-view>
   </div>
 </template>
 

@@ -1,5 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
+const Navigation = () => import('./components/Navigation');
+const Footer = () => import('./components/Footer');
 const index = () => import('./views/index/Index');
 const home = () => import('./views/home/Home');
 const service = () => import('./views/service/Service');
@@ -22,11 +24,14 @@ const user = () => import("./views/user/Info");
 const userHead = () => import("./views/user/Head");
 const message = () => import('./views/message/message');
 const log = () => import('./views/version/log');
+const noFound = () => import('./views/404');
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
     routes: [
-      {path: "/index", component: index},
+      {path: "/index",
+        component: {nav:Navigation, default:index, foo:Footer,}
+        },
       {path: "/home", component: home},
       {path: "/service", component: service},
       {path: "/service/search", component: serviceSearch,
@@ -49,6 +54,29 @@ export default new Router({
       {path: "/user", component: user},
       {path: "/user/head", component: userHead},
       {path:'/message',name:'message',component: message},
-      {path:'/log',name:'log',component: log}
+      {path:'/log',name:'log',component: log},
+      {path:'/404',name:'404',component: noFound},
+      {path:'*',redirect:'/404'},
     ]
 });
+
+// 全局路由守卫
+router.beforeEach((to,from,next) => {
+  // to: Route: 即将要进入的目标 路由对象
+  // from: Route: 当前导航正要离开的路由
+  // next: Function: 一定要调用该方法来 resolve 这个钩子。执行效果依赖 next 方法的调用参数。
+  if(to.path!=='/login'){
+    if(sessionStorage.token){
+      next();
+    }
+    else {
+      next({
+        path:'/login',
+        query:{redirect:to.fullPath}
+      })
+    }
+  }
+  else {next();}
+});
+
+export default router;

@@ -95,7 +95,7 @@
         data() {
             return {
               nav: this.$school.nav,
-              navShow:false,//导航标识
+              // navShow:false,//导航标识
               panelShow:false,//个人中心面板标识
               todoCount:0,//待办数
               UnreadCount:0,//未读消息数
