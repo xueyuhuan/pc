@@ -61,15 +61,19 @@
         },
         computed: {
             email() {
+                console.log(this.$store.state.email);
                 return this.$store.state.email;
             },
             ecard() {
+                console.log(this.$store.state.ecard);
                 return this.$store.state.ecard;
             },
             tsg() {
+                console.log(this.$store.state.tsg);
                 return this.$store.state.tsg;
             },
             network() {
+                console.log(this.$store.state.network);
                 return this.$store.state.network;
             }
         }
