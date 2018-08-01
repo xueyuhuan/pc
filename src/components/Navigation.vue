@@ -95,7 +95,7 @@
         data() {
             return {
               nav: this.$school.nav,
-              // navShow:false,//导航标识
+              navShow:true,//导航标识
               panelShow:false,//个人中心面板标识
               todoCount:0,//待办数
               UnreadCount:0,//未读消息数
@@ -116,30 +116,30 @@
           },
         },
       watch:{
-        token(curVal){
-          if(curVal!==''){
-            this.navShow=true;
-            console.log("token值："+curVal);
-            this.$ajax.post(this.$url.getUser)
-                .then(res => {
-                  this.$store.commit('set_user', res.data.user);
-                });
-            this.getUnreadCount();
-            this.getTodoCount();
+        '$route' (to,from){
+          console.log(to);
+          if(to.path==='/login'||to.path==='/404'){
+            this.navShow=false;
           }
-          else this.navShow=false;
+          else this.navShow=true;
         }
       },
         created() {
-          if (this.token!==''){
-            this.navShow=true;
-            this.$ajax.post(this.$url.getUser)
-                .then(res => {
-                  this.$store.commit('set_user', res.data.user);
-                });
-            this.getUnreadCount();
-            this.getTodoCount();
-          }
+          // if (this.token!==''){
+          //   this.navShow=true;
+          //   this.$ajax.post(this.$url.getUser)
+          //       .then(res => {
+          //         this.$store.commit('set_user', res.data.user);
+          //       });
+          //   this.getUnreadCount();
+          //   this.getTodoCount();
+          // }
+          this.$ajax.post(this.$url.getUser)
+              .then(res => {
+                this.$store.commit('set_user', res.data.user);
+              });
+          this.getUnreadCount();
+          this.getTodoCount();
         },
         methods: {
           click(url) {

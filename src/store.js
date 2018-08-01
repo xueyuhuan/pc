@@ -20,10 +20,12 @@ export default new Vuex.Store({
     date:0,//日程的日期
     service:[],//服务布局
     todo:[],
-      email:{},
-      ecard:{},
-      tsg:{},
-      network:{},
+    // 个人中心
+    userModule:{},
+    email:{},//邮件
+    ecard:{},//校园卡
+    tsg:{},//图书馆
+    network:{},//网络流量
     /*home的模块数据end*/
     /*设置弹框*/
     popupShow:false,//是否显示

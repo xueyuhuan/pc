@@ -4,48 +4,73 @@
             <router-link to="/user"><i class="fa fa-ellipsis-h"></i></router-link>
         </header>
         <ul>
-            <li class="border_bottom1">
-                <a>
-                    <img :src="$proxy+'/img/email.png'"/>
-                    <div class="right">
-                        <div class="name">邮件<br/><span class="pointer _theme_news_fontcolor">{{email.email}}</span><span class="pointer _theme_news_fontcolor">解绑</span></div>
-                        <div class="info">未读：{{email.unread}}，今日：{{email.todayCount}}</div>
-                    </div>
-                </a>
-            </li>
-            <li class="border_bottom1">
-                <a>
-                    <img :src="$proxy+'/img/school_card.png'"/>
-                    <div class="right">
-                        <div class="name">校园卡<br/><span class="pointer _theme_news_fontcolor">在用</span></div>
-                        <div class="info">
-                            <i v-show="showEcard">余额：{{ecard.balance}}元</i>&nbsp;&nbsp;
-                            <i class="fa pointer" :class="{'fa-eye':showEcard,'fa-eye-slash':!showEcard}" @click.stop="showEcard = !showEcard"></i>
+            <li v-for="i in userModule" class="border_bottom1">
+                <template v-if="i.id==='email'">
+                    <a>
+                        <img :src="$proxy+'/img/email.png'"/>
+                        <div class="right">
+                            <div class="name">邮件<br/>
+                                <template v-if="i.infos.email!==''">
+                                    <span class="pointer _theme_news_fontcolor" @click="enterEmail(i.infos.usertype,i.infos.email)">{{i.infos.email}}</span>
+                                    <span class="pointer _theme_news_fontcolor">解绑</span>
+                                </template>
+                                <template v-else>
+                                    <a href="http://mail.ccnu.edu.cn/guide.aspx" target="_blank" class="pointer _theme_news_fontcolor">注册邮箱</a>
+                                </template>
+                            </div>
+                            <div class="info" v-show="i.infos.email!==''">未读：{{i.infos.unread}}，今日：{{i.infos.todayCount}}</div>
                         </div>
-                    </div>
-                </a>
-            </li>
-            <li class="border_bottom1">
-                <a>
-                    <img :src="$proxy+'/img/book.png'"/>
-                    <div class="right">
-                        <div class="name">图书馆<br/><span class="pointer _theme_news_fontcolor">{{ tsg.bookCount === 0 ? '暂无借阅图书' : `在借${tsg.bookCount}本`}}</span></div>
-                        <div class="info">
-                            <i>{{tsg.qfje === 0 ? '无欠费' : `欠费${tsg.qfje}元`}}</i>
+                    </a>
+                </template>
+                <template v-if="i.id==='ecard'">
+                    <a>
+                        <img :src="$proxy+'/img/school_card.png'"/>
+                        <div class="right">
+                            <router-link to="/app/ecard" class="name">校园卡<br/>
+                                <span class="pointer _theme_news_fontcolor">
+                                    <template v-if="i.infos.cardStatus!==''">{{i.infos.cardStatus}}</template>
+                                    <template v-else>{{i.errmsg}}</template>
+                                </span>
+                            </router-link>
+                            <div class="info" v-show="i.infos.balance">
+                                <i v-show="showEcard">余额：{{i.infos.balance}}元</i>&nbsp;&nbsp;
+                                <i class="fa pointer" :class="{'fa-eye':showEcard,'fa-eye-slash':!showEcard}" @click.stop="showEcard = !showEcard"></i>
+                            </div>
                         </div>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a>
-                    <img :src="$proxy+'/img/school_card.png'"/>
-                    <div class="right">
-                        <div class="name">网络流量<br/><span class="pointer _theme_news_fontcolor">{{ network.status}}</span></div>
-                        <div class="info">
-                            <i>本月使用流量&nbsp;{{network.bqljll}}</i>
+                    </a>
+                </template>
+                <template v-if="i.id==='tsg'">
+                    <a>
+                        <img :src="$proxy+'/img/book.png'"/>
+                        <div class="right">
+                            <div class="name">图书馆<br/>
+                                <span class="pointer _theme_news_fontcolor">
+                                    <template v-if="i.infos.bookCount">{{ i.infos.bookCount === 0 ? '暂无借阅图书' : `在借${i.infos.bookCount}本`}}</template>
+                                    <template v-else>{{i.errmsg}}</template>
+                                </span>
+                            </div>
+                            <div class="info" v-show="i.infos.qfje">
+                                <i>{{i.infos.qfje === 0 ? '无欠费' : `欠费${i.infos.qfje}元`}}</i>
+                            </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </template>
+                <template v-if="i.id==='network'">
+                    <a>
+                        <img :src="$proxy+'/img/school_card.png'"/>
+                        <div class="right">
+                            <div class="name">网络流量<br/>
+                                <span class="pointer _theme_news_fontcolor">
+                                    <template v-if="i.infos.status">{{i.infos.status}}</template>
+                                    <template v-else>{{i.errmsg}}</template>
+                                </span>
+                            </div>
+                            <div class="info" v-show="i.infos.bqljll">
+                                <i>本月使用流量：{{i.infos.bqljll}}</i>
+                            </div>
+                        </div>
+                    </a>
+                </template>
             </li>
         </ul>
     </CardTemp>
@@ -53,26 +78,27 @@
 
 <script>
     export default {
-        name: "User",
-        data(){
-            return{
-                showEcard:false
-            }
-        },
-        computed: {
-            email() {
-                return this.$store.state.email;
-            },
-            ecard() {
-                return this.$store.state.ecard;
-            },
-            tsg() {
-                return this.$store.state.tsg;
-            },
-            network() {
-                return this.$store.state.network;
-            }
+      name: "User",
+      data(){
+        return{
+          showEcard:false,
         }
+      },
+      computed: {
+        userModule() {
+          return this.$store.state.userModule;
+        },
+      },
+      methods:{
+        enterEmail(type,email){//进入邮箱
+          this.$ajax.post('/user_portal/get_email_url',{type:type,email:email})
+              .then(res=>{
+                if(res.data.errcode==='0'){
+                  window.open(res.data.loginUrl);
+                }
+              })
+        },
+      }
     }
 </script>
 
@@ -105,10 +131,17 @@
                 .right {
                     flex: 1;
                     @include flex(space-between);
-                    span {
-                        font-size: 12px;
-                        margin-right: 10px;
+                    .name{
+                        display: inline-block;
+                        span{
+                            font-size: 12px;
+                            margin-right: 10px;
+                        }
+                        a{
+                            font-size: 12px;
+                        }
                     }
+
                 }
             }
         }

@@ -1,7 +1,5 @@
 import Vue from "vue";
 import Router from "vue-router";
-const Navigation = () => import('./components/Navigation');
-const Footer = () => import('./components/Footer');
 const index = () => import('./views/index/Index');
 const home = () => import('./views/home/Home');
 const service = () => import('./views/service/Service');
@@ -11,6 +9,7 @@ const serviceSearchList = () => import('./views/service/SearchList');
 const serviceDetail = () => import('./views/service/Detail');
 const login = () => import('./views/Login');
 const application = () => import('./views/app/Application');
+const ecard = () => import('./views/app/Ecard');
 const news = () => import('./views/news/News');
 const newsDetail = () => import('./views/news/NewsDetail');
 const newsSub = () => import('./views/news/NewsSub');
@@ -24,14 +23,12 @@ const user = () => import("./views/user/Info");
 const userHead = () => import("./views/user/Head");
 const message = () => import('./views/message/message');
 const log = () => import('./views/version/log');
-const noFound = () => import('./views/404');
+const noFound = () => import('./views/NoFound');
 Vue.use(Router);
 
 const router = new Router({
     routes: [
-      {path: "/index",
-        component: {nav:Navigation, default:index, foo:Footer,}
-        },
+      {path: "/index", component: index},
       {path: "/home", component: home},
       {path: "/service", component: service},
       {path: "/service/search", component: serviceSearch,
@@ -43,6 +40,7 @@ const router = new Router({
       {path: "/service/detail/:id", component: serviceDetail},
       {path: "/login", component: login},
       {path: "/app", component: application},
+      {path: "/app/ecard", component: ecard}, //一卡通
       {path: "/news", component: news,},
       {path: '/news/detail', name:"news_detail", component: newsDetail},
       {path: '/news/sub', name:"news_sub", component: newsSub},
