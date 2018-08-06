@@ -111,35 +111,48 @@
           user() {//用户信息
             return this.$store.state.user;
           },
-          token() {
+          token(){
             return this.$store.state.token;
-          },
+          }
         },
       watch:{
-        '$route' (to,from){
-          console.log(to);
-          if(to.path==='/login'||to.path==='/404'){
-            this.navShow=false;
+        // '$route' (to,from){
+        //   if(to.path==='/login'||to.path==='/404'||to.path==='/loading'){
+        //     this.navShow=false;
+        //   }
+        //   else this.navShow=true;
+        // },
+        token(){
+          if (this.token!==''){
+            this.navShow=true;
+            this.$ajax.post(this.$url.getUser)
+                .then(res => {
+                  this.$store.commit('set_user', res.data.user);
+                });
+            this.getUnreadCount();
+            this.getTodoCount();
           }
-          else this.navShow=true;
         }
       },
         created() {
-          // if (this.token!==''){
-          //   this.navShow=true;
-          //   this.$ajax.post(this.$url.getUser)
-          //       .then(res => {
-          //         this.$store.commit('set_user', res.data.user);
-          //       });
-          //   this.getUnreadCount();
-          //   this.getTodoCount();
-          // }
-          this.$ajax.post(this.$url.getUser)
-              .then(res => {
-                this.$store.commit('set_user', res.data.user);
-              });
-          this.getUnreadCount();
-          this.getTodoCount();
+          if (sessionStorage.token!==''){
+            if(this.token===''){
+              this.$store.commit('set_token', sessionStorage.token);
+            }
+            this.navShow=true;
+            this.$ajax.post(this.$url.getUser)
+                .then(res => {
+                  this.$store.commit('set_user', res.data.user);
+                });
+            this.getUnreadCount();
+            this.getTodoCount();
+          }
+          // this.$ajax.post(this.$url.getUser)
+          //     .then(res => {
+          //       this.$store.commit('set_user', res.data.user);
+          //     });
+          // this.getUnreadCount();
+          // this.getTodoCount();
         },
         methods: {
           click(url) {
@@ -157,7 +170,7 @@
               type: 'warning'
             }).then(() => {
               this.$store.commit('del_token');
-              this.$router.push('/login');
+              this.$router.push('/loading');
             }).catch(()=>{
 
             })

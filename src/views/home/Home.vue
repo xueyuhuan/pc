@@ -7,7 +7,7 @@
         <button @click="popup"><i class="fa fa-cog"></i>&nbsp;工作台设置</button>
       </div>
     </subhead>
-    <div class="banner" v-show="bannerShow">
+    <div class="banner" v-if="bannerShow">
       <img class="close" @click="closeBanner" :src="$proxy+'/img/banner-close.png'"/>
       <el-carousel trigger="click" height="300px">
         <el-carousel-item v-for="i in banner" >
@@ -54,11 +54,10 @@ export default {
   data(){
     return{
       banner:[],//banner列表
-      bannerShow:true,//banner是否显示
+      bannerShow:false,//banner是否显示
       home:{},//工作台布局
       A:[],
       B:[],
-
     }
   },
   computed:{
@@ -101,8 +100,8 @@ export default {
       this.getTodo(),
       this.getUser(),
     ]);
-    if(localStorage.bannerShow){
-      this.bannerShow=localStorage.bannerShow;
+    if(localStorage.bannerShow==='false'){
+      this.bannerShow=false;
     }
   },
   methods:{

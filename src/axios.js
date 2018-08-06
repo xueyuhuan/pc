@@ -62,8 +62,8 @@ instance.interceptors.response.use(
         switch (err.response.status) {
           case 403:
             router.replace({
-              path: '/login',
-              query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
+              path: '/loading',
+              //query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
             })
         }
       }

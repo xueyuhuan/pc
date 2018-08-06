@@ -127,8 +127,6 @@
             })
       },
       getList(){
-        console.log(this.dateStart);
-        console.log(this.dateEnd);
         if(this.dateStart===null){
           this.$notify.error("开始时间不能为空");
         }

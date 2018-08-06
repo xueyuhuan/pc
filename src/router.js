@@ -7,7 +7,6 @@ const serviceSearch = () => import('./views/service/Search');
 const serviceSearchIcon = () => import('./views/service/SearchIcon');
 const serviceSearchList = () => import('./views/service/SearchList');
 const serviceDetail = () => import('./views/service/Detail');
-const login = () => import('./views/Login');
 const application = () => import('./views/app/Application');
 const ecard = () => import('./views/app/Ecard');
 const news = () => import('./views/news/News');
@@ -23,6 +22,8 @@ const user = () => import("./views/user/Info");
 const userHead = () => import("./views/user/Head");
 const message = () => import('./views/message/message');
 const log = () => import('./views/version/log');
+const login = () => import('./views/Login');
+const loading = () =>import('./views/Loading');
 const noFound = () => import('./views/NoFound');
 Vue.use(Router);
 
@@ -38,7 +39,6 @@ const router = new Router({
         ]
       },
       {path: "/service/detail/:id", component: serviceDetail},
-      {path: "/login", component: login},
       {path: "/app", component: application},
       {path: "/app/ecard", component: ecard}, //一卡通
       {path: "/news", component: news,},
@@ -53,28 +53,30 @@ const router = new Router({
       {path: "/user/head", component: userHead},
       {path:'/message',name:'message',component: message},
       {path:'/log',name:'log',component: log},
+      {path:'/login',name:'login',component: login},
+      {path:'/loading',name:'loading',component: loading},
       {path:'/404',name:'404',component: noFound},
       {path:'*',redirect:'/404'},
     ]
 });
 
 // 全局路由守卫
-router.beforeEach((to,from,next) => {
-  // to: Route: 即将要进入的目标 路由对象
-  // from: Route: 当前导航正要离开的路由
-  // next: Function: 一定要调用该方法来 resolve 这个钩子。执行效果依赖 next 方法的调用参数。
-  if(to.path!=='/login'){
-    if(sessionStorage.token){
-      next();
-    }
-    else {
-      next({
-        path:'/login',
-        query:{redirect:to.fullPath}
-      })
-    }
-  }
-  else {next();}
-});
+// router.beforeEach((to,from,next) => {
+//   // to: Route: 即将要进入的目标 路由对象
+//   // from: Route: 当前导航正要离开的路由
+//   // next: Function: 一定要调用该方法来 resolve 这个钩子。执行效果依赖 next 方法的调用参数。
+//   if(to.path!=='/login'||to.path!=='/loading'){
+//     if(sessionStorage.token){
+//       next();
+//     }
+//     else {
+//       next({
+//         path:'/loading',
+//         // query:{redirect:to.fullPath}
+//       })
+//     }
+//   }
+//   else {next();}
+// });
 
 export default router;
