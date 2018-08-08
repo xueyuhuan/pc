@@ -3,7 +3,7 @@
         <subhead>
             <div><i class="fa fa-user-o"></i>&nbsp;&nbsp;&nbsp;意见反馈&nbsp;<span>Feedback</span></div>
         </subhead>
-        <card>
+        <cardTemp>
             <ul class="nav"><li v-for="(i,index) in nav" @click="navActive=index" :class="{active:index===navActive}">{{i.name}}</li></ul>
             <template v-if="navActive===0">
                 <ul class="form">
@@ -34,7 +34,7 @@
                                :page-count="list.total">
                 </el-pagination>
             </template>
-        </card>
+        </cardTemp>
         <div class="popup" v-show="popupShow">
             <div class="content">
                 <h3>详情</h3>
