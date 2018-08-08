@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="top"><img :src="$proxy+'img/'+info.schoolPrefix+'/logo_blue.png'" /></div>
+        <div class="top"><img :src="'/img/'+info.schoolPrefix+'/logo_blue.png'" /></div>
         <div class="mid">
             <div class="title">{{info.systemName}}</div>
             <div class="login">
