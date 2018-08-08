@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div class="top"><img :src="$school.school==='hit'?$proxy+'img/hit/logo_blue.png':$proxy+'img/ccnu/logo_blue.png'" /></div>
+        <div class="top"><img :src="$proxy+'img/'+info.schoolPrefix+'/logo_blue.png'" /></div>
         <div class="mid">
-            <div class="title">{{$school.loginTitle}}</div>
+            <div class="title">{{info.systemName}}</div>
             <div class="login">
                 <div style="margin-bottom: 30px;">账号登录</div>
                 <input class="account" v-model="name" type="text" placeholder="请输入用户名"/>
@@ -10,7 +10,7 @@
                 <button @click="login">登录</button>
             </div>
         </div>
-        <div class="bottom">{{$school.copyright}}</div>
+        <div class="bottom" v-html="info.copyright"></div>
     </div>
 
 </template>
@@ -20,23 +20,30 @@
         name: "Login",
         data: function () {
             return {
-                name: "2006983633",
-                password: "12345678",
+              name: "2006983633",
+              password: "12345678",
+              info:''
             }
         },
+      created(){
+        this.$ajax.post('/system_portal/info')
+            .then(res => {
+              this.info=res.data;
+            });
+      },
         methods: {
-            login: function () {
-                this.$ajax.post(this.$url.login, {username: this.name, password: this.password})
-                    .then(res => {
-                      if(res.data.errcode==='0'){
-                        this.$store.commit('set_token', res.data.token);//在store.js中设置token
-                        this.$router.push({path: this.$school.url});
-                      }
-                      else{
-                        this.$message.error(res.data.errmsg);
-                      }
-                    });
-            }
+          login: function () {
+            this.$ajax.post(this.$url.login, {username: this.name, password: this.password})
+                .then(res => {
+                  if (res.data.errcode === '0') {
+                    this.$store.commit('set_token', res.data.token);//在store.js中设置token
+                    this.$router.push({path: this.$school.url});
+                  }
+                  else {
+                    this.$message.error(res.data.errmsg);
+                  }
+                });
+          }
         }
     };
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div class="footContain">
         <div class="foot">
-            <span>© 2015-2017 Wuhan Sibe. All rights reserved.</span>
+            <span v-html="copyright"></span>
             <router-link to="/log">升级日志</router-link>
         </div>
     </div>
@@ -9,7 +9,18 @@
 
 <script>
     export default {
-        name: "Footer"
+      name: "Footer",
+      data(){
+        return{
+          copyright:'',
+        }
+      },
+      created(){
+        this.$ajax.post('/system_portal/copyright')
+            .then(res => {
+              this.copyright=res.data.copyright;
+            });
+      },
     }
 </script>
 
