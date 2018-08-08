@@ -22,7 +22,7 @@
             </card>
             <card class="deadline">
                 <template slot="header">限时办理</template>
-                <img :src="$proxy+'/img/no_data.png'"/>
+                <img src="/img/no_data.png"/>
             </card>
         </div>
         <CardTemp class="bottom">

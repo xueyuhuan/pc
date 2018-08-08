@@ -59,9 +59,9 @@
     data(){
       return{
         work:[
-          {img:process.env.VUE_APP_PROXY+'/img/banner_1.png',name:'我的待办'},
-          {img:process.env.VUE_APP_PROXY+'/img/banner_2.png',name:'未读邮件'},
-          {img:process.env.VUE_APP_PROXY+'/img/banner_3.png',name:'我发起的'}
+          {img:'/img/banner_1.png',name:'我的待办'},
+          {img:'/img/banner_2.png',name:'未读邮件'},
+          {img:'/img/banner_3.png',name:'我发起的'}
         ],
         workActive:0,
         todoList:[],

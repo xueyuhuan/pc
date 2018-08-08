@@ -2,7 +2,7 @@
     <header class="_theme position_fixed" v-show="navShow">
         <div class="content">
             <nav>
-                <router-link :to="$school.url"><img :src="$proxy+$school.logo"/></router-link>
+                <router-link :to="$school.url"><img :src="'/img/'+$school.school+'/logo.png'"/></router-link>
                 <ul>
                     <li v-for="i in nav" class="_theme_light" :class="{active:active===i.url}" @click="click(i.url)">
                         <router-link :to="i.url">{{i.name}}</router-link>

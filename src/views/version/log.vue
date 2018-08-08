@@ -5,10 +5,10 @@
         </subhead>
         <div class="main">
             <div class="banner">
-                <img class="bg" :src="$proxy+'/img/icon_upgrade_bg.jpg'"/>
+                <img class="bg" src="/img/bg_log.jpg"/>
                 <div class="info">
                     <div class="left">
-                        <img :src="$school.school==='ccnu'?$proxy+'/img/ccnu/logo_mini.png':$proxy+'/img/hit/logo_mini.png'"/>
+                        <img :src="'/img/'+$school.school+'/logo_mini.png'"/>
                         <div class="text">
                             <h4>门户成长日记</h4>
                             <p>门户{{version}}于{{time}}更新!</p>

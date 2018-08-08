@@ -82,7 +82,7 @@
                         <template slot="title"><i class="fa fa-comment-o"></i>用户评价<a class="comment" @click="commentShow=true">评价</a></template>
                         <div class="content" v-if="comment.length>0">
                             <ul>
-                                <li v-for="i in comment"><img :src="i.PATH?i.PATH:$proxy+'/img/a0.jpg'"/>
+                                <li v-for="i in comment"><img :src="i.PATH?i.PATH:'/img/a0.jpg'"/>
                                     <div class="text">{{i.USERNAME}}&nbsp;&nbsp;<el-rate class="rate" v-model="i.SCORE" disabled></el-rate><br/><span>{{i.COMMENT_TEXT}}</span></div>
                                 </li>
                             </ul>
@@ -110,7 +110,7 @@
                     <template slot="header"><div class="left"><i class="fa fa-info-circle"></i>基本信息</div></template>
                     <!--已进驻头部-->
                     <div class="enter" v-if="service.isJzdt==='1'">
-                        <img :src="$school.school==='ccnu'?$proxy+'/img/fwdt.jpg':$proxy+'/img/hitJzdt.png'"/>
+                        <img :src="'/img/'+$school.school+'/enter.png'"/>
                         <div class="text">
                             <span>当前服务已经入驻</span>
                             <p>{{$school.enterName}}</p>
@@ -120,7 +120,7 @@
                     <!--未进驻线上-->
                     <template v-if="service.isJzdt!=='1'&&service.lineAble==='1'&&$school.school==='hit'">
                         <div class="enter">
-                            <img :src="$proxy+'img/mouse.png'"/>
+                            <img src="/img/hit/mouse.png"/>
                             <div class="text">
                                 <span>本服务由<a :href="service.fwlyUrl" target="_blank">{{service.fwlymc}}</a>提供</span>
                                 <p>线上办理</p>

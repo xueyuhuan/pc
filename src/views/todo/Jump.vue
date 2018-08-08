@@ -5,7 +5,7 @@
                 <header>跳转至{{jumpName}}<i class="fa fa-close" @click="close"></i></header>
                 <div class="body">
                     <div class="main">
-                        <img :src="$proxy+'/img/icon_sp.png'"/>
+                        <img src="/img/todo_jump.png"/>
                         <p>即将进入<em>{{jumpName}}</em>的待办,请在新打开的窗口内继续完成<em>{{jumpName}}</em>的发起工作。<br/>
                             <span>若办理页面不能自动弹出，请修改浏览器配置</span></p>
                     </div>
