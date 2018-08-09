@@ -21,11 +21,11 @@
                     <a href="#">
                         <el-dropdown trigger="click" @command="toggleColor">
                             <el-tooltip class="item" effect="light" content="主题" placement="bottom"><i
-                                    class="fa fa-cube" style="color:#fff;"></i></el-tooltip>
+                                    class="iconfont icon-pifu" style="color:#fff;"></i></el-tooltip>
                             <el-dropdown-menu slot="dropdown" class="theme_dropdown">
-                                <el-dropdown-item command="blue">蓝色</el-dropdown-item>
-                                <el-dropdown-item v-if="$school.school==='ccnu'" command="green">绿色</el-dropdown-item>
-                                <el-dropdown-item v-if="$school.school==='ccnu'" command="orange">橙色</el-dropdown-item>
+                                <el-dropdown-item command="blue"><span class="themeSpan_blue"></span> 蓝色</el-dropdown-item>
+                                <el-dropdown-item v-if="$school.school==='ccnu'" command="green"><span class="themeSpan_green"></span> 绿色</el-dropdown-item>
+                                <el-dropdown-item v-if="$school.school==='ccnu'" command="orange"><span class="themeSpan_orange"></span> 橙色</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
                     </a>
@@ -34,7 +34,7 @@
                     <router-link to="/todo">
                         <el-tooltip class="item" effect="light" content="办事中心" placement="bottom">
                             <el-badge :value="todoCount" :max="9" class="item" :hidden="todoCount === 0">
-                                <i class="fa fa-tv" :class="{active:active==='/todo'}"></i>
+                                <i class="icon-screen-desktop fa-fw" :class="{active:active==='/todo'}"></i>
                             </el-badge>
                         </el-tooltip>
                     </router-link>
@@ -42,7 +42,7 @@
                 <li @click="click('/collections')">
                     <router-link to="/collections">
                         <el-tooltip class="item" effect="light" content="收藏中心" placement="bottom">
-                            <i class="fa fa-star-o" :class="{active:active==='/collections'}"></i></el-tooltip>
+                            <i class="icon-star fa-fw" :class="{active:active==='/collections'}"></i></el-tooltip>
                     </router-link>
                 </li>
                 <li @click="click('/message')" v-if="$school.school==='ccnu'">
@@ -247,6 +247,7 @@
             ul.personal {
                 @include flex;
                 height: 100%;
+
                 li {
                     height: 100%;
                     padding: 0 15px;
@@ -367,5 +368,32 @@
                 }
             }
         }
+    }
+    .themeSpan_blue{
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        background-color: $blue-card;
+    }
+    .themeSpan_green{
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        background-color: $green-card;
+    }
+    .themeSpan_orange{
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        background-color: $orange-card;
     }
 </style>

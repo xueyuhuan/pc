@@ -10,6 +10,7 @@ import hit from './hit'
 
 import 'element-ui/lib/theme-chalk/index.css';
 import 'font-awesome/css/font-awesome.css';
+import "./assets/css/iconfont.css";
 
 const requireComponent = require.context(
     // 其组件目录的相对路径

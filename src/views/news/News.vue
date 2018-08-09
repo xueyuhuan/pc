@@ -1,7 +1,7 @@
 <template>
     <div class="bg_color">
         <subhead>
-            <div><i class="fa fa-newspaper-o"></i>&nbsp;&nbsp;&nbsp;资讯中心 <span>News Center</span></div>
+            <div><i class="iconfont icon-news"></i>&nbsp;&nbsp;&nbsp;资讯中心 <span>News Center</span></div>
             <!--<el-input :placeholder="placeholder" v-model="input_value" size="small" @keyup.enter.native="searchTitle">-->
                 <!--<el-button slot="append" icon="el-icon-search" @click.native="searchTitle"></el-button>-->
             <!--</el-input>-->
@@ -37,7 +37,7 @@
                             @current-change="handleCurrentChange"
                             :current-page.sync="page"
                             :page-size="10"
-                            layout="prev, pager, next"
+                            layout="total, prev, pager, next"
                             :total="newsList_length">
                     </el-pagination>
                 </div>
