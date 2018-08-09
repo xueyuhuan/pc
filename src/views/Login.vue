@@ -20,8 +20,8 @@
         name: "Login",
         data: function () {
             return {
-              name: "2006983633",
-              password: "12345678",
+              name: "",
+              password: "",
               info:''
             }
         },
@@ -56,7 +56,6 @@
         -webkit-border-radius: 3px;
         -moz-border-radius: 3px;
         border-radius: 3px;
-        background-color: #FAFFBD;
         padding-left: 20px;
         margin-bottom: 30px;
         font-size: 16px;

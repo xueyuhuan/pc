@@ -28,7 +28,7 @@
                         </p>
                     </div></a>
                     <div class="right" v-show="i.errmsg===''">
-                        <template v-if="ecardFlag">余额：{{i.infos.balance}}</template>
+                        <template v-if="ecardFlag">余额：{{i.infos.balance}}元</template>
                         <i class="fa" :class="[{'fa-eye-slash':!ecardFlag},{'fa-eye':ecardFlag}]" @click="ecardFlag=!ecardFlag"></i>
                     </div>
                 </template>
