@@ -34,7 +34,7 @@
                     <router-link to="/todo">
                         <el-tooltip class="item" effect="light" content="办事中心" placement="bottom">
                             <el-badge :value="todoCount" :max="9" class="item" :hidden="todoCount === 0">
-                                <i class="icon-screen-desktop fa-fw" :class="{active:active==='/todo'}"></i>
+                                <i class="fa fa-tv" :class="{active:active==='/todo'}"></i>
                             </el-badge>
                         </el-tooltip>
                     </router-link>
@@ -42,7 +42,7 @@
                 <li @click="click('/collections')">
                     <router-link to="/collections">
                         <el-tooltip class="item" effect="light" content="收藏中心" placement="bottom">
-                            <i class="icon-star fa-fw" :class="{active:active==='/collections'}"></i></el-tooltip>
+                            <i class="fa fa-star-o" :class="{active:active==='/collections'}"></i></el-tooltip>
                     </router-link>
                 </li>
                 <li @click="click('/message')" v-if="$school.school==='ccnu'">

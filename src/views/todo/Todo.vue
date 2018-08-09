@@ -1,7 +1,7 @@
 <template>
     <div>
         <subhead>
-            <div><i class="icon-screen-desktop fa-fw"></i>&nbsp;&nbsp;&nbsp;办事中心 <span>Todo List</span></div>
+            <div><i class="fa fa-tv"></i>&nbsp;&nbsp;&nbsp;办事中心 <span>Todo List</span></div>
         </subhead>
         <div class="contain">
             <div class="leftDiv">

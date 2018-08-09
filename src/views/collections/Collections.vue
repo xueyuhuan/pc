@@ -1,7 +1,7 @@
 <template>
     <div>
         <subhead>
-            <div><i class="fa fa-file-word-o"></i>&nbsp;&nbsp;&nbsp;我的收藏 <span>My Collections</span></div>
+            <div><i class="fa fa-star-o"></i>&nbsp;&nbsp;&nbsp;我的收藏 <span>My Collections</span></div>
         </subhead>
         <div class="contain">
             <div class="myCollections _theme_app_bordertop">
