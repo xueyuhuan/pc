@@ -8,7 +8,7 @@
       </div>
     </subhead>
     <div class="banner" v-if="bannerShow">
-      <img class="close" @click="closeBanner" :src="$proxy+'/img/banner-close.png'"/>
+      <img class="close" @click="closeBanner" src="/img/banner-close.png"/>
       <el-carousel trigger="click" height="300px">
         <el-carousel-item v-for="i in banner" >
           <a :href="i.url" target="_blank"><img :src="i.img"/></a>
@@ -54,7 +54,7 @@ export default {
   data(){
     return{
       banner:[],//banner列表
-      bannerShow:false,//banner是否显示
+      bannerShow:true,//banner是否显示
       home:{},//工作台布局
       A:[],
       B:[],

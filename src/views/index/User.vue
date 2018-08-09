@@ -8,7 +8,7 @@
                 <template v-if="i.id==='email'">
                     <a :href="i.infos.url" target="_blank">
                         <div class="left">
-                            <img :src="$proxy+'/img/email.png'"/>
+                            <img src="/img/email.png"/>
                             <p>邮件<br/>
                                 <span v-if="i.errmsg===''">{{i.infos.email}}</span>
                                 <span v-else>{{i.errmsg}}</span>
@@ -21,7 +21,7 @@
                 </template>
                 <template v-if="i.id==='ecard'">
                     <a><div class="left">
-                        <img :src="$proxy+'/img/school_card.png'"/>
+                        <img src="/img/school_card.png"/>
                         <p>校园卡<br/>
                             <span v-if="i.errmsg===''">今日消费<i v-if="ecardFlag">{{i.infos.todayAmt}}</i><i v-else>…</i>元</span>
                             <span v-else>{{i.errmsg}}</span>
@@ -34,7 +34,7 @@
                 </template>
                 <template v-if="i.id==='teacherPage'">
                     <a :href="i.infos.url" target="_blank"><div class="left">
-                        <img :src="$proxy+'/img/teacher_page.png'"/>
+                        <img src="/img/teacher_page.png"/>
                         <p>教师个人主页<br/>
                             <span v-if="i.errmsg===''">{{i.infos.department}}&nbsp;{{i.infos.name}}</span>
                             <span v-else>{{i.errmsg}}</span>
@@ -46,7 +46,7 @@
                 </template>
                 <template v-if="i.id==='salary'" v-show="i.errmsg!==''">
                     <router-link :to="'/service/detail/'+i.infos.salaryServiceId"><div class="left">
-                        <img :src="$proxy+'/img/salary.png'"/>
+                        <img src="/img/salary.png"/>
                         <p>工资查询<br/>
                             <span v-if="i.errmsg===''">{{i.infos.desc}}</span>
                             <span v-else>{{i.errmsg}}</span>
