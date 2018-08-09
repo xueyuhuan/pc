@@ -59,20 +59,25 @@
     data(){
       return{
         work:[
-          {img:process.env.VUE_APP_PROXY+'/img/banner_1.png',name:'我的待办'},
-          {img:process.env.VUE_APP_PROXY+'/img/banner_2.png',name:'未读邮件'},
-          {img:process.env.VUE_APP_PROXY+'/img/banner_3.png',name:'我发起的'}
+          {img:'/img/banner_1.png',name:'我的待办'},
+          {img:'/img/banner_2.png',name:'未读邮件'},
+          {img:'/img/banner_3.png',name:'我发起的'}
         ],
         workActive:0,
-        todoList:[],
+        // todoList:[],
         email:'',
         emailList:[],
         myStartedList:[],
       }
     },
+    computed:{
+      todoList(){
+        return this.$store.state.todo;
+      }
+    },
     created(){
       this.getData('/week_portal/current','week','current');//学期周
-      this.getData('/task_portal/query_todo_all','todoList','todoList');//待办
+      // this.getData('/task_portal/query_todo_all','todoList','todoList');//待办
       this.getData('/email_portal/unread','emailList','list','email','email');//邮件①未读列表②邮箱
       this.getData('/task_portal/query_mystarted_all','myStartedList','myStartedList');//我发起的
     },

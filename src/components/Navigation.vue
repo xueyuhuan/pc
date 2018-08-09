@@ -2,7 +2,7 @@
     <header class="_theme position_fixed" v-show="navShow">
         <div class="content">
             <nav>
-                <router-link :to="$school.url"><img :src="$proxy+$school.logo"/></router-link>
+                <router-link :to="$school.url"><img :src="'/img/'+$school.school+'/logo.png'"/></router-link>
                 <ul>
                     <li v-for="i in nav" class="_theme_light" :class="{active:active===i.url}" @click="click(i.url)">
                         <router-link :to="i.url">{{i.name}}</router-link>
@@ -116,12 +116,6 @@
           }
         },
       watch:{
-        // '$route' (to,from){
-        //   if(to.path==='/login'||to.path==='/404'||to.path==='/loading'){
-        //     this.navShow=false;
-        //   }
-        //   else this.navShow=true;
-        // },
         token(){
           if (this.token!==''){
             this.navShow=true;
@@ -130,7 +124,7 @@
                   this.$store.commit('set_user', res.data.user);
                 });
             this.getUnreadCount();
-            this.getTodoCount();
+            this.getTodo();
           }
         }
       },
@@ -145,14 +139,8 @@
                   this.$store.commit('set_user', res.data.user);
                 });
             this.getUnreadCount();
-            this.getTodoCount();
+            this.getTodo();
           }
-          // this.$ajax.post(this.$url.getUser)
-          //     .then(res => {
-          //       this.$store.commit('set_user', res.data.user);
-          //     });
-          // this.getUnreadCount();
-          // this.getTodoCount();
         },
         methods: {
           click(url) {
@@ -162,30 +150,40 @@
             document.getElementById('app').className='_theme_'+command;
             localStorage.skin='_theme_'+command;
           },
-          logout(){//注销
-            this.panelShow=false;
-            this.$confirm('确认注销吗?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-              this.$store.commit('del_token');
-              this.$router.push('/loading');
-            }).catch(()=>{
+            logout(){//注销
+                this.panelShow=false;
+                this.$confirm('确认注销吗?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$store.commit('del_token');
+                    this.setCookie("PORTAL_TOKEN", "", -1);
+                    this.$router.push('/loading');
+                }).catch(()=>{
 
-            })
-          },
-          getTodoCount(){
-            this.$ajax.post(this.$url.getTodoCount)
-                .then(res => {
-                  this.todoCount = res.data.todoCount;
+                })
+            },
+            //设置cookie
+            setCookie: function (cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                var expires = "expires=" + d.toUTCString();
+                console.info(cname + "=" + cvalue + "; " + expires);
+                document.cookie = cname + "=" + cvalue + "; " + expires;
+                console.info(document.cookie);
+            },
+          getTodo(){
+            return this.$ajax.post(this.$url.homeTodo)
+                .then(res=>{
+                  this.todoCount=res.data.todoList.length;
+                  this.$store.commit('set_data',{
+                    data:res.data.todoList,
+                    name:'todo'
+                  })
                 });
           },
           getUnreadCount(){
-            // this.$ajax.post(this.$url.query_unread)
-            //     .then(res => {
-            //         this.UnreadCount = res.data.unreadMessages.length;
-            //     });
             if(this.$school.isWebsocket){
               this.websocket();
             }
