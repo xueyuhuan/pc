@@ -28,7 +28,7 @@ export default {
   homeUser:'/user_portal/user_center_modules',//组件-工作台-个人中心
   homePay:'/user_portal/salary',//组件-工作台-工资查询
   homeServiceRank:'/service_portal/stat_usertype',//组件-工作台-服务排行
-    getTodoCount:'/task_portal/query_todo_count',//待办数
+  //getTodoCount:'/task_portal/query_todo_count',//待办数
   /**
    * 导航
    */

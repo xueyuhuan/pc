@@ -19,7 +19,7 @@ export default new Vuex.Store({
     schedule:[],
     date:0,//日程的日期
     service:[],//服务布局
-    todo:[],
+    todo:[],//待办列表
     // 个人中心
     userModule:{},
     email:{},//邮件

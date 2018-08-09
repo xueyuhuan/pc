@@ -116,12 +116,6 @@
           }
         },
       watch:{
-        // '$route' (to,from){
-        //   if(to.path==='/login'||to.path==='/404'||to.path==='/loading'){
-        //     this.navShow=false;
-        //   }
-        //   else this.navShow=true;
-        // },
         token(){
           if (this.token!==''){
             this.navShow=true;
@@ -130,7 +124,7 @@
                   this.$store.commit('set_user', res.data.user);
                 });
             this.getUnreadCount();
-            this.getTodoCount();
+            this.getTodo();
           }
         }
       },
@@ -145,14 +139,8 @@
                   this.$store.commit('set_user', res.data.user);
                 });
             this.getUnreadCount();
-            this.getTodoCount();
+            this.getTodo();
           }
-          // this.$ajax.post(this.$url.getUser)
-          //     .then(res => {
-          //       this.$store.commit('set_user', res.data.user);
-          //     });
-          // this.getUnreadCount();
-          // this.getTodoCount();
         },
         methods: {
           click(url) {
@@ -175,17 +163,17 @@
 
             })
           },
-          getTodoCount(){
-            this.$ajax.post(this.$url.getTodoCount)
-                .then(res => {
-                  this.todoCount = res.data.todoCount;
+          getTodo(){
+            return this.$ajax.post(this.$url.homeTodo)
+                .then(res=>{
+                  this.todoCount=res.data.todoList.length;
+                  this.$store.commit('set_data',{
+                    data:res.data.todoList,
+                    name:'todo'
+                  })
                 });
           },
           getUnreadCount(){
-            // this.$ajax.post(this.$url.query_unread)
-            //     .then(res => {
-            //         this.UnreadCount = res.data.unreadMessages.length;
-            //     });
             if(this.$school.isWebsocket){
               this.websocket();
             }

@@ -97,7 +97,7 @@ export default {
       this.getRanking(),
       this.getSchedule(),
       this.getService(),
-      this.getTodo(),
+      // this.getTodo(),
       this.getUser(),
     ]);
     if(localStorage.bannerShow==='false'){
@@ -245,15 +245,6 @@ export default {
             this.$store.commit('set_data',{
               data:res.data.services,
               name:'service'
-            })
-          });
-    },
-    getTodo(){
-      return this.$ajax.post(this.$url.homeTodo)
-          .then(res=>{
-            this.$store.commit('set_data',{
-              data:res.data.todoList,
-              name:'todo'
             })
           });
     },
