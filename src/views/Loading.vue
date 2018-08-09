@@ -18,8 +18,12 @@
             }
             else{
               // window.location.href='http://one.ccnu.edu.cn/index#/app/home/main';
-              console.log('加载验证false');
-              this.$router.push({path: '/login'});
+              if(res.data.casUsing==='true'){
+                window.location.href=process.env.VUE_APP_ServerApi+'/cas/login_portal';
+              }
+              else{
+                this.$router.push({path: '/login'});
+              }
             }
           });
     },

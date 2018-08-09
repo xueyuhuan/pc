@@ -5,6 +5,7 @@
 // const target='http://192.168.0.8:88/portal';
 const target='http://192.168.0.19:8080';
 module.exports = {
+  baseUrl:process.env.baseUrl,
   outputDir:process.env.outputDir,
   css:{
     loaderOptions:{
