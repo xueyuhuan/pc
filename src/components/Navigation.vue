@@ -150,19 +150,29 @@
             document.getElementById('app').className='_theme_'+command;
             localStorage.skin='_theme_'+command;
           },
-          logout(){//注销
-            this.panelShow=false;
-            this.$confirm('确认注销吗?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-              this.$store.commit('del_token');
-              this.$router.push('/loading');
-            }).catch(()=>{
+            logout(){//注销
+                this.panelShow=false;
+                this.$confirm('确认注销吗?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$store.commit('del_token');
+                    this.setCookie("PORTAL_TOKEN", "", -1);
+                    this.$router.push('/loading');
+                }).catch(()=>{
 
-            })
-          },
+                })
+            },
+            //设置cookie
+            setCookie: function (cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                var expires = "expires=" + d.toUTCString();
+                console.info(cname + "=" + cvalue + "; " + expires);
+                document.cookie = cname + "=" + cvalue + "; " + expires;
+                console.info(document.cookie);
+            },
           getTodo(){
             return this.$ajax.post(this.$url.homeTodo)
                 .then(res=>{
