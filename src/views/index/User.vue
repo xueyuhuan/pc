@@ -20,13 +20,13 @@
                     </div>
                 </template>
                 <template v-if="i.id==='ecard'">
-                    <a><div class="left">
+                    <router-link :to="'/service/iframe/'+i.infos.cardServiceId"><div class="left">
                         <img src="/img/school_card.png"/>
                         <p>校园卡<br/>
                             <span v-if="i.errmsg===''">今日消费<i v-if="ecardFlag">{{i.infos.todayAmt}}</i><i v-else>…</i>元</span>
                             <span v-else>{{i.errmsg}}</span>
                         </p>
-                    </div></a>
+                    </div></router-link>
                     <div class="right" v-show="i.errmsg===''">
                         <template v-if="ecardFlag">余额：{{i.infos.balance}}元</template>
                         <i class="fa" :class="[{'fa-eye-slash':!ecardFlag},{'fa-eye':ecardFlag}]" @click="ecardFlag=!ecardFlag"></i>
@@ -45,7 +45,7 @@
                     </div>
                 </template>
                 <template v-if="i.id==='salary'" v-show="i.errmsg!==''">
-                    <router-link :to="'/service/detail/'+i.infos.salaryServiceId"><div class="left">
+                    <router-link :to="'/service/iframe/'+i.infos.salaryServiceId"><div class="left">
                         <img src="/img/salary.png"/>
                         <p>工资查询<br/>
                             <span v-if="i.errmsg===''">{{i.infos.desc}}</span>
