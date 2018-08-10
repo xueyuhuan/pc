@@ -11,7 +11,7 @@
                     </el-carousel-item>
                 </el-carousel>
                 <ul class="nav">
-                    <li v-for="(i,index) in columns.slice(0,3)" @click="clickNav(i,index)" :class="{active:index===active}"><i class="fa" :class="{'fa-calendar-minus-o':index===0,'fa-book':index===1,'fa-id-card-o':index===2}"></i><p>{{i.columnName}}</p></li>
+                    <li v-for="(i,index) in columns.slice(0,3)" @click="clickNav(i,index)" :class="{active:index===active}"><i :class="columnIcon[index]"></i><p>{{i.columnName}}</p></li>
                     <li><router-link to="/news"><i class="fa fa-newspaper-o"></i><p>资讯中心</p></router-link></li>
                 </ul>
             </div>
@@ -32,7 +32,9 @@
         active:0,
         news:[],
         id:'',
-      }
+          columnIcon:['iconfont icon-gongshigonggao','iconfont icon-xuexiaogongwen','iconfont icon-xinwenkuaixun','iconfont icon-yuanbudaohang','iconfont icon-xuexiaoyaowen','iconfont icon-zonghexinwen','iconfont icon-huodong']
+
+    }
     },
     created(){
       this.getBanner();

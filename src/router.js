@@ -56,7 +56,7 @@ const router = new Router({
       {path:'/login',name:'login',component: login},
       {path:'/loading',name:'loading',component: loading},
       {path:'/404',name:'404',component: noFound},
-      {path:'*',redirect:'/404'},
+      // {path:'*',redirect:'/404'},
     ]
 });
 

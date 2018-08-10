@@ -1,7 +1,7 @@
 <template>
     <div id="feedback">
         <subhead>
-            <div><i class="fa fa-user-o"></i>&nbsp;&nbsp;&nbsp;意见反馈&nbsp;<span>Feedback</span></div>
+            <div><i class="iconfont icon-fankuiwenti"></i>&nbsp;&nbsp;&nbsp;意见反馈&nbsp;<span>Feedback</span></div>
         </subhead>
         <cardTemp>
             <ul class="nav"><li v-for="(i,index) in nav" @click="navActive=index" :class="{active:index===navActive}">{{i.name}}</li></ul>
@@ -11,9 +11,7 @@
                     <li>问题类别
                         <select class="left" v-model="data.type">
                             <option disabled value="">请选择</option>
-                            <option value="BUG反馈">BUG反馈</option>
-                            <option value="功能建议">功能建议</option>
-                            <option value="其他问题">其他问题</option>
+                            <option :value="i" v-for="i in types">{{i}}</option>
                         </select></li>
                     <li>联系方式<input v-model="data.tel" placeholder="请留下联系电话或邮箱，方便我们及时告知您处理结果" class="left"/></li>
                     <li>内容描述<textarea v-model="data.content" placeholder="请详细描述您遇到的问题、您的意见及建议" class="left"></textarea></li>
@@ -55,6 +53,7 @@
     data(){
       return{
         nav:[{name:"我要反馈"},{name:"我的反馈"}],
+          types:['BUG反馈','功能建议', '其他问题'],
         navActive:0,
         data:{
           username: "",

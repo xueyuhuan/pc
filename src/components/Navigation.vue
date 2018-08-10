@@ -13,7 +13,7 @@
                 <li @click="click('/feedback')" v-if="$school.school==='hit'">
                     <router-link to="/feedback">
                         <el-tooltip class="item" effect="light" content="意见反馈" placement="bottom">
-                            <i class="fa fa-map-o" :class="{active:active==='/feedback'}"></i>
+                            <i class="iconfont icon-fankuiwenti" :class="{active:active==='/feedback'}"></i>
                         </el-tooltip>
                     </router-link>
                 </li>
@@ -34,7 +34,7 @@
                     <router-link to="/todo">
                         <el-tooltip class="item" effect="light" content="办事中心" placement="bottom">
                             <el-badge :value="todoCount" :max="9" class="item" :hidden="todoCount === 0">
-                                <i class="fa fa-tv" :class="{active:active==='/todo'}"></i>
+                                <i class="icon-screen-desktop" :class="{active:active==='/todo'}"></i>
                             </el-badge>
                         </el-tooltip>
                     </router-link>
@@ -42,23 +42,20 @@
                 <li @click="click('/collections')">
                     <router-link to="/collections">
                         <el-tooltip class="item" effect="light" content="收藏中心" placement="bottom">
-                            <i class="fa fa-star-o" :class="{active:active==='/collections'}"></i></el-tooltip>
+                            <i class="icon-star" :class="{active:active==='/collections'}"></i></el-tooltip>
                     </router-link>
                 </li>
                 <li @click="click('/message')" v-if="$school.school==='ccnu'">
                     <router-link to="/message">
                         <el-tooltip class="item" effect="light" content="消息中心" placement="bottom">
                             <el-badge :value="UnreadCount" :max="9" class="item" :hidden="UnreadCount === 0">
-                                <i class="fa fa-bell-o" :class="{active:active==='/message'}"></i>
+                                <i class="icon-bell" :class="{active:active==='/message'}"></i>
                             </el-badge>
                         </el-tooltip>
                     </router-link>
                 </li>
                 <li>
-                    <a @click="panelShow=!panelShow">{{user.name}}<i class="fa fa-caret-down"></i></a>
-                </li>
-                <li>
-                    <router-link to="/user"><img :src="user.userFace"/></router-link>
+                    <a @click="panelShow=!panelShow">{{user.name}}<i class="fa fa-caret-down"></i><img class="_common_m-l-sm" :src="user.userFace?user.userFace:'/img/a0.jpg'"/></a>
                 </li>
             </ul>
             <template v-if="$school.school==='ccnu'">
@@ -76,12 +73,12 @@
                 <el-collapse-transition>
                     <div class="panel panel-hit" v-show="panelShow">
                         <div class="name">
-                            <span>{{user.name}}<i class="fa" :class="{'fa-venus':user.xb==='女','fa-mars':user.xb!=='女'}"></i></span>
-                            <router-link @click.native="panelShow=false" to="/user"><i class="fa fa-cog"></i>门户设置</router-link>
+                            <span>{{user.name}}<i :class="{'icon-user-female female':user.xb==='女','icon-user male':user.xb!=='女'}"></i></span>
+                            <router-link @click.native="panelShow=false" to="/user"><i class="icon-settings"></i>门户设置</router-link>
                         </div>
-                        <div class="number">职工号：{{user.username}}</div>
+                        <div class="number">{{(user.usertype=='4'||user.usertype=='6')?'学号':'职工号'}}：{{user.username}}</div>
                         <div class="type">{{user.deptName}}</div>
-                        <div class="other"><a @click="panelShow=false" href="http://ids.hit.edu.cn/authserver" target="_blank"><i class="fa fa-user-plus"></i>统一身份认证设置</a><button @click="logout">退出登录</button></div>
+                        <div class="other"><a @click="panelShow=false" href="http://ids.hit.edu.cn/authserver" target="_blank"><i class="icon-user-follow"></i>统一身份认证设置</a><button @click="logout">退出登录</button></div>
                     </div>
                 </el-collapse-transition>
             </template>

@@ -6,7 +6,6 @@
                 <img :src="i.img"/>{{i.name}}
                 <em v-show="index===0&&todoList.length>0">{{todoList.length}}</em>
                 <em v-show="index===1&&email">{{email.unreadCntAll}}</em>
-                <em v-show="index===2&&myStartedList.length>0">{{myStartedList.length}}</em>
             </li>
         </ul>
         <ul class="list" v-show="workActive===0">
@@ -14,7 +13,9 @@
                 <li v-for="i in todoList.slice(0,5)" @click="openTodo(i.url,i.appName)"><a>
                     <div class="left">
                         <p><em>【{{i.appName}}】</em>{{i.title}}</p>
-                        <span>当前环节：{{i.currentNode}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发起人：{{i.startUser}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发起时间：{{i.currentTime}}</span>
+                        <span class="_common_task" v-if="i.currentNode!=null && i.currentNode!=''">当前环节：{{i.currentNode}}</span>
+                        <span class="_common_task" v-if="i.startUser!=null && i.startUser!=''">发起人：{{i.startUser}}</span>
+                        <span class="_common_task" v-if="i.createTime!=null && i.createTime!=''">发起时间：{{i.currentTime}}</span>
                     </div>
                     <div class="right"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;办理</div>
                 </a></li>
@@ -33,14 +34,20 @@
                 </a></li>
             </template>
             <li v-else><a><p>暂无邮件</p></a></li>
-            <li class="more"><a :href="email.loginUrl" target="_blank">查看更多</a></li>
+            <li class="more"><a :href="email.loginUrl" target="_blank">进入邮箱</a></li>
         </ul>
         <ul class="list" v-show="workActive===2">
             <template v-if="myStartedList&&myStartedList.length>0">
                 <li v-for="i in myStartedList.slice(0,5)"><a :href="i.url" target="_blank">
                     <div class="left">
-                        <p><em>【{{i.appname}}】</em>{{i.title}}</p>
-                        <span>当前环节：{{i.currentnode}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发起时间：{{i.createtime}}</span>
+                        <p><em>【{{i.appname}}】</em>{{i.title}}
+                            <small v-if="i.stateno=='1'" class="_common_label _common_bg_warning">{{i.state}}</small>
+                            <small v-if="i.stateno=='2'" class="_common_label _common_bg_progress">{{i.state}}</small>
+                            <small v-if="i.stateno=='3'" class="_common_label _common_bg_light">{{i.state}}</small>
+                            <small v-if="i.stateno=='4'" class="_common_label _common_bg_danger">{{i.state}}</small>
+                        </p>
+                        <span class="_common_task" v-if="i.currentnode!=null && i.currentnode!=''">当前环节：{{i.currentnode}}</span>
+                        <span class="_common_task" v-if="i.createtime!=null && i.createtime!=''">发起时间：{{i.createtime}}</span>
                     </div>
                     <div class="right"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;查看</div>
                 </a></li>
