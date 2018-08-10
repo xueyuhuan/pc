@@ -4,9 +4,9 @@
         <div class="mid">
             <div class="title">{{info.systemName}}</div>
             <div class="login">
-                <div style="margin-bottom: 30px;">账号登录</div>
-                <input class="account" v-model="name" type="text" placeholder="请输入用户名"/>
-                <input class="password" v-model="password" type="password" placeholder="请输入密码"/>
+                <div style="margin-bottom: 30px;font-size: 20px;">账号登录</div>
+                <input class="account" v-model="name" type="text" placeholder="请输入用户名" autocomplete="off"/>
+                <input class="password" v-model="password" type="password" placeholder="请输入密码" autocomplete="off"/>
                 <button @click="login">登录</button>
             </div>
         </div>
@@ -76,6 +76,11 @@
         left: 0;
         right: 0;
         top: 0;
+        height: 79px;
+        img{
+            height: 69px;
+            margin-top: 5px;
+        }
     }
     .mid{
         min-height: 800px;
@@ -84,11 +89,14 @@
         position: fixed;
         left: 0;
         right: 0;
-        top: 60px;
+        top: 79px;
         bottom: 50px;
+        background-image: url("/img/login_bg.gif");
+        background-repeat: no-repeat;
+        background-position: center bottom 50px;
         .title{
             text-align: center;
-            font-size: 26px;
+            font-size: 30px;
             color: white;
             padding: 30px 0;
         }
