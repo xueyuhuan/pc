@@ -62,14 +62,14 @@
                 <el-collapse-transition>
                     <div class="panel panel-ccnu" v-show="panelShow">
                         <ul>
-                            <li><router-link @click.native="panelShow=false" to="/user"><i class="fa fa-user"></i>个人中心</router-link></li>
-                            <li><a @click="panelShow=false" href="http://bigdata.ccnu.edu.cn" target="_blank"><i class="fa fa-map-signs"></i>我的华师足迹</a></li>
-                            <li><a @click="logout"><i class="fa fa-sign-out fa-rotate-180"></i>注销</a></li>
+                            <li><router-link @click.native="panelShow=false" to="/user"><i class="icon icon-user"></i>个人中心</router-link></li>
+                            <li><a @click="panelShow=false" href="http://bigdata.ccnu.edu.cn" target="_blank"><i class="icon icon-directions"></i>我的华师足迹</a></li>
+                            <li><a @click="logout"><i class="icon icon-logout"></i>注销</a></li>
                         </ul>
                     </div>
                 </el-collapse-transition>
             </template>
-            <template v-if="$school.school==='hit'">
+            <template v-else-if="$school.school==='hit'">
                 <el-collapse-transition>
                     <div class="panel panel-hit" v-show="panelShow">
                         <div class="name">
@@ -79,6 +79,16 @@
                         <div class="number">{{(user.usertype=='4'||user.usertype=='6')?'学号':'职工号'}}：{{user.username}}</div>
                         <div class="type">{{user.deptName}}</div>
                         <div class="other"><a @click="panelShow=false" href="http://ids.hit.edu.cn/authserver" target="_blank"><i class="icon-user-follow"></i>统一身份认证设置</a><button @click="logout">退出登录</button></div>
+                    </div>
+                </el-collapse-transition>
+            </template>
+            <template v-else>
+                <el-collapse-transition>
+                    <div class="panel panel-ccnu" v-show="panelShow">
+                        <ul>
+                            <li><router-link @click.native="panelShow=false" to="/user"><i class="fa fa-user"></i>个人中心</router-link></li>
+                            <li><a @click="logout"><i class="fa fa-sign-out fa-rotate-180"></i>注销</a></li>
+                        </ul>
                     </div>
                 </el-collapse-transition>
             </template>
@@ -162,7 +172,7 @@
                 })
             },
             //设置cookie
-            setCookie: function (cname, cvalue, exdays) {
+            setCookie(cname, cvalue, exdays) {
                 var d = new Date();
                 d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
                 var expires = "expires=" + d.toUTCString();

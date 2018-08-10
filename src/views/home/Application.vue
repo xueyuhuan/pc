@@ -3,7 +3,7 @@
         <header slot="header" class="drag">我的应用
             <div class="right">
                 <i class="fa fa-cog" @click="popup"></i>
-                <router-link to="/schedule"><i class="fa fa-ellipsis-h"></i></router-link>
+                <router-link to="/app"><i class="fa fa-ellipsis-h"></i></router-link>
             </div>
         </header>
         <ul class="noDrag">

@@ -37,7 +37,7 @@
                     <span>{{i.transNo}}</span><span>{{i.dealDate}}</span><span>{{i.dealName}}</span><span>{{i.transMoney}}</span><span>{{i.outMoney}}</span><span>{{i.orgName}}</span>
                 </li>
             </ul>
-            <el-pagination class="page"
+            <el-pagination class="page" v-if="total>limit"
                            background
                            layout="prev, pager, next"
                            @current-change="handlePageChange"
@@ -139,6 +139,10 @@
                 if(res.data.result){
                   this.total=res.data.result.records;
                   this.list=res.data.result.rows;
+                }
+                else{
+                    this.total=0;
+                    this.list=[];
                 }
               })
         }

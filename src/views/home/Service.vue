@@ -3,7 +3,7 @@
         <header class="drag" slot="header">我的服务
             <div class="right">
                 <i class="fa fa-cog" @click="popup"></i>
-                <router-link to="/schedule"><i class="fa fa-ellipsis-h"></i></router-link>
+                <router-link to="/service"><i class="fa fa-ellipsis-h"></i></router-link>
             </div>
         </header>
         <ul>
