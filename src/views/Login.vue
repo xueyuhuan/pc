@@ -7,7 +7,7 @@
                 <div style="margin-bottom: 30px;font-size: 20px;">账号登录</div>
                 <input class="account" v-model="name" type="text" placeholder="请输入用户名" autocomplete="off"/>
                 <input class="password" v-model="password" type="password" placeholder="请输入密码" autocomplete="off"/>
-                <button @click="login">登录</button>
+                <button @click="login">登 录</button>
             </div>
         </div>
         <div class="bottom" v-html="info.copyright"></div>
@@ -106,7 +106,7 @@
         bottom: 50px;
         background-image: url("/img/login_bg.gif");
         background-repeat: no-repeat;
-        background-position: center bottom 50px;
+        background-position: center bottom 0;
         .title{
             text-align: center;
             font-size: 30px;
