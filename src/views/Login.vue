@@ -56,13 +56,26 @@
         -webkit-border-radius: 3px;
         -moz-border-radius: 3px;
         border-radius: 3px;
-        padding-left: 20px;
+        padding-left: 50px;
         margin-bottom: 30px;
         font-size: 16px;
+    }
+    .account{
+        background: url("/img/input_bg1.gif") no-repeat left center;
+        /*background-image: url("/img/input_bg1.gif");*/
+        /*background-repeat: no-repeat;*/
+        /*background-position: left center;*/
+    }
+    .password{
+        background: url("/img/input_bg2.gif") no-repeat left center;
+        /*background-image: url("/img/input_bg2.gif");*/
+        /*background-repeat: no-repeat;*/
+        /*background-position: left center;*/
     }
     button{
         width: 100%;
         height: 40px;
+        font-size: 18px;
         background: #FDA102;
         color: white;
         border: none;
@@ -79,6 +92,7 @@
         img{
             height: 69px;
             margin-top: 5px;
+            margin-left: 100px;
         }
     }
     .mid{
