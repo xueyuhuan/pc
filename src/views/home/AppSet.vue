@@ -16,7 +16,7 @@
                 <li v-for="(i,index) in list">
                     <div class="select" v-show="i.selectFlag==='N'" @click="add(i,index)"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;点击选择</div>
                     <div class="flag" v-show="i.selectFlag==='Y'"><i>已选</i></div>
-                    <img :src="popupType!=='home'?$proxy+imgPath+i.id:$proxy+'/img/ccnu/logo_mini.png'"/><p>{{i.name}}</p>
+                    <img :src="popupType!=='home'?$proxy+imgPath+i.id:'/img/'+$school.school+'/logo_blue_mini.png'"/><p>{{i.name}}</p>
                 </li>
             </ul>
             <!--分页-->
@@ -47,16 +47,16 @@
                 <draggable class="drag drag-list" v-model="listHasA" :options="dragHome">
                     <transition-group>
                         <li v-for="(i,index) in listHasA" :key="index">
-                            <div class="select" @click="cancel(i,index)"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;取消选择</div>
-                            <img :src="$proxy+'/img/ccnu/logo_mini.png'"/>{{i.NAME}}
+                            <div class="select" @click="cancel(i,index,'A')"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;取消选择</div>
+                            <img :src="'/img/'+$school.school+'/logo_blue_mini.png'"/>{{i.NAME}}{{i.name}}
                         </li>
                     </transition-group>
                 </draggable>
                 <draggable class="drag drag-list" v-model="listHasB" :options="dragHome">
                     <transition-group>
                         <li v-for="(i,index) in listHasB" :key="index">
-                            <div class="select" @click="cancel(i,index)"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;取消选择</div>
-                            <img :src="$proxy+'/img/ccnu/logo_mini.png'"/>{{i.NAME}}
+                            <div class="select" @click="cancel(i,index,'B')"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;取消选择</div>
+                            <img :src="'/img/'+$school.school+'/logo_blue_mini.png'"/>{{i.NAME}}{{i.name}}
                         </li>
                     </transition-group>
                 </draggable>
@@ -119,9 +119,6 @@
       popupType(){//显示类型
         return this.$store.state.popupType;
       },
-      home(){
-        return this.$store.state.home;
-      }
     },
     watch:{
       popupShow(){
@@ -154,40 +151,82 @@
           this.getAllPage();
           this.getHasPage();
         }
-
       }
     },
     methods:{
-      add(i,index){//点击选择
-        if(this.listHas.length<10){
+      //点击选择
+      add(i,index){
+        if(this.popupType==='home'){
           this.list[index].selectFlag='Y';
-          this.listHas.push(i);
+          this.listHasA.push(i);
         }
-        else {
-          this.$notify({
-            message: '只能选择10个',
-            type: 'warning',
-          });
-        }
-      },
-      cancel(i,index){//取消选择
-        this.listHas.splice(index,1);//从已有列表删除该项
-        this.list.forEach(function (v) {//在所有列表中查找其修改为未选中
-          if(v.id===i.id){
-            v.selectFlag='N';
+        else{
+          if(this.listHas.length<10){
+            this.list[index].selectFlag='Y';
+            this.listHas.push(i);
           }
-        })
+          else {
+            this.$notify({
+              message: '只能选择10个',
+              type: 'warning',
+            });
+          }
+        }
       },
+      //取消选择
+      cancel(i,index,listType){
+        if(listType==='A'){
+          this.listHasA.splice(index,1);
+          this.list.forEach(function (v) {//在所有列表中查找其修改为未选中
+            if(v.name===i.name||v.name===i.NAME){
+              v.selectFlag='N';
+            }
+          })
+        }
+        else if(listType==='B'){
+          this.listHasB.splice(index,1);
+          this.list.forEach(function (v) {//在所有列表中查找其修改为未选中
+            if(v.name===i.name||v.name===i.NAME){
+              v.selectFlag='N';
+            }
+          })
+        }
+        else{
+          this.listHas.splice(index,1);//从已有列表删除该项
+          this.list.forEach(function (v) {//在所有列表中查找其修改为未选中
+            if(v.id===i.id){
+              v.selectFlag='N';
+            }
+          })
+        }
+      },
+      //保存
       save(){
         if(this.popupType==='home'){
+          this.listHasA.forEach(function (v) {
+            if(v.name){
+              v.NAME=v.name;
+            }
+          });
+          this.listHasB.forEach(function (v) {
+            if(v.name){
+              v.NAME=v.name;
+            }
+          });
           let layout={A:this.listHasA,B:this.listHasB};
           this.$ajax.post(this.$url.homePageSave,{layout:JSON.stringify(layout),pageId:this.pageId})
               .then(res=>{
                 if(res.data.errmsg==='ok'){
-                  this.$notify({
-                    message: '保存成功',
-                    type: 'success',
+                  console.log(this.listHasA);
+                  this.$store.commit('set_data',{
+                    data:this.listHasA,
+                    name:'homeA'
                   });
+                  this.$store.commit('set_data',{
+                    data:this.listHasB,
+                    name:'homeB'
+                  });
+                  this.$notify.success('布局已保存');
                 }
               })
         }
@@ -195,6 +234,7 @@
           this.$ajax.post(this.url.save,{layout:JSON.stringify(this.listHas)})
               .then(res=>{
                 if(res.data.errmsg==='ok'){
+                  console.log(this.listHas);
                   this.$store.commit('set_data',{
                     data:this.listHas,
                     name:this.popupType
