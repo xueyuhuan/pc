@@ -18,7 +18,7 @@
                     </router-link>
                 </li>
                 <li>
-                    <a href="#">
+                    <a>
                         <el-dropdown trigger="click" @command="toggleColor">
                             <el-tooltip class="item" effect="light" content="主题" placement="bottom"><i
                                     class="iconfont icon-pifu" style="color:#fff;"></i></el-tooltip>

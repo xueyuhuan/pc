@@ -1,7 +1,12 @@
 <template>
   <div id="app" :class="skin" v-cloak>
     <navigation v-if="$route.path!=='/login'&&$route.path!=='/loading'&&$route.path!=='/404'"></navigation>
-    <div style="padding-bottom: 50px;"><router-view/></div>
+    <div style="padding-bottom: 50px;">
+        <keep-alive>
+            <router-view v-if="$route.meta.keepAlive"></router-view>
+        </keep-alive>
+        <router-view v-if="!$route.meta.keepAlive"></router-view>
+    </div>
     <!--回到顶部按钮-->
     <a href="javascript:;" v-show="top > 200" title="回到顶部" @click="toTop" class="toTop _theme_toTop_bgcolor"><i class="fa fa-chevron-up"></i></a>
     <Footer v-if="$route.path!=='/login'&&$route.path!=='/loading'&&$route.path!=='/404'"></Footer>

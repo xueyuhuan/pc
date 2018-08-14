@@ -70,7 +70,6 @@
                   this.$notify({
                     message: '头像设置成功',
                     type: 'success',
-                    position: 'bottom-right'
                   });
                   this.$ajax.post(this.$url.getUser)
                       .then(res=>{

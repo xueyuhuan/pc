@@ -32,17 +32,17 @@ const router = new Router({
     routes: [
       {path: "/index", component: index},
       {path: "/home", component: home},
-      {path: "/service", component: service},
+      {path: "/service", component: service,meta:{keepAlive: true}},
       {path: "/service/search", component: serviceSearch,
         children:[
-          {path:'icon', component:serviceSearchIcon},
-          {path:'list', component:serviceSearchList},
+          {path:'icon', component:serviceSearchIcon,meta:{keepAlive: true}},
+          {path:'list', component:serviceSearchList,meta:{keepAlive: true}},
         ]
       },
       {path: "/service/detail/:id", component: serviceDetail},
-        {path: "/service/iframe/:id", component: serviceIframe},
-      {path: "/app", component: application},
-      {path: "/app/ecard", component: ecard}, //一卡通
+      {path: "/service/iframe/:id", component: serviceIframe},
+      {path: "/app", component: application,meta:{keepAlive: true}},
+      {path: "/app/ecard", component: ecard,meta:{keepAlive: true}}, //一卡通
       {path: "/news", component: news,},
       {path: '/news/detail', name:"news_detail", component: newsDetail},
       {path: '/news/sub', name:"news_sub", component: newsSub},
@@ -51,10 +51,10 @@ const router = new Router({
       {path: '/feedback',component:feedback},
       {path: '/todo', name: "todo", component: process.env.VUE_APP_SCHOOL==='hit'? todo_hit : todo},
       {path: '/collections', name: 'collections', component: collections},
-      {path: "/user", component: user},
-      {path: "/user/head", component: userHead},
+      {path: "/user", component: user,meta:{keepAlive: true}},
+      {path: "/user/head", component: userHead,meta:{keepAlive: true}},
       {path:'/message',name:'message',component: message},
-      {path:'/log',name:'log',component: log},
+      {path:'/log',name:'log',component: log,meta:{keepAlive: true}},
       {path:'/login',name:'login',component: login},
       {path:'/loading',name:'loading',component: loading},
       {path:'/404',name:'404',component: noFound},
