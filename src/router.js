@@ -7,6 +7,7 @@ const serviceSearch = () => import('./views/service/Search');
 const serviceSearchIcon = () => import('./views/service/SearchIcon');
 const serviceSearchList = () => import('./views/service/SearchList');
 const serviceDetail = () => import('./views/service/Detail');
+const serviceIframe = () => import('./views/service/serviceIframe');
 const application = () => import('./views/app/Application');
 const ecard = () => import('./views/app/Ecard');
 const news = () => import('./views/news/News');
@@ -42,6 +43,7 @@ const router = new Router({
         ]
       },
       {path: "/service/detail/:id", component: serviceDetail},
+        {path: "/service/iframe/:id", component: serviceIframe},
       {path: "/app", component: application},
       {path: "/app/ecard", component: ecard}, //一卡通
       {path: "/news", component: news,},

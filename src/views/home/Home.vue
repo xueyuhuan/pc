@@ -70,6 +70,12 @@ export default {
         ghostClass: 'ghost'
       }
     },
+    homeA(){
+      return this.$store.state.homeA;
+    },
+    homeB(){
+      return this.$store.state.homeB;
+    },
     type(){//排行的日期
       return this.$store.state.type;
     },
@@ -83,6 +89,12 @@ export default {
     },
     date(){
       this.getSchedule();
+    },
+    homeA(){
+      this.getHome();
+    },
+    homeB(){
+      this.getHome();
     }
   },
   created(){

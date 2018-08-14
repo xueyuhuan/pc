@@ -9,6 +9,9 @@ export default new Vuex.Store({
     user:{},//用户信息
     /*home的模块数据*/
     home:{},//home布局
+    homeChange:0,
+    homeA:[],
+    homeB:[],
     app:[],//应用布局
     file:[],
     notice:[],

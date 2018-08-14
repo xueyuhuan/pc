@@ -5,67 +5,67 @@
         </header>
         <ul>
             <li v-for="i in userModule" class="border_bottom1">
-                <template v-if="i.id==='email'">
+                <template v-if="i.id==='email' && $school.school==='ccnu'">
                     <a>
-                        <img :src="$proxy+'/img/email.png'"/>
+                        <img src="/img/email.png"/>
                         <div class="right">
                             <div class="name">邮件<br/>
                                 <template v-if="i.infos.email!==''">
                                     <span class="pointer _theme_news_fontcolor" @click="enterEmail(i.infos.usertype,i.infos.email)">{{i.infos.email}}</span>
-                                    <span class="pointer _theme_news_fontcolor">解绑</span>
+                                    <span class="pointer _theme_news_fontcolor" @click="unbindEmail()">解绑</span>
                                 </template>
                                 <template v-else>
-                                    <a href="http://mail.ccnu.edu.cn/guide.aspx" target="_blank" class="pointer _theme_news_fontcolor">注册邮箱</a>
+                                    <a href="http://mail.ccnu.edu.cn/sso.aspx" target="_blank" class="pointer _theme_news_fontcolor">注册邮箱</a>
                                 </template>
                             </div>
                             <div class="info" v-show="i.infos.email!==''">未读：{{i.infos.unread}}，今日：{{i.infos.todayCount}}</div>
                         </div>
                     </a>
                 </template>
-                <template v-if="i.id==='ecard'">
+                <template v-if="i.id==='ecard' && $school.school==='ccnu'">
                     <a>
-                        <img :src="$proxy+'/img/school_card.png'"/>
+                        <img src="/img/school_card.png"/>
                         <div class="right">
                             <router-link to="/app/ecard" class="name">校园卡<br/>
                                 <span class="pointer _theme_news_fontcolor">
-                                    <template v-if="i.infos.cardStatus!==''">{{i.infos.cardStatus}}</template>
+                                    <template v-if="i.errmsg===null || i.errmsg===''">{{i.infos.cardStatus}}</template>
                                     <template v-else>{{i.errmsg}}</template>
                                 </span>
                             </router-link>
-                            <div class="info" v-show="i.infos.balance">
+                            <div class="info" v-show="i.errmsg===null || i.errmsg===''">
                                 <i v-show="showEcard">余额：{{i.infos.balance}}元</i>&nbsp;&nbsp;
                                 <i class="fa pointer" :class="{'fa-eye':showEcard,'fa-eye-slash':!showEcard}" @click.stop="showEcard = !showEcard"></i>
                             </div>
                         </div>
                     </a>
                 </template>
-                <template v-if="i.id==='tsg'">
+                <template v-if="i.id==='tsg' && $school.school==='ccnu'">
                     <a>
-                        <img :src="$proxy+'/img/book.png'"/>
+                        <img src="/img/book.png"/>
                         <div class="right">
                             <div class="name">图书馆<br/>
                                 <span class="pointer _theme_news_fontcolor">
-                                    <template v-if="i.infos.bookCount">{{ i.infos.bookCount === 0 ? '暂无借阅图书' : `在借${i.infos.bookCount}本`}}</template>
+                                    <template v-if="i.errmsg===null || i.errmsg===''">{{ i.infos.bookCount>0 ? '在借图书${i.infos.bookCount}本':'暂无借阅图书'}}</template>
                                     <template v-else>{{i.errmsg}}</template>
                                 </span>
                             </div>
-                            <div class="info" v-show="i.infos.qfje">
-                                <i>{{i.infos.qfje === 0 ? '无欠费' : `欠费${i.infos.qfje}元`}}</i>
+                            <div class="info" v-if="i.errmsg==null || i.errmsg===''">
+                                <i>{{i.infos.qfje>0 ? '欠费${i.infos.qfje}元':'无欠费'}}</i>
                             </div>
                         </div>
                     </a>
                 </template>
-                <template v-if="i.id==='network'">
+                <template v-if="i.id==='network' && $school.school==='ccnu'">
                     <a>
-                        <img :src="$proxy+'/img/school_card.png'"/>
+                        <img src="/img/school_card.png"/>
                         <div class="right">
                             <div class="name">网络流量<br/>
                                 <span class="pointer _theme_news_fontcolor">
-                                    <template v-if="i.infos.status">{{i.infos.status}}</template>
+                                    <template v-if="i.errmsg===null || i.errmsg===''">{{i.infos.status}}</template>
                                     <template v-else>{{i.errmsg}}</template>
                                 </span>
                             </div>
-                            <div class="info" v-show="i.infos.bqljll">
+                            <div class="info" v-show="i.errmsg===null || i.errmsg===''">
                                 <i>本月使用流量：{{i.infos.bqljll}}</i>
                             </div>
                         </div>
@@ -98,6 +98,30 @@
                 }
               })
         },
+          unbindEmail(){
+              this.$confirm('确认解绑吗?', '提示', {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消',
+                  type: 'warning'
+              }).then(() => {
+                  this.$ajax.post('/user_portal/unbind_email',{})
+                      .then(res=>{
+                          if(res.data.errcode==='0'){
+                              for(var i=0; i<this.userModule.length; i++){
+                                  if(this.userModule[i].id=='email'){
+                                      this.userModule[i].infos.email='';
+                                  }
+                              }
+                              this.$notify.success('解绑成功');
+                          }
+                          else{
+                              this.$notify.error('解绑失败');
+                          }
+                      })
+              }).catch(()=>{
+
+              })
+          }
       }
     }
 </script>
@@ -120,7 +144,6 @@
             padding: 8px 23px;
             a {
                 @include flex;
-                width: 100%;
                 font-size: 14px;
                 color: #000;
                 img {

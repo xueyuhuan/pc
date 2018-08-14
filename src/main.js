@@ -7,6 +7,7 @@ import axios from './axios';
 import url from './url'
 import ccnu from './ccnu'
 import hit from './hit'
+import nit from './nit'
 
 import 'element-ui/lib/theme-chalk/index.css';
 import 'font-awesome/css/font-awesome.css';
@@ -39,7 +40,11 @@ requireComponent.keys().forEach(fileName => {
 
 Vue.prototype.$ajax=axios;
 Vue.prototype.$url=url;
-Vue.prototype.$school=process.env.VUE_APP_SCHOOL==='hit'?hit:ccnu;
+switch (process.env.VUE_APP_SCHOOL) {
+  case 'ccnu':Vue.prototype.$school=ccnu;break;
+  case 'hit':Vue.prototype.$school=hit;break;
+  case 'nit':Vue.prototype.$school=nit;break;
+}
 Vue.prototype.$proxy=process.env.VUE_APP_PROXY;
 Vue.use(ElementUI);
 Vue.config.productionTip = false;

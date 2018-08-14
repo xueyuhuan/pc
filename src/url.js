@@ -44,6 +44,7 @@ export default {
   serviceDetail:'/service_portal/get',//查询具体服务详情
   serviceDetailComment:'/service_portal/get_comments',//查询详情评论
   serviceDetailCommentSave:'/service_portal/save_comment',//保存详情评论
+  serviceSimpleDetail:'/service_portal/get_simple',
   serviceFWLY:'/service_portal/query_service_type_all',//服务领域
   serviceFZBM:'/service_portal/list_manage_dept',//负责部门
   serviceFWDX:'/service_portal/list_user_group',//服务对象
