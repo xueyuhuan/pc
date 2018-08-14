@@ -136,7 +136,7 @@
         }
       },
         created() {
-          if (sessionStorage.token!==''){
+          if (sessionStorage.token!==undefined&&sessionStorage.token!==null&&sessionStorage.token!==''){
             if(this.token===''){
               this.$store.commit('set_token', sessionStorage.token);
             }
