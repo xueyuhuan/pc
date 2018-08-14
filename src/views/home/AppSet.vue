@@ -122,34 +122,36 @@
     },
     watch:{
       popupShow(){
-        this.page=1;
-        this.key='';
-        this.typeID='';
-        if(this.popupType==='app'){
-          this.name="应用";
-          this.imgPath="/resource/app?id=";
-          this.url.save=this.$url.homeAppSave;
-          this.url.all=this.$url.homeAppAll;
-          this.url.has=this.$url.homeAppHas;
-          this.getAll();
-          this.getHas();
-        }
-        else if(this.popupType==='service') {
-          this.name="服务";
-          this.imgPath="/resource/service?id=";
-          this.url.save=this.$url.homeServiceSave;
-          this.url.all=this.$url.homeServiceAll;
-          this.url.has=this.$url.homeService;
-          this.getServiceType();
-          this.getAll();
-          this.getHas();
-        }
-        else{
-          this.url.save=this.$url.homePageSave;
-          this.url.all=this.$url.homePageAll;
-          this.url.has=this.$url.homePage;
-          this.getAllPage();
-          this.getHasPage();
+        if (this.popupShow){
+          this.page=1;
+          this.key='';
+          this.typeID='';
+          if(this.popupType==='app'){
+            this.name="应用";
+            this.imgPath="/resource/app?id=";
+            this.url.save=this.$url.homeAppSave;
+            this.url.all=this.$url.homeAppAll;
+            this.url.has=this.$url.homeAppHas;
+            this.getAll();
+            this.getHas();
+          }
+          else if(this.popupType==='service') {
+            this.name="服务";
+            this.imgPath="/resource/service?id=";
+            this.url.save=this.$url.homeServiceSave;
+            this.url.all=this.$url.homeServiceAll;
+            this.url.has=this.$url.homeService;
+            this.getServiceType();
+            this.getAll();
+            this.getHas();
+          }
+          else{
+            this.url.save=this.$url.homePageSave;
+            this.url.all=this.$url.homePageAll;
+            this.url.has=this.$url.homePage;
+            this.getAllPage();
+            this.getHasPage();
+          }
         }
       }
     },
@@ -217,7 +219,6 @@
           this.$ajax.post(this.$url.homePageSave,{layout:JSON.stringify(layout),pageId:this.pageId})
               .then(res=>{
                 if(res.data.errmsg==='ok'){
-                  console.log(this.listHasA);
                   this.$store.commit('set_data',{
                     data:this.listHasA,
                     name:'homeA'
@@ -234,7 +235,6 @@
           this.$ajax.post(this.url.save,{layout:JSON.stringify(this.listHas)})
               .then(res=>{
                 if(res.data.errmsg==='ok'){
-                  console.log(this.listHas);
                   this.$store.commit('set_data',{
                     data:this.listHas,
                     name:this.popupType
@@ -263,6 +263,7 @@
             .then(res=>{
               this.list=res.data.page.rows;
               this.total=res.data.page.total;
+
             })
       },
       getHas(){
