@@ -31,7 +31,7 @@
                     </a>
                 </li>
                 <li @click="click('/todo')">
-                    <router-link to="/todo">
+                    <router-link to="/todo/hit_todo">
                         <el-tooltip class="item" effect="light" content="办事中心" placement="bottom">
                             <el-badge :value="todoCount" :max="9" class="item" :hidden="todoCount === 0">
                                 <i class="icon-screen-desktop" :class="{active:active==='/todo'}"></i>

@@ -4,201 +4,208 @@
             <div><i class="fa fa-tv"></i>&nbsp;&nbsp;&nbsp;办事中心 <span>Todo List</span></div>
         </subhead>
         <div class="contain">
-            <CardTemp class="head">
-                <span class="head_btn" :class="{btn_choosen:flag === 0}" @click="chooseType(0)">我的待办</span>
-                <span class="head_btn" :class="{btn_choosen:flag === 1}" @click="chooseType(1)">我的已办</span>
-                <span class="head_btn" :class="{btn_choosen:flag === 2}" @click="chooseType(2)">我发起的</span>
-            </CardTemp>
-            <!--我的待办-->
-            <div v-show="flag === 0" class="content">
-                <div class="content_left">
-                    <ul>
-                        <li class="title">待办来源</li>
-                        <li :class="{todoSourceActive:todoSourceId === ''}"
-                             @click="switchTodoSource('')"><i class="fa fa-bell-o"></i>全部
-                        </li>
-                        <li :class="{todoSourceActive:todoSourceId === item.id}"
-                             v-for="item in todomenu" @click="switchTodoSource(item.id)"><i class="fa fa-bell-o"></i>{{item.name}}
-                            <span>（{{item.todoList.length}}）</span>
-                        </li>
-                    </ul>
-                    <!--<card>-->
-                        <!--<template slot="header">通知公告</template>-->
-                        <!--<div class="menuDiv" :class="{todoSourceActive:todoSourceId === ''}"-->
-                             <!--@click="switchTodoSource('')">全部-->
-                        <!--</div>-->
-                        <!--<div class="menuDiv" :class="{todoSourceActive:todoSourceId === item.id}"-->
-                             <!--v-for="item in todomenu" @click="switchTodoSource(item.id)">-->
-                            <!--{{item.name}}-->
+            <!--<CardTemp class="head">-->
+                <!--<span class="head_btn" :class="{btn_choosen:flag === 0}" @click="chooseType(0)">我的待办</span>-->
+                <!--<span class="head_btn" :class="{btn_choosen:flag === 1}" @click="chooseType(1)">我的已办</span>-->
+                <!--<span class="head_btn" :class="{btn_choosen:flag === 2}" @click="chooseType(2)">我发起的</span>-->
+            <!--</CardTemp>-->
+
+            <!--&lt;!&ndash;我的待办&ndash;&gt;-->
+            <!--<div v-show="flag === 0" class="content">-->
+                <!--<div class="content_left">-->
+                    <!--<ul>-->
+                        <!--<li class="title">待办来源</li>-->
+                        <!--<li :class="{todoSourceActive:todoSourceId === ''}"-->
+                             <!--@click="switchTodoSource('')"><i class="fa fa-bell-o"></i>全部-->
+                        <!--</li>-->
+                        <!--<li :class="{todoSourceActive:todoSourceId === item.id}"-->
+                             <!--v-for="item in todomenu" @click="switchTodoSource(item.id)"><i class="fa fa-bell-o"></i>{{item.name}}-->
                             <!--<span>（{{item.todoList.length}}）</span>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                    <!--&lt;!&ndash;<card>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<template slot="header">通知公告</template>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="menuDiv" :class="{todoSourceActive:todoSourceId === ''}"&ndash;&gt;-->
+                             <!--&lt;!&ndash;@click="switchTodoSource('')">全部&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="menuDiv" :class="{todoSourceActive:todoSourceId === item.id}"&ndash;&gt;-->
+                             <!--&lt;!&ndash;v-for="item in todomenu" @click="switchTodoSource(item.id)">&ndash;&gt;-->
+                            <!--&lt;!&ndash;{{item.name}}&ndash;&gt;-->
+                            <!--&lt;!&ndash;<span>（{{item.todoList.length}}）</span>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</card>&ndash;&gt;-->
+                <!--</div>-->
+                <!--<div class="content_right">-->
+                    <!--<ul></ul>-->
+                    <!--<card>-->
+                        <!--<template slot="header">待办明细</template>-->
+                        <!--<div v-for="item in todomenu">-->
+                            <!--<div v-for="i in item.todoList" @click="openTodo(i.url,i.appName)" class="block"-->
+                                 <!--v-if="i.appId=== todoSourceId|| todoSourceId ===''">-->
+                                <!--<div class="blockLeft">-->
+                                    <!--<div class="title">[{{i.appName}}]{{i.title}}</div>-->
+                                    <!--<div class="time">{{i.currentTime}}</div>-->
+                                <!--</div>-->
+                                <!--<div class="blockRight"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;办理</div>-->
+                            <!--</div>-->
+                            <!--<div style="text-align: center">-->
+                                <!--<img v-if="item.todoList.length === 0 && todoSourceId === item.id"-->
+                                     <!--src="/img/no_data.png"/>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div style="text-align: center">-->
+                            <!--<img v-if="allLength === 0 && todoSourceId === ''"-->
+                                 <!--src="/img/no_data.png"/>-->
                         <!--</div>-->
                     <!--</card>-->
-                </div>
-                <div class="content_right">
-                    <ul></ul>
-                    <card>
-                        <template slot="header">待办明细</template>
-                        <div v-for="item in todomenu">
-                            <div v-for="i in item.todoList" @click="openTodo(i.url,i.appName)" class="block"
-                                 v-if="i.appId=== todoSourceId|| todoSourceId ===''">
-                                <div class="blockLeft">
-                                    <div class="title">[{{i.appName}}]{{i.title}}</div>
-                                    <div class="time">{{i.currentTime}}</div>
-                                </div>
-                                <div class="blockRight"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;办理</div>
-                            </div>
-                            <div style="text-align: center">
-                                <img v-if="item.todoList.length === 0 && todoSourceId === item.id"
-                                     src="/img/no_data.png"/>
-                            </div>
-                        </div>
-                        <div style="text-align: center">
-                            <img v-if="allLength === 0 && todoSourceId === ''"
-                                 src="/img/no_data.png"/>
-                        </div>
-                    </card>
-                </div>
-            </div>
-            <!--我的已办-->
-            <div v-show="flag === 1" class="content">
-                <div class="content_left">
-                    <card>
-                        <template slot="header">条件过滤</template>
-                        <div class="menuDiv_input">
-                            <el-form label-position="right" label-width="80px">
-                                <el-form-item label="来源:">
-                                    <el-select v-model="sourceValue" clearable filterable placeholder="请选择来源"
-                                               style="width:266px;">
-                                        <el-option v-for="item in myDone_select_contain" :label="item.name"
-                                                   :value="item.id" :key="item.value">{{item.name}}
-                                        </el-option>
-                                    </el-select>
-                                </el-form-item>
-                                <el-form-item label="标题:">
-                                    <el-input v-model="title"></el-input>
-                                </el-form-item>
-                                <el-form-item label="办理时间:">
-                                    <el-date-picker
-                                            class="dateInput"
-                                            v-model="period"
-                                            type="daterange"
-                                            align="right"
-                                            unlink-panels
-                                            range-separator="-"
-                                            start-placeholder="开始日期"
-                                            end-placeholder="结束日期"
-                                            :picker-options="pickerOptions2">
-                                    </el-date-picker>
-                                </el-form-item>
-                                <el-row style="text-align: center;">
-                                    <el-button @click="clear">清空</el-button>
-                                    <el-button type="primary" style="background-color: #1295d8;" @click="getDoneList">查询</el-button>
-                                </el-row>
+                <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;我的已办&ndash;&gt;-->
+            <!--<div v-show="flag === 1" class="content">-->
+                <!--<div class="content_left">-->
+                    <!--<card>-->
+                        <!--<template slot="header">条件过滤</template>-->
+                        <!--<div class="menuDiv_input">-->
+                            <!--<el-form label-position="right" label-width="80px">-->
+                                <!--<el-form-item label="来源:">-->
+                                    <!--<el-select v-model="sourceValue" clearable filterable placeholder="请选择来源"-->
+                                               <!--style="width:266px;">-->
+                                        <!--<el-option v-for="item in myDone_select_contain" :label="item.name"-->
+                                                   <!--:value="item.id" :key="item.value">{{item.name}}-->
+                                        <!--</el-option>-->
+                                    <!--</el-select>-->
+                                <!--</el-form-item>-->
+                                <!--<el-form-item label="标题:">-->
+                                    <!--<el-input v-model="title"></el-input>-->
+                                <!--</el-form-item>-->
+                                <!--<el-form-item label="办理时间:">-->
+                                    <!--<el-date-picker-->
+                                            <!--class="dateInput"-->
+                                            <!--v-model="period"-->
+                                            <!--type="daterange"-->
+                                            <!--align="right"-->
+                                            <!--unlink-panels-->
+                                            <!--range-separator="-"-->
+                                            <!--start-placeholder="开始日期"-->
+                                            <!--end-placeholder="结束日期"-->
+                                            <!--:picker-options="pickerOptions2">-->
+                                    <!--</el-date-picker>-->
+                                <!--</el-form-item>-->
+                                <!--<el-row style="text-align: center;">-->
+                                    <!--<el-button @click="clear">清空</el-button>-->
+                                    <!--<el-button type="primary" style="background-color: #1295d8;" @click="getDoneList">查询</el-button>-->
+                                <!--</el-row>-->
 
-                            </el-form>
-                        </div>
-                    </card>
-                </div>
-                <div class="content_right">
-                    <card>
-                        <template slot="header">明细</template>
-                        <div v-for="item in doneList" @click="" class="block">
-                            <div class="blockLeft">
-                                <div class="title"> <span>【{{item.appname}}】</span>{{item.title}} </div>
-                                <div class="time">
-                                    <span>发起人：{{item.startdept}}{{item.startuser}}</span>
-                                    <span>发起时间：{{item.createtime.substring(0,16)}}</span>
-                                    <span>我的办理时间：{{item.opertime.substring(0,16)}}</span>
-                                </div>
-                            </div>
-                            <div @click="openDoneDetail(item.url)" class="blockRight"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;查看</div>
-                        </div>
-                        <div v-if="doneList.length > 0" style="text-align: center;padding: 10px 23px;">
-                            <el-pagination
-                                    background
-                                    @current-change="handleCurrentChange_1"
-                                    :current-page.sync="page"
-                                    :page-size="limit"
-                                    layout="prev, pager, next"
-                                    :total="total">
-                            </el-pagination>
-                        </div>
-                    </card>
-                    <div style="text-align: center">
-                        <img v-if="doneList.length === 0"
-                             src="/img/no_data.png"/>
-                    </div>
-                </div>
-            </div>
-            <!--我发起的-->
-            <div v-show="flag === 2" class="content">
-                <div class="content_left">
-                    <card>
-                        <template slot="header">条件过滤</template>
-                        <div class="menuDiv_input">
-                            <el-form label-position="right" label-width="80px">
-                                <el-form-item label="来源:">
-                                    <el-select v-model="sourceValue" clearable filterable placeholder="请选择来源"
-                                               style="width:266px;">
-                                        <el-option v-for="item in myDone_select_contain" :label="item.name"
-                                                   :value="item.id" :key="item.value">{{item.name}}
-                                        </el-option>
-                                    </el-select>
-                                </el-form-item>
-                                <el-form-item label="标题:">
-                                    <el-input v-model="title"></el-input>
-                                </el-form-item>
-                                <el-form-item label="办理时间:">
-                                    <el-date-picker
-                                            class="dateInput"
-                                            v-model="period"
-                                            type="daterange"
-                                            align="right"
-                                            unlink-panels
-                                            range-separator="-"
-                                            start-placeholder="开始日期"
-                                            end-placeholder="结束日期"
-                                            :picker-options="pickerOptions2">
-                                    </el-date-picker>
-                                </el-form-item>
-                                <el-row style="text-align: center;">
-                                    <el-button @click="clear">清空</el-button>
-                                    <el-button type="primary" style="background-color: #1295d8;"  @click="getMyList">查询</el-button>
-                                </el-row>
-                            </el-form>
-                        </div>
-                    </card>
-                </div>
-                <div class="content_right">
-                    <card>
-                        <template slot="header">明细</template>
-                        <div v-for="item in myList" @click="" class="block">
-                            <div class="blockLeft">
-                                <div class="title"> <span>【{{item.appname}}】</span>{{item.title}} </div>
-                                <div class="time">
-                                    <span>发起时间：{{item.createtime}}</span>
-                                    <span>当前环节：{{item.currentnode}}</span>
-                                </div>
-                            </div>
-                            <div @click="openDoneDetail(item.url)" class="blockRight"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;查看</div>
-                        </div>
-                        <div v-if="myList.length > 0" style="text-align: center;padding: 10px 23px;">
-                            <el-pagination
-                                    background
-                                    @current-change="handleCurrentChange_2"
-                                    :current-page.sync="page"
-                                    :page-size="limit"
-                                    layout="prev, pager, next"
-                                    :total="total">
-                            </el-pagination>
-                        </div>
-                    </card>
-                    <div style="text-align: center">
-                        <img v-if="myList.length === 0"
-                             src="/img/no_data.png"/>
-                    </div>
-                </div>
-            </div>
+                            <!--</el-form>-->
+                        <!--</div>-->
+                    <!--</card>-->
+                <!--</div>-->
+                <!--<div class="content_right">-->
+                    <!--<card>-->
+                        <!--<template slot="header">明细</template>-->
+                        <!--<div v-for="item in doneList" @click="" class="block">-->
+                            <!--<div class="blockLeft">-->
+                                <!--<div class="title"> <span>【{{item.appname}}】</span>{{item.title}} </div>-->
+                                <!--<div class="time">-->
+                                    <!--<span>发起人：{{item.startdept}}{{item.startuser}}</span>-->
+                                    <!--<span>发起时间：{{item.createtime.substring(0,16)}}</span>-->
+                                    <!--<span>我的办理时间：{{item.opertime.substring(0,16)}}</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div @click="openDoneDetail(item.url)" class="blockRight"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;查看</div>-->
+                        <!--</div>-->
+                        <!--<div v-if="doneList.length > 0" style="text-align: center;padding: 10px 23px;">-->
+                            <!--<el-pagination-->
+                                    <!--background-->
+                                    <!--@current-change="handleCurrentChange_1"-->
+                                    <!--:current-page.sync="page"-->
+                                    <!--:page-size="limit"-->
+                                    <!--layout="prev, pager, next"-->
+                                    <!--:total="total">-->
+                            <!--</el-pagination>-->
+                        <!--</div>-->
+                    <!--</card>-->
+                    <!--<div style="text-align: center">-->
+                        <!--<img v-if="doneList.length === 0"-->
+                             <!--src="/img/no_data.png"/>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;我发起的&ndash;&gt;-->
+            <!--<div v-show="flag === 2" class="content">-->
+                <!--<div class="content_left">-->
+                    <!--<card>-->
+                        <!--<template slot="header">条件过滤</template>-->
+                        <!--<div class="menuDiv_input">-->
+                            <!--<el-form label-position="right" label-width="80px">-->
+                                <!--<el-form-item label="来源:">-->
+                                    <!--<el-select v-model="sourceValue" clearable filterable placeholder="请选择来源"-->
+                                               <!--style="width:266px;">-->
+                                        <!--<el-option v-for="item in myDone_select_contain" :label="item.name"-->
+                                                   <!--:value="item.id" :key="item.value">{{item.name}}-->
+                                        <!--</el-option>-->
+                                    <!--</el-select>-->
+                                <!--</el-form-item>-->
+                                <!--<el-form-item label="标题:">-->
+                                    <!--<el-input v-model="title"></el-input>-->
+                                <!--</el-form-item>-->
+                                <!--<el-form-item label="办理时间:">-->
+                                    <!--<el-date-picker-->
+                                            <!--class="dateInput"-->
+                                            <!--v-model="period"-->
+                                            <!--type="daterange"-->
+                                            <!--align="right"-->
+                                            <!--unlink-panels-->
+                                            <!--range-separator="-"-->
+                                            <!--start-placeholder="开始日期"-->
+                                            <!--end-placeholder="结束日期"-->
+                                            <!--:picker-options="pickerOptions2">-->
+                                    <!--</el-date-picker>-->
+                                <!--</el-form-item>-->
+                                <!--<el-row style="text-align: center;">-->
+                                    <!--<el-button @click="clear">清空</el-button>-->
+                                    <!--<el-button type="primary" style="background-color: #1295d8;"  @click="getMyList">查询</el-button>-->
+                                <!--</el-row>-->
+                            <!--</el-form>-->
+                        <!--</div>-->
+                    <!--</card>-->
+                <!--</div>-->
+                <!--<div class="content_right">-->
+                    <!--<card>-->
+                        <!--<template slot="header">明细</template>-->
+                        <!--<div v-for="item in myList" @click="" class="block">-->
+                            <!--<div class="blockLeft">-->
+                                <!--<div class="title"> <span>【{{item.appname}}】</span>{{item.title}} </div>-->
+                                <!--<div class="time">-->
+                                    <!--<span>发起时间：{{item.createtime}}</span>-->
+                                    <!--<span>当前环节：{{item.currentnode}}</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div @click="openDoneDetail(item.url)" class="blockRight"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;查看</div>-->
+                        <!--</div>-->
+                        <!--<div v-if="myList.length > 0" style="text-align: center;padding: 10px 23px;">-->
+                            <!--<el-pagination-->
+                                    <!--background-->
+                                    <!--@current-change="handleCurrentChange_2"-->
+                                    <!--:current-page.sync="page"-->
+                                    <!--:page-size="limit"-->
+                                    <!--layout="prev, pager, next"-->
+                                    <!--:total="total">-->
+                            <!--</el-pagination>-->
+                        <!--</div>-->
+                    <!--</card>-->
+                    <!--<div style="text-align: center">-->
+                        <!--<img v-if="myList.length === 0"-->
+                             <!--src="/img/no_data.png"/>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <CardTemp class="head">
+                <router-link class="head_btn" to="/todo/hit_todo">我的待办</router-link>
+                <router-link class="head_btn" to="/todo/hit_done">我的已办</router-link>
+                <router-link class="head_btn" to="/todo/hit_create">我发起的</router-link>
+            </CardTemp>
+            <router-view></router-view>
         </div>
         <!--我的待办弹出框-->
         <!--<el-dialog title=""-->
@@ -410,6 +417,9 @@
 </script>
 
 <style scoped lang="scss">
+    .router-link-active{
+        background: #F08625 !important;
+    }
     .contain {
         width: 1200px;
         margin: 0 auto;
