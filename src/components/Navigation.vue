@@ -267,7 +267,7 @@
 
                     }
                     &:last-child {
-                        padding: 0;
+                        padding-right: 0;
                         img {
                             width: 40px;
                             height: 40px;
