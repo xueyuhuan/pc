@@ -122,32 +122,37 @@
             return this.$store.state.token;
           }
         },
-      watch:{
-        token(){
-          if (this.token!==''){
-            this.navShow=true;
-            this.$ajax.post(this.$url.getUser)
-                .then(res => {
-                  this.$store.commit('set_user', res.data.user);
-                });
-            this.getUnreadCount();
-            this.getTodo();
-          }
-        }
-      },
+      // watch:{
+      //   token(){
+      //     if (this.token!==''){
+      //       console.log("监听时");
+      //       console.log(this.token);
+      //       this.navShow=true;
+      //       this.$ajax.post(this.$url.getUser)
+      //           .then(res => {
+      //             this.$store.commit('set_user', res.data.user);
+      //           });
+      //       this.getUnreadCount();
+      //       this.getTodo();
+      //     }
+      //   }
+      // },
         created() {
-          if (sessionStorage.token!==undefined&&sessionStorage.token!==null&&sessionStorage.token!==''){
-            if(this.token===''){
-              this.$store.commit('set_token', sessionStorage.token);
-            }
-            this.navShow=true;
-            this.$ajax.post(this.$url.getUser)
-                .then(res => {
-                  this.$store.commit('set_user', res.data.user);
-                });
-            this.getUnreadCount();
-            this.getTodo();
-          }
+          // if (sessionStorage.token!==undefined&&sessionStorage.token!==null&&sessionStorage.token!==''){
+          //   if(this.token===''){
+          //     this.$store.commit('set_token', sessionStorage.token);
+          //   }
+          //   console.log("创建时");
+          //   console.log(this.token);
+          //   this.navShow=true;
+          //
+          // }
+          this.$ajax.post(this.$url.getUser)
+              .then(res => {
+                this.$store.commit('set_user', res.data.user);
+              });
+          this.getUnreadCount();
+          this.getTodo();
         },
         methods: {
           click(url) {
@@ -194,7 +199,7 @@
             }
           },
           websocket () {
-            let ws = new WebSocket('ws://msg.ccnu.edu.cn:8080/msgsocket/websocket?token='+this.token);
+            let ws = new WebSocket('ws://msg.ccnu.edu.cn:8080/msgsocket/websocket?token='+sessionStorage.token);
             ws.onmessage = evt => {
               this.UnreadCount=JSON.parse(evt.data).unReadTotal;
             };
