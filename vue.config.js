@@ -3,7 +3,9 @@
 // const target='http://one.ccnu.edu.cn';
 // const target='http://onetest.ccnu.edu.cn';
 // const target='http://192.168.0.8:88/portal';
-const target='http://192.168.0.19:8080';
+const target='http://192.168.0.110:8080/portal';
+
+// const target='http://192.168.0.19:8080';
 module.exports = {
   baseUrl:process.env.baseUrl,
   outputDir:process.env.outputDir,
