@@ -16,7 +16,7 @@
                     <p><span class="width2">用户类别：</span><span class="width4">{{user.usertypeName}}</span></p>
                 </div>
                 <div class="img">
-                    <router-link to="/user/head" class="border"><img :src="user.userFace"/></router-link>
+                    <router-link to="/user/head" class="border"><img :src="user.userFace?user.userFace:'/img/a0.jpg'"/></router-link>
                 </div>
             </div>
         </section>
