@@ -14,7 +14,7 @@
                 <ul>
                     <li v-for="i in list.recommend"><router-link :to="'/service/detail/'+i.id">
                         <img :src="$proxy+imgPath+i.id"/>
-                        <p>{{i.name}}</p>
+                        <p :title="i.name">{{i.name}}</p>
                         <span>{{i.type2Name}}</span>
                         <el-rate v-model="i.score" disabled></el-rate>
                     </router-link></li>
@@ -22,7 +22,20 @@
             </card>
             <card class="deadline">
                 <template slot="header">限时办理</template>
-                <img src="/img/no_data.png"/>
+                <div style="overflow: hidden;height: 204px;">
+                    <ul v-if="list.deadline.length>0" :class="{anim:animate==true}">
+                        <li v-for="i in list.deadline">
+                            <router-link :to="'/service/detail/'+i.id">
+                                <img :src="$proxy+imgPath+i.id"/>
+                                <div class="info">
+                                    <p :title="i.name">{{i.name}}</p>
+                                    <span>到期时间：{{i.deadlineEnd}}</span>
+                                </div>
+                            </router-link>
+                        </li>
+                    </ul>
+                    <img v-else src="/img/no_data.png"/>
+                </div>
             </card>
         </div>
         <CardTemp class="bottom">
@@ -42,7 +55,7 @@
                         <a :href="i.url" target="_blank">
                             <img :src="$proxy+imgPath+i.id"/>
                             <div class="info">
-                                <p>{{i.name}}</p>
+                                <p :title="i.name">{{i.name}}</p>
                                 <span>{{i.type2Name}}</span>
                                 <el-rate v-model="i.score" disabled show-score score-template=" {value}分"></el-rate>
                             </div>
@@ -79,18 +92,37 @@
         type2ID:"",
         list:{
           recommend:[],//推荐服务列表
+          deadline:[],
           type:[],//纵向一级目录
           type2:[],//横向二级目录
           list:[],
-        }
+        },
+        animate:false
       }
     },
     created(){
       this.getRecommend();
+      this.$ajax.post(this.$url.serviceDeadline)
+          .then(res=>{
+            this.list.deadline=res.data.services;
+          })
+          .then(()=>{
+            if(this.list.deadline.length>3){
+              setInterval(this.scroll,5000);
+            }
+          });
       this.getHot();
       this.getType();
     },
     methods:{
+      scroll() {
+        this.animate = true;    // 因为在消息向上滚动的时候需要添加css3过渡动画，所以这里需要设置true
+        setTimeout(() => {      //  这里直接使用了es6的箭头函数，省去了处理this指向偏移问题，代码也比之前简化了很多
+          this.list.deadline.push(this.list.deadline[0]);  // 将数组的第一个元素添加到数组的
+          this.list.deadline.shift();               //删除数组的第一个元素
+          this.animate = false;  // margin-top 为0 的时候取消过渡动画，实现无缝滚动
+        }, 500)
+      },
       clickType2(id,index){//点击二级目录
         this.page=1;
         this.type2ID=id;
@@ -152,71 +184,88 @@
     }
 </style>
 <style scoped lang="scss">
+    .anim {
+        transition: all 0.5s;
+        margin-top: -68px;
+    }
     .service{
-        .subhead{
-            /*.right{*/
-                /*height: 30px;*/
-                /*input{*/
-                    /*background: #069;*/
-                    /*width: 160px;*/
-                    /*height: 100%;*/
-                    /*font-size: 12px;*/
-                    /*padding: 5px 15px;*/
-                    /*border-radius: 30px 0 0 30px;*/
-                    /*border: none;*/
-                /*}*/
-                /*button{*/
-                    /*background: #069;*/
-                    /*height: 100%;*/
-                    /*font-size: 12px;*/
-                    /*padding: 5px 10px;*/
-                    /*border-radius: 0 30px 30px 0;*/
-                    /*border: none;*/
-                    /*i{*/
-                        /*color: #1295d8;*/
-                    /*}*/
-                /*}*/
-            /*}*/
-        }
         .top{
             @include flex(space-between,stretch);
             width: 1200px;
             margin: 0 auto;
             .recommend{
                 width: 784px;
+                ul{
+                    @include flex;
+                    li:hover{
+                        background-color: #eee;
+                    }
+                    li{
+                        width: 155px;
+                        text-align: center;
+                        padding: 20px 10px;
+                        img{
+                            width: 85px;
+                            height: 85px;
+                        }
+                        p{
+                            font-size: 14px;
+                            color: #000;
+                            margin: 15px 0 0 0;
+                            @extend %ellipsis;
+                        }
+                        span{
+                            font-size: 12px;
+                            color: #959595;
+                        }
+                    }
+                }
             }
             .deadline{
                 width: 399px;
                 text-align: center;
+                ul{
+                    @include flex;
+                    flex-flow: column;
+                    height: 204px;
+                    overflow: hidden;
+                    li{
+                        flex: 0 0 68px;
+                        height: 68px;
+                        width: 100%;
+                        a{
+                            &:hover{
+                                background-color: #eee;
+                            }
+                            @include flex;
+                            height: 100%;
+                            width: 100%;
+                            text-align: left;
+                            padding: 15px 20px;
+                            img{
+                                width: 46px;
+                                height: 46px;
+                                margin: 0 20px 0 0;
+                            }
+                            p{
+                                width: 152px;
+                                font-size: 14px;
+                                color: #000;
+                                margin: 0;
+                                @extend %ellipsis;
+                            }
+                            span{
+                                font-size: 12px;
+                                color: #959595;
+                            }
+                        }
+                    }
+                }
                 img{
                     height: 200px;
                 }
             }
-            ul{
-                @include flex;
-                li:hover{
-                    background-color: #eee;
-                }
-                li{
-                    width: 155px;
-                    text-align: center;
-                    padding: 20px 10px;
-                    img{
-                        width: 85px;
-                        height: 85px;
-                    }
-                    p{
-                        font-size: 14px;
-                        color: #000;
-                        margin: 15px 0 0 0;
-                        @extend %ellipsis;
-                    }
-                    span{
-                        font-size: 12px;
-                        color: #959595;
-                    }
-                }
-            }
+
         }
         .bottom{
             width: 1200px;
