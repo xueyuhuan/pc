@@ -1,73 +1,89 @@
 <template>
-    <div class="content">
-        <div class="content_left">
-            <card>
-                <template slot="header">条件过滤</template>
-                <div class="menuDiv_input">
-                    <el-form label-position="right" label-width="80px">
-                        <el-form-item label="来源:">
-                            <el-select v-model="sourceValue" clearable filterable placeholder="请选择来源"
-                                       style="width:266px;">
-                                <el-option v-for="item in myDone_select_contain" :label="item.name"
-                                           :value="item.id" :key="item.value">{{item.name}}
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="标题:">
-                            <el-input v-model="title"></el-input>
-                        </el-form-item>
-                        <el-form-item label="办理时间:">
-                            <el-date-picker
-                                    class="dateInput"
-                                    v-model="period"
-                                    type="daterange"
-                                    align="right"
-                                    unlink-panels
-                                    range-separator="-"
-                                    start-placeholder="开始日期"
-                                    end-placeholder="结束日期"
-                                    :picker-options="pickerOptions2">
-                            </el-date-picker>
-                        </el-form-item>
-                        <el-row style="text-align: center;">
-                            <el-button @click="clear">清空</el-button>
-                            <el-button type="primary" style="background-color: #1295d8;" @click="getDoneList">查询
-                            </el-button>
-                        </el-row>
+    <div>
+        <subhead>
+            <div><i class="fa fa-tv"></i>&nbsp;&nbsp;&nbsp;办事中心 <span>Todo List</span></div>
+        </subhead>
+        <div class="contain">
+            <CardTemp class="head" v-if="todoType.length > 1">
+                <router-link class="head_btn" :class="{btn_choosen:item.url === '/todo_done'}" v-for="item in todoType" :to="item.url">
+                    {{item.name}}
+                </router-link>
+            </CardTemp>
+            <div class="content">
+                <div class="content_left">
+                    <card>
+                        <template slot="header">条件过滤</template>
+                        <div class="menuDiv_input">
+                            <el-form label-position="right" label-width="80px">
+                                <el-form-item label="来源:">
+                                    <el-select v-model="sourceValue" clearable filterable placeholder="请选择来源"
+                                               style="width:266px;">
+                                        <el-option v-for="item in myDone_select_contain" :label="item.name"
+                                                   :value="item.id" :key="item.value">{{item.name}}
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item label="标题:">
+                                    <el-input v-model="title"></el-input>
+                                </el-form-item>
+                                <el-form-item label="办理时间:">
+                                    <el-date-picker
+                                            class="dateInput"
+                                            v-model="period"
+                                            type="daterange"
+                                            align="right"
+                                            unlink-panels
+                                            range-separator="-"
+                                            start-placeholder="开始日期"
+                                            end-placeholder="结束日期"
+                                            :picker-options="pickerOptions2">
+                                    </el-date-picker>
+                                </el-form-item>
+                                <el-row style="text-align: center;">
+                                    <el-button @click="clear">清空</el-button>
+                                    <el-button type="primary" style="background-color: #1295d8;" @click="getDoneList">查询
+                                    </el-button>
+                                </el-row>
 
-                    </el-form>
-                </div>
-            </card>
-        </div>
-        <div class="content_right">
-            <card>
-                <template slot="header">明细</template>
-                <div v-for="item in doneList" @click="" class="block">
-                    <div class="blockLeft">
-                        <div class="title"><span>【{{item.appname}}】</span>{{item.title}}</div>
-                        <div class="time">
-                            <span>发起人：{{item.startdept}}{{item.startuser}}</span>
-                            <span>发起时间：{{item.createtime.substring(0,16)}}</span>
-                            <span>我的办理时间：{{item.opertime.substring(0,16)}}</span>
+                            </el-form>
                         </div>
-                    </div>
-                    <div @click="openDoneDetail(item.url)" class="blockRight"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;查看
+                    </card>
+                </div>
+                <div class="content_right">
+                    <card>
+                        <template slot="header">明细</template>
+                        <div v-for="item in doneList" @click="" class="block">
+                            <div class="blockLeft">
+                                <div class="title">
+                                    <span>【{{item.appname}}】</span>
+                                    <i style="font-style: normal" @click.stop="showTitle(item.title)">{{item.title}}</i>&nbsp;&nbsp;
+                                </div>
+                                <div class="time">
+                                    <span>发起人：{{item.startdept}}{{item.startuser}}</span>
+                                    <span>发起时间：{{item.createtime.substring(0,16)}}</span>
+                                    <span>我的办理时间：{{item.opertime.substring(0,16)}}</span>
+                                </div>
+                            </div>
+                            <div @click="openDoneDetail(item.url)" class="blockRight"><i
+                                    class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;查看
+                            </div>
+                        </div>
+                        <div v-if="doneList.length > 0" style="text-align: center;padding: 10px 23px;">
+                            <el-pagination
+                                    background
+                                    @current-change="handleCurrentChange_1"
+                                    :current-page.sync="page"
+                                    :page-size="limit"
+                                    layout="total, prev, pager, next"
+                                    :total="total">
+                            </el-pagination>
+                        </div>
+                    </card>
+                    <div style="text-align: center">
+                        <img v-if="doneList.length === 0"
+                             src="/img/no_data.png"/>
                     </div>
                 </div>
-                <div v-if="doneList.length > 0" style="text-align: center;padding: 10px 23px;">
-                    <el-pagination
-                            background
-                            @current-change="handleCurrentChange_1"
-                            :current-page.sync="page"
-                            :page-size="limit"
-                            layout="prev, pager, next"
-                            :total="total">
-                    </el-pagination>
-                </div>
-            </card>
-            <div style="text-align: center">
-                <img v-if="doneList.length === 0"
-                     src="/img/no_data.png"/>
             </div>
         </div>
     </div>
@@ -75,9 +91,10 @@
 
 <script>
     export default {
-        name: "Todo_hit_done",
+        name: "Todo_done",
         data() {
             return {
+                todoType: this.$school.todoType,
                 //  我的已办-查询条件
                 myDone_select_contain: [],//来源备选项
                 sourceValue: '',//来源
@@ -131,7 +148,7 @@
                 let date2;
                 let startDate = '';
                 let endDate = '';
-                if(this.period && this.period.length === 2 && this.period[0] !== '' && this.period[1] !== '' ){
+                if (this.period && this.period.length === 2 && this.period[0] !== '' && this.period[1] !== '') {
                     date1 = new Date(this.period[0]);
                     date2 = new Date(this.period[1]);
                     startDate = date1.getFullYear() + '-' + (date1.getMonth() + 1) + '-' + date1.getDate();
@@ -139,7 +156,14 @@
                     console.log(startDate);
                     console.log(endDate);
                 }
-                this.$ajax.post(this.$url.query_done,{appId:this.sourceValue, title:this.title, startDate:startDate, endDate:endDate, page:this.page, limit:this.limit})
+                this.$ajax.post(this.$url.query_done, {
+                    appId: this.sourceValue,
+                    title: this.title,
+                    startDate: startDate,
+                    endDate: endDate,
+                    page: this.page,
+                    limit: this.limit
+                })
                     .then(res => {
                         console.log(res.data);
                         this.doneList = res.data.data.rows;
@@ -149,23 +173,29 @@
                     })
             },
             //打开已办详情
-            openDoneDetail(url){
+            openDoneDetail(url) {
                 window.open(url);
             },
             //我的已办,分页
-            handleCurrentChange_1(page){
+            handleCurrentChange_1(page) {
                 this.page = page;
                 this.getDoneList();
             },
             //清空
-            clear(){
+            clear() {
                 this.sourceValue = '';
                 this.title = '';
                 this.period = '';
                 this.page = 1;
+                this.getDoneList();
             },
+            //点击将该条新闻标题展示在左侧条件区
+            showTitle(title){
+                this.title = title;
+                this.getDoneList();
+            }
         },
-        mounted(){
+        mounted() {
             this.get_myDone_apps();
             this.getDoneList();
         }
@@ -176,10 +206,10 @@
     .contain {
         width: 1200px;
         margin: 0 auto;
-        .head{
+        .head {
             padding: 10px 28px;
             margin-bottom: 10px;
-            .head_btn{
+            .head_btn {
                 display: inline-block;
                 background: #BFBFBF;
                 height: 30px;
@@ -204,9 +234,9 @@
             .content_left {
                 width: 386px;
                 background: white;
-                ul{
-                    li{
-                        &.title{
+                ul {
+                    li {
+                        &.title {
                             font-size: 18px;
                             font-weight: 700;
                             color: #0683c3;
@@ -217,10 +247,10 @@
                         font-size: 14px;
                         color: #363f44;
                         border-bottom: 1px dashed #eaeaea;
-                        &:last-child{
+                        &:last-child {
                             border: none;
                         }
-                        i{
+                        i {
                             margin-right: 8px;
                         }
                     }
@@ -252,7 +282,7 @@
                         overflow: hidden;
                         text-overflow: ellipsis;
                         white-space: nowrap;
-                        span{
+                        span {
                             color: #0683c3;
                         }
                     }
@@ -260,7 +290,7 @@
                         font-size: 12px;
                         margin-top: 5px;
                         color: #a0a0a0;
-                        span{
+                        span {
                             padding-left: 20px;
                         }
                     }
@@ -272,6 +302,7 @@
             }
         }
     }
+
     .dialog_content {
         @include flex(center, center);
         .content_title {

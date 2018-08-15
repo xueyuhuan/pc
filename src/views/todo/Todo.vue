@@ -3,6 +3,9 @@
         <subhead>
             <div><i class="fa fa-tv"></i>&nbsp;&nbsp;&nbsp;办事中心 <span>Todo List</span></div>
         </subhead>
+        <CardTemp class="head" v-if="todoType.length > 1">
+            <router-link class="head_btn" :class="{btn_choosen:item.url === '/todo'}" v-for="item in todoType" :to="item.url" @click="chooseType(0)">{{item.name}}</router-link>
+        </CardTemp>
         <div class="contain">
             <div class="leftDiv">
                 <card>
@@ -35,14 +38,18 @@
                 </card>
             </div>
         </div>
+        <Jump></Jump>
     </div>
 </template>
 
 <script>
+    import Jump from "./Jump";
     export default {
         name: "Todo",
+        components: {Jump},
         data(){
             return{
+                todoType:this.$school.todoType,
                 todomenu:[],//待办来源
                 todoSourceId:"",//当前选中的待办ID
                 allLength:0,//我的待办所有类的待办事项
@@ -64,7 +71,16 @@
                     })
             },
             openTodo(url){
-                this.dialogVisible = true;
+                this.$store.commit('set_data',{
+                    data:true,
+                    name:'jumpShow'
+                });
+                this.$store.commit('set_data',{
+                    data:appName,
+                    name:'jumpName'
+                });
+                // this.dialogVisible = true;
+                // this.appName = appName;
                 window.open(url);
             },
             //切换待办来源
@@ -80,9 +96,31 @@
 </script>
 
 <style scoped lang="scss">
+    .head{
+        padding: 10px 28px;
+        width: 1200px;
+        margin: 0 auto 10px;
+        .head_btn{
+            display: inline-block;
+            background: #BFBFBF;
+            height: 30px;
+            line-height: 30px;
+            width: 90px;
+            font-size: 16px;
+            color: white;
+            text-align: center;
+            border-radius: 15px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .btn_choosen {
+            background: #F08625;
+        }
+    }
     .contain{
         width: 1200px;
         margin: 0 auto;
+
         @include flex(space-between,flex-start);
         .leftDiv{
             width: 389px;
@@ -137,3 +175,4 @@
         }
     }
 </style>
+

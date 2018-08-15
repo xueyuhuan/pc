@@ -14,8 +14,8 @@ export default {
     {name:'日程',url:'/schedule'}
   ],
     todoType:[
-        {name:'我的待办',url:'./todo/'},
-        {name:'我的已办',url:''},
-        {name:'我发起的',url:''}
+        {name:'我的待办',url:'/todo'},
+        {name:'我的已办',url:'/todo_done'},
+        {name:'我发起的',url:'/todo_create'}
     ]
 }
