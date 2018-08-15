@@ -108,6 +108,7 @@ export default {
   //我发起的
   get_myStarted_apps:'/task_portal/get_myStarted_apps',//拿左侧条件
   query_myStarted:'/task_portal/query_myStarted',//拿右侧明细
+    query_mystarted_progress:'/task_portal/query_mystarted_progress',//查看当前环节
     /**
      * 收藏
      */

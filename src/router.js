@@ -17,7 +17,8 @@ const schedule = () => import('./views/schedule/Schedule');
 const scheduleSub = () => import('./views/schedule/MySub');
 const feedback = () => import('./views/icon/feedback');
 const todo = () => import('./views/todo/Todo');
-const todo_hit = () => import('./views/todo/Todo_hit');
+const todo_create = () => import('./views/todo/Todo_create');
+const todo_done = () => import('./views/todo/Todo_done');
 const collections = () => import('./views/collections/Collections');
 const user = () => import("./views/user/Info");
 const userHead = () => import("./views/user/Head");
@@ -49,7 +50,9 @@ const router = new Router({
       {path: '/schedule', name:"schedule", component: schedule},
       {path: '/schedule/MySub', name: "schedule_mySub", component: scheduleSub},
       {path: '/feedback',component:feedback},
-      {path: '/todo', name: "todo", component: process.env.VUE_APP_SCHOOL==='hit'? todo_hit : todo},
+      {path: '/todo', name: "todo", component: todo,},
+        {path: '/todo_done', name: 'todo_done', component: todo_done},
+        {path: '/todo_create', name: 'todo_create', component: todo_create},
       {path: '/collections', name: 'collections', component: collections},
       {path: "/user", component: user,meta:{keepAlive: true}},
       {path: "/user/head", component: userHead,meta:{keepAlive: true}},
