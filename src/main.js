@@ -4,10 +4,11 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import axios from './axios';
-import url from './url'
-import ccnu from './ccnu'
-import hit from './hit'
-import nit from './nit'
+import url from './url';
+import ccnu from './ccnu';
+import hit from './hit';
+import hzau from './hzau';
+import nit from './nit';
 
 import 'element-ui/lib/theme-chalk/index.css';
 import 'font-awesome/css/font-awesome.css';
@@ -43,6 +44,7 @@ Vue.prototype.$url=url;
 switch (process.env.VUE_APP_SCHOOL) {
   case 'ccnu':Vue.prototype.$school=ccnu;break;
   case 'hit':Vue.prototype.$school=hit;break;
+  case 'hzau':Vue.prototype.$school=hzau;break;
   case 'nit':Vue.prototype.$school=nit;break;
 }
 Vue.prototype.$proxy=process.env.VUE_APP_PROXY;
