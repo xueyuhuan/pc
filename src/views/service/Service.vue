@@ -25,13 +25,13 @@
                 <div style="overflow: hidden;height: 204px;">
                     <ul v-if="list.deadline.length>0" :class="{anim:animate==true}">
                         <li v-for="i in list.deadline">
-                            <router-link :to="'/service/detail/'+i.id">
+                            <a @click="enterService(i)">
                                 <img :src="$proxy+imgPath+i.id"/>
                                 <div class="info">
                                     <p :title="i.name">{{i.name}}</p>
                                     <span>到期时间：{{i.deadlineEnd}}</span>
                                 </div>
-                            </router-link>
+                            </a>
                         </li>
                     </ul>
                     <img v-else src="/img/no_data.png"/>
@@ -52,7 +52,7 @@
                 </ul>
                 <div>
                     <ul class="list"><li v-for="i in list.list">
-                        <a :href="i.url" target="_blank">
+                        <a @click="enterService(i)">
                             <img :src="$proxy+imgPath+i.id"/>
                             <div class="info">
                                 <p :title="i.name">{{i.name}}</p>
@@ -77,7 +77,8 @@
 </template>
 
 <script>
-  export default {
+    // import {enterService,openService} from "../../assets/js/service";
+    export default {
     name: "Service",
     data(){
       return{
@@ -115,6 +116,37 @@
       this.getType();
     },
     methods:{
+      //进入服务
+      enterService(i){
+        if(i.lineAble==='1'){//线上
+          if(i.fwfs==='0'){//访问限制
+            this.$ajax.post('/service_portal/validate_fwfs')
+                .then(res=>{
+                  if(res.data.errmsg===''){
+                    this.openService(i);
+                  }
+                  else {
+                    this.$message.error(res.data.errmsg);
+                  }
+                })
+          }
+          else {
+            this.openService(i);
+          }
+        }
+        else{
+          this.$router.push({path: '/service/detail/'+i.id});
+        }
+      },
+      //打开服务
+      openService(i){
+        if(i.openType==='1'){
+          this.$router.push({path: '/service/iframe/'+i.id});
+        }
+        else{
+          window.open(i.url);
+        }
+      },
       scroll() {
         this.animate = true;    // 因为在消息向上滚动的时候需要添加css3过渡动画，所以这里需要设置true
         setTimeout(() => {      //  这里直接使用了es6的箭头函数，省去了处理this指向偏移问题，代码也比之前简化了很多
@@ -242,6 +274,7 @@
                             width: 100%;
                             text-align: left;
                             padding: 15px 20px;
+                            cursor: pointer;
                             img{
                                 width: 46px;
                                 height: 46px;
@@ -329,6 +362,7 @@
                             width: 270px;
                             padding: 15px 20px;
                             border-right: 1px solid #f0f0f0;
+                            cursor: pointer;
                             img{
                                 width: 46px;
                                 height: 46px;

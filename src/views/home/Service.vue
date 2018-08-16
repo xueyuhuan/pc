@@ -8,7 +8,7 @@
         </header>
         <ul>
             <li v-for="i in data">
-                <a :href="i.url" target="_blank"><img :src="$proxy+imgPath+i.id"/>{{i.name}}</a>
+                <a @click="enterService(i)"><img :src="$proxy+imgPath+i.id"/>{{i.name}}</a>
             </li>
             <li class="no" v-if="data.length===0">暂无数据</li>
         </ul>
@@ -29,6 +29,7 @@
       }
     },
     methods:{
+      //打开设置
       popup(){
         this.$store.commit('set_data',{
           data:true,
@@ -38,6 +39,37 @@
           data:"service",
           name:'popupType'
         });
+      },
+      //进入服务
+      enterService(i){
+        if(i.lineAble==='1'){//线上
+          if(i.fwfs==='0'){//访问限制
+            this.$ajax.post('/service_portal/validate_fwfs')
+                .then(res=>{
+                  if(res.data.errmsg===''){
+                    this.openService(i);
+                  }
+                  else {
+                    this.$message.error(res.data.errmsg);
+                  }
+                })
+          }
+          else {
+            this.openService(i);
+          }
+        }
+        else{
+          this.$router.push({path: '/service/detail/'+i.id});
+        }
+      },
+      //打开服务
+      openService(i){
+        if(i.openType==='1'){
+          this.$router.push({path: '/service/iframe/'+i.id});
+        }
+        else{
+          window.open(i.url);
+        }
       }
     }
   }
@@ -64,6 +96,7 @@
                 @include flex;
                 font-size: 14px;
                 color: #000;
+                cursor: pointer;
                 img{
                     width: 30px;
                     height: 30px;
