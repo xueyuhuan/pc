@@ -113,6 +113,9 @@
         }
         .news_content{
             border-bottom: 1px solid #dee5e7;
+            p{
+                text-indent: 28px;
+            }
         }
         .news_foot{
             padding: 20px 0;

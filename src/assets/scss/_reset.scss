@@ -1,3 +1,6 @@
+/*
+*重置样式表*
+*/
 html{
   height: 100%;
   box-sizing: border-box;
@@ -25,9 +28,10 @@ a{
 em,i{
   font-style: normal;
 }
-.news_content p{
-  text-indent: 28px;
-}
+/*
+*element重置样式*
+*/
+//分页
 .el-pagination.is-background .el-pager li:not(.disabled).active {
   background-color: #65637b;
   color: #fff;
@@ -38,22 +42,22 @@ em,i{
 .el-pager, .el-pager li:hover{
   color: #1295d8;
 }
+//下拉菜单
+.el-dropdown-menu__item{
+  padding:0 20px;
+}
+//出现在按钮、图标旁的数字或状态标记
 .el-badge__content{
   border: none;
 }
-//导航部分，换主题色下拉菜单
-.theme_dropdown{
-  .el-dropdown-menu__item{
-    padding-left:20px;
-    padding-right: 20px;
-  }
+//下拉选择框
+.el-select-dropdown__item{
+  padding: 0 20px;
 }
+
 .dialog_h3{
   color: #000;padding-bottom: 20px;border-bottom: 1px solid #bfbfbf;
   font-size: 24px;
   margin-top: 0;
   font-weight: normal;
-}
-.el-select-dropdown__item{
-  padding: 0 20px;
 }

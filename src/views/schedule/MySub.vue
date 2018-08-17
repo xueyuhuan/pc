@@ -1,5 +1,5 @@
 <template>
-    <div class="bg_color">
+    <div>
         <subhead>
             <div><i class="fa fa-arrow-left hand" style="cursor: pointer" @click="goBack"></i>&nbsp;&nbsp;&nbsp;我的订阅
             </div>
@@ -80,10 +80,6 @@
 </script>
 
 <style scoped lang="scss">
-    .bg_color {
-        @extend %bg1;
-    }
-
     .contain {
         width: 1200px;
         margin: 20px auto 0 auto;

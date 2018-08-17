@@ -110,7 +110,7 @@ export default {
       this.getSchedule(),
       this.getService(),
       // this.getTodo(),
-      this.getUser(),
+      this.getUserModule(),
     ]);
     if(localStorage.bannerShow==='false'){
       this.bannerShow=false;
@@ -189,15 +189,8 @@ export default {
     每个组件数据获取
      **/
     getApp(){
-      if(localStorage.hasOwnProperty('app')){
-        this.$store.commit('set_data',{
-          data:JSON.parse(localStorage.getItem('app')),
-          name:'app'
-        })
-      }
-      this.$ajax.post(this.$url.homeApp)
+      return this.$ajax.post(this.$url.homeApp)
           .then(res=>{
-            localStorage.setItem('app',JSON.stringify(res.data.apps));
             this.$store.commit('set_data',{
               data:res.data.apps,
               name:'app'
@@ -205,15 +198,8 @@ export default {
           });
     },
     getFile(){
-      if(localStorage.hasOwnProperty('file')){
-        this.$store.commit('set_data',{
-          data:JSON.parse(localStorage.getItem('file')),
-          name:'file'
-        })
-      }
-      this.$ajax.post(this.$url.homeFile)
+      return this.$ajax.post(this.$url.homeFile)
           .then(res=>{
-            localStorage.setItem('file',JSON.stringify(res.data.gongwenList.slice(0,7)));
             this.$store.commit('set_data',{
               data:res.data.gongwenList.slice(0,7),
               name:'file'
@@ -221,15 +207,8 @@ export default {
           });
     },
     getNotice(){
-      if(localStorage.hasOwnProperty('notice')){
-        this.$store.commit('set_data',{
-          data:JSON.parse(localStorage.getItem('notice')),
-          name:'notice'
-        })
-      }
-      this.$ajax.post(this.$url.homeNotice)
+      return this.$ajax.post(this.$url.homeNotice)
           .then(res=>{
-            localStorage.setItem('notice',JSON.stringify(res.data.xntzList.slice(0,7)));
             this.$store.commit('set_data',{
               data:res.data.xntzList.slice(0,7),
               name:'notice'
@@ -237,15 +216,8 @@ export default {
           });
     },
     getNotice2(){
-      if(localStorage.hasOwnProperty('notice2')){
-        this.$store.commit('set_data',{
-          data:JSON.parse(localStorage.getItem('notice2')),
-          name:'notice2'
-        })
-      }
-      this.$ajax.post(this.$url.homeNotice2,{columnId:"058ac10ab4684d6aaec045196c09a9b7"})
+      return this.$ajax.post(this.$url.homeNotice2,{columnId:"058ac10ab4684d6aaec045196c09a9b7"})
           .then(res=>{
-            localStorage.setItem('notice2',JSON.stringify(res.data.news.slice(0,7)));
             this.$store.commit('set_data',{
               data:res.data.news.slice(0,7),
               name:'notice2'
@@ -253,15 +225,8 @@ export default {
           });
     },
     getPay(){
-      if(localStorage.hasOwnProperty('pay')){
-        this.$store.commit('set_data',{
-          data:JSON.parse(localStorage.getItem('pay')),
-          name:'pay'
-        })
-      }
-      this.$ajax.post(this.$url.homePay)
+      return this.$ajax.post(this.$url.homePay)
           .then(res=>{
-            localStorage.setItem('pay',JSON.stringify(res.data));
             this.$store.commit('set_data',{
               data:res.data,
               name:'pay'
@@ -269,15 +234,8 @@ export default {
           });
     },
     getRanking(){
-      if(localStorage.hasOwnProperty('ranking')){
-        this.$store.commit('set_data',{
-          data:JSON.parse(localStorage.getItem('ranking')),
-          name:'ranking'
-        })
-      }
-      this.$ajax.post(this.$url.homeServiceRank,{type:this.type})
+      return this.$ajax.post(this.$url.homeServiceRank,{type:this.type})
           .then(res=>{
-            localStorage.setItem('ranking',JSON.stringify(res.data.services));
             this.$store.commit('set_data',{
               data:res.data.services,
               name:'ranking'
@@ -285,15 +243,8 @@ export default {
           });
     },
     getSchedule(){
-      if(localStorage.hasOwnProperty('schedule')){
-        this.$store.commit('set_data',{
-          data:JSON.parse(localStorage.getItem('schedule')),
-          name:'schedule'
-        })
-      }
-      this.$ajax.post(this.$url.homeSchedule,{date:this.date})
+      return this.$ajax.post(this.$url.homeSchedule,{date:this.date})
           .then(res=>{
-            localStorage.setItem('schedule',JSON.stringify(res.data.events));
             this.$store.commit('set_data',{
               data:res.data.events,
               name:'schedule'
@@ -301,31 +252,17 @@ export default {
           });
     },
     getService(){
-      if(localStorage.hasOwnProperty('service')){
-        this.$store.commit('set_data',{
-          data:JSON.parse(localStorage.getItem('service')),
-          name:'service'
-        })
-      }
-      this.$ajax.post(this.$url.homeService)
+      return this.$ajax.post(this.$url.homeService)
           .then(res=>{
-            localStorage.setItem('service',JSON.stringify(res.data.services));
             this.$store.commit('set_data',{
               data:res.data.services,
               name:'service'
             })
           });
     },
-    getUser(){
-      if(localStorage.hasOwnProperty('userModule')){
-        this.$store.commit('set_data',{
-          data:JSON.parse(localStorage.getItem('userModule')),
-          name:'userModule'
-        })
-      }
-      this.$ajax.post(this.$url.homeUser)
+    getUserModule(){
+      return this.$ajax.post(this.$url.homeUser)
           .then(res=>{
-            localStorage.setItem('userModule',JSON.stringify(res.data.services));
             this.$store.commit('set_data',{
               data:res.data.services,
               name:'userModule'

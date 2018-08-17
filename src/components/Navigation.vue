@@ -1,5 +1,5 @@
 <template>
-    <header class="_theme position_fixed" v-show="navShow">
+    <header id="nav" class="_theme ">
         <div class="content">
             <nav>
                 <router-link :to="$school.url"><img :src="'/img/'+$school.school+'/logo.png'"/></router-link>
@@ -9,7 +9,7 @@
                     </li>
                 </ul>
             </nav>
-            <ul class="personal">
+            <ul class="icon">
                 <li @click="click('/feedback')" v-if="$school.school==='hit'">
                     <router-link to="/feedback">
                         <el-tooltip class="item" effect="light" content="意见反馈" placement="bottom">
@@ -19,9 +19,8 @@
                 </li>
                 <li>
                     <a>
-                        <el-dropdown trigger="click" @command="toggleColor">
-                            <el-tooltip class="item" effect="light" content="主题" placement="bottom"><i
-                                    class="iconfont icon-pifu" style="color:#fff;"></i></el-tooltip>
+                        <el-dropdown trigger="click" @command="toggleTheme">
+                            <el-tooltip class="item" effect="light" content="主题" placement="bottom"><i class="iconfont icon-pifu" style="color:#fff;"></i></el-tooltip>
                             <el-dropdown-menu slot="dropdown" class="theme_dropdown">
                                 <el-dropdown-item command="blue"><span class="themeSpan_blue"></span> 蓝色</el-dropdown-item>
                                 <el-dropdown-item v-if="$school.school==='ccnu'" command="green"><span class="themeSpan_green"></span> 绿色</el-dropdown-item>
@@ -48,7 +47,7 @@
                 <li @click="click('/message')" v-if="$school.school==='ccnu'">
                     <router-link to="/message">
                         <el-tooltip class="item" effect="light" content="消息中心" placement="bottom">
-                            <el-badge :value="UnreadCount" :max="9" class="item" :hidden="UnreadCount === 0">
+                            <el-badge :value="unreadCount" :max="9" class="item" :hidden="unreadCount === 0">
                                 <i class="icon-bell" :class="{active:active==='/message'}"></i>
                             </el-badge>
                         </el-tooltip>
@@ -101,11 +100,10 @@
         name: "Navigation",
         data() {
             return {
-              nav: this.$school.nav,
-              navShow:true,//导航标识
+              nav: this.$school.nav,//主文字导航
               panelShow:false,//个人中心面板标识
               todoCount:0,//待办数
-              UnreadCount:0,//未读消息数
+              unreadCount:0,//未读消息数
             }
         },
         computed: {
@@ -122,31 +120,7 @@
             return this.$store.state.token;
           }
         },
-      // watch:{
-      //   token(){
-      //     if (this.token!==''){
-      //       console.log("监听时");
-      //       console.log(this.token);
-      //       this.navShow=true;
-      //       this.$ajax.post(this.$url.getUser)
-      //           .then(res => {
-      //             this.$store.commit('set_user', res.data.user);
-      //           });
-      //       this.getUnreadCount();
-      //       this.getTodo();
-      //     }
-      //   }
-      // },
         created() {
-          // if (sessionStorage.token!==undefined&&sessionStorage.token!==null&&sessionStorage.token!==''){
-          //   if(this.token===''){
-          //     this.$store.commit('set_token', sessionStorage.token);
-          //   }
-          //   console.log("创建时");
-          //   console.log(this.token);
-          //   this.navShow=true;
-          //
-          // }
           this.$ajax.post(this.$url.getUser)
               .then(res => {
                 this.$store.commit('set_user', res.data.user);
@@ -158,31 +132,31 @@
           click(url) {
             this.active = url;
           },
-          toggleColor(command) {//换肤
+          toggleTheme(command) {//换肤
             document.getElementById('app').className='_theme_'+command;
             localStorage.skin='_theme_'+command;
           },
-            logout(){//注销
-                this.panelShow=false;
-                this.$confirm('确认注销吗?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.$store.commit('del_token');
-                    this.setCookie("PORTAL_TOKEN", "", -1);
-                    this.$router.push('/loading');
-                }).catch(()=>{
+          logout(){//注销
+            this.panelShow=false;
+            this.$confirm('确认注销吗?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.$store.commit('del_token');
+              this.setCookie("PORTAL_TOKEN", "", -1);
+              this.$router.push('/loading');
+            }).catch(()=>{
 
-                })
-            },
-            //设置cookie
-            setCookie(cname, cvalue, exdays) {
-                var d = new Date();
-                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-                var expires = "expires=" + d.toUTCString();
-                document.cookie = cname + "=" + cvalue + "; " + expires;
-            },
+            })
+          },
+          //设置cookie
+          setCookie(cname, cvalue, exdays) {
+            let d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
+          },
           getTodo(){
             return this.$ajax.post(this.$url.homeTodo)
                 .then(res=>{
@@ -201,7 +175,7 @@
           websocket () {
             let ws = new WebSocket('ws://msg.ccnu.edu.cn:8080/msgsocket/websocket?token='+sessionStorage.token);
             ws.onmessage = evt => {
-              this.UnreadCount=JSON.parse(evt.data).unReadTotal;
+              this.unreadCount=JSON.parse(evt.data).unReadTotal;
             };
           }
         }
@@ -209,25 +183,17 @@
 </script>
 
 <style scoped lang="scss">
-    .position_fixed{
+    header#nav{
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         z-index: 999;
-    }
-    header {
-        nav {
-            li.active {
-                border-bottom: 3px solid #f7b47f;
-            }
-        }
         .content {
-            position: relative;
             @include flex(space-between);
-            width: 1200px;
+            position: relative;
+            @extend %width;
             height: 90px;
-            margin: 0 auto;
             nav {
                 @include flex;
                 height: 100%;
@@ -239,6 +205,9 @@
                     @include flex;
                     height: 100%;
                     li {
+                        &.active{
+                            border-bottom: 3px solid #f7b47f;
+                        }
                         height: 100%;
                         padding: 0;
                         a {
@@ -252,11 +221,10 @@
                     }
                 }
             }
-            ul.personal {
+            ul.icon {
                 @include flex;
                 height: 100%;
-
-                li {
+                li{
                     height: 100%;
                     padding: 0 15px;
                     color: #fff;
@@ -288,7 +256,6 @@
                         }
                     }
                 }
-
             }
             .panel{
                 position: absolute;

@@ -1,18 +1,15 @@
 <template>
-    <div class="bg_color">
+    <div class="">
         <subhead>
-            <div><i class="fa fa-th-large"></i>&nbsp;&nbsp;&nbsp;应用中心 <span>App Center</span></div>
-            <!--<el-input :placeholder="placeholder" v-model="input_value" size="small">-->
-                <!--<el-button slot="append" icon="el-icon-search" @click="searchApp"></el-button>-->
-            <!--</el-input>-->
+            <div><i class="fa fa-th-large icon"></i>应用中心 <span>App Center</span></div>
             <SubheadInput>
-                <input slot="input" v-model="input_value" :placeholder="placeholder"/><button @click="searchApp"><i class="fa fa-search"></i></button>
+                <input slot="input" v-model="input_value" placeholder="应用搜索"/><button @click="searchApp"><i class="fa fa-search"></i></button>
             </SubheadInput>
         </subhead>
         <div class="contain">
-            <div class="left_div _theme_app_bordertop">
+            <div class="left_div _theme_card">
                 <div class="left_div_block" v-for="appGroup in appGroups" v-show="appGroup.apps.length>0" v-if="current_app_type_id === appGroup.id || current_app_type_id === ''">
-                    <div class="block_head _theme_app_block_head_color">{{appGroup.name}}</div>
+                    <div class="block_head _theme_card_font">{{appGroup.name}}</div>
                     <div class="block_body">
                         <div class="app" v-for="app in appGroup.apps">
                             <a :href="app.url" :title="'进入' + app.name" target="_blank">
@@ -49,8 +46,8 @@
                 <img :src="appDetail_app.img" />
                 <div class="modal_head_middiv">
                     <div class="modal_head_middiv_div1">{{appDetail_app.name}}
-                        &nbsp;<i @click="toggle_subscribe(appDetail_app_subscribe_status,appDetail_app.id)" :class="{'fa fa-star': appDetail_app_subscribe_status,'fa fa-star-o': !appDetail_app_subscribe_status}"></i>
-                        &nbsp;<span>{{appDetail_app_subscribe_status ? '(取消收藏)' : '(点击收藏)'}}</span>
+                        &nbsp;<i @click="favorite(isFavorite,appDetail_app.id)" :class="{'fa fa-star': isFavorite,'fa fa-star-o': !isFavorite}"></i>
+                        &nbsp;<span>{{isFavorite ? '(取消收藏)' : '(点击收藏)'}}</span>
                     </div>
                     <div class="modal_head_middiv_div2">可见用户组: <span v-for="item in appDetail_app.userGroups">{{item.PERMNAME}} </span></div>
                     <div class="modal_head_middiv_div2">可见部门: <span v-for="item in appDetail_app.deptNames">{{item}}</span></div>
@@ -76,12 +73,11 @@
         name: "Application",
         data(){
             return{
-                placeholder:"应用搜索",
-                input_value:'',
-                appGroups:[],//app所有类别，展示的数据
+                input_value:'',//搜索框的值
+                appGroups:[],//所有分类
                 appDetail:{},//模态框里的app详情信息
                 appDetail_app:{},
-                appDetail_app_subscribe_status:false,
+                isFavorite:false,
                 dialogVisible:false,//模态框是否显示
                 all_service_count:0,//分类->全部服务的个数
                 icon:[
@@ -97,105 +93,69 @@
                     ],
                 current_app_type_id:"",//当前展示的app类型id
                 app_rank:[],//app排行
-
             }
         },
+      created(){
+        this.getApp();
+        this.getAppRank();
+      },
         methods:{
             //获取所有类别app
             getApp(){
-                this.$ajax.post(this.$url.list_app_group)
+                this.$ajax.post(this.$url.appType)
                     .then(res => {
-                        // console.log(res.data);
                         this.appGroups = res.data.groups;
-                        let all_service_count=0;
                         for(let i=0;i<this.appGroups.length;i=i+1){
-                            all_service_count += this.appGroups[i].apps.length;
+                            this.all_service_count += this.appGroups[i].apps.length;
                         }
-                        this.all_service_count = all_service_count;
                     })
             },
             //app排行
             getAppRank(){
-                this.$ajax.post(this.$url.app_rank)
+                this.$ajax.post(this.$url.appRank)
                     .then(res => {
-                        // console.log(res.data);
                         this.app_rank = res.data.apps;
                     })
             },
             //搜索应用
             searchApp(){
-                this.$ajax.post(this.$url.list_app_query,{name:this.input_value})
+                this.$ajax.post(this.$url.appSearch,{name:this.input_value})
                     .then(res => {
-                        console.log(res.data);
                         this.appGroups = res.data.groups;
                     })
             },
             //进入应用详情
             showDetail(id){
-                this.$ajax.post(this.$url.get_app_detail,{id:id})
+                this.$ajax.post(this.$url.appDetail,{id:id})
                     .then(res => {
-                        // console.log(res.data);
-                        this.appDetail = res.data;
-                        this.appDetail_app = res.data.app;
-                        //通过改变appDetail_app_subscribe_status这个标识符来控制订阅和非订阅状态的展示,true-订阅，false-非订阅
-                        if(this.appDetail.favoritesFlag === true){
-                            this.appDetail_app_subscribe_status = true;
-                        }else{
-                            this.appDetail_app_subscribe_status = false;
-                        }
-                        this.dialogVisible = true;
+                      this.appDetail = res.data;
+                      this.appDetail_app = res.data.app;
+                      this.isFavorite=res.data.favoritesFlag;
+                      this.dialogVisible = true;
                     })
             },
             //切换展示的app类型
             toggleAppType(id){
                 this.current_app_type_id = id;
             },
-            //切换订阅/取消订阅
-            toggle_subscribe(status,id){
-                let url;
-                if(status){//已订阅
-                    url = this.$url.addFavorites;
-                }else{
-                    url = this.$url.delFavorites;
-                }
-                this.$ajax.post(url,{thirdId:id,type:'app'})
-                    .then(res => {
-                        if(res.data.errcode == '0'){
-                            if(status){//之前的状态是已经订阅，点击成功改变状态后，未订阅
-                                this.appDetail_app_subscribe_status = false;
-                            }else{
-                                this.appDetail_app_subscribe_status = true;
-                            }
-                            this.$notify({
-                                title:"提示",
-                                message:res.data.errmsg,
-                                type:"success",
-                                position:"bottom-right"
-                            })
-                        }else{
-                            this.$notify({
-                                title:"提示",
-                                message:res.data.errmsg,
-                                type:"warning",
-                                position:"bottom-right"
-                            })
-                        }
-                    })
+            //收藏
+            favorite(isFavorite,id){
+              this.$ajax.post(!isFavorite?this.$url.addFavorites:this.$url.delFavorites,{thirdId:id,type:'app'})
+                  .then(res=>{
+                    if(res.data.errcode==='0'){
+                      this.isFavorite = !isFavorite;
+                      this.$notify.success(res.data.errmsg);
+                    }
+                    else this.$notify.warning(res.data.errmsg);
+                  });
             }
         },
-        created(){
-            this.getApp();
-            this.getAppRank();
-        }
     }
 </script>
 
 <style scoped lang="scss">
-    .bg_color{
-        @extend %bg1;
-    }
     .contain{
-        @extend %content;
+        @extend %width;
         @include flex(space-between,flex-start);
         .left_div{
             width: 784px;

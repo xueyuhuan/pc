@@ -1,5 +1,6 @@
 import Vue from "vue";
 import ElementUI from 'element-ui';
+import AutoStorage from "vue-auto-storage";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -49,6 +50,7 @@ switch (process.env.VUE_APP_SCHOOL) {
 }
 Vue.prototype.$proxy=process.env.VUE_APP_PROXY;
 Vue.use(ElementUI);
+Vue.use(AutoStorage);
 Vue.config.productionTip = false;
 
 new Vue({

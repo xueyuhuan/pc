@@ -87,9 +87,6 @@
 </script>
 
 <style scoped lang="scss">
-    .bg_color{
-        @extend %bg1;
-    }
     .contain{
         width: 1200px;
         margin: 20px auto 0 auto;

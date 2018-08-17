@@ -157,9 +157,7 @@
     }
 </script>
 <style scoped lang="scss">
-    .bg_color {
-        @extend %bg1;
-    }
+
     .nodata{
         font-size: 14px;
         padding: 10px;
@@ -168,7 +166,7 @@
         color: red;
     }
     .contain {
-        @extend %content;
+        @extend %width;
         @include flex(space-between, flex-start);
         .left_div {
             width: 784px;

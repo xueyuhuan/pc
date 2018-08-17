@@ -12,9 +12,9 @@ $orange-card:#f18b2e;
     background: #067ebe!important;
   }
   ._theme_card{
-    border-top:3px solid #1295d8!important;
+    border-top:3px solid $blue-card!important;
     header{
-      color: #1295d8!important;
+      color: $blue-card!important;
     }
   }
   ._theme_card_font{
@@ -33,7 +33,7 @@ $orange-card:#f18b2e;
     button{
       background: #069!important;
       i{
-        color: #1295d8!important;
+        color: $blue-card!important;
       }
     }
   }
@@ -47,25 +47,25 @@ $orange-card:#f18b2e;
     color: #2aa8e9!important;
   }
   ._theme_news_choosen{
-    background-color: #1295d8 !important;
+    background-color: $blue-card !important;
   }
   ._theme_news_borderleft{
-    border-left: 3px solid #1295d8 !important;
+    border-left: 3px solid $blue-card !important;
   }
   ._theme_news_fontcolor{
-    color: #1295d8;
+    color: $blue-card;
   }
   ._theme_toTop_bgcolor{
-    background-color: #1295d8;
+    background-color: $blue-card;
   }
   ._theme_app_block_head_color,.el-tabs__item.is-active,.el-tabs__item:hover{
-    color: #1295d8;
+    color: $blue-card;
   }
   ._theme_app_bordertop{
-    border-top: 3px solid #1295d8;
+    border-top: 3px solid $blue-card;
   }
   .el-tabs__active-bar{
-    background-color: #1295d8;
+    background-color: $blue-card;
   }
 }
 ._theme_green{

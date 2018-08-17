@@ -64,15 +64,15 @@ export default {
   /*办事中心*/
   componentMytodo:'/task_portal/get_apps',
 
-    /**
-     * 应用
-     */
-    list_app_group:'/app_portal/list_app_group',//获取所有类别的app
-    get_app_detail:'/app_portal/get',//获取app详情
-    app_rank:'/app_portal/list_top',//app排行
-    list_app_query:'/app_portal/list_app_query',//应用搜索
-    delFavorites:'/user_portal/delFavorites',//取消订阅
-    addFavorites:'/user_portal/addFavorites',//订阅
+  /**
+   * 应用
+   */
+  appType:'/app_portal/list_app_group',//应用类别
+  appDetail:'/app_portal/get',//获取app详情
+  appRank:'/app_portal/list_top',//app排行
+  appSearch:'/app_portal/list_app_query',//应用搜索
+  delFavorites:'/user_portal/delFavorites',//取消订阅
+  addFavorites:'/user_portal/addFavorites',//订阅
     /**
      * 资讯
      */
