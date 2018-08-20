@@ -11,11 +11,11 @@
                         <div class="right">
                             <div class="name">邮件<br/>
                                 <template v-if="i.infos.email!==''">
-                                    <span class="pointer _theme_news_fontcolor" @click="enterEmail(i.infos.usertype,i.infos.email)">{{i.infos.email}}</span>
-                                    <span class="pointer _theme_news_fontcolor" @click="unbindEmail()">解绑</span>
+                                    <span class="pointer _theme_font" @click="enterEmail(i.infos.usertype,i.infos.email)">{{i.infos.email}}</span>
+                                    <span class="pointer _theme_font" @click="unbindEmail()">解绑</span>
                                 </template>
                                 <template v-else>
-                                    <a href="http://mail.ccnu.edu.cn/sso.aspx" target="_blank" class="pointer _theme_news_fontcolor">注册邮箱</a>
+                                    <a href="http://mail.ccnu.edu.cn/sso.aspx" target="_blank" class="pointer _theme_font">注册邮箱</a>
                                 </template>
                             </div>
                             <div class="info" v-show="i.infos.email!==''">未读：{{i.infos.unread}}，今日：{{i.infos.todayCount}}</div>
@@ -27,7 +27,7 @@
                         <img src="/img/school_card.png"/>
                         <div class="right">
                             <router-link to="/app/ecard" class="name">校园卡<br/>
-                                <span class="pointer _theme_news_fontcolor">
+                                <span class="pointer _theme_font">
                                     <template v-if="i.errmsg===null || i.errmsg===''">{{i.infos.cardStatus}}</template>
                                     <template v-else>{{i.errmsg}}</template>
                                 </span>
@@ -44,7 +44,7 @@
                         <img src="/img/book.png"/>
                         <div class="right">
                             <div class="name">图书馆<br/>
-                                <span class="pointer _theme_news_fontcolor">
+                                <span class="pointer _theme_font">
                                     <template v-if="i.errmsg===null || i.errmsg===''">{{ i.infos.bookCount>0 ? '在借图书${i.infos.bookCount}本':'暂无借阅图书'}}</template>
                                     <template v-else>{{i.errmsg}}</template>
                                 </span>
@@ -60,7 +60,7 @@
                         <img src="/img/school_card.png"/>
                         <div class="right">
                             <div class="name">网络流量<br/>
-                                <span class="pointer _theme_news_fontcolor">
+                                <span class="pointer _theme_font">
                                     <template v-if="i.errmsg===null || i.errmsg===''">{{i.infos.status}}</template>
                                     <template v-else>{{i.errmsg}}</template>
                                 </span>

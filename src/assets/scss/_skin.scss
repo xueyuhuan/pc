@@ -1,204 +1,148 @@
-$blue-card:#1295d8;
-$green-card:#00697e;
-$orange-card:#f18b2e;
+//蓝色
+$blue:#1390d3;
+$blue-light:#2aa8e9;
+$blue-darker:#067ebe;
+//绿色
+$green:#00697e;
+$green-light:#008099;
+$green-darker:#005768;
+//橙色
+$orange:#f18b2e;
+$orange-light:#fc9e48;
+$orange-darker:#ed760a;
 ._theme_blue{
   ._theme{
-    background: #1390d3!important;
+    background: $blue!important;
+    &.active{//服务中心服务目录选择样式
+      background: $blue-darker!important;
+    }
   }
-  ._theme_light.active{
-    background: #2aa8e9!important;
+  ._theme_font{//字颜色
+    color: $blue!important;
+  }
+  ._theme_border{//边框颜色
+    border-color: $blue!important;
+  }
+  ._theme_light.active{//导航选中样式
+    background: $blue-light!important;
   }
   ._theme_darker{
-    background: #067ebe!important;
+    background: $blue-darker!important;
   }
-  ._theme_card{
-    border-top:3px solid $blue-card!important;
-    header{
-      color: $blue-card!important;
+  ._theme_card{//card组件头部横线
+    border-top:3px solid $blue!important;
+    header{//card组件头部文字颜色
+      color: $blue!important;
     }
   }
-  ._theme_card_font{
-    color: $blue-card;
+  ._theme_card_span.active{//card组件选择span标签（服务和咨询搜索上部分）
+    background: $blue!important;
   }
-  ._theme_card_a{
-    border-left: 2px solid $blue-card;
-  }
-  ._theme_card_span.active{
-    background: $blue-card;
-  }
-  ._theme_input{
+  ._theme_input{//SubHeadInput组件
     input{
-      background: #069!important;
+      background: $blue!important;
     }
     button{
-      background: #069!important;
+      background: $blue!important;
       i{
-        color: $blue-card!important;
+        color: $blue-light!important;
       }
     }
   }
-  ._theme_service_bg{
-    background: #2aa8e9!important;
-  }
-  ._theme_service_bg.active{
-    background: #0683c3!important;
-  }
-  ._theme_service_font{
-    color: #2aa8e9!important;
-  }
-  ._theme_news_choosen{
-    background-color: $blue-card !important;
-  }
-  ._theme_news_borderleft{
-    border-left: 3px solid $blue-card !important;
-  }
-  ._theme_news_fontcolor{
-    color: $blue-card;
-  }
-  ._theme_toTop_bgcolor{
-    background-color: $blue-card;
-  }
-  ._theme_app_block_head_color,.el-tabs__item.is-active,.el-tabs__item:hover{
-    color: $blue-card;
-  }
-  ._theme_app_bordertop{
-    border-top: 3px solid $blue-card;
+  //消息中心tab
+  .el-tabs__item.is-active,.el-tabs__item:hover{
+    color: $blue;
   }
   .el-tabs__active-bar{
-    background-color: $blue-card;
+    background-color: $blue;
   }
 }
 ._theme_green{
   ._theme{
-    background: #00697e!important;
-  }
-  ._theme_light.active{
-    background: #008099!important;
-  }
-  ._theme_darker{
-    background: #005768!important;
-  }
-  ._theme_card{
-    border-top:3px solid #00697e!important;
-    header{
-      color: #00697e!important;
+    background: $green!important;
+    &.active{
+      background: $green-darker!important;
     }
   }
-  ._theme_card_font{
-    color: $green-card;
+  ._theme_font{
+    color: $green!important;
   }
-  ._theme_card_a{
-    border-left: 2px solid $green-card;
+  ._theme_border{//边框颜色
+    border-color: $green!important;
+  }
+  ._theme_light.active{
+    background: $green-light!important;
+  }
+  ._theme_darker{
+    background: $green-darker!important;
+  }
+  ._theme_card{
+    border-top:3px solid $green!important;
+    header{
+      color: $green!important;
+    }
   }
   ._theme_card_span.active{
-    background: $green-card;
+    background: $green!important;
   }
   ._theme_input{
     input{
-      background: #00697e!important;
+      background: $green!important;
     }
     button{
-      background: #00697e!important;
+      background: $green!important;
       i{
-        color: #008099!important;
+        color: $green-light!important;
       }
     }
   }
-  ._theme_service_bg{
-    background: #00697e!important;
-  }
-  ._theme_service_bg.active{
-    background: #005768!important;
-  }
-  ._theme_service_font{
-    color: #00697e!important;
-  }
-  ._theme_news_choosen{
-    background-color: #00697e !important;
-  }
-  ._theme_news_borderleft{
-    border-left: 3px solid #00697e !important;
-  }
-  ._theme_news_fontcolor{
-    color: #00697e;
-  }
-  ._theme_toTop_bgcolor{
-    background-color: #00697e;
-  }
-  ._theme_app_block_head_color,.el-tabs__item.is-active,.el-tabs__item:hover{
-    color: #00697e;
-  }
-  ._theme_app_bordertop{
-    border-top: 3px solid #00697e;
+  .el-tabs__item.is-active,.el-tabs__item:hover{
+    color: $green;
   }
   .el-tabs__active-bar{
-    background-color: #00697e;
+    background-color: $green;
   }
 }
 ._theme_orange{
    ._theme{
-     background: #f18b2e!important;
+     background: $orange!important;
    }
+  ._theme_font{
+    color: $orange!important;
+  }
+  ._theme_border{//边框颜色
+    border-color: $orange!important;
+  }
    ._theme_light.active{
-     background: #fc9e48!important;
+     background: $orange-light!important;
    }
    ._theme_darker{
-     background: #ed760a!important;
+     background: $orange-darker!important;
    }
    ._theme_card{
-     border-top:3px solid #f18b2e!important;
+     border-top:3px solid $orange!important;
      header{
-       color: #f18b2e!important;
+       color: $orange!important;
      }
    }
-  ._theme_card_font{
-    color: $orange-card;
-  }
-  ._theme_card_a{
-    border-left: 2px solid $orange-card;
-  }
   ._theme_card_span.active{
-    background: $orange-card;
+    background: $orange!important;
   }
   ._theme_input{
     input{
-      background: #f18b2e;
+      background: $orange;
     }
     button{
-      background: #f18b2e;
+      background: $orange;
       i{
-        color: #fc9e48;
+        color: $orange-light;
       }
     }
   }
-  ._theme_service_bg{
-    background: #f18b2e!important;
-  }
-  ._theme_service_bg.active{
-    background: #ed760a!important;
-  }
-  ._theme_service_font{
-    color: #f18b2e!important;
-  }
-  ._theme_news_choosen{
-    background-color: #f18b2e !important;
-  }
-  ._theme_news_borderleft{
-    border-left: 3px solid #f18b2e !important;
-  }
-  ._theme_news_fontcolor{
-    color: #f18b2e;
-  }
-  ._theme_toTop_bgcolor{
-    background-color: #f18b2e;
-  }
-  ._theme_app_block_head_color,.el-tabs__item.is-active,.el-tabs__item:hover{
-    color: #f18b2e;
-  }
-  ._theme_app_bordertop{
-    border-top: 3px solid #f18b2e;
+  .el-tabs__item.is-active,.el-tabs__item:hover{
+    color: $orange;
   }
   .el-tabs__active-bar{
-    background-color: #f18b2e ;
+    background-color: $orange ;
   }
  }

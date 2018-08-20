@@ -4,7 +4,7 @@
             <div><i class="fa fa-user-o"></i>&nbsp;&nbsp;&nbsp;个人中心&nbsp;<span>Personal Center</span></div>
         </subhead>
         <div class="main">
-            <header>头像设置</header>
+            <header class="_theme_font">头像设置</header>
             <label><i class="fa fa-image"></i>&nbsp;&nbsp;选择头像<input id="file" type="file" accept="image/png, image/jpeg, image/gif, image/jpg" @change="change()"/></label>
             <div class="img">
                 <div class="border"><div class="preview">
@@ -89,7 +89,7 @@
             background: #fff;
             padding: 0 20px;
             header{
-                color: $skin-card;
+
                 padding: 10px 0;
                 border-bottom: 1px dashed #bfbfbf;
             }

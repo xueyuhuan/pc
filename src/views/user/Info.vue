@@ -4,9 +4,9 @@
             <div><i class="fa fa-user-o"></i>&nbsp;&nbsp;&nbsp;个人中心&nbsp;<span>Personal Center</span></div>
         </subhead>
         <section>
-            <header>我的信息
+            <header class="_theme_font">我的信息
                 <span v-if="$school.school==='ccnu'"><a href="http://selfservice.ccnu.edu.cn/account/modifypass.jsf" target="_blank">修改密码</a>
-                <a href="http://selfservice.ccnu.edu.cn/account/userinfo.jsf" target="_blank">修改账户预留信息</a></span>
+                <a class="_theme_border" href="http://selfservice.ccnu.edu.cn/account/userinfo.jsf" target="_blank">修改账户预留信息</a></span>
             </header>
             <div class="content">
                 <div class="text">
@@ -22,7 +22,7 @@
         </section>
         <template v-if="$school.school==='hit'">
             <section class="other">
-                <header>绑定邮箱<i>用于收取个人邮件<em>( 仅支持工大邮箱（@*.hit.edu.cn）的绑定 )</em></i></header>
+                <header class="_theme_font">绑定邮箱<i>用于收取个人邮件<em>( 仅支持工大邮箱（@*.hit.edu.cn）的绑定 )</em></i></header>
                 <label v-if="user.schoolEmail!==''">
                     <span>已绑邮箱：</span>
                     <input class="disabled" :value="user.schoolEmail" disabled/><button @click="delEmail">解除绑定</button>
@@ -39,7 +39,7 @@
                 </label>
             </section>
             <section class="other">
-                <header>绑定一卡通
+                <header class="_theme_font">绑定一卡通
                     <i v-if="user.cardNo===''">友情提示:您的工号/学号{{user.usernumber}}对应的一卡通(饭卡)账号为{{user.cardNo}}</i>
                     <i v-else>友情提示:一卡通(饭卡)账号并非您的学号/职工号,您可以通过分布在校园内的一卡通自助查询设备或网费自助缴费机进行查询,一般为5位数字。</i>
                 </header>
@@ -168,14 +168,14 @@
             margin: 0 auto 20px;
             header{
                 @include flex(space-between);
-                color: $skin-card;
+
                 padding: 10px 0;
                 border-bottom: 1px dashed #bfbfbf;
                 span{
-                    a:first-child{
-                        padding-right: 10px;
-                        margin-right: 10px;
-                        border-right: solid 1px $skin-card;
+                    a:last-child{
+                        padding-left: 10px;
+                        margin-left: 10px;
+                        border-left: 1px solid;
                     }
                 }
             }

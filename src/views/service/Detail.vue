@@ -22,9 +22,9 @@
                 </template>
                 <!--服务提供和对象说明-->
                 <div class="explain">
-                    <p v-if="service.managerDeptname"><i class="fa fa-info-circle"></i>本服务由<em class="_theme_card_font">{{service.managerDeptname}}</em>提供</p>
+                    <p v-if="service.managerDeptname"><i class="fa fa-info-circle"></i>本服务由<em class="_theme_font">{{service.managerDeptname}}</em>提供</p>
                     <p v-else><i class="fa fa-info-circle"></i>暂无服务部门</p>
-                    <p v-if="service.fwdxsm"><i class="fa fa-info-circle"></i>本服务的服务对象为<em class="_theme_card_font">{{service.fwdxsm}}</em></p>
+                    <p v-if="service.fwdxsm"><i class="fa fa-info-circle"></i>本服务的服务对象为<em class="_theme_font">{{service.fwdxsm}}</em></p>
                     <p v-else><i class="fa fa-info-circle"></i>暂无服务对象</p>
                 </div>
                 <!--四个折叠面板-->
@@ -178,7 +178,7 @@
                     <header>
                         <img :src="$proxy+imgPath.head+service.id"/>
                         <div class="text">{{service.name}}<br/>
-                            <span v-if="service.managerDeptname"><i class="fa fa-info-circle"></i>本服务由<em class="_theme_card_font">{{service.managerDeptname}}</em>提供</span>
+                            <span v-if="service.managerDeptname"><i class="fa fa-info-circle"></i>本服务由<em class="_theme_font">{{service.managerDeptname}}</em>提供</span>
                             <span v-else><i class="fa fa-info-circle"></i>暂无服务部门</span>
                         </div>
                     </header>

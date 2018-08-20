@@ -351,7 +351,7 @@
         -webkit-border-radius: 50%;
         -moz-border-radius: 50%;
         border-radius: 50%;
-        background-color: $blue-card;
+        background-color: $blue;
     }
     .themeSpan_green{
         display: inline-block;
@@ -360,7 +360,7 @@
         -webkit-border-radius: 50%;
         -moz-border-radius: 50%;
         border-radius: 50%;
-        background-color: $green-card;
+        background-color: $green;
     }
     .themeSpan_orange{
         display: inline-block;
@@ -369,6 +369,6 @@
         -webkit-border-radius: 50%;
         -moz-border-radius: 50%;
         border-radius: 50%;
-        background-color: $orange-card;
+        background-color: $orange;
     }
 </style>

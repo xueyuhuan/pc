@@ -9,7 +9,7 @@
         <div class="contain">
             <div class="left_div _theme_card">
                 <div class="left_div_block" v-for="appGroup in appGroups" v-show="appGroup.apps.length>0" v-if="current_app_type_id === appGroup.id || current_app_type_id === ''">
-                    <div class="block_head _theme_card_font">{{appGroup.name}}</div>
+                    <div class="block_head _theme_font">{{appGroup.name}}</div>
                     <div class="block_body">
                         <div class="app" v-for="app in appGroup.apps">
                             <a :href="app.url" :title="'进入' + app.name" target="_blank">
@@ -152,7 +152,54 @@
         },
     }
 </script>
-
+<style lang="scss">
+    .enterApp{
+        .el-dialog__header{
+            padding: 25px 30px;
+            border-bottom: 1px solid #e5e5e5;
+            .modal_head{
+                @include flex(space-bettween,center);
+                .modal_head_middiv{
+                    width: 578px;
+                    color: #000;
+                    margin-left: 20px;
+                    .modal_head_middiv_div1{
+                        font-size: 16px;
+                        font-weight: 700;
+                        margin-bottom: 5px;
+                        i{
+                            color:#fad733;
+                            cursor: pointer;
+                        }
+                        span{
+                            font-size: 12px;
+                            color: #777;
+                        }
+                    }
+                    .modal_head_middiv_div2{
+                        padding: 2px 0 0;
+                        font-size: 12px;
+                        font-weight: 500;
+                    }
+                }
+                img{
+                    width: 80px;
+                    height: 80px;
+                }
+                &>a{
+                    color: white;
+                    margin-left: 50px;
+                }
+            }
+        }
+        .el-dialog__body{
+            background-color: #F7F7F7;
+            .modal_body{
+                @include flex(space-between,flex-start);
+            }
+        }
+    }
+</style>
 <style scoped lang="scss">
     .contain{
         @extend %width;
@@ -250,51 +297,5 @@
             }
         }
     }
-    .enterApp{
-        .el-dialog__header{
-            padding: 25px 30px;
-            border-bottom: 1px solid #e5e5e5;
-            .modal_head{
-                @include flex(space-bettween,center);
-                .modal_head_middiv{
-                    width: 578px;
-                    color: #000;
-                    margin-left: 20px;
-                    .modal_head_middiv_div1{
-                        font-size: 16px;
-                        font-weight: 700;
-                        margin-bottom: 5px;
-                        i{
-                            color:#fad733;
-                            cursor: pointer;
-                        }
-                        span{
-                            font-size: 12px;
-                            color: #777;
-                        }
-                    }
-                    .modal_head_middiv_div2{
-                        padding: 2px 0 0;
-                        font-size: 12px;
-                        font-weight: 500;
-                    }
-                }
-                img{
-                    width: 80px;
-                    height: 80px;
-                }
-                &>a{
-                    color: white;
-                    margin-left: 50px;
-                }
-            }
-        }
-        .el-dialog__body{
-            background-color: #F7F7F7;
-            border-top: 1px solid black;
-            .modal_body{
-                @include flex(space-between,flex-start);
-            }
-        }
-    }
+
 </style>

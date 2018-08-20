@@ -23,7 +23,7 @@
             <card class="deadline">
                 <template slot="header">限时办理</template>
                 <div style="overflow: hidden;height: 204px;">
-                    <ul v-if="list.deadline.length>0" :class="{anim:animate==true}">
+                    <ul v-if="list.deadline.length>0" :class="{anim:animate}">
                         <li v-for="i in list.deadline">
                             <a @click="enterService(i)">
                                 <img :src="$proxy+imgPath+i.id"/>
@@ -47,8 +47,8 @@
             </header>
             <div class="content">
                 <ul class="catalog">
-                    <li class="_theme_service_bg" @click="getHot" :class="{active:type===-1}">热门服务</li>
-                    <li class="_theme_service_bg" v-for="(i,index) in list.type" @click="clickType1(i.id,index)" :class="{active:type===index}">{{i.name}}</li>
+                    <li class="_theme" @click="getHot" :class="{active:type===-1}">热门服务</li>
+                    <li class="_theme" v-for="(i,index) in list.type" @click="clickType1(i.id,index)" :class="{active:type===index}">{{i.name}}</li>
                 </ul>
                 <div>
                     <ul class="list"><li v-for="i in list.list">
@@ -60,7 +60,7 @@
                                 <el-rate v-model="i.score" disabled show-score score-template=" {value}分"></el-rate>
                             </div>
                         </a>
-                        <router-link :to="'/service/detail/'+i.id"><i class="fa fa-question-circle _theme_service_font"></i></router-link>
+                        <router-link :to="'/service/detail/'+i.id"><i class="fa fa-question-circle _theme_font"></i></router-link>
                     </li></ul>
                     <el-pagination v-show="type!==-1&&total>1"
                             background
@@ -77,7 +77,6 @@
 </template>
 
 <script>
-    // import {enterService,openService} from "../../assets/js/service";
     export default {
     name: "Service",
     data(){

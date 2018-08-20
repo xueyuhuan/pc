@@ -32,6 +32,7 @@ em,i{
 *element重置样式*
 */
 //分页
+.el-pagination{text-align: center}
 .el-pagination.is-background .el-pager li:not(.disabled).active {
   background-color: #65637b;
   color: #fff;

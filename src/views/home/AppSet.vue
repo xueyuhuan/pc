@@ -289,9 +289,6 @@
     }
   }
 </script>
-<!--<style>-->
-    <!--/*.el-pagination{text-align: center}*/-->
-<!--</style>-->
 <style scoped lang="scss">
     .drag{
         width: 100%;

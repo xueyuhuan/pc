@@ -4,7 +4,7 @@
             <div><i class="fa fa-star-o"></i>&nbsp;&nbsp;&nbsp;我的收藏 <span>My Collections</span></div>
         </subhead>
         <div class="contain">
-            <div class="myCollections _theme_app_bordertop">
+            <div class="myCollections _theme_card">
                 <div class="title">我的收藏概况</div>
                 <div class="band">
                     <div class="band_block">

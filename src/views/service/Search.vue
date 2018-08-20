@@ -211,32 +211,6 @@
 </script>
 <style scoped lang="scss">
     .search{
-        .subhead{
-            .right{
-                height: 30px;
-                input{
-                    background: #069;
-                    width: 160px;
-                    height: 100%;
-                    font-size: 12px;
-                    color: $skin-card;
-                    padding: 5px 15px;
-                    border-radius: 30px 0 0 30px;
-                    border: none;
-                }
-                button{
-                    background: #069;
-                    height: 100%;
-                    font-size: 12px;
-                    padding: 5px 10px;
-                    border-radius: 0 30px 30px 0;
-                    border: none;
-                    i{
-                        color: #1295d8;
-                    }
-                }
-            }
-        }
         .menu{
             width: 1200px;
             padding: 10px 20px;
@@ -265,7 +239,6 @@
                 }
                 span.active{
                     color: #fff;
-                    background: $skin-card;
                 }
                 ul{
                     @include flex(flex-start,flex-start);
@@ -315,9 +288,9 @@
                     i{
                         margin-left: 10px;
                         cursor: pointer;
-                    }
-                    i.active{
-                        color: $skin-card;
+                        &.active{
+                            @extend ._theme_font;
+                        }
                     }
                 }
             }

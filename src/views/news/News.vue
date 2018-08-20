@@ -1,12 +1,9 @@
 <template>
-    <div class="bg_color">
+    <div>
         <subhead>
             <div><i class="iconfont icon-news"></i>&nbsp;&nbsp;&nbsp;资讯中心 <span>News Center</span></div>
-            <!--<el-input :placeholder="placeholder" v-model="input_value" size="small" @keyup.enter.native="searchTitle">-->
-                <!--<el-button slot="append" icon="el-icon-search" @click.native="searchTitle"></el-button>-->
-            <!--</el-input>-->
             <SubheadInput>
-                <input slot="input" v-model="input_value" :placeholder="placeholder" @keyup.enter="searchTitle"/><button @click="searchTitle"><i class="fa fa-search"></i></button>
+                <input slot="input" v-model="input_value" placeholder="标题搜索" @keyup.enter="searchTitle"/><button @click="searchTitle"><i class="fa fa-search"></i></button>
             </SubheadInput>
         </subhead>
         <div class="contain">
@@ -15,17 +12,17 @@
                 <div class="new_condition">
                     <div class="new_condition1">
                         <div class="title_div">资讯栏目：</div>
-                        <span class="span_all" :class="{_theme_news_choosen:id === ''}" @click="choose_zxlm('')">全部</span>
-                        <div class="content_div"><label v-for="item in zxlm"><span :class="{_theme_news_choosen:id === i.ID}" v-for="i in item.subscribe" @click="choose_zxlm(i.ID)">{{i.COLUMN_NAME}}</span></label></div>
+                        <span class="span_all _theme_card_span" :class="{active:id === ''}" @click="choose_zxlm('')">全部</span>
+                        <div class="content_div"><label v-for="item in zxlm"><span class="_theme_card_span" :class="{active:id === i.ID}" v-for="i in item.subscribe" @click="choose_zxlm(i.ID)">{{i.COLUMN_NAME}}</span></label></div>
                     </div>
                     <div class="new_condition1">
                         <div class="title_div">发布时间：</div>
-                        <span class="span_all" :class="{_theme_news_choosen: date_index === 0}" @click="choose_date(-1)">全部</span>
-                        <div class="content_div"><span :class="{_theme_news_choosen:index + 1 === date_index}" v-for="(item,index) in date" @click="choose_date(index)">{{item}}</span></div>
+                        <span class="span_all _theme_card_span" :class="{active: date_index === 0}" @click="choose_date(-1)">全部</span>
+                        <div class="content_div"><span class="_theme_card_span" :class="{active:index + 1 === date_index}" v-for="(item,index) in date" @click="choose_date(index)">{{item}}</span></div>
                     </div>
                 </div>
                 <div class="news_div" v-for="news in newsList" @click="newsDetail(news.id,news.columnType,news.url)">
-                    <div class="news _theme_news_borderleft">
+                    <div class="news _theme_border">
                         <div class="news_title" v-html="ruleTitle(news.title)"></div>
                         <div class="source">来源：{{news.origin}}</div>
                     </div>
@@ -61,7 +58,6 @@
         name: "News",
         data(){
             return{
-                placeholder:"标题搜索",
                 input_value:"",
                 zxlm:[],//资讯栏目所有内容
                 id:"",//资讯栏目的id
@@ -142,7 +138,7 @@
                     // 匹配关键字正则
                     let replaceReg = new RegExp(this.input_value, 'g');
                     // 高亮替换v-html值
-                    let replaceString = '<span class="_theme_news_fontcolor">' + this.input_value + '</span>';
+                    let replaceString = '<span class="_theme_font">' + this.input_value + '</span>';
                     // 开始替换
                     titleString = titleString.replace(replaceReg, replaceString);
                 }
@@ -157,7 +153,6 @@
     }
 </script>
 <style scoped lang="scss">
-
     .nodata{
         font-size: 14px;
         padding: 10px;
@@ -171,7 +166,7 @@
         .left_div {
             width: 784px;
             background: #fff;
-            border-top: 3px solid $skin-card;
+
             margin-bottom: 20px;
             font-size: 14px;
             color: rgb(0,0,0);
@@ -205,11 +200,10 @@
                         margin-left: 5px;
                         padding: 3px 5px;
                         cursor: pointer;
-                    }
-                    ._theme_news_choosen{
-                        color: #fff;
-                        background-color: #65637b;
-                        border-radius: 2px;
+                        &.active{
+                            color: #fff;
+                            border-radius: 2px;
+                        }
                     }
                 }
             }
@@ -224,6 +218,7 @@
                 }
                 .news{
                     padding-left: 10px;
+                    border-left: 3px solid;
                     .news_title{
                         width: 650px;
                         font-size: 14px;

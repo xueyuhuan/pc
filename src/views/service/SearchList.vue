@@ -1,7 +1,7 @@
 <template>
     <div class="listing">
         <div class="left">
-            <h4 class="_theme_card_font">热门服务</h4>
+            <h4 class="_theme_font">热门服务</h4>
             <ul><li v-for="i in hot"><router-link :to="'/service/detail/'+i.id">
                 <img :src="$proxy+imgPath+i.id"/>
                 <div class="text">
@@ -10,7 +10,7 @@
                     <span class="number"><i class="fa fa-eye"></i>&nbsp;{{i.viewCount}}<i class="fa fa-star" :class="{yellow:i.favCount>0}"></i>&nbsp;{{i.favCount}}</span>
                 </div>
             </router-link></li></ul>
-            <h4 class="_theme_card_font" style="padding: 10px 0 0 0">最新服务</h4>
+            <h4 class="_theme_font" style="padding: 10px 0 0 0">最新服务</h4>
             <ul><li v-for="i in newest"><router-link :to="'/service/detail/'+i.id">
                 <img :src="$proxy+imgPath+i.id"/>
                 <div class="text">
