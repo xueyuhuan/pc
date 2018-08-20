@@ -41,7 +41,7 @@
             </div>
         </div>
         <!--模态框-->
-        <el-dialog :visible.sync="dialogVisible" width="900px">
+        <el-dialog :visible.sync="dialogVisible" width="900px" class="enterApp">
             <div slot="title" class="modal_head">
                 <img :src="appDetail_app.img" />
                 <div class="modal_head_middiv">
@@ -250,46 +250,51 @@
             }
         }
     }
-    .el-dialog__body{
-        background-color: rgb(247,247,247);
-        border-top: 1px solid black;
-    }
-    .modal_head{
-        padding-top: 20px;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #bfbfbf;
-        @include flex(space-bettween,flex-start);
-        .modal_head_middiv{
-            width: 578px;
-            margin-left: 20px;
-            font-size: 16px;
-            font-weight: 700;
-            color: #000;
-            .modal_head_middiv_div1{
-                i{
-                    color:#fad733;cursor: pointer;
+    .enterApp{
+        .el-dialog__header{
+            padding: 25px 30px;
+            border-bottom: 1px solid #e5e5e5;
+            .modal_head{
+                @include flex(space-bettween,center);
+                .modal_head_middiv{
+                    width: 578px;
+                    color: #000;
+                    margin-left: 20px;
+                    .modal_head_middiv_div1{
+                        font-size: 16px;
+                        font-weight: 700;
+                        margin-bottom: 5px;
+                        i{
+                            color:#fad733;
+                            cursor: pointer;
+                        }
+                        span{
+                            font-size: 12px;
+                            color: #777;
+                        }
+                    }
+                    .modal_head_middiv_div2{
+                        padding: 2px 0 0;
+                        font-size: 12px;
+                        font-weight: 500;
+                    }
                 }
-                span{
-                    font-size: 12px;
-                    color: #777;
+                img{
+                    width: 80px;
+                    height: 80px;
+                }
+                &>a{
+                    color: white;
+                    margin-left: 50px;
                 }
             }
-            .modal_head_middiv_div2{
-                padding: 3px 0px;
-                font-size: 12px;
-                color: #000;
+        }
+        .el-dialog__body{
+            background-color: #F7F7F7;
+            border-top: 1px solid black;
+            .modal_body{
+                @include flex(space-between,flex-start);
             }
         }
-        img{
-            width: 80px;
-            height: 80px;
-        }
-        &>a{
-            color: white;
-            margin-left: 50px;
-        }
-    }
-    .modal_body{
-        @include flex(space-between,flex-start);
     }
 </style>

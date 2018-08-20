@@ -79,28 +79,13 @@
     methods:{
       add(){
         if(this.data.type===''){
-          this.$notify({
-            title:'错误',
-            message: '请选择问题类型',
-            type: 'error',
-            position: 'bottom-right'
-          });
+          this.$notify.error('请选择问题类型');
         }
         else if(this.data.tel===''){
-          this.$notify({
-            title:'错误',
-            message: '请输入联系方式',
-            type: 'error',
-            position: 'bottom-right'
-          });
+          this.$notify.error('请输入联系方式');
         }
         else if(this.data.content===''){
-          this.$notify({
-            title:'错误',
-            message: '请输入内容描述',
-            type: 'error',
-            position: 'bottom-right'
-          });
+          this.$notify.error('请输入内容描述');
         }
         else{
           this.data.username=this.user.username;
@@ -109,12 +94,7 @@
                 if(res.data.errcode==='0'){
                   this.navActive=1;
                   this.getList();
-                  this.$notify({
-                    title:'成功',
-                    message: '提交成功',
-                    type: 'success',
-                    position: 'bottom-right'
-                  });
+                  this.$notify.success('提交成功');
                   this.data.type="";
                   this.data.tel="";
                   this.data.content="";

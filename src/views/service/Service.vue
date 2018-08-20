@@ -126,7 +126,7 @@
                     this.openService(i);
                   }
                   else {
-                    this.$message.error(res.data.errmsg);
+                    this.$notify.error(res.data.errmsg);
                   }
                 })
           }

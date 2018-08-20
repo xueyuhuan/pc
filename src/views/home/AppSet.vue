@@ -168,10 +168,7 @@
             this.listHas.push(i);
           }
           else {
-            this.$notify({
-              message: '只能选择10个',
-              type: 'warning',
-            });
+            this.$notify.warning('只能选择10个');
           }
         }
       },
@@ -239,10 +236,7 @@
                     data:this.listHas,
                     name:this.popupType
                   });
-                  this.$notify({
-                    message: '保存成功',
-                    type: 'success',
-                  });
+                  this.$notify.success('保存成功');
                 }
               })
         }
@@ -295,9 +289,9 @@
     }
   }
 </script>
-<style>
-    .el-pagination{text-align: center}
-</style>
+<!--<style>-->
+    <!--/*.el-pagination{text-align: center}*/-->
+<!--</style>-->
 <style scoped lang="scss">
     .drag{
         width: 100%;

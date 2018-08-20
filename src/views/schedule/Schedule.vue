@@ -386,26 +386,15 @@
                     this.$ajax.post(this.$url.add_private_event, this.formData)
                         .then(res => {
                             // console.log(res.data);
-                            if (res.data.errcode == '0') {
-                                this.$notify({
-                                    title: "提示",
-                                    message: '添加成功',
-                                    type: "success",
-                                    position: "bottom-right"
-                                })
+                            if (res.data.errcode === '0') {
+                                this.$notify.success('添加成功');
                                 //添加成功后，刷新数据
                                 this.personalSchedule = false;
                                 this.getDayEvent();
                                 this.getCalendar();
                                 this.clear();
-                            } else {
-                                this.$notify({
-                                    title: "提示",
-                                    message: res.data.errmsg,
-                                    type: "warning",
-                                    position: "bottom-right"
-                                })
                             }
+                            else this.$notify.warning(res.data.errmsg)
                         })
                 }
                 if (this.openModalFlag === 2) {//编辑
@@ -431,26 +420,14 @@
                     this.$ajax.post(this.$url.edit_private_event, data)
                         .then(res => {
                             // console.log(res.data);
-                            if (res.data.errcode == '0') {
-                                this.$notify({
-                                    title: "提示",
-                                    message: '修改成功',
-                                    type: "success",
-                                    position: "bottom-right"
-                                })
+                            if (res.data.errcode === '0') {
+                              this.$notify.success('修改成功');
                                 //添加成功后，刷新数据
                                 this.personalSchedule = false;
                                 this.getDayEvent();
                                 this.getCalendar();
                                 this.clear();
-                            } else {
-                                this.$notify({
-                                    title: "提示",
-                                    message: res.data.errmsg,
-                                    type: "warning",
-                                    position: "bottom-right"
-                                })
-                            }
+                            } else this.$notify.warning(res.data.errmsg);
                         })
                 }
             },
@@ -481,25 +458,13 @@
             deleteSchedule() {
                 this.$ajax.post(this.$url.remove_private_events, {id: this.deleteSchedule_id})
                     .then(res => {
-                        if (res.data.errcode == '0') {
-                            this.$notify({
-                                title: "提示",
-                                message: res.data.errmsg,
-                                type: "success",
-                                position: "bottom-right"
-                            })
+                        if (res.data.errcode === '0') {
+                            this.$notify.success(res.data.errmsg);
                             //删除成功后，刷新数据
                             this.deleteSchedule_show = false;
                             this.getDayEvent();
                             this.getCalendar();
-                        } else {
-                            this.$notify({
-                                title: "提示",
-                                message: res.data.errmsg,
-                                type: "warning",
-                                position: "bottom-right"
-                            })
-                        }
+                        } else this.$notify.warning(res.data.errmsg);
                     })
             },
             //订阅
@@ -511,7 +476,7 @@
                 this.qrDialogShow = true;
                 this.$ajax.post(this.$url.subscription_private)
                     .then(res => {
-                        if(res.data.errcode == '0'){
+                        if(res.data.errcode === '0'){
                             this.string = res.data.subscriptionPath;
                             QRCode.toDataURL(this.string)
                                 .then(url => {

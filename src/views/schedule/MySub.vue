@@ -51,24 +51,14 @@
             cancelSub(id) {//退订已订阅的栏目
                     this.$ajax.post(this.$url.cancelUserCalendar, {calId: id})
                         .then(res => {
-                            this.$notify({
-                                title: "提示",
-                                message: res.data.errmsg,
-                                type: "success",
-                                position: "bottom-right"
-                            })
+                            this.$notify.success(res.data.errmsg);
                             this.getData();
                         })
             },
             saveSub(id) {//订阅栏目
                 this.$ajax.post(this.$url.saveUserCalendar, {calId: id})
                     .then(res => {
-                        this.$notify({
-                            title: "提示",
-                            message: res.data.errmsg,
-                            type: "success",
-                            position: "bottom-right"
-                        })
+                        this.$notify.success(res.data.errmsg);
                         this.getData();
                     })
             }

@@ -36,10 +36,7 @@ instance.interceptors.request.use(
     error => {
       //对错误请求做些什么
       loading=Vue.prototype.$loading({text:"",background: 'rgba(0, 0, 0, 0.3)'});
-      Vue.prototype.$message({
-        type:'info',
-        message:'加载超时'
-      });
+      Vue.prototype.$notify.info('加载超时');
       return Promise.reject(error);
     });
 //响应拦截器（返回状态判断）
@@ -48,7 +45,7 @@ instance.interceptors.response.use(
       loading.close();
       // if(res.data.errcode !== '0'){//非正常
       //     if(res.data.errmsg){
-      //       Vue.prototype.$message({
+      //       Vue.prototype.$notify({
       //         type:'info',
       //         message:res.data.errmsg
       //       });

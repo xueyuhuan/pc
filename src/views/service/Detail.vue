@@ -17,7 +17,7 @@
                             <span v-show="isFavorite" @click="favorite('del')"><i class="fa fa-star"></i>点击取消</span>
                         </div>
                     </div>
-                    <a class="online" v-if="service.lineAble==='1'">进入服务</a>
+                    <a class="online" v-if="service.lineAble==='1'" @click="enterService(data)">进入服务</a>
                     <a class="underline" v-else>该项服务为线下服务<br/>请仔细查看办理流程</a>
                 </template>
                 <!--服务提供和对象说明-->
@@ -230,6 +230,7 @@
       this.getComment();
     },
     methods:{
+      //获取服务详情
       getData(){
         this.$ajax.post(this.$url.serviceDetail,{id:this.$route.params.id})
             .then(res=>{
@@ -239,58 +240,81 @@
               this.service=res.data.service;
             })
       },
-      getComment(){//获取评论列表
+      //获取评论列表
+      getComment(){
         this.$ajax.post(this.$url.serviceDetailComment,{id:this.$route.params.id,page:this.page})
             .then(res=>{
               this.comment=res.data.comments;
               this.total=res.data.count;
             })
       },
-      saveComment(){//提交评论
+      //提交评论
+      saveComment(){
         if(this.rate===0){
-          this.$notify.error({
-            title:'错误',
-            message:'请选择评分'
-          })
+          this.$notify.error('请选择评分');
         }
         else if(this.textarea===''){
-          this.$notify.error({
-            title:'错误',
-            message:'请填写评论内容'
-          })
+          this.$notify.error('请填写评论内容')
         }
         else {
           this.$ajax.post(this.$url.serviceDetailCommentSave,{thirdId:this.$route.params.id,score:this.rate,commentText:this.textarea})
               .then(res=>{
                 if(res.data.errcode==='0'){
-                  this.$notify.success({
-                    title:'成功',
-                    message:'评论成功'
-                  });
+                  this.$notify.success('评论成功');
                   this.commentShow=false;
                   this.getComment();
                 }
               })
         }
       },
-      handlePageChange(n){//监听页数改变
+      //监听页数改变
+      handlePageChange(n){
         this.page=n;
         this.getComment();
       },
       routerBack(){
         this.$router.go(-1);
       },
-      favorite(type){//收藏
+      //收藏
+      favorite(type){
         this.$ajax.post(type==='add'?this.$url.addFavorites:this.$url.delFavorites,{thirdId:this.$route.params.id,type:"service"})
             .then(res=>{
               if(res.data.errcode==='0'){
                 this.isFavorite=!this.isFavorite;
-                this.$notify({
-                  message: res.data.errmsg,
-                  type: 'success',
-                });
+                this.$notify.success(res.data.errmsg);
               }
             })
+      },
+      //进入服务
+      enterService(i){
+        if(i.openServiceErrmsg){
+          this.$notify.error(i.openServiceErrmsg);
+        }
+        else {
+          if(i.fwfs==='0'){//访问限制
+            this.$ajax.post('/service_portal/validate_fwfs')
+                .then(res=>{
+                  if(res.data.errmsg===''){
+                    this.openService(i);
+                  }
+                  else {
+                    this.$notify.error(res.data.errmsg);
+                  }
+                })
+          }
+          else {
+            this.openService(i);
+          }
+        }
+      },
+      //打开服务
+      openService(i){
+        if(i.openType==='1'){
+          this.$router.push({path: '/service/iframe/'+i.id});
+        }
+        else{
+          window.open(i.url);
+        }
       },
     }
   }

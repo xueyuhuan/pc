@@ -40,7 +40,7 @@
                     this.$router.push({path: this.$school.url});
                   }
                   else {
-                    this.$message.error(res.data.errmsg);
+                    this.$notify.error(res.data.errmsg);
                   }
                 });
           }

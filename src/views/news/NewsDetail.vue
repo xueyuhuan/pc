@@ -71,12 +71,7 @@
                 this.$ajax.post(url,{thirdId:this.news_current.id,type:'news',newsType:0})
                     .then(res => {
                         this.collect = !this.collect;
-                        this.$notify({
-                            title:"提示",
-                            message:res.data.errmsg,
-                            type:"success",
-                            position:"bottom-right"
-                        })
+                        this.$notify.success(res.data.errmsg);
                     })
             }
 

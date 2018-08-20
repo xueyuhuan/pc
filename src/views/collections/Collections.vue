@@ -127,12 +127,7 @@
                 this.$ajax.post(this.$url.delFavorites,{thirdId:id,type:type,newsType:1})
                     .then(res => {
                         if(res.data.errcode == '0'){
-                            this.$notify({
-                                title:"提示",
-                                message:res.data.errmsg,
-                                type:"success",
-                                position:"bottom-right"
-                            })
+                            this.$notify.success(res.data.errmsg);
                             if(type === 'service'){
                                 this.getService();
                             }
@@ -143,12 +138,7 @@
                                 this.getNews();
                             }
                         }else{
-                            this.$notify({
-                                title:"提示",
-                                message:res.data.errmsg,
-                                type:"warning",
-                                position:"bottom-right"
-                            })
+                            this.$notify.warning(res.data.errmsg)
                         }
 
                     })

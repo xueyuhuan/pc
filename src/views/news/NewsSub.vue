@@ -57,12 +57,7 @@
                 }else{
                     this.$ajax.post(this.$url.cancelNews,{columnId:b.ID})
                         .then(res => {
-                            this.$notify({
-                                title:"提示",
-                                message:res.data.errmsg,
-                                type:"success",
-                                position:"bottom-right"
-                            })
+                          this.$notify.success(res.data.errmsg);
                             this.getData();
                         })
                 }
@@ -70,12 +65,7 @@
             saveSub(id){//订阅栏目
                 this.$ajax.post(this.$url.saveNews,{columnId:id})
                     .then(res => {
-                        this.$notify({
-                            title:"提示",
-                            message:res.data.errmsg,
-                            type:"success",
-                            position:"bottom-right"
-                        })
+                      this.$notify.success(res.data.errmsg);
                         this.getData();
                     })
             }

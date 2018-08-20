@@ -67,10 +67,7 @@
           this.$ajax.post(this.$url.setUserImg,{img:data})
               .then(res=>{
                 if(res.data.errcode==='0'){
-                  this.$notify({
-                    message: '头像设置成功',
-                    type: 'success',
-                  });
+                  this.$notify.success('头像设置成功');
                   this.$ajax.post(this.$url.getUser)
                       .then(res=>{
                         this.user=res.data.user;

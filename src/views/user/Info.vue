@@ -79,11 +79,7 @@
         this.$ajax.post('/email_portal/unbindEmail')
             .then(res=>{
               if(res.data.errcode==='0'){
-                this.$notify({
-                  title: '成功',
-                  message: '解绑成功',
-                  type: 'success'
-                });
+                this.$notify.success('解绑成功');
                 this.email='';
                 this.type='';
                 this.password='';
@@ -96,42 +92,26 @@
       },
       addEmail(){
         if(this.email===''){
-          this.$notify.error({
-            title:'错误',
-            message: '邮箱名称不能为空！',
-          });
+          this.$notify.error('邮箱名称不能为空');
         }
         else if(this.type===''){
-          this.$notify.error({
-            title:'错误',
-            message: '请选择邮箱类型！',
-          });
+          this.$notify.error('请选择邮箱类型');
         }
         else if(this.password===''){
-          this.$notify.error({
-            title:'错误',
-            message: '邮箱密码不能为空！',
-          });
+          this.$notify.error('邮箱密码不能为空');
         }
         else{
           this.$ajax.post('/email_portal/bindEmail',{email:this.email+this.type,password:this.password})
               .then(res=>{
                 if(res.data.errcode==='0'){
-                  this.$notify({
-                    title: '成功',
-                    message: '绑定成功',
-                    type: 'success'
-                  });
+                  this.$notify.success('绑定成功');
                   this.$ajax.post(this.$url.getUser)
                       .then(res => {
                         this.$store.commit('set_user', res.data.user);
                       });
                 }
                 else{
-                  this.$notify.error({
-                    title:'错误',
-                    message: '绑定失败，请仔细核对邮箱信息！',
-                  });
+                  this.$notify.error('绑定失败，请仔细核对邮箱信息');
                 }
               })
         }
@@ -140,11 +120,7 @@
         this.$ajax.post('/ecard_portal/unbindCard')
             .then(res=>{
               if(res.data.errcode==='0'){
-                this.$notify({
-                  title: '成功',
-                  message: '解绑成功',
-                  type: 'success'
-                });
+                this.$notify.success('解绑成功');
                 this.cardNo='';
                 this.cardPassword='';
                 this.$ajax.post(this.$url.getUser)
@@ -156,36 +132,23 @@
       },
       addEcard(){
         if(this.cardNo===''){
-          this.$notify.error({
-            title:'错误',
-            message: '一卡通号不能为空！',
-          });
+          this.$notify.error('一卡通号不能为空');
         }
         else if(this.cardPassword===''){
-          this.$notify.error({
-            title:'错误',
-            message: '一卡通密码不能为空！',
-          });
+          this.$notify.error('一卡通密码不能为空');
         }
         else{
           this.$ajax.post('/ecard_portal/bindCard',{cardNo:this.cardNo,password:this.cardPassword})
               .then(res=>{
                 if(res.data.errcode==='0'){
-                  this.$notify({
-                    title: '成功',
-                    message: '绑定成功',
-                    type: 'success'
-                  });
+                  this.$notify.success('绑定成功');
                   this.$ajax.post(this.$url.getUser)
                       .then(res => {
                         this.$store.commit('set_user', res.data.user);
                       });
                 }
                 else{
-                  this.$notify.error({
-                    title:'错误',
-                    message: '绑定失败，请仔细核对一卡通信息！',
-                  });
+                  this.$notify.error('绑定失败，请仔细核对一卡通信息');
                 }
               })
         }
