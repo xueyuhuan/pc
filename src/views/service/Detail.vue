@@ -17,7 +17,7 @@
                             <span v-show="isFavorite" @click="favorite('del')"><i class="fa fa-star"></i>点击取消</span>
                         </div>
                     </div>
-                    <a class="online" v-if="service.lineAble==='1'" @click="enterService(data)">进入服务</a>
+                    <a class="online" v-if="service.lineAble==='1'" @click="enterService(service)">进入服务</a>
                     <a class="underline" v-else>该项服务为线下服务<br/>请仔细查看办理流程</a>
                 </template>
                 <!--服务提供和对象说明-->
@@ -287,7 +287,7 @@
       },
       //进入服务
       enterService(i){
-        if(i.openServiceErrmsg!==''){
+        if(this.data.openServiceErrmsg!==''){
           this.$notify.error(i.openServiceErrmsg);
         }
         else {
@@ -309,11 +309,11 @@
       },
       //打开服务
       openService(i){
-        if(i.service.openType==='1'){
-          this.$router.push({path: '/service/iframe/'+i.service.id});
+        if(i.openType==='1'){
+          this.$router.push({path: '/service/iframe/'+i.id});
         }
         else{
-          window.open(i.service.url);
+          window.open(i.url);
         }
       },
     }
