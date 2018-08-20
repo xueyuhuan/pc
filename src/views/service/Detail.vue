@@ -287,7 +287,7 @@
       },
       //进入服务
       enterService(i){
-        if(i.openServiceErrmsg){
+        if(i.openServiceErrmsg!==''){
           this.$notify.error(i.openServiceErrmsg);
         }
         else {
@@ -309,11 +309,11 @@
       },
       //打开服务
       openService(i){
-        if(i.openType==='1'){
-          this.$router.push({path: '/service/iframe/'+i.id});
+        if(i.service.openType==='1'){
+          this.$router.push({path: '/service/iframe/'+i.service.id});
         }
         else{
-          window.open(i.url);
+          window.open(i.service.url);
         }
       },
     }
