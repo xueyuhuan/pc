@@ -9,7 +9,6 @@
     .subhead-input{
         height: 30px;
         input{
-            background: #069;
             width: 160px;
             height: 100%;
             font-size: 12px;
@@ -32,16 +31,12 @@
             color:#bfbfbf;
         }
         button{
-            background: #069;
             height: 100%;
             font-size: 12px;
             padding: 5px 10px;
             border-radius: 0 30px 30px 0;
             border: none;
             outline: none;
-            i{
-                color: #1295d8;
-            }
         }
     }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <subhead>
-            <div><i class="fa fa-calendar"></i>&nbsp;&nbsp;&nbsp;日程 <span>Schedule</span></div>
+            <div><i class="fa fa-calendar icon"></i>日程 <span>Schedule</span></div>
         </subhead>
         <div class="content">
             <card>
@@ -38,8 +38,8 @@
                             </tr>
                             <tr v-for="item in calendars.days">
                                 <td v-for="i in item"
-                                    @click.passive="chooseDay(i.day)"
-                                    @dblclick="addSchedule(i)"
+                                    @dblclick="addSchedule"
+                                    @click="chooseDay(i)"
                                     :class="{today : calendars.year === current_year && calendars.month === current_month && i.day === current_day , chooseDay : i.day === day}">
                                     <div v-if="i.day !== 0" class="num">{{i.day}}</div>
                                     <div class="dot"><span :style="'background-color:' + b.color + ';'"
@@ -83,110 +83,69 @@
             </card>
         </div>
         <!--个人日程-->
-        <el-dialog
-                title=""
-                :visible.sync="personalSchedule"
-                width="900px">
-            <div slot="title"><h3 class="dialog_h3">添加日程</h3></div>
+        <el-dialog :visible="personalSchedule" width="900px">
+            <h3 slot="title" class="dialog_h3">{{openModalFlag===1?'添加':'编辑'}}日程</h3>
             <div class="form_body">
-                <el-form :model="formData" :rules="rules" label-position="right"
-                         label-width="150px">
+                <el-form :model="formData" ref="formData" :rules="rules" label-position="right" label-width="150px">
                     <el-form-item label="日程主题" prop="title">
                         <el-input v-model="formData.title"></el-input>
                     </el-form-item>
-                    <el-form-item label="开始时间" prop="start">
+                    <el-form-item label="时间">
                         <el-date-picker
-                                v-model="formData.start"
-                                type="datetime"
-                                placeholder="选择开始时间"
+                                v-model="timeRange"
+                                type="datetimerange"
+                                start-placeholder="开始时间"
+                                end-placeholder="结束时间"
                                 format="yyyy-MM-dd HH:mm"
                                 value-format="yyyy-MM-dd HH:mm">
                         </el-date-picker>
                     </el-form-item>
-                    <el-form-item label="结束时间" prop="end">
-                        <el-date-picker
-                                v-model="formData.end"
-                                type="datetime"
-                                placeholder="选择结束时间"
-                                format="yyyy-MM-dd HH:mm"
-                                value-format="yyyy-MM-dd HH:mm"
-                        >
-                        </el-date-picker>
-                    </el-form-item>
-                    <el-form-item label="地点" prop="location">
+                    <el-form-item label="地点">
                         <el-input v-model="formData.location"></el-input>
                     </el-form-item>
-                    <el-form-item label="备注" prop="info">
+                    <el-form-item label="备注">
                         <el-input type="textarea" :rows="5" v-model="formData.info"></el-input>
                     </el-form-item>
                 </el-form>
             </div>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="personalSchedule = false">取 消</el-button>
-                <el-button type="primary" @click="submitFormData">确 定</el-button>
-            </span>
+            <div slot="footer" class="dialog_footer">
+                <button class="_theme _theme_border" @click="submitFormData">确定</button><button @click="personalSchedule = false">取消</button>
+            </div>
         </el-dialog>
         <!--个人日程--查看详情--只读-->
-        <el-dialog
-                title=""
-                :visible.sync="personalSchedule_readOnly"
-                width="900px">
-            <div slot="title"><h3>日程详情</h3></div>
-            <div class="form_body">
-                <el-form :model="formData" :rules="rules" :disabled="formDisabled_readOnly" label-position="right"
-                         label-width="150px">
-                    <el-form-item label="日程主题" prop="title">
-                        <el-input v-model="formData.title"></el-input>
-                    </el-form-item>
-                    <el-form-item label="开始时间" prop="start">
-                        <el-date-picker
-                                v-model="formData.start"
-                                type="datetime"
-                                placeholder="选择开始时间"
-                                format="yyyy-MM-dd HH:mm"
-                                value-format="yyyy-MM-dd HH:mm">
-                        </el-date-picker>
-                    </el-form-item>
-                    <el-form-item label="结束时间" prop="end">
-                        <el-date-picker
-                                v-model="formData.end"
-                                type="datetime"
-                                placeholder="选择结束时间"
-                                format="yyyy-MM-dd HH:mm"
-                                value-format="yyyy-MM-dd HH:mm">
-                        </el-date-picker>
-                    </el-form-item>
-                    <el-form-item label="地点" prop="location">
-                        <el-input v-model="formData.location"></el-input>
-                    </el-form-item>
-                    <el-form-item label="备注" prop="info">
-                        <el-input type="textarea" :rows="5" v-model="formData.info"></el-input>
-                    </el-form-item>
-                </el-form>
-            </div>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="personalSchedule_readOnly = false" type="primary">关 闭</el-button>
-            </span>
-        </el-dialog>
-        <!--删除日程模态框-->
-        <el-dialog
-                title=""
-                :visible.sync="deleteSchedule_show"
-                width="900px">
-            <div slot="title"><h3>提示</h3></div>
-            <div>确认删除该日程？</div>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="deleteSchedule_show = false">取 消</el-button>
-                <el-button type="primary" @click="deleteSchedule">确 定</el-button>
-            </span>
-        </el-dialog>
+        <!--<el-dialog :visible.sync="personalSchedule_readOnly" width="900px">-->
+            <!--<h3 slot="title" class="dialog_h3">日程详情</h3>-->
+            <!--<div class="form_body">-->
+                <!--<el-form :model="formData" :rules="rules" :disabled="formDisabled_readOnly" label-position="right" label-width="150px">-->
+                    <!--<el-form-item label="日程主题" prop="title">-->
+                        <!--<el-input v-model="formData.title"></el-input>-->
+                    <!--</el-form-item>-->
+                    <!--<el-form-item label="时间" prop="timeRange">-->
+                        <!--<el-date-picker-->
+                                <!--v-model="formData.timeRange"-->
+                                <!--type="datetimerange"-->
+                                <!--start-placeholder="开始时间"-->
+                                <!--end-placeholder="结束时间"-->
+                                <!--format="yyyy-MM-dd HH:mm"-->
+                                <!--value-format="yyyy-MM-dd HH:mm">-->
+                        <!--</el-date-picker>-->
+                    <!--</el-form-item>-->
+                    <!--<el-form-item label="地点" prop="location">-->
+                        <!--<el-input v-model="formData.location"></el-input>-->
+                    <!--</el-form-item>-->
+                    <!--<el-form-item label="备注" prop="info">-->
+                        <!--<el-input type="textarea" :rows="5" v-model="formData.info"></el-input>-->
+                    <!--</el-form-item>-->
+                <!--</el-form>-->
+            <!--</div>-->
+            <!--<div slot="footer" class="dialog_footer">-->
+                <!--<button @click="personalSchedule_readOnly= false">关闭</button>-->
+            <!--</div>-->
+        <!--</el-dialog>-->
         <!--手机二维码dialog-->
-        <el-dialog
-                title=""
-                :visible.sync="qrDialogShow"
-                width="900px">
-            <div slot="title"><h3 class="dialog_h3">订阅日程</h3></div>
-            <div> <i class="fa fa-info-circle"></i>通过订阅功能，在手机、平板电脑或者其他日历软件中查看日程</div>
+        <el-dialog :visible.sync="qrDialogShow" width="900px">
+            <h3 slot="title" class="dialog_h3">订阅日程</h3>
+            <div style="padding:30px 0 0 15px"><i class="fa fa-info-circle"></i> 通过订阅功能，在手机、平板电脑或者其他日历软件中查看日程</div>
             <div class="qr_div">
                 <div>
                     <h2 style="text-align: center;font-size: 18px;font-weight: 700;">在 iPad 和 iPhone 上订阅</h2>
@@ -197,312 +156,278 @@
                     <div style="font-size: 18px;padding: 20px;text-align: center"><a :href="string" target="_blank">订阅</a></div>
                 </div>
             </div>
-            <span slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="qrDialogShow = false">关 闭</el-button>
-            </span>
+            <div slot="footer" class="dialog_footer">
+                <button @click="qrDialogShow= false">关闭</button>
+            </div>
         </el-dialog>
     </div>
 </template>
 
 <script>
-    import QRCode from 'qrcode';
-    export default {
-        name: "Schedule",
-        data() {
-            return {
-                eventType: [],
-                year: "",//显示的年月日，传参拿日程数据
-                month: "",
-                day: "",
-                current_year: "",
-                current_month: "",
-                current_day: "",//今天
-                calendars: [],//日历
-                date_events: [],//右侧显示的某天的日程和事件
-                toggle_index: -1,//右侧栏目index，初始化为-1，
-                personalSchedule: false,//个人日程模态框是否显示
-                personalSchedule_readOnly: false,//只读的弹出框是否显示
-                deleteSchedule_show:false,//删除日程模态框是否显示
-                qrDialogShow:false,//手机订阅
-                deleteSchedule_id:"",//待删除的日程的id
-                formData: {//添加日程表单
-                    className: "bg-success bg",
-                    type: "private",
-                    notify: false,
-                    start: "",
-                    end: "",
-                    title: "",
-                    location: "",
-                    info: "",
-                    id: ""
-                },
-                openModalFlag: 0,//打开日程模态框标识符，提交表单时用于区分是新增还是修改， 0代表无状态 1-新增日程,2-修改日程
-                buttonText: "",//表单里面的文字
-                formDisabled_readOnly: true,//只读表单
-                rules: {
-                    title: [
-                        {required: true, message: '请输入日程主题', trigger: 'blur'}
-                    ],
-                    start: [
-                        {type: 'string', required: true, message: '请选择开始时间', trigger: 'change'}
-                    ],
-                    end: [
-                        {type: 'string', required: true, message: '请选择结束日期', trigger: 'change'}
-                    ]
-                },
-                string:"",//二维码连接
-                qrUrl:"",//二维码图片的src
-                showNoData:true//右侧如果没数据
-            }
-
+  import QRCode from 'qrcode';
+  import date from '../../utils/date';
+  export default {
+    name: "Schedule",
+    data() {
+      return {
+        eventType: [],
+        year: "",//左上角显示的年月，传参拿日程数据
+        month: "",
+        choose_year:"",//选中的年月日
+        choose_month:"",
+        day: "",
+        current_year: "",
+        current_month: "",
+        current_day: "",//今天
+        calendars: [],//日历
+        date_events: [],//右侧显示的某天的日程和事件
+        toggle_index: -1,//右侧栏目index，初始化为-1，
+        personalSchedule: false,//个人日程模态框是否显示
+        personalSchedule_readOnly: false,//只读的弹出框是否显示
+        // deleteSchedule_show:false,//删除日程模态框是否显示
+        qrDialogShow:false,//手机订阅
+        deleteSchedule_id:"",//待删除的日程的id
+        timeRange:[],//时间范围
+        formData: {//添加日程表单
+          className: "bg-success bg",
+          type: "private",
+          notify: false,
+          timeRange:[],//时间范围
+          start: "",
+          end: "",
+          title: "",
+          location: "",
+          info: "",
+          id: ""
         },
-        methods: {
-            //获取事件类型
-            getEventType() {
-                this.$ajax.post(this.$url.getCalendarObjs)
-                    .then(res => {
-                        this.eventType = res.data.cals;
-                    })
-            },
-            //初始化年月日
-            initDate() {
-                let date = new Date();
-                this.year = date.getFullYear();
-                this.month = date.getMonth() + 1;
-                this.day = date.getDate();
-                this.current_year = date.getFullYear();
-                this.current_month = date.getMonth() + 1;
-                this.current_day = date.getDate();
-            },
-            //获取日历信息
-            getCalendar() {
-                this.$ajax.post(this.$url.getCalendar, {year: this.year, month: this.month})
-                    .then(res => {
-                        this.calendars = res.data;
-                    })
-            },
-            //下个月
-            nextMonth() {
-                if (this.month === 12) {
-                    this.month = 1;
-                    this.year = this.year + 1;
-                } else {
-                    this.month = this.month + 1;
-                }
-                this.day = "";
-                this.getCalendar();
-            },
-            //上个月
-            prevMonth() {
-                if (this.month === 1) {
-                    this.month = 12;
-                    this.year = this.year - 1;
-                } else {
-                    this.month = this.month - 1;
-                }
-                //置空
-                this.day = "";
-                this.toggle_index = -1;
-                this.getCalendar();
-            },
-            //获取某天的日程数据，展示在右侧
-            getDayEvent() {
-                this.$ajax.post(this.$url.getEvents, {year: this.year, month: this.month, day: this.day})
-                    .then(res => {
-                        // console.log(res.data);
-                        this.date_events = res.data.calObjs;
-                        let totalEvents = 0;
-                        for(let i=0;i<this.date_events.length;i++){
-                            totalEvents += this.date_events[i].events.length;
-                        }
-                        if(totalEvents === 0){
-                            this.showNoData = true;
-                        }else{
-                            this.showNoData = false;
-                        }
-                    })
-            },
-            //选择某天,并且更新该天日程数据
-            chooseDay(day) {
-                if (day === 0) {//点击空白部分
-                    return;
-                }
-                if (this.day === day) {//防止连重复选中一天
-                    return;
-                }
-                this.day = day;
-                this.toggle_index = -1;
-                this.getDayEvent();
-            },
-            //点击具体的日程事件
-            seeSchedule(url, id) {
-                if (url) {//有url则直接跳转
-                    window.open(url);
-                } else {//没有url则打开模态框查看该日程,只读,获取该日程信息，渲染到视图层
-                    this.personalSchedule_readOnly = true;
-                }
-            },
-            //切换展示的事件
-            toggleIndex(index) {
-                if (this.toggle_index === index || this.toggle_index === -1) {
-                    this.toggle_index = ""
-                } else {
-                    this.toggle_index = index;
-                }
-            },
-            //点击添加日程
-            addSchedule(i) {
-                this.personalSchedule = true;
-                this.openModalFlag = 1;
-                //通过双击事件新增日程，则默认选中当天的8点-9点
-                if(i){
-                    let month = i.month + '';
-                    if(month.length === 1){
-                        month = '0' + month;
-                    }
-                    let startTime = `${i.year}-${month}-${i.day} 08:00`;
-                    let endTime = `${i.year}-${month}-${i.day} 09:00`;
-                    this.formData.start = startTime;
-                    this.formData.end = endTime;
-                };
-            },
-            //提交个人日程表单
-            submitFormData() {// 1-新增 2-编辑
-                if (this.openModalFlag === 1) {//新增日程
-                    // console.log(this.formData);
-                    // return;
-                    if(!this.formData.title){
-                        this.$alert('请输入日程主题','提示',{confirmButtonText: '确定',type:'warning'});
-                        return;
-                    }
-                    if(!this.formData.start){
-                        this.$alert('请输入日程开始时间','提示',{confirmButtonText: '确定',type:'warning'});
-                        return;
-                    }
-                    if(!this.formData.end){
-                        this.$alert('请输入日程结束时间','提示',{confirmButtonText: '确定',type:'warning'});
-                        return;
-                    }
-                    this.$ajax.post(this.$url.add_private_event, this.formData)
-                        .then(res => {
-                            // console.log(res.data);
-                            if (res.data.errcode === '0') {
-                                this.$notify.success('添加成功');
-                                //添加成功后，刷新数据
-                                this.personalSchedule = false;
-                                this.getDayEvent();
-                                this.getCalendar();
-                                this.clear();
-                            }
-                            else this.$notify.warning(res.data.errmsg)
-                        })
-                }
-                if (this.openModalFlag === 2) {//编辑
-                    let data = {};
-                    data.id = this.formData.id;
-                    data.title = this.formData.title;
-                    data.start = this.formData.start;
-                    data.end = this.formData.end;
-                    data.info = this.formData.info;
-                    data.location = this.formData.location;
-                    if(!this.formData.title){
-                        this.$alert('请输入日程主题','提示',{confirmButtonText: '确定'});
-                        return;
-                    }
-                    if(!this.formData.start){
-                        this.$alert('请输入日程开始时间','提示',{confirmButtonText: '确定'});
-                        return;
-                    }
-                    if(!this.formData.end){
-                        this.$alert('请输入日程结束时间','提示',{confirmButtonText: '确定'});
-                        return;
-                    }
-                    this.$ajax.post(this.$url.edit_private_event, data)
-                        .then(res => {
-                            // console.log(res.data);
-                            if (res.data.errcode === '0') {
-                              this.$notify.success('修改成功');
-                                //添加成功后，刷新数据
-                                this.personalSchedule = false;
-                                this.getDayEvent();
-                                this.getCalendar();
-                                this.clear();
-                            } else this.$notify.warning(res.data.errmsg);
-                        })
-                }
-            },
-            //获取该日程已有数据，渲染到表单视图层
-            getFormData(id) {
-                this.$ajax.post(this.$url.get_private_event, {id: id})
-                    .then(res => {
-                        this.formData.start = res.data.event.start;
-                        this.formData.end = res.data.event.end;
-                        this.formData.title = res.data.event.title;
-                        this.formData.location = res.data.event.location;
-                        this.formData.info = res.data.event.info;
-                        this.formData.id = res.data.event.id;
-                    })
-            },
-            //修改日程表单数据
-            editFormData(id) {
-                this.getFormData(id);//获取表单数据
-                this.personalSchedule = true;//显示模态框
-                this.openModalFlag = 2;
-            },
-            //弹出模态框提示是否删除该日程
-            showDeleteDialog(id){
-                this.deleteSchedule_id = id;
-                this.deleteSchedule_show = true
-            },
-            //删除日程
-            deleteSchedule() {
-                this.$ajax.post(this.$url.remove_private_events, {id: this.deleteSchedule_id})
-                    .then(res => {
-                        if (res.data.errcode === '0') {
-                            this.$notify.success(res.data.errmsg);
-                            //删除成功后，刷新数据
-                            this.deleteSchedule_show = false;
-                            this.getDayEvent();
-                            this.getCalendar();
-                        } else this.$notify.warning(res.data.errmsg);
-                    })
-            },
-            //订阅
-            subscribe(){
-                this.$router.push({ path: '/schedule/MySub' })
-            },
-            //二维码
-            qrDialog(){
-                this.qrDialogShow = true;
-                this.$ajax.post(this.$url.subscription_private)
-                    .then(res => {
-                        if(res.data.errcode === '0'){
-                            this.string = res.data.subscriptionPath;
-                            QRCode.toDataURL(this.string)
-                                .then(url => {
-                                    this.qrUrl = url;
-                                })
-                        }
-
-                    })
-            },
-            //表单提交成功后，需要清除表单的数据
-            clear(){
-                this.formData.title = "";
-                this.formData.start = "";
-                this.formData.end = "";
-                this.formData.info = "";
-                this.formData.location = "";
-                this.formData.id = "";
-            }
+        openModalFlag: 1,//打开日程模态框标识符，提交表单时用于区分是新增还是修改， 默认为新增 1-新增日程,2-修改日程
+        buttonText: "",//表单里面的文字
+        formDisabled_readOnly: true,//只读表单
+        rules: {
+          title: [
+            {required: true, message: '请输入日程主题', trigger: 'blur'}
+          ],
+          timeRange:[
+            {required: true, message: '请选择时间', trigger: 'change'}
+          ],
         },
-        created() {
-            this.getEventType();
-            this.initDate();
-            this.getCalendar();
-            this.getDayEvent();
+        string:"",//二维码连接
+        qrUrl:"",//二维码图片的src
+        showNoData:true//右侧如果没数据
+      }
+    },
+    watch:{
+      timeRange(value){
+        this.formData.timeRange=value;
+      }
+    },
+    methods: {
+      //获取事件类型
+      getEventType() {
+        this.$ajax.post(this.$url.getCalendarObjs)
+            .then(res => {
+              this.eventType = res.data.cals;
+            })
+      },
+      //初始化年月日
+      initDate() {
+        let date = new Date();
+        this.year = date.getFullYear();
+        this.month = date.getMonth() + 1;
+        this.day = date.getDate();
+        this.current_year = date.getFullYear();
+        this.current_month = date.getMonth() + 1;
+        this.current_day = date.getDate();
+        //直接点击添加日程时设置时间为当前8-9点
+        this.formData.timeRange=[new Date(date.getFullYear(), date.getMonth(), date.getDate(), 8, 0), new Date(date.getFullYear(), date.getMonth(), date.getDate(), 9, 0)];
+      },
+      //获取日历信息
+      getCalendar() {
+        this.$ajax.post(this.$url.getCalendar, {year: this.year, month: this.month})
+            .then(res => {
+              this.calendars = res.data;
+            })
+      },
+      //下个月
+      nextMonth() {
+        if (this.month === 12) {
+          this.month = 1;
+          this.year = this.year + 1;
+        } else {
+          this.month = this.month + 1;
         }
+        this.day = "";
+        this.getCalendar();
+      },
+      //上个月
+      prevMonth() {
+        if (this.month === 1) {
+          this.month = 12;
+          this.year = this.year - 1;
+        } else {
+          this.month = this.month - 1;
+        }
+        //置空
+        this.day = "";
+        this.toggle_index = -1;
+        this.getCalendar();
+      },
+      //获取某天的日程数据，展示在右侧
+      getDayEvent() {
+        this.$ajax.post(this.$url.getEvents, {year: this.year, month: this.month, day: this.day})
+            .then(res => {
+              this.date_events = res.data.calObjs;
+              let totalEvents = 0;
+              for(let i=0;i<this.date_events.length;i++){
+                totalEvents += this.date_events[i].events.length;
+              }
+              this.showNoData = totalEvents === 0;
+            })
+      },
+      //选择某天,并且更新该天日程数据
+      chooseDay(i) {
+        if (i.day === 0) {//点击空白部分
+          return;
+        }
+        if (this.day === i.day) {//防止连重复选中一天
+          return;
+        }
+        //设置弹出框时间范围
+        this.formData.timeRange=[new Date(i.year, i.month-1, i.day, 8, 0), new Date(i.year, i.month-1, i.day, 9, 0)];
+        //存储选中的日期
+        this.day = i.day;
+        this.toggle_index = -1;
+        this.getDayEvent();
+      },
+      //点击添加日程
+      addSchedule() {
+        this.clear();
+        this.personalSchedule = true;
+        this.openModalFlag = 1;
+      },
+      //提交个人日程表单
+      submitFormData() {// 1-新增 2-编辑
+        this.$refs['formData'].validate((valid)=>{
+          if(valid){
+            if(this.formData.timeRange[0].constructor.name==='Date'){
+              this.formData.start=date.dateFormat("yyyy-MM-dd hh:mm",this.formData.timeRange[0]);
+              this.formData.end=date.dateFormat("yyyy-MM-dd hh:mm",this.formData.timeRange[1])
+            }
+            else {
+              this.formData.start=this.formData.timeRange[0];
+              this.formData.end=this.formData.timeRange[1];
+            }
+            this.$ajax.post(this.openModalFlag===1?this.$url.add_private_event:this.$url.edit_private_event, this.formData)
+                .then(res => {
+                  if (res.data.errcode === '0') {
+                    this.$notify.success('添加成功');
+                    //添加成功后，刷新数据
+                    this.personalSchedule = false;
+                    this.getDayEvent();
+                    this.getCalendar();
+                    this.clear();
+                  }
+                  else this.$notify.warning(res.data.errmsg)
+                });
+          }
+          else return false;
+        });
+      },
+      //修改日程表单数据
+      editFormData(id) {
+        this.getFormData(id);//获取表单数据
+        this.personalSchedule = true;//显示模态框
+        this.openModalFlag = 2;
+      },
+      //点击具体的日程事件
+      seeSchedule(url, id) {
+        if (url) {//有url则直接跳转
+          window.open(url);
+        } else {//没有url则打开模态框查看该日程,只读,获取该日程信息，渲染到视图层
+          this.getFormData(id);//获取表单数据
+          this.personalSchedule = true;
+        }
+      },
+      //获取该日程已有数据，渲染到表单视图层
+      getFormData(id) {
+        this.$ajax.post(this.$url.get_private_event, {id: id})
+            .then(res => {
+              this.formData=res.data.event;
+              this.timeRange=[res.data.event.start,res.data.event.end];
+              //let date = new Date();
+              //this.formData.timeRange=[new Date(date.getFullYear(), date.getMonth(), date.getDate(), 8, 0), new Date(date.getFullYear(), date.getMonth(), date.getDate(), 9, 0)];
+              // this.formData.timeRange=[new Date(res.data.event.start), new Date(res.data.event.end)];
+              console.log(this.formData);
+            })
+      },
+      //切换展示的事件
+      toggleIndex(index) {
+        if (this.toggle_index === index || this.toggle_index === -1) {
+          this.toggle_index = ""
+        } else {
+          this.toggle_index = index;
+        }
+      },
+      //弹出提示是否删除该日程
+      showDeleteDialog(id){
+        this.$confirm('确定删除该日程吗？','提示',{
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(()=>{
+          this.deleteSchedule_id = id;
+          this.deleteSchedule();
+        }).catch(()=>{});
+      },
+      //删除日程
+      deleteSchedule() {
+        this.$ajax.post(this.$url.remove_private_events, {id: this.deleteSchedule_id})
+            .then(res => {
+              if (res.data.errcode === '0') {
+                //删除成功后，刷新数据
+                this.getDayEvent();
+                this.getCalendar();
+                this.$notify.success(res.data.errmsg);
+              }
+              else this.$notify.warning(res.data.errmsg);
+            })
+      },
+      //订阅
+      subscribe(){
+        this.$router.push({ path: '/schedule/MySub' })
+      },
+      //二维码
+      qrDialog(){
+        this.qrDialogShow = true;
+        this.$ajax.post(this.$url.subscription_private)
+            .then(res => {
+              if(res.data.errcode === '0'){
+                this.string = res.data.subscriptionPath;
+                QRCode.toDataURL(this.string)
+                    .then(url => {
+                      this.qrUrl = url;
+                    })
+              }
+
+            })
+      },
+      //表单提交成功后，需要清除表单的数据
+      clear(){
+        this.formData.title = "";
+        this.formData.start = "";
+        this.formData.end = "";
+        this.formData.info = "";
+        this.formData.location = "";
+        this.formData.id = "";
+      }
+    },
+    created() {
+      this.getEventType();
+      this.initDate();
+      this.getCalendar();
+      this.getDayEvent();
     }
+  }
 </script>
 
 <style scoped lang="scss">
@@ -651,7 +576,7 @@
     .form_body {
         width: 800px;
         margin: 0 auto;
-        padding-right: 100px;
+        padding: 30px 100px 0 0;
     }
     .qr_div{
         @include flex(flex-start,flex-start);

@@ -19,7 +19,7 @@ instance.interceptors.request.use(
     config => {
       //在发送请求之前做些什么
       //保存布局时不加载loading
-      if(config.url!=='/page_portal/save_layout'&&config.url!=='/api/page_portal/save_layout'){
+      if(config.url!=='/page_portal/save_layout'&&config.url!=='/calendar_portal/get_events_date'){
         loading=Vue.prototype.$loading({text:"",background: 'rgba(0, 0, 0, 0.3)'});
       }
       if(config.method==="post"){
