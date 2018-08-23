@@ -38,7 +38,7 @@
                             </tr>
                             <tr v-for="item in calendars.days">
                                 <td v-for="i in item"
-                                    @dblclick="addSchedule"
+                                    @dblclick="addSchedule('db')"
                                     @click="chooseDay(i)"
                                     :class="{today : calendars.year === current_year && calendars.month === current_month && i.day === current_day , chooseDay : i.day === day}">
                                     <div v-if="i.day !== 0" class="num">{{i.day}}</div>
@@ -75,22 +75,20 @@
                             </div>
                             <div class="noData" v-show="item.events.length === 0">暂无信息</div>
                         </div>
-                        <div v-if="showNoData" style="color: #000;
-    font-size: 14px;
-    font-family: 'Microsoft YaHei','Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;">暂无数据</div>
+                        <div v-if="showNoData" style="color: #000;font-size: 14px;">暂无数据</div>
                     </div>
                 </div>
             </card>
         </div>
-        <!--个人日程-->
-        <el-dialog :visible="personalSchedule" width="900px">
-            <h3 slot="title" class="dialog_h3">{{openModalFlag===1?'添加':'编辑'}}日程</h3>
+        <!--弹窗-->
+        <el-dialog :visible="personalSchedule" width="900px" @close="personalSchedule=false">
+            <h3 slot="title" class="dialog_h3">{{dialogName}}日程</h3>
             <div class="form_body">
-                <el-form :model="formData" ref="formData" :rules="rules" label-position="right" label-width="150px">
+                <el-form :model="formData" ref="formData" :rules="rules" :disabled="formDisabled_readOnly" label-position="right" label-width="150px">
                     <el-form-item label="日程主题" prop="title">
                         <el-input v-model="formData.title"></el-input>
                     </el-form-item>
-                    <el-form-item label="时间">
+                    <el-form-item label="时间" prop="timeRange">
                         <el-date-picker
                                 v-model="timeRange"
                                 type="datetimerange"
@@ -109,39 +107,10 @@
                 </el-form>
             </div>
             <div slot="footer" class="dialog_footer">
-                <button class="_theme _theme_border" @click="submitFormData">确定</button><button @click="personalSchedule = false">取消</button>
+                <template v-if="!formDisabled_readOnly"><button class="_theme _theme_border" @click="submitFormData">确定</button><button @click="personalSchedule = false">取消</button></template>
+                <button v-else @click="personalSchedule= false">关闭</button>
             </div>
         </el-dialog>
-        <!--个人日程--查看详情--只读-->
-        <!--<el-dialog :visible.sync="personalSchedule_readOnly" width="900px">-->
-            <!--<h3 slot="title" class="dialog_h3">日程详情</h3>-->
-            <!--<div class="form_body">-->
-                <!--<el-form :model="formData" :rules="rules" :disabled="formDisabled_readOnly" label-position="right" label-width="150px">-->
-                    <!--<el-form-item label="日程主题" prop="title">-->
-                        <!--<el-input v-model="formData.title"></el-input>-->
-                    <!--</el-form-item>-->
-                    <!--<el-form-item label="时间" prop="timeRange">-->
-                        <!--<el-date-picker-->
-                                <!--v-model="formData.timeRange"-->
-                                <!--type="datetimerange"-->
-                                <!--start-placeholder="开始时间"-->
-                                <!--end-placeholder="结束时间"-->
-                                <!--format="yyyy-MM-dd HH:mm"-->
-                                <!--value-format="yyyy-MM-dd HH:mm">-->
-                        <!--</el-date-picker>-->
-                    <!--</el-form-item>-->
-                    <!--<el-form-item label="地点" prop="location">-->
-                        <!--<el-input v-model="formData.location"></el-input>-->
-                    <!--</el-form-item>-->
-                    <!--<el-form-item label="备注" prop="info">-->
-                        <!--<el-input type="textarea" :rows="5" v-model="formData.info"></el-input>-->
-                    <!--</el-form-item>-->
-                <!--</el-form>-->
-            <!--</div>-->
-            <!--<div slot="footer" class="dialog_footer">-->
-                <!--<button @click="personalSchedule_readOnly= false">关闭</button>-->
-            <!--</div>-->
-        <!--</el-dialog>-->
         <!--手机二维码dialog-->
         <el-dialog :visible.sync="qrDialogShow" width="900px">
             <h3 slot="title" class="dialog_h3">订阅日程</h3>
@@ -166,8 +135,10 @@
 <script>
   import QRCode from 'qrcode';
   import date from '../../utils/date';
+  import Calendar from "../../components/Calendar";
   export default {
     name: "Schedule",
+    components: {Calendar},
     data() {
       return {
         eventType: [],
@@ -183,7 +154,8 @@
         date_events: [],//右侧显示的某天的日程和事件
         toggle_index: -1,//右侧栏目index，初始化为-1，
         personalSchedule: false,//个人日程模态框是否显示
-        personalSchedule_readOnly: false,//只读的弹出框是否显示
+        dialogName:'',//弹框名字
+        // personalSchedule_readOnly: false,//只读的弹出框是否显示
         // deleteSchedule_show:false,//删除日程模态框是否显示
         qrDialogShow:false,//手机订阅
         deleteSchedule_id:"",//待删除的日程的id
@@ -219,6 +191,11 @@
     watch:{
       timeRange(value){
         this.formData.timeRange=value;
+      },
+      personalSchedule(value){
+        if(!value){
+          this.$refs['formData'].resetFields();
+        }
       }
     },
     methods: {
@@ -239,7 +216,7 @@
         this.current_month = date.getMonth() + 1;
         this.current_day = date.getDate();
         //直接点击添加日程时设置时间为当前8-9点
-        this.formData.timeRange=[new Date(date.getFullYear(), date.getMonth(), date.getDate(), 8, 0), new Date(date.getFullYear(), date.getMonth(), date.getDate(), 9, 0)];
+        this.timeRange=[new Date(date.getFullYear(), date.getMonth(), date.getDate(), 8, 0), new Date(date.getFullYear(), date.getMonth(), date.getDate(), 9, 0)];
       },
       //获取日历信息
       getCalendar() {
@@ -293,7 +270,7 @@
           return;
         }
         //设置弹出框时间范围
-        this.formData.timeRange=[new Date(i.year, i.month-1, i.day, 8, 0), new Date(i.year, i.month-1, i.day, 9, 0)];
+        this.timeRange=[new Date(i.year, i.month-1, i.day, 8, 0), new Date(i.year, i.month-1, i.day, 9, 0)];
         //存储选中的日期
         this.day = i.day;
         this.toggle_index = -1;
@@ -302,8 +279,10 @@
       //点击添加日程
       addSchedule() {
         this.clear();
+        this.formDisabled_readOnly=false;//添加非只读
         this.personalSchedule = true;
         this.openModalFlag = 1;
+        this.dialogName='添加';
       },
       //提交个人日程表单
       submitFormData() {// 1-新增 2-编辑
@@ -333,19 +312,23 @@
           else return false;
         });
       },
-      //修改日程表单数据
+      //编辑日程
       editFormData(id) {
         this.getFormData(id);//获取表单数据
-        this.personalSchedule = true;//显示模态框
+        this.formDisabled_readOnly=false;//添加非只读
+        this.personalSchedule = true;
         this.openModalFlag = 2;
+        this.dialogName='编辑';
       },
-      //点击具体的日程事件
+      //查看日程
       seeSchedule(url, id) {
         if (url) {//有url则直接跳转
           window.open(url);
         } else {//没有url则打开模态框查看该日程,只读,获取该日程信息，渲染到视图层
           this.getFormData(id);//获取表单数据
+          this.formDisabled_readOnly=true;//添加只读
           this.personalSchedule = true;
+          this.dialogName='查看';
         }
       },
       //获取该日程已有数据，渲染到表单视图层
@@ -354,10 +337,6 @@
             .then(res => {
               this.formData=res.data.event;
               this.timeRange=[res.data.event.start,res.data.event.end];
-              //let date = new Date();
-              //this.formData.timeRange=[new Date(date.getFullYear(), date.getMonth(), date.getDate(), 8, 0), new Date(date.getFullYear(), date.getMonth(), date.getDate(), 9, 0)];
-              // this.formData.timeRange=[new Date(res.data.event.start), new Date(res.data.event.end)];
-              console.log(this.formData);
             })
       },
       //切换展示的事件
