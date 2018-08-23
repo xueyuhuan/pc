@@ -96,7 +96,6 @@
             getService(){
                 this.$ajax.post(this.$url.collectionService)
                     .then(res => {
-                        console.log(res.data);
                         this.service = res.data.services;
                     })
             },
@@ -106,7 +105,6 @@
             getApp(){
                 this.$ajax.post(this.$url.collectionApp)
                     .then(res => {
-                        console.log(res.data);
                         this.app = res.data.apps;
                     })
             },
@@ -116,7 +114,6 @@
             getNews(){
                 this.$ajax.post(this.$url.collectionNews)
                     .then(res => {
-                        console.log(res.data);
                         this.news = res.data.result;
                     })
             },

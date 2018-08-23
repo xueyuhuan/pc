@@ -6,10 +6,10 @@ import router from "./router";
 import store from "./store";
 import axios from './axios';
 import url from './url';
-import ccnu from './ccnu';
-import hit from './hit';
-import hzau from './hzau';
-import nit from './nit';
+import ccnu from './school/ccnu';
+import hit from './school/hit';
+import hzau from './school/hzau';
+import nit from './school/nit';
 
 import 'element-ui/lib/theme-chalk/index.css';
 import 'font-awesome/css/font-awesome.css';

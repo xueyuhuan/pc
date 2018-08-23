@@ -98,7 +98,6 @@
             getNewsList(){
                 this.$ajax.post(this.$url.news_list,{page:this.page,columnId:this.id,dateIndex:this.date_index,key:this.input_value})
                     .then(res => {
-                        // console.log(res.data);
                         this.newsList_length = res.data.count;
                         this.newsList = res.data.news;
                     })
@@ -120,7 +119,6 @@
             get_rank(){
                 this.$ajax.post(this.$url.rank_news,{type:this.rank_date_value})
                     .then(res => {
-                        // console.log(res.data);
                        this.rank_news = res.data.news;
                     })
             },

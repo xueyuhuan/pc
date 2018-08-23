@@ -216,7 +216,6 @@
             },
             //我发起的-右侧明细
             getMyList() {
-                console.log(this.period);
                 let date1;
                 let date2;
                 let startDate = '';
@@ -226,8 +225,6 @@
                     date2 = new Date(this.period[1]);
                     startDate = date1.getFullYear() + '-' + (date1.getMonth() + 1) + '-' + date1.getDate();
                     endDate = date2.getFullYear() + '-' + (date2.getMonth() + 1) + '-' + date2.getDate();
-                    console.log(startDate);
-                    console.log(endDate);
                 }
                 this.$ajax.post(this.$url.query_myStarted, {
                     appId: this.sourceValue,
@@ -239,7 +236,6 @@
                     stateno:this.blStatusValue
                 })
                     .then(res => {
-                        console.log(res.data);
                         this.myList = res.data.data.rows;
                         this.page = res.data.data.page;
                         this.total = res.data.data.records;
@@ -261,7 +257,6 @@
                     taskid: taskid,
                 })
                     .then(res => {
-                        console.log(res.data);
                         this.linkDetail = res.data.progressList;
                         this.isShowLink = true;
                     })

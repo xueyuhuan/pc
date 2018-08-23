@@ -34,7 +34,7 @@
   import User from "./User";
   import Collect from "./Collect";
   import Application from "./Application";
-  import Jump from "../todo/Jump";
+  import Jump from "../icon/todo/Jump";
   export default {
     name: "Index",
     components: {Jump, Application, Collect, User, Service, News, Work},

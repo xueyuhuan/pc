@@ -196,6 +196,7 @@
             background-color: #F7F7F7;
             .modal_body{
                 @include flex(space-between,flex-start);
+                padding: 20px 30px;
             }
         }
     }

@@ -102,7 +102,6 @@
             getAll(){
                 this.$ajax.post(this.$url.query,{page:this.page || 1,limit:this.pageSize || 10})
                     .then(res => {
-                        console.log(res.data);
                         this.page = res.data.page.page;
                         this.pageSize = res.data.page.pageSize;
                         this.totalMsgNum = res.data.page.records;
@@ -113,7 +112,7 @@
             getMsgDetail(id,status){
                 this.$ajax.post(this.$url.msgDetail,{id:id})
                     .then(res => {
-                        if(res.data.errcode == '0'){
+                        if(res.data.errcode === '0'){
                             this.dialogVisible = true;
                             this.msgDetail = res.data.message;
                             if(status === '0'){

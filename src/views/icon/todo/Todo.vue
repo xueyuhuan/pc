@@ -61,7 +61,6 @@
             getTodoSource(){
                 this.$ajax.post(this.$url.getTodoResource)
                     .then(res => {
-                        console.log(res.data);
                         this.todomenu = res.data.apps;
                         let allLength = 0;
                         for(let i=0;i<this.todomenu.length;i++){
@@ -85,7 +84,6 @@
             },
             //切换待办来源
             switchTodoSource(id){
-                console.log(id);
                 this.todoSourceId = id;
             }
         },

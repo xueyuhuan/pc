@@ -137,13 +137,11 @@
             get_myDone_apps() {
                 this.$ajax.post(this.$url.get_myDone_apps)
                     .then(res => {
-                        console.log(res.data);
                         this.myDone_select_contain = res.data.apps;
                     })
             },
             //我的已办-右侧明细
             getDoneList() {
-                console.log(this.period);
                 let date1;
                 let date2;
                 let startDate = '';
@@ -153,8 +151,7 @@
                     date2 = new Date(this.period[1]);
                     startDate = date1.getFullYear() + '-' + (date1.getMonth() + 1) + '-' + date1.getDate();
                     endDate = date2.getFullYear() + '-' + (date2.getMonth() + 1) + '-' + date2.getDate();
-                    console.log(startDate);
-                    console.log(endDate);
+
                 }
                 this.$ajax.post(this.$url.query_done, {
                     appId: this.sourceValue,
@@ -165,7 +162,6 @@
                     limit: this.limit
                 })
                     .then(res => {
-                        console.log(res.data);
                         this.doneList = res.data.data.rows;
                         this.page = res.data.data.page;
                         this.total = res.data.data.records;

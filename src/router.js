@@ -2,28 +2,35 @@ import Vue from "vue";
 import Router from "vue-router";
 const index = () => import('./views/index/Index');
 const home = () => import('./views/home/Home');
+// 服务
 const service = () => import('./views/service/Service');
 const serviceSearch = () => import('./views/service/Search');
 const serviceSearchIcon = () => import('./views/service/SearchIcon');
 const serviceSearchList = () => import('./views/service/SearchList');
 const serviceDetail = () => import('./views/service/Detail');
 const serviceIframe = () => import('./views/service/serviceIframe');
+//应用和一卡通
 const application = () => import('./views/app/Application');
 const ecard = () => import('./views/app/Ecard');
+//资讯
 const news = () => import('./views/news/News');
 const newsDetail = () => import('./views/news/NewsDetail');
 const newsSub = () => import('./views/news/NewsSub');
+//日程
 const schedule = () => import('./views/schedule/Schedule');
 const scheduleSub = () => import('./views/schedule/MySub');
+//icon图标
 const feedback = () => import('./views/icon/feedback');
-const todo = () => import('./views/todo/Todo');
-const todo_create = () => import('./views/todo/Todo_create');
-const todo_done = () => import('./views/todo/Todo_done');
-const collections = () => import('./views/collections/Collections');
-const user = () => import("./views/user/Info");
-const userHead = () => import("./views/user/Head");
-const message = () => import('./views/message/message');
+const todo = () => import('./views/icon/todo/Todo');
+const todo_create = () => import('./views/icon/todo/Todo_create');
+const todo_done = () => import('./views/icon/todo/Todo_done');
+const collections = () => import('./views/icon/Collections');
+const message = () => import('./views/icon/message');
+const user = () => import("./views/icon/user/Info");
+const userHead = () => import("./views/icon/user/Head");
+//版本日志
 const log = () => import('./views/version/log');
+//其他
 const login = () => import('./views/Login');
 const loading = () =>import('./views/Loading');
 const noFound = () => import('./views/NoFound');

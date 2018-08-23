@@ -43,7 +43,6 @@
             getData(){
                 this.$ajax.post(this.$url.news_detail,{id:this.id})
                     .then(res => {
-                        console.log(res.data);
                         this.news_current = res.data.news.current;
                         this.news_next = res.data.news.next;
                         this.news_pre = res.data.news.prev;
@@ -53,7 +52,6 @@
             updateData(id){
                 this.$ajax.post(this.$url.news_detail,{id:id})
                     .then(res => {
-                        console.log(res.data);
                         this.news_current = res.data.news.current;
                         this.news_next = res.data.news.next;
                         this.news_pre = res.data.news.prev;

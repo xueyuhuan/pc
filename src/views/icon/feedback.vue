@@ -105,7 +105,6 @@
       see(detail){
         this.popupShow=true;
         this.detail=detail;
-        console.log(this.detail);
       },
       getList(){
         this.$ajax.post('/advice_portal/mylist',{page:this.page,limit:this.limit})
