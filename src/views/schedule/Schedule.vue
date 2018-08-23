@@ -38,7 +38,7 @@
                             </tr>
                             <tr v-for="item in calendars.days">
                                 <td v-for="i in item"
-                                    @dblclick="addSchedule('db')"
+                                    @dblclick="addSchedule"
                                     @click="chooseDay(i)"
                                     :class="{today : calendars.year === current_year && calendars.month === current_month && i.day === current_day , chooseDay : i.day === day}">
                                     <div v-if="i.day !== 0" class="num">{{i.day}}</div>
