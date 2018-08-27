@@ -3,6 +3,36 @@
         <subhead>
             <div><i class="fa fa-calendar icon"></i>日程 <span>Schedule</span></div>
         </subhead>
+        <calendar @click-event="handleClickDay" @month-change="handleMonth" @year-change="handleYear" :event-type="eventType" :event-month="eventMonth" ref="calendar">
+            <div class="top-right" slot="top-right">
+                <span @click="addSchedule"><i class="fa fa-calendar"></i>&nbsp;添加日程</span>
+                <span @click="qrDialog"><i class="fa fa-mobile"></i>&nbsp;手机订阅</span>
+                <span @click="subscribe"><i class="fa fa-plus-square-o"></i>&nbsp;订阅</span>
+            </div>
+            <div class="event-list" slot="event-list">
+                <el-collapse v-model="activeNames" @change="handleChange" v-if="eventDayLength>0">
+                    <el-collapse-item v-for="(i,index) in eventDay" v-if="i.events.length>0" :name="index">
+                        <div class="title" slot="title" :style="'border-top-color:'+i.color">{{i.name}}</div>
+                        <ul>
+                            <li v-for="j in i.events" @click="seeSchedule(j.url,j.id)">
+                                <div>
+                                    {{j.dtstart}}
+                                    <span v-if="!j.url" style="float: right;">
+                                        <i class="fa fa-pencil" @click.stop="editFormData(j.id)"></i>&nbsp;&nbsp;
+                                        <i class="fa fa-trash-o" @click.stop="showDeleteDialog(j.id)"></i>
+                                    </span>
+                                </div>
+                                <div>
+                                    <i class="fa fa-bookmark-o fa-fw"></i>&nbsp;{{j.title}}
+                                    <template v-if="j.location" style="margin-left: 5px;"><i class="fa fa-location-arrow"></i>&nbsp;{{j.location}}</template>
+                                </div>
+                            </li>
+                        </ul>
+                    </el-collapse-item>
+                </el-collapse>
+                <p v-else>暂无信息</p>
+            </div>
+        </calendar>
         <div class="content">
             <card>
                 <template slot="header">
@@ -141,7 +171,14 @@
     components: {Calendar},
     data() {
       return {
-        eventType: [],
+        activeNames: [0,1],
+        eventType: [],//事件类型
+        eventDay:[],//日事件
+        eventDayLength:0,//日事件件数
+        eventMonth:[],//月事件
+        today:{},//今天
+        choose:{},//选中天
+
         year: "",//左上角显示的年月，传参拿日程数据
         month: "",
         choose_year:"",//选中的年月日
@@ -198,12 +235,66 @@
         }
       }
     },
+    created() {
+      this.getEventType();//事件类型
+      this.today=this.getDate(new Date());
+      this.getEventDay(this.today);//日事件
+      this.getEventMonth(this.today);//月事件
+
+      this.initDate();
+      this.getCalendar();
+      this.getDayEvent();
+    },
     methods: {
+      //监听折叠
+      handleChange(val) {
+        console.log(val);
+      },
+      //监听点击日事件
+      handleClickDay(date){
+        this.choose=date;
+        this.getEventDay(date);
+      },
+      //监听月改变
+      handleMonth(date){
+        this.getEventMonth(date);
+      },
+      //监听年改变
+      handleYear(date){
+        this.getEventMonth(date);
+      },
+      //从date获取年月日
+      getDate (date) {
+        return {
+          year: date.getFullYear(),
+          month: date.getMonth()+1,
+          day: date.getDate()
+        }
+      },
       //获取事件类型
       getEventType() {
-        this.$ajax.post(this.$url.getCalendarObjs)
+        this.$ajax.post(this.$url.scheduleEventType)
             .then(res => {
               this.eventType = res.data.cals;
+            })
+      },
+      //获取日事件
+      getEventDay(date){
+        this.$ajax.post(this.$url.scheduleEventDay,date)
+            .then(res => {
+              this.eventDay = res.data.calObjs;
+              this.eventDayLength=0;
+              for(let i in this.eventDay){
+                this.eventDayLength+=this.eventDay[i].events.length;
+              }
+              console.log(this.eventDayLength);
+            })
+      },
+      //获取月事件
+      getEventMonth(date){
+        this.$ajax.post(this.$url.scheduleEventMonth,date)
+            .then(res => {
+              this.eventMonth=res.data.days;
             })
       },
       //初始化年月日
@@ -400,16 +491,40 @@
         this.formData.id = "";
       }
     },
-    created() {
-      this.getEventType();
-      this.initDate();
-      this.getCalendar();
-      this.getDayEvent();
-    }
+
   }
 </script>
 
 <style scoped lang="scss">
+    .top-right{
+        font-size: 14px;
+        font-weight: 500;
+        color: #000;
+        span{
+            cursor: pointer;
+            i{
+                color: #959595;
+                margin: 0 5px 0 20px;
+            }
+        }
+    }
+    .event-list{
+        .el-collapse{
+            border-top: none;
+        }
+        .el-collapse-item__content{
+            padding-bottom: 0!important;
+        }
+        .title{
+            border-top: 3px solid;
+            margin-top: 20px;
+        }
+        ul{
+            li{
+                margin-bottom: 10px;
+            }
+        }
+    }
     .content {
         padding: 0 0 15px 0;
         margin: auto;
