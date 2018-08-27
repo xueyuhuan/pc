@@ -33,83 +33,83 @@
                 <p v-else>暂无信息</p>
             </div>
         </calendar>
-        <div class="content">
-            <card>
-                <template slot="header">
-                    <div style="width: 758px;">
-                        <div class="head_left">
-                            <i class="fa fa-chevron-left" @click="prevMonth"></i>
-                            <span>{{year}}年{{month}}月</span>
-                            <i class="fa fa-chevron-right" @click="nextMonth"></i>
-                        </div>
-                        <div class="head_mid">
-                            <div class="eventType" v-for="item in eventType">
-                                <span :style="`background-color:${item.color};`"></span>&nbsp;{{item.name}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="head_right">
-                        <span @click="addSchedule"><i class="fa fa-calendar"></i>&nbsp;添加日程</span>
-                        <span @click="qrDialog"><i class="fa fa-mobile"></i>&nbsp;手机订阅</span>
-                        <span @click="subscribe"><i class="fa fa-plus-square-o"></i>&nbsp;订阅</span>
-                    </div>
-                </template>
-                <div class="body">
-                    <div class="body_left">
-                        <table border="1" cellpadding="0" cellspacing="0" bordercolor="#e4e4e4">
-                            <tr>
-                                <th style="color: #959595;"> 周日</th>
-                                <th>周一</th>
-                                <th>周二</th>
-                                <th>周三</th>
-                                <th>周四</th>
-                                <th>周五</th>
-                                <th style="color: #959595;">周六</th>
-                            </tr>
-                            <tr v-for="item in calendars.days">
-                                <td v-for="i in item"
-                                    @dblclick="addSchedule"
-                                    @click="chooseDay(i)"
-                                    :class="{today : calendars.year === current_year && calendars.month === current_month && i.day === current_day , chooseDay : i.day === day}">
-                                    <div v-if="i.day !== 0" class="num">{{i.day}}</div>
-                                    <div class="dot"><span :style="'background-color:' + b.color + ';'"
-                                                           v-for="b in i.objList"></span></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="body_right">
-                        <div v-for="(item,index) in date_events" v-if="item.events.length > 0"
-                             :style="'border-top: 3px solid' + item.color + ';'" class="board">
-                            <div class="board_head">
-                                <span>{{item.name}}</span>
-                                <i @click="toggleIndex(index)"
-                                   :class="{'fa fa-chevron-up':toggle_index === index || toggle_index === -1,'fa fa-chevron-down' : toggle_index !== index && toggle_index !== -1}"></i>
-                            </div>
-                            <div v-show="toggle_index === index || toggle_index === -1" v-for="i in item.events"
-                                 class="board_body">
-                                <div @click="seeSchedule(i.url,i.id)" class="board_body_block">
-                                    <div class="block_time">{{i.dtstart}}
-                                        <span v-if="!i.url" style="float: right;">
-                                            <i class="fa fa-pencil" @click.stop="editFormData(i.id)"></i>&nbsp;&nbsp;
-                                            <i class="fa fa-trash-o" @click.stop="showDeleteDialog(i.id)"></i>
-                                        </span>
-                                    </div>
-                                    <div class="block_content">
-                                        <i class="fa fa-bookmark-o fa-fw"></i>&nbsp;{{i.title}}
-                                        <span v-if="i.location" style="margin-left: 5px;">
-                                            <i class="fa fa-location-arrow"></i>&nbsp;{{i.location}}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="noData" v-show="item.events.length === 0">暂无信息</div>
-                        </div>
-                        <div v-if="showNoData" style="color: #000;font-size: 14px;">暂无数据</div>
-                    </div>
-                </div>
-            </card>
-        </div>
+        <!--<div class="content">-->
+            <!--<card>-->
+                <!--<template slot="header">-->
+                    <!--<div style="width: 758px;">-->
+                        <!--<div class="head_left">-->
+                            <!--<i class="fa fa-chevron-left" @click="prevMonth"></i>-->
+                            <!--<span>{{year}}年{{month}}月</span>-->
+                            <!--<i class="fa fa-chevron-right" @click="nextMonth"></i>-->
+                        <!--</div>-->
+                        <!--<div class="head_mid">-->
+                            <!--<div class="eventType" v-for="item in eventType">-->
+                                <!--<span :style="`background-color:${item.color};`"></span>&nbsp;{{item.name}}-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="head_right">-->
+                        <!--<span @click="addSchedule"><i class="fa fa-calendar"></i>&nbsp;添加日程</span>-->
+                        <!--<span @click="qrDialog"><i class="fa fa-mobile"></i>&nbsp;手机订阅</span>-->
+                        <!--<span @click="subscribe"><i class="fa fa-plus-square-o"></i>&nbsp;订阅</span>-->
+                    <!--</div>-->
+                <!--</template>-->
+                <!--<div class="body">-->
+                    <!--<div class="body_left">-->
+                        <!--<table border="1" cellpadding="0" cellspacing="0" bordercolor="#e4e4e4">-->
+                            <!--<tr>-->
+                                <!--<th style="color: #959595;"> 周日</th>-->
+                                <!--<th>周一</th>-->
+                                <!--<th>周二</th>-->
+                                <!--<th>周三</th>-->
+                                <!--<th>周四</th>-->
+                                <!--<th>周五</th>-->
+                                <!--<th style="color: #959595;">周六</th>-->
+                            <!--</tr>-->
+                            <!--<tr v-for="item in calendars.days">-->
+                                <!--<td v-for="i in item"-->
+                                    <!--@dblclick="addSchedule"-->
+                                    <!--@click="chooseDay(i)"-->
+                                    <!--:class="{today : calendars.year === current_year && calendars.month === current_month && i.day === current_day , chooseDay : i.day === day}">-->
+                                    <!--<div v-if="i.day !== 0" class="num">{{i.day}}</div>-->
+                                    <!--<div class="dot"><span :style="'background-color:' + b.color + ';'"-->
+                                                           <!--v-for="b in i.objList"></span></div>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                        <!--</table>-->
+                    <!--</div>-->
+                    <!--<div class="body_right">-->
+                        <!--<div v-for="(item,index) in date_events" v-if="item.events.length > 0"-->
+                             <!--:style="'border-top: 3px solid' + item.color + ';'" class="board">-->
+                            <!--<div class="board_head">-->
+                                <!--<span>{{item.name}}</span>-->
+                                <!--<i @click="toggleIndex(index)"-->
+                                   <!--:class="{'fa fa-chevron-up':toggle_index === index || toggle_index === -1,'fa fa-chevron-down' : toggle_index !== index && toggle_index !== -1}"></i>-->
+                            <!--</div>-->
+                            <!--<div v-show="toggle_index === index || toggle_index === -1" v-for="i in item.events"-->
+                                 <!--class="board_body">-->
+                                <!--<div @click="seeSchedule(i.url,i.id)" class="board_body_block">-->
+                                    <!--<div class="block_time">{{i.dtstart}}-->
+                                        <!--<span v-if="!i.url" style="float: right;">-->
+                                            <!--<i class="fa fa-pencil" @click.stop="editFormData(i.id)"></i>&nbsp;&nbsp;-->
+                                            <!--<i class="fa fa-trash-o" @click.stop="showDeleteDialog(i.id)"></i>-->
+                                        <!--</span>-->
+                                    <!--</div>-->
+                                    <!--<div class="block_content">-->
+                                        <!--<i class="fa fa-bookmark-o fa-fw"></i>&nbsp;{{i.title}}-->
+                                        <!--<span v-if="i.location" style="margin-left: 5px;">-->
+                                            <!--<i class="fa fa-location-arrow"></i>&nbsp;{{i.location}}-->
+                                        <!--</span>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="noData" v-show="item.events.length === 0">暂无信息</div>-->
+                        <!--</div>-->
+                        <!--<div v-if="showNoData" style="color: #000;font-size: 14px;">暂无数据</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</card>-->
+        <!--</div>-->
         <!--弹窗-->
         <el-dialog :visible="personalSchedule" width="900px" @close="personalSchedule=false">
             <h3 slot="title" class="dialog_h3">{{dialogName}}日程</h3>
