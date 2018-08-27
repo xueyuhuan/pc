@@ -59,7 +59,7 @@
 </template>
 
 <script>
-  import Jump from "../todo/Jump";
+  import Jump from "../icon/todo/Jump";
   export default {
     name: "Work",
     components: {Jump},
