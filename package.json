@@ -14,12 +14,13 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.0.0",
     "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
     "echarts": "^4.1.0",
     "element-ui": "^2.4.2",
     "font-awesome": "^4.7.0",
     "vue": "^2.5.16",
-    "vue-auto-storage": "^1.8.0",
     "vue-cropper": "^0.2.9",
     "vue-router": "^3.0.1",
     "vuedraggable": "^2.16.0",
