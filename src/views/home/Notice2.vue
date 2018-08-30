@@ -2,7 +2,7 @@
     <CardTemp>
         <header class="drag" slot="header">通知公告</header>
         <ul>
-            <li v-for="i in data">
+            <li v-for="(i,index) in data" v-if="index<7">
                 <a :href="i.url" target="_blank"><p>{{i.title}}</p><time>{{i.publishDate}}</time></a>
             </li>
             <li class="no" v-if="data.length===0">暂无数据</li>

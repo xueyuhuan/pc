@@ -160,7 +160,7 @@
           getTodo(){
             return this.$ajax.post(this.$url.homeTodo)
                 .then(res=>{
-                  this.todoCount=res.data.todoList.length;
+                  this.todoCount=res.data.data.length;
                   this.$store.commit('set_data',{
                     data:res.data.todoList,
                     name:'todo'

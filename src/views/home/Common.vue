@@ -1,20 +1,17 @@
 <template>
     <CardTemp>
-        <header class="drag" slot="header">校内通知
+        <header class="drag" slot="header">新增模块
             <a href="http://fw.ccnu.edu.cn/notice/notify/notifyList" target="_blank"><i class="fa fa-ellipsis-h"></i></a>
         </header>
         <ul>
-            <li v-for="(i,index) in data" v-if="index<7">
-                <a :href="i.url" target="_blank"><p>{{i.title}}</p><time>{{i.when_created}}</time></a>
-            </li>
-            <li class="no" v-if="data.length===0">暂无数据</li>
+            <li>暂无数据</li>
         </ul>
     </CardTemp>
 </template>
 
 <script>
   export default {
-    name: "Notice",
+    name: "Common",
     computed:{
       data(){
         return this.$store.state.notice;

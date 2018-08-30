@@ -3,11 +3,11 @@
     <subhead>
       {{$store.state.user.name}}，欢迎回来!
       <div class="right">
-        <a href="http://one.ccnu.edu.cn/help" target="_blank"><i class="fa fa-question-circle-o"></i>&nbsp;帮助</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a v-if="$school.school==='ccnu'" href="http://one.ccnu.edu.cn/help" target="_blank"><i class="fa fa-question-circle-o"></i>&nbsp;帮助</a>&nbsp;&nbsp;&nbsp;&nbsp;
         <button @click="popup"><i class="fa fa-cog"></i>&nbsp;工作台设置</button>
       </div>
     </subhead>
-    <div class="banner" v-if="bannerShow">
+    <div class="banner" v-if="bannerShow&&banner>0">
       <img class="close" @click="closeBanner" src="/img/banner-close.png"/>
       <el-carousel trigger="click" height="300px">
         <el-carousel-item v-for="i in banner" >
@@ -50,6 +50,7 @@ export default {
     'User': () => import('./User'),
     'Pay': () => import('./Pay'),
     'Ranking': () => import('./Ranking'),
+    'Common': () => import('./Common'),
   },
   data(){
     return{
@@ -144,17 +145,17 @@ export default {
       this.$ajax.post(this.$url.homePage)
           .then(res=>{
             this.$store.commit('set_data',{
-              data:res.data.pages[0],
+              data:res.data.page,
               name:'home'
             });
-            this.home=res.data.pages[0];
+            this.home=res.data.page;
             this.A=this.home.columnWidgets.A;
             for(let i=0;i<this.A.length;i++){
-              this.A[i].componentName=this.transform(this.A[i].NAME);
+              this.A[i].componentName=this.transform(this.A[i].name);
             }
             this.B=this.home.columnWidgets.B;
             for(let i=0;i<this.B.length;i++){
-              this.B[i].componentName=this.transform(this.B[i].NAME);
+              this.B[i].componentName=this.transform(this.B[i].name);
             }
           });
     },
@@ -171,16 +172,17 @@ export default {
         case '通知公告':x='notice2';break;
         case '学校公文':x='file';break;
         case '我的待办':x='todo';break;
+        default: x='Common';
       }
       return x;
     },
     getBanner(){//获取banner
       this.$ajax.post(this.$url.homeBanner,{id: "dashboard"})
           .then(res=>{
-            for(let i=0;i<res.data.space.banners.length;i++){
+            for(let i=0;i<res.data.banners.length;i++){
               this.banner.push({
-                img:this.$proxy+res.data.imgUrl+res.data.space.banners[i].url,
-                url:res.data.space.banners[i].link
+                img:this.$proxy+res.data.imgUrl+res.data.banners[i].url,
+                url:res.data.banners[i].link
               });
             }
           });
@@ -192,7 +194,7 @@ export default {
       return this.$ajax.post(this.$url.homeApp)
           .then(res=>{
             this.$store.commit('set_data',{
-              data:res.data.apps,
+              data:res.data.data,
               name:'app'
             })
           });
@@ -201,7 +203,7 @@ export default {
       return this.$ajax.post(this.$url.homeFile)
           .then(res=>{
             this.$store.commit('set_data',{
-              data:res.data.gongwenList.slice(0,7),
+              data:res.data.data,
               name:'file'
             })
           });
@@ -210,7 +212,7 @@ export default {
       return this.$ajax.post(this.$url.homeNotice)
           .then(res=>{
             this.$store.commit('set_data',{
-              data:res.data.xntzList.slice(0,7),
+              data:res.data.data,
               name:'notice'
             })
           });
@@ -219,7 +221,7 @@ export default {
       return this.$ajax.post(this.$url.homeNotice2,{columnId:"058ac10ab4684d6aaec045196c09a9b7"})
           .then(res=>{
             this.$store.commit('set_data',{
-              data:res.data.news.slice(0,7),
+              data:res.data.data.data,
               name:'notice2'
             })
           });
@@ -237,7 +239,7 @@ export default {
       return this.$ajax.post(this.$url.homeServiceRank,{type:this.type})
           .then(res=>{
             this.$store.commit('set_data',{
-              data:res.data.services,
+              data:res.data.data,
               name:'ranking'
             })
           });
@@ -280,7 +282,7 @@ export default {
   .drag-list>span{
     display: inline-block;
     width: 595px;
-    min-height: 50px;
+    min-height: 100px;
   }
   .home{
     .card:hover{

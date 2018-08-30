@@ -2,7 +2,7 @@
     <div class="service">
         <subhead>
             <div class="left">
-                <i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;服务中心&nbsp;<span>Service&nbsp;Center</span>
+                <i class="fa fa-list icon"></i>服务中心 <span>Service Center</span>
             </div>
             <SubheadInput>
                 <input slot="input" v-model="key" placeholder="服务搜索"/><router-link to="/service/search/icon"><button><i class="fa fa-search"></i></button></router-link>
@@ -104,7 +104,9 @@
       this.getRecommend();
       this.$ajax.post(this.$url.serviceDeadline)
           .then(res=>{
-            this.list.deadline=res.data.services;
+            if (res.data.services) {
+              this.list.deadline=res.data.services;
+            }
           })
           .then(()=>{
             if(this.list.deadline.length>3){

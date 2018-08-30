@@ -64,10 +64,6 @@
             <button class="_theme _theme_border" @click="save">确定</button><button @click="close">取消</button>
         </div>
     </el-dialog>
-    <!--<div class="popup" v-if="popupShow">-->
-        <!--<div class="content">-->
-        <!--</div>-->
-    <!--</div>-->
 </template>
 
 <script>
@@ -283,9 +279,9 @@
       getHasPage(){
         this.$ajax.post(this.url.has)
             .then(res=>{
-              this.pageId=res.data.pages[0].id;
-              this.listHasA=res.data.pages[0].columnWidgets.A;
-              this.listHasB=res.data.pages[0].columnWidgets.B;
+              this.pageId=res.data.page.id;
+              this.listHasA=res.data.page.columnWidgets.A;
+              this.listHasB=res.data.page.columnWidgets.B;
             })
       },
     }

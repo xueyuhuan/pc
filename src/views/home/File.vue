@@ -5,7 +5,7 @@
             <a href="http://oa.ccnu.edu.cn/seeyon/caslogin.jsp?type=newBulletin" target="_blank"><i class="fa fa-ellipsis-h"></i></a>
         </header>
         <ul>
-            <li v-for="i in data">
+            <li v-for="(i,index) in data" v-if="index<7">
                 <a href="'http://oa.ccnu.edu.cn/seeyon/caslogin.jsp?type='+i.url" target="_blank"><p>[{{i.type}}]{{i.title}}</p><time>{{i.createDate}}</time></a>
             </li>
             <li class="no" v-if="data.length===0">暂无数据</li>

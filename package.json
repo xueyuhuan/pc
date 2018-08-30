@@ -10,6 +10,7 @@
     "build": "vue-cli-service build",
     "build-ccnu": "vue-cli-service build --mode bccnu",
     "build-hit": "vue-cli-service build --mode bhit",
+    "build-nit": "vue-cli-service build --mode bnit",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },

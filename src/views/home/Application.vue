@@ -6,7 +6,7 @@
                 <router-link to="/app"><i class="fa fa-ellipsis-h"></i></router-link>
             </div>
         </header>
-        <ul class="noDrag">
+        <ul>
             <li v-for="i in data">
                 <a :href="i.url" target="_blank"><img :src="$proxy+imgPath+i.id"/>{{i.name}}</a>
             </li>

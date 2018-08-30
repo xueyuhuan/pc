@@ -5,7 +5,7 @@
         </header>
         <ul>
             <li v-for="i in userModule" class="border_bottom1">
-                <template v-if="i.id==='email' && $school.school==='ccnu'">
+                <template v-if="i.id==='email'">
                     <a>
                         <img src="/img/email.png"/>
                         <div class="right">
@@ -22,7 +22,7 @@
                         </div>
                     </a>
                 </template>
-                <template v-if="i.id==='ecard' && $school.school==='ccnu'">
+                <template v-if="i.id==='ecard'">
                     <a>
                         <img src="/img/school_card.png"/>
                         <div class="right">
@@ -39,7 +39,7 @@
                         </div>
                     </a>
                 </template>
-                <template v-if="i.id==='tsg' && $school.school==='ccnu'">
+                <template v-if="i.id==='tsg'">
                     <a>
                         <img src="/img/book.png"/>
                         <div class="right">
@@ -55,7 +55,7 @@
                         </div>
                     </a>
                 </template>
-                <template v-if="i.id==='network' && $school.school==='ccnu'">
+                <template v-if="i.id==='network'">
                     <a>
                         <img src="/img/school_card.png"/>
                         <div class="right">

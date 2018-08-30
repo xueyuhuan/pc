@@ -4,11 +4,11 @@
             <div class="top">
                 <div class="left">
                     <div class="year">
-                        <i @click="prevYear">«</i>
-                        <i @click="prevMonth">‹</i>
+                        <i class="fa fa-angle-double-left" @click="prevYear"></i>
+                        <i class="fa fa-angle-left" @click="prevMonth"></i>
                         <span>{{nowDate.year}}年{{nowDate.month+1}}月</span>
-                        <i @click="nextMonth">›</i>
-                        <i @click="nextYear">»</i>
+                        <i class="fa fa-angle-right" @click="nextMonth"></i>
+                        <i class="fa fa-angle-double-right" @click="nextYear"></i>
                     </div>
                     <ul v-if="eventType.length>0">
                         <li v-for="i in eventType"><i :style="`background:${i.color};`"></i>{{i.name}}</li>
@@ -26,7 +26,10 @@
                 </ul>
                 <ul class="date">
                     <li class="no" v-for="day in lastMonthDays" :key="lastMonthStartDay+day-1"> </li>
-                    <li @click="clickEvent" v-for="day in nowMonthDays">{{day}}<div><span v-for="i in eventMonth" v-if="i.data===day"><i :style="`background:${i.colour};`"></i></span></div></li>
+                    <li @click="clickEvent" @dblclick="dbClickEvent" v-for="day in nowMonthDays"
+                        :class="{choose:day===choose.day&&(nowDate.month+1)===choose.month&&nowDate.year===choose.year,today:day===today.day&&(nowDate.month+1)===today.month&&nowDate.year===today.year}">
+                        {{day}}<div><span v-for="i in eventMonth" v-if="i.data===day"><i :style="`background:${i.colour};`"></i></span></div>
+                    </li>
                     <li class="no" v-for="day in (lastMonthDays+nowMonthDays>35)?(42-lastMonthDays-nowMonthDays):(35-lastMonthDays-nowMonthDays)" :key="day"> </li>
                 </ul>
             </div>
@@ -43,10 +46,16 @@
     props: {
       eventType:Array,//事件类型列表
       eventMonth:Array,
+      today:{},
     },
     data () {
       return {
         nowDate: this.getDate(new Date()), //当前设置时间 默认为当前系统时间
+        choose:{
+          year:0,
+          month:0,
+          day:0
+        },
       }
     },
     computed: {
@@ -124,7 +133,7 @@
         }else {
           this.nowDate.month --
         }
-        this.$emit('month-change',{year:this.nowDate.year,month:this.nowDate.month+1});
+        this.$emit('year-month-change',{year:this.nowDate.year,month:this.nowDate.month+1});
       },
       //下月
       nextMonth () {
@@ -134,17 +143,17 @@
         }else {
           this.nowDate.month ++
         }
-        this.$emit('month-change',{year:this.nowDate.year,month:this.nowDate.month+1});
+        this.$emit('year-month-change',{year:this.nowDate.year,month:this.nowDate.month+1});
       },
       //去年
       prevYear () {
         this.nowDate.year --;
-        this.$emit('year-change',{year:this.nowDate.year,month:this.nowDate.month+1});
+        this.$emit('year-month-change',{year:this.nowDate.year,month:this.nowDate.month+1});
       },
       //下一年
       nextYear () {
         this.nowDate.year ++;
-        this.$emit('year-change',{year:this.nowDate.year,month:this.nowDate.month+1});
+        this.$emit('year-month-change',{year:this.nowDate.year,month:this.nowDate.month+1});
       },
       //计算当月开始星期
       startWeek () {
@@ -154,14 +163,17 @@
       clickEvent (e) {
         let monthNo = this.nowDate.month;
         let month = monthNo<=11?(monthNo+1):0;
-        let date = {
+        this.choose = {
           year:this.nowDate.year,
           month:month,
-          week: new Date(this.nowDate.year,this.nowDate.month,e.target.innerText).getDay(),
+          // week: new Date(this.nowDate.year,this.nowDate.month,e.target.innerText).getDay(),
           day:Number(e.target.innerText)
         };
-        this.$emit('click-event',date);
-      }
+        this.$emit('click-event',this.choose);
+      },
+      dbClickEvent () {
+        this.$emit('db-click-event',this.choose);
+      },
     }
   }
 </script>
@@ -210,6 +222,8 @@
                     flex-flow: wrap;
                     width: 100%;
                     li{
+                        &.choose{background: #bfbfbf}
+                        &.today{background: #eee}
                         @include flex(space-between,flex-start);
                         flex-flow: column;
                         flex: 0 0 108px;
@@ -217,6 +231,7 @@
                         padding: 10px;
                         border-right: 1px solid #e4e4e4;
                         border-bottom: 1px solid #e4e4e4;
+                        cursor: pointer;
                         div{
                             align-self: flex-end;
                             span{

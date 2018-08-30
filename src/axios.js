@@ -43,14 +43,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     res => {
       loading.close();
-      // if(res.data.errcode !== '0'){//非正常
-      //     if(res.data.errmsg){
-      //       Vue.prototype.$notify({
-      //         type:'info',
-      //         message:res.data.errmsg
-      //       });
-      //     }
-      //   }
+      if(res.data.errcode === '500') Vue.prototype.$notify.error(res.data.errmsg);
       return res;
     },
     err => {
@@ -60,8 +53,8 @@ instance.interceptors.response.use(
           case 403:
             router.replace({
               path: '/loading',
-              //query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
-            })
+              query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
+            });
         }
       }
       return Promise.reject(err)
