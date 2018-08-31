@@ -18,12 +18,12 @@
     <div class="main">
       <draggable class="drag-list" v-model="A" :options="dragOptions" @end="end">
         <transition-group>
-            <component :is="i.componentName" v-for="(i,index) in A" :key="index"></component>
+            <component :is="i.type" v-for="(i,index) in A" :id=i.id :key="index"></component>
         </transition-group>
       </draggable>
       <draggable class="drag-list" v-model="B" :options="dragOptions" @end="end">
         <transition-group>
-          <component :is="i.componentName" v-for="(i,index) in B" :key="index"></component>
+          <component :is="i.type" v-for="(i,index) in B" :id=i.id :key="index"></component>
         </transition-group>
       </draggable>
     </div>
@@ -50,7 +50,7 @@ export default {
     'User': () => import('./User'),
     'Pay': () => import('./Pay'),
     'Ranking': () => import('./Ranking'),
-    'Common': () => import('./Common'),
+    'newslist': () => import('./newslist'),
   },
   data(){
     return{
@@ -101,18 +101,19 @@ export default {
   created(){
     this.getBanner();
     this.getHome();
-    axios.all([
-      this.getApp(),
-      this.getFile(),
-      this.getNotice(),
-      this.getNotice2(),
-      this.getPay(),
-      this.getRanking(),
-      this.getSchedule(),
-      this.getService(),
-      // this.getTodo(),
-      this.getUserModule(),
-    ]);
+    // axios.all([
+    //   this.getApp(),
+    //   this.getFile(),
+    //   this.getNotice(),
+    //   this.getNotice2(),
+    //   this.getPay(),
+    //   this.getRanking(),
+    //   this.getSchedule(),
+    //   this.getService(),
+    //   // this.getTodo(),
+    //   this.getUserModule(),
+    // ]);
+
     if(localStorage.bannerShow==='false'){
       this.bannerShow=false;
     }
@@ -144,20 +145,29 @@ export default {
     getHome(){//获取页面布局
       this.$ajax.post(this.$url.homePage)
           .then(res=>{
-            this.$store.commit('set_data',{
-              data:res.data.page,
-              name:'home'
-            });
             this.home=res.data.page;
             this.A=this.home.columnWidgets.A;
             for(let i=0;i<this.A.length;i++){
-              this.A[i].componentName=this.transform(this.A[i].name);
+              this.getComponentData(this.A[i].url,this.A[i].params,this.A[i].id,this.A[i].name,this.A[i].moreLink);
+
             }
             this.B=this.home.columnWidgets.B;
             for(let i=0;i<this.B.length;i++){
-              this.B[i].componentName=this.transform(this.B[i].name);
+              this.getComponentData(this.B[i].url,this.B[i].params,this.B[i].id,this.B[i].name,this.B[i].moreLink);
             }
           });
+    },
+    getComponentData(url,param,id,name,moreLink){
+      if(param!=='') param=JSON.parse(param);
+      this.$ajax.post(url,param)
+          .then(res=>{
+            this.$store.commit('setComponentData',{
+              id:id,
+              name:name,
+              moreLink:moreLink,
+              data:res.data.data
+            })
+          })
     },
     transform(name){//根据名字转换组件
       let x;
@@ -190,6 +200,7 @@ export default {
     /**
     每个组件数据获取
      **/
+
     getApp(){
       return this.$ajax.post(this.$url.homeApp)
           .then(res=>{

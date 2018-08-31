@@ -12,6 +12,7 @@ export default new Vuex.Store({
     homeChange:0,
     homeA:[],
     homeB:[],
+    componentData:{},
     app:[],//应用布局
     file:[],
     notice:[],
@@ -42,6 +43,11 @@ export default new Vuex.Store({
     jumpName:''//跳转的名字
   },
   mutations: {
+    //设置工作台组件数据
+    setComponentData(state,data){
+      Vue.set(state.componentData,data.id,data);
+      // state.componentData[data.id]=data;
+    },
     set_token(state,token){
       state.token=token;
       sessionStorage.token=token;
