@@ -101,18 +101,18 @@ export default {
   created(){
     this.getBanner();
     this.getHome();
-    // axios.all([
-    //   this.getApp(),
-    //   this.getFile(),
-    //   this.getNotice(),
-    //   this.getNotice2(),
-    //   this.getPay(),
-    //   this.getRanking(),
-    //   this.getSchedule(),
-    //   this.getService(),
-    //   // this.getTodo(),
-    //   this.getUserModule(),
-    // ]);
+    axios.all([
+      this.getApp(),
+      this.getFile(),
+      // this.getNotice(),
+      // this.getNotice2(),
+      this.getPay(),
+      this.getRanking(),
+      this.getSchedule(),
+      this.getService(),
+      // this.getTodo(),
+      this.getUserModule(),
+    ]);
 
     if(localStorage.bannerShow==='false'){
       this.bannerShow=false;
