@@ -79,6 +79,9 @@
 <script>
     export default {
       name: "User",
+      props:{
+        id:''
+      },
       data(){
         return{
           showEcard:false,

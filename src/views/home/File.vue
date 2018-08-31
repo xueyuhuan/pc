@@ -16,6 +16,9 @@
 <script>
   export default {
     name: "File",
+    props:{
+      id:''
+    },
     computed:{
       data(){
         return this.$store.state.file;

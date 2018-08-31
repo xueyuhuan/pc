@@ -22,6 +22,9 @@
 <script>
   export default {
     name: "Schedule",
+    props:{
+      id:''
+    },
     computed:{
       data(){
         return this.$store.state.schedule;

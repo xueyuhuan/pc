@@ -19,6 +19,9 @@
 <script>
   export default {
     name: "Ranking",
+    props:{
+      id:''
+    },
     data(){
       return{
         imgPath:"/resource/service?id="

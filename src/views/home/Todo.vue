@@ -16,6 +16,9 @@
 <script>
   export default {
     name: "Todo",
+    props:{
+      id:''
+    },
     computed:{
       data(){
         return this.$store.state.todo;

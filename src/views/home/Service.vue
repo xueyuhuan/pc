@@ -18,6 +18,9 @@
 <script>
   export default {
     name: "Service",
+    props:{
+      id:''
+    },
     data(){
       return{
         imgPath:"/resource/service?id="

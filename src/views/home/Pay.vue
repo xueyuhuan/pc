@@ -27,11 +27,9 @@
   import 'echarts/lib/component/legendScroll'
   export default {
     name: "Pay",
-    // watch:{
-    //   data(){
-    //     this.drawPie();
-    //   }
-    // },
+    props:{
+      id:''
+    },
     computed:{
       data(){
         return this.$store.state.pay;
