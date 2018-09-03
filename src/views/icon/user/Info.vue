@@ -76,19 +76,25 @@
     },
     methods:{
       delEmail(){
-        this.$ajax.post('/email_portal/unbindEmail')
-            .then(res=>{
-              if(res.data.errcode==='0'){
-                this.$notify.success('解绑成功');
-                this.email='';
-                this.type='';
-                this.password='';
-                this.$ajax.post(this.$url.getUser)
-                    .then(res => {
-                      this.$store.commit('set_user', res.data.user);
-                    });
-              }
-            })
+        this.$confirm('确认解绑吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$ajax.post('/email_portal/unbindEmail')
+              .then(res=>{
+                if(res.data.errcode==='0'){
+                  this.$notify.success('解绑成功');
+                  this.email='';
+                  this.type='';
+                  this.password='';
+                  this.$ajax.post(this.$url.getUser)
+                      .then(res => {
+                        this.$store.commit('set_user', res.data.user);
+                      });
+                }
+              })
+        }).catch(()=>{})
       },
       addEmail(){
         if(this.email===''){
@@ -117,18 +123,24 @@
         }
       },
       delCard(){
-        this.$ajax.post('/ecard_portal/unbindCard')
-            .then(res=>{
-              if(res.data.errcode==='0'){
-                this.$notify.success('解绑成功');
-                this.cardNo='';
-                this.cardPassword='';
-                this.$ajax.post(this.$url.getUser)
-                    .then(res => {
-                      this.$store.commit('set_user', res.data.user);
-                    });
-              }
-            })
+        this.$confirm('确认解绑吗？','提示',{
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(()=>{
+          this.$ajax.post('/ecard_portal/unbindCard')
+              .then(res=>{
+                if(res.data.errcode==='0'){
+                  this.$notify.success('解绑成功');
+                  this.cardNo='';
+                  this.cardPassword='';
+                  this.$ajax.post(this.$url.getUser)
+                      .then(res => {
+                        this.$store.commit('set_user', res.data.user);
+                      });
+                }
+              })
+        }).catch(()=>{})
       },
       addEcard(){
         if(this.cardNo===''){
