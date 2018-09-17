@@ -1,6 +1,77 @@
 /*
 *全局公用样式*
 */
+//应用点击文字和消息查看弹窗
+.enterApp{
+  .el-dialog{
+    width: 900px;
+    @media only screen and (max-width:767px) {
+      width: 95%;
+    }
+    header{
+      @include flex(space-between);
+      flex-flow: wrap;
+      padding: 25px 30px;
+      border-bottom: 1px solid #e5e5e5;
+      .left{
+        @include flex();
+        img{
+          width: 80px;
+          margin-right: 20px;
+          @media only screen and (max-width:767px) {
+            width: 55px;
+          }
+        }
+        .text{
+          h4{
+            font-size: 16px;
+            margin: 0 0 10px 0;
+            i{
+              color:#fad733;
+              margin: 0 5px;
+              cursor: pointer;
+            }
+            span{
+              font-size: 12px;
+              font-weight: 500;
+              color: #777;
+            }
+          }
+          p{
+            font-size: 12px;
+            margin: 0 0 5px 0;
+          }
+        }
+
+      }
+      a.enter{
+        background: #9ccc65;
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 2px;
+      }
+    }
+    .content{
+      @include flex(flex-start,flex-start);
+      background: #F7F7F7;
+      @media screen and (min-width: 768px) {
+        min-height: 300px;
+      }
+      padding: 20px 30px;
+      .el-carousel{
+        width: 400px;
+        border: 1px solid #bfbfbf;
+        .el-carousel__container{
+          height: 250px;
+        }
+      }
+      p{
+        margin: 0 0 0 20px;
+      }
+    }
+  }
+}
+
 ._common_label{
   display: inline;
   padding: .2em .6em .3em;
@@ -29,3 +100,4 @@
 }
 ._common_task{padding-right:20px;}
 ._common_m-l-sm{margin-left:10px;}
+

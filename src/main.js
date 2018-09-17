@@ -12,6 +12,7 @@ import hzau from './school/hzau';
 import nit from './school/nit';
 
 import 'element-ui/lib/theme-chalk/index.css';
+import 'element-ui/lib/theme-chalk/display.css';
 import 'font-awesome/css/font-awesome.css';
 import "./assets/css/iconfont.css";
 import "./assets/css/simple-line-icons.css"

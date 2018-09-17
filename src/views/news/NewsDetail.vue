@@ -6,9 +6,9 @@
         <div class="news_div">
             <div class="news_head">{{news_current.title}}</div>
             <div class="news_desc">
-                <i class="fa fa-clock-o" style="color:#1390d4;"></i>&nbsp;&nbsp;&nbsp;{{news_current.publishDate}}
+                <i class="fa fa-clock-o _theme_font"></i>&nbsp;&nbsp;&nbsp;{{news_current.publishDate}}
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <i class="fa fa-bar-chart-o" style="color:#1390d4;"></i>&nbsp;&nbsp;&nbsp;来源&nbsp;&nbsp;&nbsp;
+                <i class="fa fa-bar-chart-o _theme_font"></i>&nbsp;&nbsp;&nbsp;来源&nbsp;&nbsp;&nbsp;
                 <a :href="news_current.url" target="_blank">{{news_current.origin}}</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <i :class="{'fa fa-star' : collect,'fa fa-star-o' : !collect}" @click="toggle_collect" style="cursor: pointer;font-size: 16px;color: #fad733;"></i>
@@ -79,9 +79,12 @@
 
 <style scoped lang="scss">
     .news_div{
-        width: 1200px;
+        @extend %width;
+        @media only screen and (max-width:767px) {
+            padding: 0 8px;
+        }
         padding: 0 140px;
-        margin: 20px auto 0 auto;
+        margin-top: 20px;
         background-color: white;
         font-size: 14px;
         .news_head{

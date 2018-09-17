@@ -15,7 +15,7 @@
                     <p><span class="width2">手机：</span><span class="width4">{{user.mobile}}</span><span class="width2">邮箱：</span><span class="width4">{{user.schoolEmail}}</span></p>
                     <p><span class="width2">用户类别：</span><span class="width4">{{user.usertypeName}}</span></p>
                 </div>
-                <div class="img">
+                <div class="img hidden-xs-only">
                     <router-link to="/user/head" class="border"><img :src="user.userFace?user.userFace:'/img/a0.jpg'"/></router-link>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                         <option value="@stu.hit.edu.cn">@stu.hit.edu.cn</option>
                     </select>
                     <input v-model="password" type="password" placeholder="邮箱密码"/>
-                    <button @click="addEmail">确认绑定</button>
+                    <button class="_theme_darker" @click="addEmail">确认绑定</button>
                 </label>
             </section>
             <section class="other">
@@ -50,7 +50,7 @@
                 <label v-else>
                     <span>一卡通账号：</span><input v-model="cardNo" placeholder="一卡通账号/（学）工号"/>
                     <input style="padding-left: 15px" v-model="cardPassword" type="password" placeholder="一卡通密码"/>
-                    <button @click="addEcard">确认绑定</button>
+                    <button class="_theme_darker" @click="addEcard">确认绑定</button>
                 </label>
             </section>
         </template>
@@ -173,11 +173,11 @@
     #info{
         section{
             background: #fff;
-            width: 1200px;
+            @extend %width;
             font-size: 14px;
             padding: 0 20px 50px;
             border: 1px solid #eaeaea;
-            margin: 0 auto 20px;
+            margin-bottom: 20px;
             header{
                 @include flex(space-between);
 
@@ -192,11 +192,17 @@
                 }
             }
             .content{
+                @include flex;
                 padding: 10px 0 0 0;
                 .text{
                     display: inline-block;
                     width: 75%;
+                    @media only screen and (max-width:767px) {
+                        width: 100%;
+                    }
                     p{
+                        @include flex;
+                        flex-flow: wrap;
                         margin: 12px 0 0 0;
                         span{
                             display: inline-block;
@@ -205,6 +211,9 @@
                         .width2{
                             text-align: right;
                             width: 16.6%;
+                            @media only screen and (max-width:767px) {
+                                width: 50%;
+                            }
                         }
                         .width4{
                             width: 33.3%;
@@ -242,10 +251,19 @@
             }
             label{
                 @include flex;
+                flex-flow: wrap;
+                @media only screen and (max-width:767px) {
+                    span,input,select,button{
+                        margin-bottom: 10px;
+                    }
+                }
                 span{
                     display: inline-block;
                     width: 197px;
                     text-align: right;
+                    @media only screen and (max-width:767px){
+                        text-align: left;
+                    }
                     padding: 0 15px 0 0;
                 }
                 input{
@@ -273,11 +291,10 @@
                     margin-right: 30px;
                 }
                 button{
-                    background: #067ebe;
                     font-size: 14px;
                     color: #fff;
                     padding: 6px 12px;
-                    border: 1px #067ebe solid;
+                    border: none;
                     border-radius: 2px;
                 }
             }

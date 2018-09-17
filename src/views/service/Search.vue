@@ -52,7 +52,7 @@
         <card class="list">
             <template slot="header">
                 <div class="left">共为您检索到<em>{{data.count}}</em>项服务，<template v-if="$school.school==='hit'"><em>{{data.jzdtCount}}</em>项已经进驻师生服务中心, </template><em>{{data.lineCount}}</em>项可部分或全部线上办理</div>
-                <div class="right">
+                <div class="right hidden-xs-only">
                     排序：<i class="fa fa-eye" @click="order('view')" :class="{active:searchData.orderBy==='view'}">&nbsp;热度</i><i class="fa fa-star" @click="order('fav')" :class="{active:searchData.orderBy==='fav'}">&nbsp;收藏</i>
                     <span></span>
                     排列：<router-link to="/service/search/list"><i class="fa fa-align-justify" :class="{active:show==='list'}" @click="show='list'">&nbsp;列表方式</i></router-link>
@@ -60,8 +60,18 @@
                 </div>
             </template>
             <router-view></router-view>
-            <el-pagination v-show="data.count>12"
+            <el-pagination class="hidden-xs-only" v-show="data.count>12"
                            background
+                           layout="prev, pager, next"
+                           @current-change="handlePageChange"
+                           @prev-click="handlePageChange"
+                           @next-click="handlePageChange"
+                           :page-size=searchData.limit
+                           :total="data.count">
+            </el-pagination>
+            <el-pagination class="hidden-sm-and-up" v-show="data.count>12"
+                           background
+                           small
                            layout="prev, pager, next"
                            @current-change="handlePageChange"
                            @prev-click="handlePageChange"
@@ -212,9 +222,8 @@
 <style scoped lang="scss">
     .search{
         .menu{
-            width: 1200px;
+            @extend %width;
             padding: 10px 20px;
-            margin: 0 auto;
             section{
                 @include flex(flex-start,flex-start);
                 font-size: 14px;
@@ -251,10 +260,10 @@
         }
         .condition{
             background: #fff;
-            width: 1200px;
+            @extend %width;
             font-size: 14px;
             padding: 10px 20px;
-            margin: 4px auto 0;
+            margin-top: 4px;
             .item{
                 color: #0683c3;
                 margin-left: 20px;
@@ -265,7 +274,7 @@
             }
         }
         .list{
-            width: 1200px;
+            @extend %width;
             padding: 0 0 30px 0;
             margin: 20px auto;
             header{
@@ -296,6 +305,9 @@
             }
             .el-pagination{
                 text-align: right;
+                @media only screen and (max-width:767px) {
+                    text-align: center;
+                }
                 margin: 20px 0 0 0;
             }
         }

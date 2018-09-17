@@ -1,5 +1,5 @@
 <template>
-    <div class="jump" v-show="jumpShow">
+    <div class="jump hidden-xs-only" v-show="jumpShow">
         <transition name="slide-fade">
             <div class="content" v-show="jumpShow">
                 <header>跳转至{{jumpName}}<i class="fa fa-close" @click="close"></i></header>

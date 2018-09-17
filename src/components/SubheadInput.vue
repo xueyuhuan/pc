@@ -10,6 +10,9 @@
         height: 30px;
         input{
             width: 160px;
+            @media only screen and (max-width:767px) {
+                width: 100px;
+            }
             height: 100%;
             font-size: 12px;
             padding: 5px 15px;

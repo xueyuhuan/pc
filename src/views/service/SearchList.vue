@@ -1,6 +1,6 @@
 <template>
     <div class="listing">
-        <div class="left">
+        <div class="left hidden-xs-only">
             <h4 class="_theme_font">热门服务</h4>
             <ul><li v-for="i in hot"><router-link :to="'/service/detail/'+i.id">
                 <img :src="$proxy+imgPath+i.id"/>
@@ -30,7 +30,7 @@
                     <span class="number"><i class="fa fa-eye"></i>&nbsp;{{i.viewCount}}<i class="fa fa-star" :class="{yellow:i.favCount>0}"></i>&nbsp;{{i.favCount}}</span>
                 </div>
             </div>
-            <div class="right">
+            <div class="right hidden-xs-only">
                 <p><i class="fa fa-info-circle"></i>&nbsp;由{{i.managerDeptname}}提供</p>
                 <p><i class="fa fa-info-circle"></i>&nbsp;本服务的服务对象{{i.fwdxsm}}</p>
             </div>
@@ -160,6 +160,9 @@
             a{
                 @include flex(space-between);
                 width: 770px;
+                @media only screen and (max-width:767px) {
+                    width: auto;
+                }
                 padding: 7px 23px;
                 border: 1px solid #e5e5e5;
                 margin-bottom: 10px;
@@ -167,8 +170,14 @@
                     @include flex;
                     .text{
                         flex: 0 0 280px;
+                        @media only screen and (max-width:767px) {
+                            flex: auto;
+                        }
                         p.name{
                             width: 280px;
+                            @media only screen and (max-width:767px) {
+                                width: auto;
+                            }
                         }
                     }
 

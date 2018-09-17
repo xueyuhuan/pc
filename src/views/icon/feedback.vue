@@ -16,7 +16,7 @@
                     <li>联系方式<input v-model="data.tel" placeholder="请留下联系电话或邮箱，方便我们及时告知您处理结果" class="left"/></li>
                     <li>内容描述<textarea v-model="data.content" placeholder="请详细描述您遇到的问题、您的意见及建议" class="left"></textarea></li>
                 </ul>
-                <div class="btn"><button @click="add">提交</button></div>
+                <div class="btn"><button @click="add" class="_theme">提交</button></div>
             </template>
             <template v-else>
                 <ul class="list"><li v-for="i in list.rows" @click="see(i)">
@@ -131,6 +131,9 @@
                 border-bottom: 1px dashed #dee5e7;
                 .left{
                     width: 547px;
+                    @media only screen and (max-width:767px) {
+                        width: 200px;
+                    }
                     font-size: 14px;
                     color: #555;
                     padding: 6px 12px;
@@ -154,7 +157,6 @@
             text-align: center;
             padding: 15px;
             button{
-                background: #067ebe;
                 font-size: 14px;
                 color: #fff;
                 padding: 6px 12px;

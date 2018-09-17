@@ -78,8 +78,7 @@
 
 <style scoped lang="scss">
     .contain{
-        width: 1200px;
-        margin: 20px auto 0 auto;
+        @extend %width;
         font-size: 14px;
         .content_body{
             margin-bottom: 20px;

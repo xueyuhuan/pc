@@ -6,7 +6,7 @@
             <div class="login">
                 <div style="margin-bottom: 30px;font-size: 20px;">账号登录</div>
                 <input class="account" v-model="name" type="text" placeholder="请输入用户名" autocomplete="off"/>
-                <input class="password" v-model="password" type="password" placeholder="请输入密码" autocomplete="off"/>
+                <input @keyup.enter="login" class="password" v-model="password" type="password" placeholder="请输入密码" autocomplete="off"/>
                 <button @click="login">登 录</button>
             </div>
         </div>
@@ -62,15 +62,9 @@
     }
     .account{
         background: url("/img/input_bg1.gif") no-repeat left center;
-        /*background-image: url("/img/input_bg1.gif");*/
-        /*background-repeat: no-repeat;*/
-        /*background-position: left center;*/
     }
     .password{
         background: url("/img/input_bg2.gif") no-repeat left center;
-        /*background-image: url("/img/input_bg2.gif");*/
-        /*background-repeat: no-repeat;*/
-        /*background-position: left center;*/
     }
     button{
         width: 100%;
@@ -93,6 +87,9 @@
             height: 69px;
             margin-top: 5px;
             margin-left: 100px;
+            @media only screen and (max-width:767px) {
+                margin-left: 0;
+            }
         }
     }
     .mid{
@@ -119,6 +116,10 @@
             border-radius: 5px;
             background-color: white;
             width: 400px;
+            @media only screen and (max-width:767px) {
+                width: 100%;
+                border-radius: 0;
+            }
         }
     }
     .bottom{

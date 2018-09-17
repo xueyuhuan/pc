@@ -107,8 +107,7 @@
 <style scoped lang="scss">
     #log{
         .main{
-            width: 1170px;
-            margin: 0 auto;
+            @extend %width;
             .banner{
                 position: relative;
                 height: 200px;
@@ -142,17 +141,25 @@
                         }
                     }
                     .right{
+                        @include flex(center);
+                        flex-flow: wrap;
                         p{
                             display: inline-block;
                             font-size: 14px;
                             font-weight: 700;
                             text-align: center;
                             margin: 0;
+                            @media only screen and (max-width:767px) {
+                                margin-right: 10px;
+                            }
                             span{
                                 font-weight: 500;
                             }
                             &:last-child{
                                 margin: 0 90px 0 40px;
+                                @media only screen and (max-width:767px) {
+                                    margin: 0 10px 0 0;
+                                }
                             }
                         }
                     }

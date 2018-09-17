@@ -1,7 +1,7 @@
 <template>
     <div>
         <subhead>
-            <div><i class="fa fa-star-o"></i>&nbsp;&nbsp;&nbsp;我的收藏 <span>My Collections</span></div>
+            <div><i class="fa fa-star-o icon"></i>我的收藏 <span>My Collections</span></div>
         </subhead>
         <div class="contain">
             <div class="myCollections _theme_card">
@@ -38,11 +38,14 @@
                     <card>
                         <template slot="header"><span><i class="fa fa-star starColor"></i>&nbsp;&nbsp;服务</span></template>
                         <div class="service_body">
-                            <div v-for="item in service" @click="openService(item.url)" class="service_block">
-                                <img :src="item.img" />
-                                <div>{{item.name}}</div>
-                                <i @click.stop="delFavorites(item.id,'service')" class="fa fa-star starColor"></i>
-                            </div>
+                            <template v-if="service.length>0">
+                                <div v-for="item in service" @click="openService(item.url)" class="service_block">
+                                    <img :src="item.img" />
+                                    <div>{{item.name}}</div>
+                                    <i @click.stop="delFavorites(item.id,'service')" class="fa fa-star starColor"></i>
+                                </div>
+                            </template>
+                            <div v-else class="no-data">温馨提示:您一个收藏也没有哦，进入服务的详情页面，点击五角星就可以收藏啦！</div>
                         </div>
                     </card>
                 </div>
@@ -50,11 +53,14 @@
                     <card>
                         <template slot="header"><span><i class="fa fa-star starColor"></i>&nbsp;&nbsp;应用</span></template>
                         <div class="service_body">
-                            <div v-for="item in app" @click="openApp(item.url)" class="service_block">
-                                <img :src="$proxy+`/resource/app?id=${item.id}&timestamp=${item.timestamp}`"/>
-                                <div>{{item.name}}</div>
-                                <i @click.stop="delFavorites(item.id,'app')" class="fa fa-star starColor"></i>
-                            </div>
+                            <template v-if="app.length>0">
+                                <div v-for="item in app" @click="openApp(item.url)" class="service_block">
+                                    <img :src="$proxy+`/resource/app?id=${item.id}&timestamp=${item.timestamp}`"/>
+                                    <div>{{item.name}}</div>
+                                    <i @click.stop="delFavorites(item.id,'app')" class="fa fa-star starColor"></i>
+                                </div>
+                            </template>
+                            <div v-else class="no-data">温馨提示:您一个收藏也没有哦，进入应用的详情页面，点击五角星就可以收藏啦！</div>
                         </div>
                     </card>
                 </div>
@@ -62,7 +68,7 @@
             <div class="news">
                 <card>
                     <template slot="header"><span><i class="fa fa-star starColor"></i>&nbsp;&nbsp;资讯</span></template>
-                    <div class="">
+                    <template v-if="news.length>0">
                         <div v-for="item in news" class="news_block">
                             <div class="news_title" @click="openNews(item.id)">{{item.title}}</div>
                             <div class="news_desc">
@@ -70,7 +76,8 @@
                                  <span class="starSpan"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{item.publishDate.substring(0,10)}}</span>
                             </div>
                         </div>
-                    </div>
+                    </template>
+                    <div v-else class="no-data">温馨提示:您一个收藏也没有哦，进入资讯的详情页面，点击五角星就可以收藏啦！</div>
                 </card>
             </div>
         </div>
@@ -150,9 +157,13 @@
 </script>
 
 <style scoped lang="scss">
+    .no-data{
+        font-size: 12px;
+        color: #a0a0a0;
+        padding: 10px 20px;
+    }
     .contain{
-        width: 1200px;
-        margin: 0 auto;
+        @extend %width;
         .starColor{
             color: #fad733;
             cursor: pointer;
@@ -183,17 +194,20 @@
         }
         .serviceApp{
             @include flex(space-between,flex-start);
+            flex-flow: wrap;
             .service{
                 width: 585px;
+                @media only screen and (max-width:767px) {
+                    width: 100%;
+                }
             }
             .service_body{
-                padding-bottom: 43px;
                 @include flex(flex-start,flex-start);
                 flex-wrap: wrap;
             }
             .service_block{
                 width: 50%;
-                padding: 10px 23px;
+                padding: 10px 20px;
                 cursor: pointer;
                 @include flex(flex-start,center);
                 img{
@@ -201,11 +215,8 @@
                     height: 30px;
                 }
                 div{
-                    width: 180px;
                     font-size: 14px;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
+                    @extend %ellipsis;
                     margin: 0 15px;
                 }
                 &>i{
@@ -218,11 +229,17 @@
             }
             .app{
                 width: 585px;
+                @media only screen and (max-width:767px) {
+                    width: 100%;
+                }
             }
         }
         .news_block{
             width: 50%;
-            padding: 10px 23px;
+            @media only screen and (max-width:767px) {
+                width: 100%;
+            }
+            padding: 10px 20px;
             border-bottom: 1px dashed #e4e4e4;
             font-size: 14px;
             &:hover{
@@ -235,12 +252,14 @@
             .news_title{
                 font-size: 14px;
                 width: 437px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+                @media only screen and (max-width:767px) {
+                    width: auto;
+                }
+                @extend %ellipsis;
                 cursor: pointer;
             }
             .news_desc{
+                flex: 0 0 100px;
                 .starSpan{
                     font-size: 13px;
                     color: #a0a0a0;

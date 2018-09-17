@@ -8,7 +8,7 @@
         <router-view v-if="!$route.meta.keepAlive"></router-view>
     </div>
     <!--回到顶部按钮-->
-    <a href="javascript:;" v-show="top > 200" title="回到顶部" @click="toTop" class="toTop _theme"><i class="fa fa-chevron-up"></i></a>
+    <div v-show="top > 200" title="回到顶部" @click="toTop" class="toTop"><i class="el-icon-caret-top _theme_font"></i></div>
     <Footer v-if="$route.path!=='/login'&&$route.path!=='/loading'&&$route.path!=='/404'"></Footer>
   </div>
 </template>
@@ -56,23 +56,24 @@
     min-height: 100%;
     padding-top: 90px;
   }
-    .toTop{
-      display:block;
-      width: 50px;
-      height: 50px;
-      cursor: pointer;
-      text-align: center;
-      line-height: 50px;
-      -webkit-border-radius: 50%;
-      -moz-border-radius: 50%;
-      border-radius: 50%;
+  .toTop{
       position: fixed;
       right: 20px;
       bottom: 80px;
-      color: #fff;
-      transition: transform .1s ease-in-out;
-      font-size: 1.5em;
-    }
+      background: rgba(255,255,255,0.5);
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: .3s;
+      box-shadow: 0 0 6px rgba(0,0,0,.12);
+      i{
+          display: block;
+          line-height: 40px;
+          text-align: center;
+          font-size: 18px;
+      }
+  }
   .toTop:hover{
     transform: scale(1.2,1.2);
   }

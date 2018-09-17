@@ -1,7 +1,7 @@
 <template>
     <div>
         <subhead>
-            <div><i class="fa fa-th-large"></i>&nbsp;&nbsp;&nbsp;消息中心 <span>Message Center</span></div>
+            <div><i class="fa fa-th-large icon"></i>消息中心 <span>Message Center</span></div>
         </subhead>
         <div class="contain">
             <div class="read_btn" @click="ReadAll">全部标为已读</div>
@@ -17,12 +17,11 @@
                             <div class="list_mid">{{item.title}}</div>
                             <div class="list_eye_div"><i class="fa fa-eye list_eye" @click.stop="readThisMsg(item.id)"></i></div>
                             <div class="list_right">
-                                <span>{{item.createTime}}</span>
+                                <span>{{timestampFormat(item.createTime)}}</span>
                             </div>
                         </div>
-                        <div style="text-align: center">
-                            <img v-if="unreadMsg.length === 0"
-                                 src="/img/no_data.png"/>
+                        <div class="img" v-if="unreadMsg.length === 0">
+                            <img src="/img/no_data.png"/>
                         </div>
                     </div>
                 </el-tab-pane>
@@ -37,127 +36,141 @@
                             <div class="list_mid">{{item.title}}</div>
                             <div class="list_eye_div"><i class="fa fa-eye list_eye" v-if="item.status === '0'" @click.stop="readThisMsg(item.id)"></i></div>
                             <div class="list_right">
-                                <span>{{item.createTime}}</span>
+                                <span>{{timestampFormat(item.createTime)}}</span>
                             </div>
                         </div>
-                        <div style="text-align: center">
-                            <img v-if="allMsg.length === 0"
-                                 src="/img/no_data.png"/>
+                        <div class="img" v-if="allMsg.length === 0">
+                            <img src="/img/no_data.png"/>
                         </div>
                     </div>
                     <!--分页-->
-                    <div class="pagination_block">
-                        <el-pagination
-                                background
-                                @current-change="handleCurrentChange"
-                                :current-page.sync="page"
-                                :page-size="pageSize"
-                                layout="prev, pager, next"
-                                :total="totalMsgNum">
-                        </el-pagination>
-                    </div>
+                    <el-pagination class="hidden-sm-and-up" v-show="totalMsgNum>10"
+                                   background
+                                   small
+                                   @current-change="handleCurrentChange"
+                                   :current-page.sync="page"
+                                   :page-size="pageSize"
+                                   layout="prev, pager, next"
+                                   :total="totalMsgNum">
+                    </el-pagination>
+                    <el-pagination class="hidden-xs-only" v-show="totalMsgNum>10"
+                                   background
+                                   @current-change="handleCurrentChange"
+                                   :current-page.sync="page"
+                                   :page-size="pageSize"
+                                   layout="prev, pager, next"
+                                   :total="totalMsgNum">
+                    </el-pagination>
                 </el-tab-pane>
             </el-tabs>
         </div>
         <!--消息详情模态框-->
-        <el-dialog :visible.sync="dialogVisible" width="900px">
-            <div slot="title" class="modal_head">
-                <img :src="msgDetail.fromImg" />
-                <div class="modal_head_middiv">
-                    <div>{{msgDetail.title}}</div>
-                    <div>消息来源:<span>{{msgDetail.fromName}}</span>&nbsp;&nbsp;消息时间:<span>{{msgDetail.createTime}}</span></div>
+        <el-dialog class="enterApp" :visible.sync="dialogVisible">
+            <header slot="title">
+                <div class="left">
+                    <img :src="msgDetail.fromImg" />
+                    <div class="text">
+                        <h4>{{msgDetail.title}}</h4>
+                        <p>消息来源：<span>{{msgDetail.fromName}}</span></p>
+                        <p>消息时间：<span>{{timestampFormat(msgDetail.createTime)}}</span></p>
+                    </div>
                 </div>
-            </div>
-            <div class="modal_body">
-                {{msgDetail.content}}
+            </header>
+            <div class="content">
+                <p>{{msgDetail.content}}</p>
             </div>
         </el-dialog>
     </div>
 </template>
 
 <script>
-    export default {
-        name: "message",
-        data(){
-            return{
-                unreadMsg:[],//未读消息
-                page:1,//当前页码
-                pageSize:10,//一页有多少条消息
-                totalMsgNum:0,//总共多少条消息
-                allMsg:[],//所有消息
-                msgDetail:{},//消息详情
-                activeName:'unread',
-                dialogVisible:false
-            }
-        },
-        methods:{
-            //获取未读消息
-            getUnread(){
-                this.$ajax.post(this.$url.query_unread)
-                    .then(res => {
-                        this.unreadMsg = res.data.unreadMessages;
-                    })
-            },
-            //获取所有消息
-            getAll(){
-                this.$ajax.post(this.$url.query,{page:this.page || 1,limit:this.pageSize || 10})
-                    .then(res => {
-                        this.page = res.data.page.page;
-                        this.pageSize = res.data.page.pageSize;
-                        this.totalMsgNum = res.data.page.records;
-                        this.allMsg = res.data.page.rows;
-                    })
-            },
-            //打开消息详情
-            getMsgDetail(id,status){
-                this.$ajax.post(this.$url.msgDetail,{id:id})
-                    .then(res => {
-                        if(res.data.errcode === '0'){
-                            this.dialogVisible = true;
-                            this.msgDetail = res.data.message;
-                            if(status === '0'){
-                                this.readThisMsg(id);
-                            }
-                        }
-                    })
-            },
-            //将未读消息标记为已读
-            readThisMsg(id){
-                this.$ajax.post(this.$url.set_read,{id:id})
-                    .then(res => {
-                       if(res.data.errcode == '0'){
-                           this.getUnread();
-                           this.getAll();
-                       }
-                    })
-            },
-            //翻页
-            handleCurrentChange(page){
-                this.page = page;
+  import date from '../../utils/date';
+  export default {
+    name: "message",
+    data(){
+      return{
+        unreadMsg:[],//未读消息
+        page:1,//当前页码
+        pageSize:10,//一页有多少条消息
+        totalMsgNum:0,//总共多少条消息
+        allMsg:[],//所有消息
+        msgDetail:{},//消息详情
+        activeName:'unread',
+        dialogVisible:false
+      }
+    },
+    created(){
+      this.getUnread();
+      this.getAll();
+    },
+    methods:{
+      //获取未读消息
+      getUnread(){
+        this.$ajax.post(this.$url.query_unread)
+            .then(res => {
+              this.unreadMsg = res.data.unreadMessages;
+            })
+      },
+      //获取所有消息
+      getAll(){
+        this.$ajax.post(this.$url.query,{page:this.page || 1,limit:this.pageSize || 10})
+            .then(res => {
+              this.page = res.data.page.page;
+              this.pageSize = res.data.page.pageSize;
+              this.totalMsgNum = res.data.page.records;
+              this.allMsg = res.data.page.rows;
+            })
+      },
+      //时间戳转换
+      timestampFormat(timestamp){
+        return date.dateFormat("yyyy-MM-dd hh:mm:ss",new Date(timestamp));
+      },
+      //打开消息详情
+      getMsgDetail(id,status){
+        this.$ajax.post(this.$url.msgDetail,{id:id})
+            .then(res => {
+              if(res.data.errcode === '0'){
+                this.dialogVisible = true;
+                this.msgDetail = res.data.message;
+                if(status === '0'){
+                  this.readThisMsg(id);
+                }
+              }
+            })
+      },
+      //将未读消息标记为已读
+      readThisMsg(id){
+        this.$ajax.post(this.$url.set_read,{id:id})
+            .then(res => {
+              if(res.data.errcode === '0'){
+
+                this.getUnread();
                 this.getAll();
-            },
-            ReadAll(){
-                this.$ajax.post(this.$url.set_read_all)
-                    .then(res => {
-                        if(res.data.errcode == '0'){
-                            this.getUnread();
-                            this.getAll();
-                        }
-                    })
-            }
-        },
-        created(){
-            this.getUnread();
-            this.getAll();
-        }
+              }
+            })
+      },
+      //翻页
+      handleCurrentChange(page){
+        this.page = page;
+        this.getAll();
+      },
+      ReadAll(){
+        this.$ajax.post(this.$url.set_read_all)
+            .then(res => {
+              if(res.data.errcode === '0'){
+                this.getUnread();
+                this.getAll();
+              }
+            })
+      }
     }
+  }
 </script>
 
 <style scoped lang="scss">
     .contain{
-        width: 1200px;
-        margin: 0 auto;
-        background-color: white;
+        @extend %width;
+        background: white;
         padding: 0 20px;
         position: relative;
     }
@@ -168,7 +181,7 @@
         font-size: 14px;
         font-weight: 500;
         cursor: pointer;
-        z-index: 999;
+        z-index: 99;
     }
     .tabs_head{
         color: #333;
@@ -182,15 +195,15 @@
         padding: 20px;
         .list{
             position: relative;
-            display: block;
             padding: 10px 15px;
             margin-bottom: -1px;
-            background-color: #fff;
+            background: #fff;
             border: 1px solid #edf1f2;
-            border-left: 0px;
-            border-right: 0px;
+            border-left: 0;
+            border-right: 0;
             cursor: pointer;
             @include flex(space-between,center);
+            flex-flow: wrap;
             .list_left{
                 @include flex(flex-start,center);
                 width: 290px;
@@ -226,43 +239,13 @@
             .list_right{
             }
         }
-    }
-    .modal_head{
-        @include flex(flex-start,center);
-        img{
-            width: 60px;
-            height: 60px;
-            margin-right: 30px;
-        }
-        .modal_head_middiv{
-            div{
-                margin: 10px 0;
-                font-size: 16px;
-                font-weight: 700;
-                width: 548px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                span{
-                    font-size: 12px;
-                    color: #000;
-                    font-weight: normal;
-                    margin: 0 10px;
+        .img{
+            text-align: center;
+            img{
+                @media only screen and (max-width:767px) {
+                    width: 100%;
                 }
             }
         }
-    }
-    .modal_body{
-        width: 100%;
-        min-height: 350px;
-        border-top: 1px solid #e5e5e5;
-        padding-top: 20px;
-        font-size: 16px;
-        color: black;
-        text-indent: 20px;
-    }
-    .pagination_block{
-        text-align: right;
-        padding: 30px;
     }
 </style>

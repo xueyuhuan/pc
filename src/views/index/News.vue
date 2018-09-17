@@ -16,7 +16,9 @@
                 </ul>
             </div>
             <ul class="right">
-                <li v-for="i in news.slice(0,7)"><a :href="i.url" target="_blank"><i class="fa fa fa-bookmark-o text_m"></i><p>{{i.title}}</p><time>&nbsp;{{i.publishDate.substring(5,10)}}</time></a></li>
+                <li v-for="i in news.slice(0,7)"><a :href="i.url" target="_blank">
+                    <p><i class="fa fa fa-bookmark-o text_m"></i>{{i.title}}</p><time>&nbsp;{{i.publishDate.substring(5,10)}}</time>
+                </a></li>
             </ul>
         </div>
     </card>
@@ -32,9 +34,8 @@
         active:0,
         news:[],
         id:'',
-          columnIcon:['iconfont icon-gongshigonggao','iconfont icon-xuexiaogongwen','iconfont icon-xinwenkuaixun','iconfont icon-yuanbudaohang','iconfont icon-xuexiaoyaowen','iconfont icon-zonghexinwen','iconfont icon-huodong']
-
-    }
+        columnIcon:['iconfont icon-gongshigonggao','iconfont icon-xuexiaogongwen','iconfont icon-xinwenkuaixun','iconfont icon-yuanbudaohang','iconfont icon-xuexiaoyaowen','iconfont icon-zonghexinwen','iconfont icon-huodong']
+      }
     },
     created(){
       this.getBanner();
@@ -42,7 +43,6 @@
       this.getNews();
     },
     methods:{
-
       getBanner(){
         this.$ajax.post('/news_portal/hit_focus')
             .then(res=>{
@@ -75,8 +75,12 @@
     .news{
         .content{
             @include flex;
+            flex-flow: wrap;
             .left{
                 width: 386.5px;
+                @media only screen and (max-width:767px) {
+                    width: 100%;
+                }
                 .el-carousel{
                     a{
                         position: relative;
@@ -92,8 +96,7 @@
                             font-size: 14px;
                             color: #fff;
                             text-align: center;
-                            margin: 0;
-                            margin-left: -116px;
+                            margin: 0 0 0 -116px;
                         }
                     }
                 }
@@ -126,20 +129,23 @@
             ul.right{
                 flex: 1;
                 padding: 0 0 5px 30px;
+                @media only screen and (max-width:767px) {
+                    padding-left: 0;
+                }
                 a{
                     &:hover{
                         background: #f0f3f4;
                     }
-                    @include flex;
+                    @include flex(space-between);
                     font-size: 14px;
                     padding: 9px 10px;
                     border-top: 1px solid #edf1f2;
-                    i{
-                        font-size: 12px;
-                        color: #98a6ad;
-                        padding-right: 10px;
-                    }
                     p{
+                        i{
+                            font-size: 12px;
+                            color: #98a6ad;
+                            padding-right: 10px;
+                        }
                         width: 305px;
                         margin: 0;
                         @extend %ellipsis;

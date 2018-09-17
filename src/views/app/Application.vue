@@ -20,7 +20,7 @@
                     </div>
                 </div>
             </div>
-            <div class="right_div">
+            <div class="right_div hidden-xs-only">
                 <card>
                     <template slot="header">分类</template>
                     <div class="fenlei">
@@ -41,28 +41,29 @@
             </div>
         </div>
         <!--模态框-->
-        <el-dialog :visible.sync="dialogVisible" width="900px" class="enterApp">
-            <div slot="title" class="modal_head">
-                <img :src="appDetail_app.img" />
-                <div class="modal_head_middiv">
-                    <div class="modal_head_middiv_div1">{{appDetail_app.name}}
-                        &nbsp;<i @click="favorite(isFavorite,appDetail_app.id)" :class="{'fa fa-star': isFavorite,'fa fa-star-o': !isFavorite}"></i>
-                        &nbsp;<span>{{isFavorite ? '(取消收藏)' : '(点击收藏)'}}</span>
+        <el-dialog :visible.sync="dialogVisible" class="enterApp">
+            <header slot="title">
+                <div class="left">
+                    <img :src="appDetail_app.img" />
+                    <div class="text">
+                        <h4>{{appDetail_app.name}}
+                            <i @click="favorite(isFavorite,appDetail_app.id)" :class="{'fa fa-star': isFavorite,'fa fa-star-o': !isFavorite}"></i>
+                        </h4>
+                        <p>可见用户组: <span v-for="item in appDetail_app.userGroups">{{item.PERMNAME}} </span></p>
+                        <p>可见部门：<span v-for="item in appDetail_app.deptNames">{{item}}</span></p>
+                        <p>可见角色：<span v-for="item in appDetail_app.roleNames">{{item}}</span></p>
+                        <p>访问限制：{{appDetail_app.fwxz}}</p>
                     </div>
-                    <div class="modal_head_middiv_div2">可见用户组: <span v-for="item in appDetail_app.userGroups">{{item.PERMNAME}} </span></div>
-                    <div class="modal_head_middiv_div2">可见部门: <span v-for="item in appDetail_app.deptNames">{{item}}</span></div>
-                    <div class="modal_head_middiv_div2">可见角色: <span v-for="item in appDetail_app.roleNames">{{item}}</span></div>
-                    <div class="modal_head_middiv_div2">访问限制: <span>全网</span></div>
                 </div>
-                <a :href="appDetail_app.url" target="_blank" class="el-button el-button--success">进入应用</a>
-            </div>
-            <div class="modal_body">
-                <el-carousel height="250px" style="width: 500px; border: 1px solid #bfbfbf;">
+                <a class="enter" :href="appDetail_app.url" target="_blank">进入应用</a>
+            </header>
+            <div class="content">
+                <el-carousel class="hidden-xs-only">
                     <el-carousel-item v-for="(item,index) in appDetail_app.screenshots" :key="index">
                         <img :src="appDetail.imgUrl + item.path" alt="暂无图片" style="width: 100%;" />
                     </el-carousel-item>
                 </el-carousel>
-                <div style="width: 330px; min-height: 30px;" v-html="appDetail_app.description"></div>
+                <p v-html="appDetail_app.description"></p>
             </div>
         </el-dialog>
     </div>
@@ -152,61 +153,16 @@
         },
     }
 </script>
-<style lang="scss">
-    .enterApp{
-        .el-dialog__header{
-            padding: 25px 30px;
-            border-bottom: 1px solid #e5e5e5;
-            .modal_head{
-                @include flex(space-bettween,center);
-                .modal_head_middiv{
-                    width: 578px;
-                    color: #000;
-                    margin-left: 20px;
-                    .modal_head_middiv_div1{
-                        font-size: 16px;
-                        font-weight: 700;
-                        margin-bottom: 5px;
-                        i{
-                            color:#fad733;
-                            cursor: pointer;
-                        }
-                        span{
-                            font-size: 12px;
-                            color: #777;
-                        }
-                    }
-                    .modal_head_middiv_div2{
-                        padding: 2px 0 0;
-                        font-size: 12px;
-                        font-weight: 500;
-                    }
-                }
-                img{
-                    width: 80px;
-                    height: 80px;
-                }
-                &>a{
-                    color: white;
-                    margin-left: 50px;
-                }
-            }
-        }
-        .el-dialog__body{
-            background-color: #F7F7F7;
-            .modal_body{
-                @include flex(space-between,flex-start);
-                padding: 20px 30px;
-            }
-        }
-    }
-</style>
+
 <style scoped lang="scss">
     .contain{
         @extend %width;
         @include flex(space-between,flex-start);
         .left_div{
             width: 784px;
+            @media only screen and (max-width:767px) {
+                width: 100%;
+            }
             background: #fff;
             margin-bottom: 20px;
             .block_head{
@@ -218,14 +174,13 @@
                 border-bottom: 1px dashed #bfbfbf;
             }
             .block_body{
-                @include flex(flex-start,flex-start);
+                @include flex;
                 flex-wrap: wrap;
                 padding: 0 20px;
                 border-bottom: 1px dashed #bfbfbf;
                 .app{
-                    @include flex(space-around,center);
+                    @include flex;
                     flex-direction: column;
-                    width: 20%;
                     height: 148px;
                     padding: 10px 0;
                     &:hover{

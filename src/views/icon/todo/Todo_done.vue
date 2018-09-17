@@ -1,7 +1,7 @@
 <template>
     <div>
         <subhead>
-            <div><i class="fa fa-tv"></i>&nbsp;&nbsp;&nbsp;办事中心 <span>Todo List</span></div>
+            <div><i class="fa fa-tv icon"></i>办事中心 <span>Todo List</span></div>
         </subhead>
         <div class="contain">
             <CardTemp class="head" v-if="todoType.length > 1">
@@ -17,7 +17,7 @@
                             <el-form label-position="right" label-width="80px">
                                 <el-form-item label="来源:">
                                     <el-select v-model="sourceValue" clearable filterable placeholder="请选择来源"
-                                               style="width:266px;">
+                                               style="width:100%;">
                                         <el-option v-for="item in myDone_select_contain" :label="item.name"
                                                    :value="item.id" :key="item.value">{{item.name}}
                                         </el-option>
@@ -26,7 +26,7 @@
                                 <el-form-item label="标题:">
                                     <el-input v-model="title"></el-input>
                                 </el-form-item>
-                                <el-form-item label="办理时间:">
+                                <el-form-item class="hidden-xs-only" label="办理时间:">
                                     <el-date-picker
                                             class="dateInput"
                                             v-model="period"
@@ -41,10 +41,8 @@
                                 </el-form-item>
                                 <el-row style="text-align: center;">
                                     <el-button @click="clear">清空</el-button>
-                                    <el-button type="primary" style="background-color: #1295d8;" @click="getDoneList">查询
-                                    </el-button>
+                                    <el-button class="_theme" type="primary" @click="getDoneList">查询</el-button>
                                 </el-row>
-
                             </el-form>
                         </div>
                     </card>
@@ -79,10 +77,7 @@
                             </el-pagination>
                         </div>
                     </card>
-                    <div style="text-align: center">
-                        <img v-if="doneList.length === 0"
-                             src="/img/no_data.png"/>
-                    </div>
+                    <div class="img" v-if="doneList.length === 0"><img src="/img/no_data.png"/></div>
                 </div>
             </div>
         </div>
@@ -200,8 +195,7 @@
 
 <style scoped lang="scss">
     .contain {
-        width: 1200px;
-        margin: 0 auto;
+        @extend %width;
         .head {
             padding: 10px 28px;
             margin-bottom: 10px;
@@ -227,8 +221,12 @@
                 border-top: none;
             }
             @include flex(space-between, flex-start);
+            flex-flow: wrap;
             .content_left {
                 width: 386px;
+                @media only screen and (max-width:767px) {
+                    width: 100%;
+                }
                 background: white;
                 ul {
                     li {
@@ -257,12 +255,15 @@
                 .menuDiv_input {
                     padding: 20px;
                     .dateInput {
-                        width: 266px;
+                        width: 100%;
                     }
                 }
             }
             .content_right {
                 width: 784px;
+                @media only screen and (max-width:767px) {
+                    width: 100%;
+                }
                 background-color: white;
                 .block {
                     padding: 12px 23px;
@@ -293,6 +294,14 @@
                     .blockRight {
                         font-size: 14px;
                         color: #f7b47f;
+                    }
+                }
+                .img{
+                    text-align: center;
+                    img{
+                        @media only screen and (max-width:767px) {
+                            width: 100%;
+                        }
                     }
                 }
             }

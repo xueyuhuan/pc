@@ -34,12 +34,10 @@ const log = () => import('./views/version/log');
 const login = () => import('./views/Login');
 const loading = () =>import('./views/Loading');
 const noFound = () => import('./views/NoFound');
-const calendar = () => import('./components/Calendar');
 Vue.use(Router);
 
 const router = new Router({
     routes: [
-      {path: "/calendar", component: calendar},
       {path: "/index", component: index},
       {path: "/home", component: home},
       {path: "/service", component: service,meta:{keepAlive: true}},

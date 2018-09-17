@@ -13,6 +13,9 @@
         .content{
             @include flex(space-between);
             @extend %width;
+            @media only screen and (max-width:767px) {
+                padding: 0 10px;
+            }
             height: 42px;
             color: #fff;
             i.icon{

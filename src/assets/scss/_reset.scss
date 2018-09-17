@@ -17,6 +17,7 @@ body{
   -webkit-font-smoothing: antialiased;
   margin: 0;
 }
+input,button,select,textarea{outline:none;}
 ul,li{
   list-style: none;
   padding: 0;
@@ -50,11 +51,22 @@ em,i{
 }
 //出现在按钮、图标旁的数字或状态标记
 .el-badge__content{
+  //width: 18px;
   border: none;
 }
 //下拉选择框
 .el-select-dropdown__item{
   padding: 0 20px;
+}
+//按钮
+.el-button{
+  padding: 6px 12px;
+}
+//确认框
+.el-message-box{
+  @media only screen and (max-width:767px) {
+    width: 200px;
+  }
 }
 //弹出框
 .el-dialog{

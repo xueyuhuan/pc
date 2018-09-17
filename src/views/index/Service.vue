@@ -81,33 +81,35 @@
             @include flex;
             flex-flow: wrap;
             padding: 15px;
-            a{
-                &:hover{
-                    box-shadow: 0 0 6px 3px #eee;
-                }
-                @include flex(flex-start,flex-start);
+            li{
                 flex: 0 0 25%;
-                padding: 15px;
-                img{
-                    width: 40px;
-                    margin: 0 15px 17px 0;
-                }
-                p{
-                    display: inline-block;
-                    width: 108px;
-                    font-size: 13px;
-                    margin: 0;
-                    overflow : hidden;
-                    text-overflow: ellipsis;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 2;
-                    -webkit-box-orient: vertical;
-                    span{
-                        color: #98a6ad;
-                        font-size: 12px;
+                a{
+                    &:hover{
+                        box-shadow: 0 0 6px 3px #eee;
+                    }
+                    @include flex(flex-start,flex-start);
+                    padding: 15px;
+                    @media only screen and (max-width:767px) {
+                        padding: 0;
+                    }
+                    img{
+                        width: 40px;
+                        margin: 0 15px 17px 0;
+                    }
+                    p{
+                        display: inline-block;
+                        width: 108px;
+                        font-size: 13px;
+                        margin: 0;
+                        @include ellipsis(2);
+                        span{
+                            color: #98a6ad;
+                            font-size: 12px;
+                        }
                     }
                 }
             }
+
         }
     }
 </style>

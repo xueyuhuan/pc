@@ -95,9 +95,9 @@
 
 <style scoped lang="scss">
     .head{
-        padding: 10px 28px;
-        width: 1200px;
-        margin: 0 auto 10px;
+        @extend %width;
+        padding: 10px 20px;
+        margin-bottom: 10px;
         .head_btn{
             display: inline-block;
             background: #BFBFBF;
@@ -116,12 +116,14 @@
         }
     }
     .contain{
-        width: 1200px;
-        margin: 0 auto;
-
+        @extend %width;
         @include flex(space-between,flex-start);
+        flex-flow: wrap;
         .leftDiv{
             width: 389px;
+            @media only screen and (max-width:767px) {
+                width: 100%;
+            }
             .todoSourceActive{
                 background-color: #efefef;
             }
@@ -134,6 +136,12 @@
         }
         .rightDiv{
             width: 784px;
+            @media only screen and (max-width:767px) {
+                width: 100%;
+                img{
+                    width: 100%;
+                }
+            }
             .block{
                 padding: 12px 23px;
                 font-size: 14px;

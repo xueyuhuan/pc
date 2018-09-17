@@ -11,22 +11,22 @@
             <router-link to="/collections"><i class="fa fa-ellipsis-h"></i></router-link>
         </template>
         <ul class="list service" v-show="active==='service'">
-            <template v-if="service&&service.length">
+            <template v-if="service&&service.length>0">
                 <li v-for="i in service"><router-link :to="'/service/detail/'+i.id"><img :src="$proxy+imgPath+i.id"/><p>{{i.name}}</p></router-link></li>
             </template>
             <li v-else class="no">温馨提示:您一个收藏也没有哦，进入服务的详情页面，点击五角星就可以收藏啦！</li>
         </ul>
         <ul class="list app" v-show="active==='app'">
-            <template v-if="app&&app.length">
+            <template v-if="app&&app.length>0">
                 <li v-for="i in app"><a><img :src="$proxy+imgPath2+i.id"/><p>{{i.name}}</p></a></li>
             </template>
             <li v-else class="no">温馨提示:您一个收藏也没有哦，进入应用的详情页面，点击五角星就可以收藏啦！</li>
         </ul>
         <ul class="list news" v-show="active==='news'">
-            <template v-if="news&&news.length">
+            <template v-if="news&&news.length>0">
                 <li v-for="i in news"><router-link :to="'/news/detail?id='+i.id">{{i.title}}</router-link></li>
             </template>
-            <li v-else class="no">温馨提示:您一个收藏也没有哦，进入应用的详情页面，点击五角星就可以收藏啦！</li>
+            <li v-else class="no">温馨提示:您一个收藏也没有哦，进入资讯的详情页面，点击五角星就可以收藏啦！</li>
         </ul>
     </card>
 </template>

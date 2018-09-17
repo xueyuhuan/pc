@@ -112,10 +112,15 @@
             }
             .img{
                 @include flex(flex-start,flex-start);
+                @media only screen and (max-width:767px) {
+                    @include flex(center);
+                    flex-flow: wrap;
+                }
                 padding: 0 0 50px 0;
                 border-bottom: 1px dashed #bfbfbf;
                 .border:first-child{
                     margin-right: 50px;
+                    margin-bottom: 20px;
                 }
                 .border{
                     display: inline-block;

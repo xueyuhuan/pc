@@ -2,7 +2,7 @@
     <CardTemp>
         <header class="drag" slot="header">我的服务
             <div class="right">
-                <i class="fa fa-cog" @click="popup"></i>
+                <i class="fa fa-cog hidden-xs-only" @click="popup"></i>
                 <router-link to="/service"><i class="fa fa-ellipsis-h"></i></router-link>
             </div>
         </header>

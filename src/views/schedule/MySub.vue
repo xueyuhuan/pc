@@ -71,8 +71,8 @@
 
 <style scoped lang="scss">
     .contain {
-        width: 1200px;
-        margin: 20px auto 0 auto;
+        @extend %width;
+        margin-top: 20px;
         font-size: 14px;
         .content_body {
             margin-bottom: 20px;
@@ -90,6 +90,10 @@
                 cursor: pointer;
                 width: 180px;
                 height: 55px;
+                @media only screen and (max-width:767px) {
+                    width: 99px;
+                    height: 40px;
+                }
                 margin-right: 10px;
                 margin-bottom: 20px;
                 padding: 0 10px;

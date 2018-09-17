@@ -29,8 +29,17 @@
                     <div class="time">{{news.publishDate.substring(5,10)}}</div>
                 </div>
                 <div class="block">
-                    <el-pagination
+                    <el-pagination class="hidden-xs-only"
+                                   background
+                                   @current-change="handleCurrentChange"
+                                   :current-page.sync="page"
+                                   :page-size="10"
+                                   layout="total, prev, pager, next"
+                                   :total="newsList_length">
+                    </el-pagination>
+                    <el-pagination class="hidden-sm-and-up"
                             background
+                            small
                             @current-change="handleCurrentChange"
                             :current-page.sync="page"
                             :page-size="10"
@@ -39,7 +48,7 @@
                     </el-pagination>
                 </div>
             </card>
-            <card class="right_div">
+            <card class="right_div hidden-xs-only">
                 <template slot="header">
                     <span>阅读排行</span>
                     <div class="date_div">
@@ -163,8 +172,10 @@
         @include flex(space-between, flex-start);
         .left_div {
             width: 784px;
+            @media only screen and (max-width:767px) {
+                width: 100%;
+            }
             background: #fff;
-
             margin-bottom: 20px;
             font-size: 14px;
             color: rgb(0,0,0);
@@ -186,7 +197,7 @@
                         flex: 0 0 80px;
                     }
                     .content_div{
-                        flex: 0 0 600px;
+                        /*flex: 0 0 600px;*/
                     }
                     .span_all{
                         display: block;
@@ -209,7 +220,6 @@
                 padding: 10px 23px;
                 border-bottom: 1px dashed #eaeaea;
                 @include flex(space-between,flex-start);
-
                 &:hover{
                     background-color: #eee;
                     cursor: pointer;
@@ -218,7 +228,6 @@
                     padding-left: 10px;
                     border-left: 3px solid;
                     .news_title{
-                        width: 650px;
                         font-size: 14px;
                         color: #000;
                     }
@@ -227,11 +236,14 @@
                         color: #959595;
                     }
                 }
+                .time{
+                    flex: none;
+                    margin-left: 10px;
+                }
             }
             .block{
-                padding: 10px 23px;
+                padding: 10px;
                 text-align: center;
-
             }
         }
         .right_div {

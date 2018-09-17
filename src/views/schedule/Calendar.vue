@@ -10,7 +10,7 @@
                         <i class="fa fa-angle-right" @click="nextMonth"></i>
                         <i class="fa fa-angle-double-right" @click="nextYear"></i>
                     </div>
-                    <ul v-if="eventType.length>0">
+                    <ul class="hidden-xs-only" v-if="eventType.length>0">
                         <li v-for="i in eventType"><i :style="`background:${i.color};`"></i>{{i.name}}</li>
                     </ul>
                 </div>
@@ -28,7 +28,7 @@
                     <li class="no" v-for="day in lastMonthDays" :key="lastMonthStartDay+day-1"> </li>
                     <li @click="clickEvent" @dblclick="dbClickEvent" v-for="day in nowMonthDays"
                         :class="{choose:day===choose.day&&(nowDate.month+1)===choose.month&&nowDate.year===choose.year,today:day===today.day&&(nowDate.month+1)===today.month&&nowDate.year===today.year}">
-                        {{day}}<div><span v-for="i in eventMonth" v-if="i.data===day"><i :style="`background:${i.colour};`"></i></span></div>
+                        {{day}}<div><span class="hidden-xs-only" v-for="i in eventMonth" v-if="i.data===day"><i :style="`background:${i.colour};`"></i></span></div>
                     </li>
                     <li class="no" v-for="day in (lastMonthDays+nowMonthDays>35)?(42-lastMonthDays-nowMonthDays):(35-lastMonthDays-nowMonthDays)" :key="day"> </li>
                 </ul>
@@ -187,6 +187,9 @@
             .left{
                 @include flex(space-between,flex-start);
                 width: 758px;
+                @media only screen and (max-width:767px) {
+                    width: auto;
+                }
                 .year {
                     @include flex;
                     flex: none;
@@ -211,10 +214,14 @@
         }
         .bottom{
             @include flex(space-between,flex-start);
+            flex-flow: wrap;
             width: 100%;
             padding: 10px 20px;
             .left{
                 width: 758px;
+                @media only screen and (max-width:767px) {
+                    width: 100%;
+                }
                 border-top: 1px solid #e4e4e4;
                 border-left: 1px solid #e4e4e4;
                 ul{
@@ -226,7 +233,12 @@
                         &.today{background: #eee}
                         @include flex(space-between,flex-start);
                         flex-flow: column;
-                        flex: 0 0 108px;
+                        flex: none;
+                        width: 108px;
+                        @media only screen and (max-width:767px) {
+                            width:14.28%;
+                            flex: 0 0 14.28%;
+                        }
                         font-size: 14px;
                         padding: 10px;
                         border-right: 1px solid #e4e4e4;
@@ -257,6 +269,9 @@
                     &.date{
                         li{
                             height: 108px;
+                            @media only screen and (max-width:767px) {
+                                height: 48px;
+                            }
                         }
                     }
                 }
@@ -264,6 +279,9 @@
             }
             .right{
                 flex: 0 0 370px;
+                @media only screen and (max-width:767px) {
+                    flex: auto;
+                }
             }
         }
     }

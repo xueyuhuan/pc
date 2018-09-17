@@ -38,7 +38,7 @@
                 </div>
             </card>
         </div>
-        <CardTemp class="bottom">
+        <CardTemp class="bottom hidden-xs-only">
             <header slot="header">服务目录
                 <ul v-show="type!==-1">
                     <li @click="clickType2('',-1)" :class="{active:type2===-1}">全部</li>
@@ -48,7 +48,7 @@
             <div class="content">
                 <ul class="catalog">
                     <li class="_theme" @click="getHot" :class="{active:type===-1}">热门服务</li>
-                    <li class="_theme" v-for="(i,index) in list.type" @click="clickType1(i.id,index)" :class="{active:type===index}">{{i.name}}</li>
+                    <li class="_theme" v-for="(i,index) in list.type" @click="clickType1(i.id,index)" :class="{_theme_darker:type===index}">{{i.name}}</li>
                 </ul>
                 <div>
                     <ul class="list"><li v-for="i in list.list">
@@ -60,7 +60,7 @@
                                 <el-rate v-model="i.score" disabled show-score score-template=" {value}分"></el-rate>
                             </div>
                         </a>
-                        <router-link :to="'/service/detail/'+i.id"><i class="fa fa-question-circle _theme_font"></i></router-link>
+                        <router-link :to="'/service/detail/'+i.id" class="hidden-xs-only"><i class="fa fa-question-circle _theme_font"></i></router-link>
                     </li></ul>
                     <el-pagination v-show="type!==-1&&total>1"
                             background
@@ -224,10 +224,13 @@
     .service{
         .top{
             @include flex(space-between,stretch);
-            width: 1200px;
-            margin: 0 auto;
+            @extend %width;
+            flex-flow: wrap;
             .recommend{
                 width: 784px;
+                @media only screen and (max-width:767px) {
+                    width: 100%;
+                }
                 ul{
                     @include flex;
                     li:hover{
@@ -256,6 +259,9 @@
             }
             .deadline{
                 width: 399px;
+                @media only screen and (max-width:767px) {
+                    width: 100%;
+                }
                 text-align: center;
                 ul{
                     @include flex;
@@ -299,11 +305,9 @@
                     height: 200px;
                 }
             }
-
         }
         .bottom{
-            width: 1200px;
-            margin: 0 auto;
+            @extend %width;
             header{
                 @include flex(flex-start);
                 font-size: 20px;

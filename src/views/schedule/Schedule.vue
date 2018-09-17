@@ -5,9 +5,9 @@
         </subhead>
         <calendar @click-event="handleClick" @db-click-event="addSchedule" @year-month-change="handleYearMonth" :event-type="eventType" :event-month="eventMonth" :today="today" ref="calendar">
             <div class="top-right" slot="top-right">
-                <span @click="addSchedule"><i class="fa fa-calendar"></i>&nbsp;添加日程</span>
-                <span @click="qrDialog"><i class="fa fa-mobile"></i>&nbsp;手机订阅</span>
-                <span @click="subscribe"><i class="fa fa-plus-square-o"></i>&nbsp;订阅</span>
+                <span class="hidden-xs-only" @click="addSchedule"><i class="fa fa-calendar"></i>添加日程</span>
+                <span class="hidden-xs-only" @click="qrDialog"><i class="fa fa-mobile"></i>手机订阅</span>
+                <span @click="subscribe"><i class="fa fa-plus-square-o"></i>订阅</span>
             </div>
             <div class="event-list" slot="event-list">
                 <el-collapse v-model="activeNames" v-if="eventDayLength>0">
@@ -88,7 +88,7 @@
 <script>
   import QRCode from 'qrcode';
   import date from '../../utils/date';
-  import Calendar from "../../components/Calendar";
+  import Calendar from "./Calendar";
   export default {
     name: "Schedule",
     components: {Calendar},
@@ -107,7 +107,7 @@
         readOnly: true,//是否只读
         dialogName:'',//弹框名字
 
-        timeRange:[2],//时间范围
+        timeRange:[],//时间范围
         formData: {//添加日程表单
           className: "bg-success bg",
           type: "private",
@@ -132,7 +132,6 @@
         },
         string:"",//二维码连接
         qrUrl:"",//二维码图片的src
-        // showNoData:true//右侧如果没数据
       }
     },
     watch:{
@@ -146,6 +145,7 @@
       }
     },
     created() {
+      //事件类型
       this.$ajax.post(this.$url.scheduleEventType)
           .then(res => {
             this.eventType = res.data.cals;
@@ -154,7 +154,7 @@
             for(let i=0;i< this.eventType.length;i++){
               this.activeNames.push(i);
             }
-          });//事件类型
+          });
       this.today=this.getDate(new Date());
       //设置默认范围时间
       this.timeRange=[new Date(this.today.year,this.today.month-1,this.today.day,8,0),new Date(this.today.year,this.today.month-1,this.today.day,9,0)];
@@ -183,10 +183,6 @@
           month: date.getMonth()+1,
           day: date.getDate()
         }
-      },
-      //获取事件类型
-      getEventType() {
-
       },
       //获取日事件
       getEventDay(date){
@@ -328,7 +324,7 @@
             cursor: pointer;
             i{
                 color: #959595;
-                margin: 0 5px 0 20px;
+                margin: 0 5px 0 10px;
             }
         }
     }

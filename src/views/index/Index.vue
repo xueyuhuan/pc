@@ -2,7 +2,7 @@
     <div id="index">
         <subhead>
             {{$store.state.user.name}}，欢迎回来!
-            <div class="week" v-if="week!=null && week.termName!=null">{{week.termName}}第<em>{{week.name}}</em>教学周</div>
+            <div class="week hidden-xs-only" v-if="week!=null && week.termName!=null">{{week.termName}}第<em>{{week.name}}</em>教学周</div>
         </subhead>
         <div class="content">
             <div class="left">
@@ -81,10 +81,17 @@
         .content{
             @include flex(space-between,flex-start);
             @extend %width;
+            flex-flow: wrap;
             .left{
+                @media only screen and (max-width:767px) {
+                    width: 100%;
+                }
                 width: 805px;
             }
             .right{
+                @media only screen and (max-width:767px) {
+                    width: 100%;
+                }
                 width: 380px;
                 .ad{
                     margin-bottom: 20px;

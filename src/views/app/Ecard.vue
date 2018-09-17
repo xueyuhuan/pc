@@ -1,7 +1,7 @@
 <template>
     <div id="ecard">
         <subhead>
-            <div><i class="fa fa-credit-card"></i>&nbsp;&nbsp;&nbsp;一卡通&nbsp;<span>Personal Card</span></div>
+            <div><i class="fa fa-credit-card icon"></i>一卡通 <span>Personal Card</span></div>
         </subhead>
         <section>
             <div class="left">
@@ -10,8 +10,8 @@
                     <span class="name">快捷查询：</span>
                     <span class="btn" v-for="(i,index) in date" :class="{active:index===dateActive}" @click="clickQuickDate(i.day,index)">{{i.name}}</span>
                 </div>
-                <div class="row">
-                    <span class="name">按日期查询：</span>
+                <div class="row last">
+                    <span class="name hidden-xs-only">按日期查询：</span>
                     <el-date-picker class="date" v-model="dateStart" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>至
                     <el-date-picker class="date" v-model="dateEnd" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
                     <button @click="getList">查询流水</button>
@@ -19,10 +19,10 @@
             </div>
             <div class="right">
                 <div class="ecard">
-                    <img :src="$proxy+'/img/ccnu/card_1.png'"/>
+                    <img src="/img/ccnu/card_1.png"/>
                     <p><span>姓名：<i>{{card.xm}}</i></span><span><i class="money">{{card.balance}}</i>元</span></p>
                     <p><span>编号：<i>{{card.username}}</i></span><span class="blod">卡内余额</span></p>
-                    <p><span>部门：<i>{{card.deptName}}</i></span><img :src="$proxy+'/img/ccnu/card_2.png'"/></p>
+                    <p><span>部门：<i>{{card.deptName}}</i></span><img src="/img/ccnu/card_2.png"/></p>
                 </div>
             </div>
         </section>
@@ -32,9 +32,9 @@
                 <ul><li class="btn" v-for="(i,index) in type" :class="{active:index===typeActive}" @click="clickType(i.type,index)">{{i.name}}</li></ul>
             </header>
             <ul class="list">
-                <li><span>流水号</span><span>时间</span><span>消费类型</span><span>消费金额</span><span>余额</span><span>消费地点</span></li>
+                <li><span>流水号</span><span>时间</span><span>消费类型</span><span>消费金额</span><span>余额</span><span class="hidden-xs-only">消费地点</span></li>
                 <li v-for="i in list">
-                    <span>{{i.transNo}}</span><span>{{i.dealDate}}</span><span>{{i.dealName}}</span><span>{{i.transMoney}}</span><span>{{i.outMoney}}</span><span>{{i.orgName}}</span>
+                    <span>{{i.transNo}}</span><span>{{i.dealDate}}</span><span>{{i.dealName}}</span><span>{{i.transMoney}}</span><span>{{i.outMoney}}</span><span class="hidden-xs-only">{{i.orgName}}</span>
                 </li>
             </ul>
             <el-pagination class="page" v-if="total>limit"
@@ -155,11 +155,12 @@
     #ecard{
         section{
             @include flex(space-between,start-flex);
+            flex-flow: wrap;
             background: #fff;
-            width: 1200px;
+            @extend %width;
             padding: 10px;
             border-radius: 5px;
-            margin: 0 auto 15px;
+            margin-bottom: 15px;
             h4{
                 font-size: 16px;
                 font-weight: 700;
@@ -174,6 +175,9 @@
                 box-shadow: 0 1px 1px rgba(90,90,90,.1);
                 border-radius: 3px;
                 margin: 0 25px 0 15px;
+                @media only screen and (max-width:767px) {
+                    margin: 0;
+                }
                 cursor: pointer;
                 &.active{
                     color: #3c81f2;
@@ -184,9 +188,19 @@
             }
             .left{
                 flex: 0 0 650px;
+                @media only screen and (max-width:767px) {
+                    flex: auto;
+                    width: 100%;
+                }
                 padding-left: 15px;
                 .row{
                     @include flex;
+                    &.last{
+                        @media only screen and (max-width:767px) {
+                            justify-content: center;
+                        }
+                    }
+                    flex-flow: wrap;
                     font-size: 12px;
                     margin-top: 25px;
                     span.name{
@@ -199,6 +213,10 @@
                     .date{
                         width: 150px;
                         margin: 0 15px;
+                        @media only screen and (max-width:767px) {
+                            width: 140px;
+                            margin: 0 5px 10px;
+                        }
                     }
                     button{
                         background: #3c81f2;
@@ -207,11 +225,17 @@
                         padding: 5px 15px;
                         border: none;
                         border-radius: 5px;
+                        @media only screen and (max-width:767px) {
+                            margin-bottom: 5px;
+                        }
                     }
                 }
             }
             .right{
                 margin-right: 85px;
+                @media only screen and (max-width:767px) {
+                    margin: 10px 0 0 15px;
+                }
                 .ecard{
                     width: 320px;
                     height: 200px;
@@ -267,6 +291,9 @@
             }
             ul.list{
                 padding: 0 40px;
+                @media only screen and (max-width:767px) {
+                    padding: 0;
+                }
                 margin: 30px 0 0 0;
                 li:first-child{
                     span{

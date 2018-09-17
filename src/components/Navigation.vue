@@ -1,15 +1,15 @@
 <template>
-    <header id="nav" class="_theme ">
+    <header id="nav" class="_theme">
         <div class="content">
             <nav>
                 <router-link :to="$school.url"><img :src="'/img/'+$school.school+'/logo.png'"/></router-link>
-                <ul>
+                <ul class="hidden-xs-only">
                     <li v-for="i in nav" class="_theme_light" :class="{active:active===i.url}" @click="click(i.url)">
                         <router-link :to="i.url">{{i.name}}</router-link>
                     </li>
                 </ul>
             </nav>
-            <ul class="icon">
+            <ul class="icon hidden-xs-only">
                 <li @click="click('/feedback')" v-if="$school.school==='hit'">
                     <router-link to="/feedback">
                         <el-tooltip class="item" effect="light" content="意见反馈" placement="bottom">
@@ -91,6 +91,15 @@
                     </div>
                 </el-collapse-transition>
             </template>
+            <a class="mobile-head hidden-sm-and-up" @click="panelShow=!panelShow"><i class="fa fa-caret-down"></i><img class="_common_m-l-sm" :src="user.userFace?user.userFace:'/img/a0.jpg'"/></a>
+            <button class="dropdown-toggle hidden-sm-and-up" @click="dropdownShow=!dropdownShow"><span class="_theme"></span><span class="_theme"></span><span class="_theme"></span></button>
+            <el-collapse-transition>
+                <ul class="dropdown-menu hidden-sm-and-up" v-show="dropdownShow">
+                    <li class="_theme" v-for="i in nav" @click="click(i.url)">
+                        <router-link :to="i.url" :class="{choose:active===i.url,_theme_font:active===i.url}">{{i.name}}</router-link>
+                    </li>
+                </ul>
+            </el-collapse-transition>
         </div>
     </header>
 </template>
@@ -101,7 +110,8 @@
         data() {
             return {
               nav: this.$school.nav,//主文字导航
-              panelShow:false,//个人中心面板标识
+              panelShow:false,//个人中心面板显示标识
+              dropdownShow:false,//移动端下拉菜单显示标识
               todoCount:0,//待办数
               unreadCount:0,//未读消息数
             }
@@ -131,6 +141,7 @@
         methods: {
           click(url) {
             this.active = url;
+            this.dropdownShow=false;
           },
           toggleTheme(command) {//换肤
             document.getElementById('app').className='_theme_'+command;
@@ -158,9 +169,9 @@
             document.cookie = cname + "=" + cvalue + "; " + expires;
           },
           getTodo(){
-            return this.$ajax.post(this.$url.homeTodo)
+             this.$ajax.post(this.$url.homeTodo)
                 .then(res=>{
-                  this.todoCount=res.data.data.length;
+                  this.todoCount=res.data.todoList.length;
                   this.$store.commit('set_data',{
                     data:res.data.todoList,
                     name:'todo'
@@ -176,6 +187,10 @@
             let ws = new WebSocket('ws://msg.ccnu.edu.cn:8080/msgsocket/websocket?token='+sessionStorage.token);
             ws.onmessage = evt => {
               this.unreadCount=JSON.parse(evt.data).unReadTotal;
+              this.$store.commit('set_data',{
+                data:this.unreadCount,
+                name:'unreadCount'
+              })
             };
           }
         }
@@ -193,17 +208,20 @@
             @include flex(space-between);
             position: relative;
             @extend %width;
+            @media only screen and (max-width:767px) {
+                padding: 0 10px;
+            }
             height: 90px;
             nav {
                 @include flex;
                 height: 100%;
                 img {
                     height: 50px;
-                    margin-right: 100px;
                 }
                 ul {
                     @include flex;
                     height: 100%;
+                    margin-left: 100px;
                     li {
                         &.active{
                             border-bottom: 3px solid #f7b47f;
@@ -257,11 +275,53 @@
                     }
                 }
             }
+            a.mobile-head{
+                @include flex;
+                color: #fff;
+                img{
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                }
+            }
+            button.dropdown-toggle{
+                background: #fff;
+                padding: 8px 10px;
+                border: none;
+                border-radius: 4px;
+                span{
+                    display: block;
+                    width: 20px;
+                    height: 2px;
+                    border-radius: 1px;
+                    margin-bottom: 4px;
+                    &:last-child{margin: 0}
+                }
+            }
+            ul.dropdown-menu{
+                position: absolute;
+                top: 90px;
+                right: 0;
+                z-index: 998;
+                width: 100%;
+                li{
+                    a.choose{
+                        background: #fff;
+                        padding: 4px 8px;
+                        border-radius: 4px;
+                    }
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: #fff;
+                    text-align: center;
+                    padding: 0 0 20px 0;
+                }
+            }
             .panel{
                 position: absolute;
                 top: 90px;
                 right: 0;
-                z-index: 999;
+                z-index: 998;
                 background: #fff;
                 border: 1px solid rgba(0,0,0,.1);
                 border-radius: 2px;

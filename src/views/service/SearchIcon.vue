@@ -75,6 +75,9 @@
                 }
             }
             width: 220px;
+            @media only screen and (max-width:767px) {
+                width: auto;
+            }
             text-align: center;
             padding: 20px 0;
             border: 1px solid #e5e5e5;
@@ -91,6 +94,9 @@
                     margin-right: 4px;
                 }
                 width: 180px;
+                @media only screen and (max-width:767px) {
+                    width: 150px;
+                }
                 font-size: 14px;
                 margin: 5px auto 0;
                 @extend %ellipsis;

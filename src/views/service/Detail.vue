@@ -91,7 +91,7 @@
                     </el-collapse-item>
                 </el-collapse>
                 <!--分页-->
-                <el-pagination v-show="this.total>1"
+                <el-pagination v-show="total>10"
                                background
                                layout="prev, pager, next"
                                @current-change="handlePageChange"
@@ -211,7 +211,7 @@
         service:'',//服务详情，在data内
         activeName:['1','2','3','4'],
         comment:[],
-        page:1,
+        page:1,//当前页
         total:0,//总条目数
         pageSize:10,//每页显示条目个数
         commentShow:false,//评论框显示
@@ -338,18 +338,21 @@
     .detail{
         p.time-limit{
             background: #fff;
-            width: 1200px;
+            @extend %width;
             font-size: 14px;
             text-align: center;
             padding: 12px 0;
-            margin: 0 auto 20px;
+            margin-bottom: 20px;
         }
         &>.content{
             @include flex(space-between,flex-start);
-            width: 1200px;
-            margin: 0 auto;
+            @extend %width;
+            flex-flow: wrap;
             &>.left{
                 width: 784px;
+                @media only screen and (max-width:767px) {
+                    width: 100%;
+                }
                 header{
                     height: auto!important;
                     padding: 10px 20px!important;
@@ -397,6 +400,7 @@
                         }
                     }
                     a.online{
+                        flex: none;
                         background: #1390d3;
                         font-size: 14px;
                         font-weight: normal;
@@ -426,6 +430,7 @@
                     }
                 }
                 .collapse{
+                    overflow: hidden;
                     i{margin: 0 10px;}
                     a.comment{
                         float: right;
@@ -614,6 +619,9 @@
                 background: #fff;
                 outline: 0;
                 width: 900px;
+                @media only screen and (max-width:767px) {
+                    width: 100%;
+                }
                 padding: 15px;
                 border: 1px solid rgba(0, 0, 0, .2);
                 border-radius: 6px;

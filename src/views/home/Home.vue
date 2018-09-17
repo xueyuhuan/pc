@@ -2,7 +2,7 @@
   <div class="home">
     <subhead>
       {{$store.state.user.name}}，欢迎回来!
-      <div class="right">
+      <div class="right hidden-xs-only">
         <a v-if="$school.school==='ccnu'" href="http://one.ccnu.edu.cn/help" target="_blank"><i class="fa fa-question-circle-o"></i>&nbsp;帮助</a>&nbsp;&nbsp;&nbsp;&nbsp;
         <button @click="popup"><i class="fa fa-cog"></i>&nbsp;工作台设置</button>
       </div>
@@ -18,12 +18,12 @@
     <div class="main">
       <draggable class="drag-list" v-model="A" :options="dragOptions" @end="end">
         <transition-group>
-            <component :is="i.type" v-for="(i,index) in A" :id=i.id :key="index"></component>
+            <component :is="i.componentName" v-for="(i,index) in A" :id=i.id :key="index"></component>
         </transition-group>
       </draggable>
       <draggable class="drag-list" v-model="B" :options="dragOptions" @end="end">
         <transition-group>
-          <component :is="i.type" v-for="(i,index) in B" :id=i.id :key="index"></component>
+          <component :is="i.componentName" v-for="(i,index) in B" :id=i.id :key="index"></component>
         </transition-group>
       </draggable>
     </div>
@@ -149,11 +149,12 @@ export default {
             this.A=this.home.columnWidgets.A;
             for(let i=0;i<this.A.length;i++){
               this.getComponentData(this.A[i].url,this.A[i].params,this.A[i].id,this.A[i].name,this.A[i].moreLink);
-
+              this.A[i].componentName=this.transform(this.A[i].name);
             }
             this.B=this.home.columnWidgets.B;
             for(let i=0;i<this.B.length;i++){
               this.getComponentData(this.B[i].url,this.B[i].params,this.B[i].id,this.B[i].name,this.B[i].moreLink);
+              this.B[i].componentName=this.transform(this.B[i].name);
             }
           });
     },
@@ -178,11 +179,11 @@ export default {
         case '服务排行':x='ranking';break;
         case '工资查询':x='pay';break;
         case '个人中心':x='user';break;
-        case '校内通知':x='notice';break;
-        case '通知公告':x='notice2';break;
+        // case '校内通知':x='notice';break;
+        // case '通知公告':x='notice2';break;
         case '学校公文':x='file';break;
         case '我的待办':x='todo';break;
-        default: x='Common';
+        default: x='newslist';
       }
       return x;
     },
@@ -219,24 +220,24 @@ export default {
             })
           });
     },
-    getNotice(){
-      return this.$ajax.post(this.$url.homeNotice)
-          .then(res=>{
-            this.$store.commit('set_data',{
-              data:res.data.data,
-              name:'notice'
-            })
-          });
-    },
-    getNotice2(){
-      return this.$ajax.post(this.$url.homeNotice2,{columnId:"058ac10ab4684d6aaec045196c09a9b7"})
-          .then(res=>{
-            this.$store.commit('set_data',{
-              data:res.data.data.data,
-              name:'notice2'
-            })
-          });
-    },
+    // getNotice(){
+    //   return this.$ajax.post(this.$url.homeNotice)
+    //       .then(res=>{
+    //         this.$store.commit('set_data',{
+    //           data:res.data.data,
+    //           name:'notice'
+    //         })
+    //       });
+    // },
+    // getNotice2(){
+    //   return this.$ajax.post(this.$url.homeNotice2,{columnId:"058ac10ab4684d6aaec045196c09a9b7"})
+    //       .then(res=>{
+    //         this.$store.commit('set_data',{
+    //           data:res.data.data.data,
+    //           name:'notice2'
+    //         })
+    //       });
+    // },
     getPay(){
       return this.$ajax.post(this.$url.homePay)
           .then(res=>{
@@ -293,6 +294,9 @@ export default {
   .drag-list>span{
     display: inline-block;
     width: 595px;
+    @media only screen and (max-width:767px) {
+      width: 100%;
+    }
     min-height: 100px;
   }
   .home{
@@ -317,8 +321,8 @@ export default {
   }
   .banner{
     position: relative;
-    width: 1200px;
-    margin: 0 auto 20px;
+    @extend %width;
+    margin-bottom: 20px;
     .close{
       position: absolute;
       top:10px;
@@ -334,12 +338,14 @@ export default {
     }
   }
   .main{
+    @extend %width;
     @include flex(space-between,flex-start);
     flex-flow: wrap;
-    width: 1200px;
-    margin: 0 auto;
     &>div{
       width: 595px;
+      @media only screen and (max-width:767px) {
+        width: 100%;
+      }
     }
   }
 </style>
