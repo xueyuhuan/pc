@@ -71,33 +71,160 @@
     }
   }
 }
-
-._common_label{
-  display: inline;
-  padding: .2em .6em .3em;
-  font-size: 75%;
-  line-height: 1;
-  color: #fff;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  border-radius: .25em;
-  text-shadow:0 1px 0 rgba(0,0,0,.2);font-weight:700;
+//哈工大待办列表
+.todo{
+  //头部切换导航
+  .nav{
+    @extend %width;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    a{
+      display: inline-block;
+      background: #BFBFBF;
+      height: 30px;
+      line-height: 30px;
+      width: 90px;
+      font-size: 16px;
+      color: white;
+      text-align: center;
+      border-radius: 15px;
+      margin-right: 10px;
+      cursor: pointer;
+      &.choose {
+        background: #F08625;
+      }
+    }
+  }
+  //card无边框
+  .noborder{
+    .card{
+      border-top: none!important;
+      header{
+        border-bottom: none;
+      }
+    }
+  }
+  //主体内容
+  .container{
+    @extend %width;
+    @include flex(space-between,flex-start);
+    flex-flow: wrap;
+    //左侧
+    &>.left{
+      width: 389px;
+      @media only screen and (max-width:767px) {
+        width: 100%;
+      }
+      //搜索表单
+      .search{
+        padding: 20px 20px 0;
+        border-top: 1px solid #edf1f2;
+        .input{
+          width: 100%;
+        }
+      }
+      //列表
+      ul{
+        li{
+          i{
+            margin-right: 5px;
+          }
+          padding: 12px 20px;
+          font-size: 14px;
+          border-top: 1px dashed #eaeaea;
+          cursor: pointer;
+          &.todoSourceActive{
+            background: #efefef;
+          }
+        }
+      }
+    }
+    //右侧
+    &>.right{
+      width: 784px;
+      @media only screen and (max-width:767px) {
+        width: 100%;
+        img{
+          width: 100%;
+        }
+      }
+      ul{
+        img{
+          display: block;
+          margin: 0 auto;
+        }
+      }
+    }
+  }
 }
-._common_bg_progress{
-  background-color: #20af42;
-  color:#fff;
+//待办的右侧的统一列表
+ul.todoList{
+  li{
+    cursor: pointer;
+    &:hover{
+      background: #efefef;
+    }
+    a{
+      @include flex(space-between);
+      padding: 15px;
+      border-top: 1px solid #edf1f2;
+      //左侧内容
+      .left{
+        //第一行
+        p{
+          //蓝色来源文字
+          em{
+            color: #0683c3;
+          }
+          font-size: 14px;
+          color: #363f44;
+          margin: 0 0 5px 0;
+          //多色状态标签
+          small{
+            display: inline;
+            padding: .2em .6em .3em;
+            font-size: 75%;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: .25em;
+            text-shadow:0 1px 0 rgba(0,0,0,.2);font-weight:700;
+            &.progress{
+              background-color: #20af42;
+              color:#fff;
+            }
+            &.warning{
+              background-color:#fad733;color:#fffefa;
+            }
+            &.light{
+              background-color:#747474;color:#fff;
+            }
+            &.danger{
+              background-color: #f05050;
+              color:#fff;
+            }
+          }
+        }
+        //第二行
+        span{
+          font-size: 12px;
+          color: #98a6ad;
+          padding-right:20px;
+        }
+      }
+      //右侧
+      .right{
+        flex: 0 0 150px;
+        @media only screen and (max-width:767px) {
+          flex: 0 0 50px;
+        }
+        font-size: 14px;
+        color: #f7b47f;
+        text-align: right;
+      }
+    }
+  }
 }
-._common_bg_warning{
-  background-color:#fad733;color:#fffefa;
-}
-._common_bg_light{
-  background-color:#747474;color:#fff;
-}
-._common_bg_danger{
-  background-color: #f05050;
-  color:#fff;
-}
-._common_task{padding-right:20px;}
-._common_m-l-sm{margin-left:10px;}
 

@@ -10,7 +10,4 @@ export default {
     {name:'资讯',url:'/news'},
     {name:'日程',url:'/schedule'}
   ],
-    todoType:[
-        {name:'我的待办',url:'/todo'}
-    ]
 }

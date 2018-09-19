@@ -113,3 +113,10 @@ em,i{
     }
   }
 }
+//轮播图
+.el-carousel__indicators{
+  white-space: nowrap;
+  .el-carousel__button{
+    width: 20px;
+  }
+}

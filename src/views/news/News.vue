@@ -1,7 +1,7 @@
 <template>
     <div>
         <subhead>
-            <div><i class="iconfont icon-news"></i>&nbsp;&nbsp;&nbsp;资讯中心 <span>News Center</span></div>
+            <div><i class="iconfont icon-news icon"></i>资讯中心 <span>News Center</span></div>
             <SubheadInput>
                 <input slot="input" v-model="input_value" placeholder="标题搜索" @keyup.enter="searchTitle"/><button @click="searchTitle"><i class="fa fa-search"></i></button>
             </SubheadInput>

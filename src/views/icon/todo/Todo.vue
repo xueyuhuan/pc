@@ -1,42 +1,41 @@
 <template>
-    <div>
+    <div class="todo">
         <subhead>
-            <div><i class="fa fa-tv"></i>&nbsp;&nbsp;&nbsp;办事中心 <span>Todo List</span></div>
+            <div><i class="fa fa-tv icon"></i>办事中心 <span>Todo List</span></div>
         </subhead>
-        <CardTemp class="head" v-if="todoType.length > 1">
-            <router-link class="head_btn" :class="{btn_choosen:item.url === '/todo'}" v-for="item in todoType" :to="item.url" @click="chooseType(0)">{{item.name}}</router-link>
-        </CardTemp>
-        <div class="contain">
-            <div class="leftDiv">
-                <card>
-                    <template slot="header">待办来源</template>
-                    <div class="menuDiv" :class="{todoSourceActive:todoSourceId === ''}" @click="switchTodoSource('')">全部</div>
-                    <div class="menuDiv" :class="{todoSourceActive:todoSourceId === item.id}" v-for="item in todomenu" @click="switchTodoSource(item.id)">
-                        {{item.name}}
-                        <span>（{{item.todoList.length}}）</span>
-                    </div>
-                </card>
-            </div>
-            <div class="rightDiv">
-                <card>
-                    <template slot="header">待办明细</template>
-                    <div v-for="item in todomenu">
-                        <div v-for="i in item.todoList" @click="openTodo(i.url)" class="block" v-if="todoSourceId === i.appId || todoSourceId ===''">
-                            <div class="blockLeft">
-                                <div class="title">[{{i.appName}}]{{i.title}}</div>
-                                <div class="time">{{i.currentTime}}</div>
+        <cardTemp class="nav" v-if="$school.todoType">
+            <router-link :class="{choose:item.url === '/todo'}" v-for="item in $school.todoType" :to="item.url" @click="chooseType(0)">{{item.name}}</router-link>
+        </cardTemp>
+        <div class="container" :class="{noborder:$school.todoType}">
+            <cardTemp class="left">
+                <header slot="header">待办来源</header>
+                <ul>
+                    <li :class="{todoSourceActive:todoSourceId === ''}" @click="switchTodoSource('')">
+                        <i class="fa fa-bell-o"></i>全部（{{allLength}}）
+                    </li>
+                    <li :class="{todoSourceActive:todoSourceId === item.id}" v-for="item in todoSource" @click="switchTodoSource(item.id)">
+                        <i class="fa fa-bell-o"></i>{{item.name}}（{{item.todoList.length}}）
+                    </li>
+                </ul>
+            </cardTemp>
+            <cardTemp class="right">
+                <header slot="header">待办明细</header>
+                <ul class="todoList">
+                    <li v-for="item in todoSource">
+                        <a v-for="i in item.todoList" @click="openJump(i.url,i.appName)" v-if="todoSourceId === i.appId || todoSourceId ===''">
+                            <div class="left">
+                                <p><em>【{{i.appName}}】</em>{{i.title}}</p>
+                                <span v-if="i.currentNode!==''">当前环节：{{i.currentNode}}</span>
+                                <span v-if="i.startUser!==''">发起人：{{i.startUser}}</span>
+                                <span v-if="i.createTime!==''">发起时间：{{i.currentTime}}</span>
                             </div>
-                            <div class="blockRight"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;办理</div>
-                        </div>
-                        <div style="text-align: center">
-                            <img v-if="item.todoList.length === 0 && todoSourceId === item.id" src="/img/no_data.png" />
-                        </div>
-                    </div>
-                    <div style="text-align: center">
-                        <img v-if="allLength === 0 && todoSourceId === ''" src="/img/no_data.png" />
-                    </div>
-                </card>
-            </div>
+                            <div class="right"><i class="fa fa-pencil-square-o"></i> 办理</div>
+                        </a>
+                        <a v-if="item.todoList.length===0&& todoSourceId === item.id"><img src="/img/no_data.png"/></a>
+                    </li>
+                    <li v-if="allLength===0&& todoSourceId === ''"><img src="/img/no_data.png"/></li>
+                </ul>
+            </cardTemp>
         </div>
         <Jump></Jump>
     </div>
@@ -49,27 +48,28 @@
         components: {Jump},
         data(){
             return{
-                todoType:this.$school.todoType,
-                todomenu:[],//待办来源
+                todoSource:[],//待办来源
                 todoSourceId:"",//当前选中的待办ID
                 allLength:0,//我的待办所有类的待办事项
                 dialogVisible:false,//是否显示模态框
             }
         },
+      created(){
+        this.getTodoSource();
+      },
         methods:{
             //待办来源
             getTodoSource(){
                 this.$ajax.post(this.$url.getTodoResource)
                     .then(res => {
-                        this.todomenu = res.data.apps;
-                        let allLength = 0;
-                        for(let i=0;i<this.todomenu.length;i++){
-                            allLength += this.todomenu[i].todoList.length;
+                        this.todoSource = res.data.apps;
+                        for(let i=0;i<this.todoSource.length;i++){
+                          this.allLength += this.todoSource[i].todoList.length;
                         }
-                        this.allLength = allLength;
                     })
             },
-            openTodo(url){
+          //打开跳转弹窗
+            openJump(url,appName){
                 this.$store.commit('set_data',{
                     data:true,
                     name:'jumpShow'
@@ -78,107 +78,15 @@
                     data:appName,
                     name:'jumpName'
                 });
-                // this.dialogVisible = true;
-                // this.appName = appName;
                 window.open(url);
             },
             //切换待办来源
             switchTodoSource(id){
                 this.todoSourceId = id;
             }
-        },
-        created(){
-            this.getTodoSource();
         }
     }
 </script>
 
-<style scoped lang="scss">
-    .head{
-        @extend %width;
-        padding: 10px 20px;
-        margin-bottom: 10px;
-        .head_btn{
-            display: inline-block;
-            background: #BFBFBF;
-            height: 30px;
-            line-height: 30px;
-            width: 90px;
-            font-size: 16px;
-            color: white;
-            text-align: center;
-            border-radius: 15px;
-            margin-right: 10px;
-            cursor: pointer;
-        }
-        .btn_choosen {
-            background: #F08625;
-        }
-    }
-    .contain{
-        @extend %width;
-        @include flex(space-between,flex-start);
-        flex-flow: wrap;
-        .leftDiv{
-            width: 389px;
-            @media only screen and (max-width:767px) {
-                width: 100%;
-            }
-            .todoSourceActive{
-                background-color: #efefef;
-            }
-            .menuDiv{
-                cursor: pointer;
-                padding: 12px 23px;
-                font-size: 14px;
-                border-bottom: 1px dashed #eaeaea;
-            }
-        }
-        .rightDiv{
-            width: 784px;
-            @media only screen and (max-width:767px) {
-                width: 100%;
-                img{
-                    width: 100%;
-                }
-            }
-            .block{
-                padding: 12px 23px;
-                font-size: 14px;
-                border-bottom: 1px dashed #eaeaea;
-                cursor: pointer;
-                @include flex(space-between,center);
-                .title{
-                    width: 650px;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                }
-                .time{
-                    font-size: 12px;
-                    margin-top: 5px;
-                    color: #a0a0a0;
-                }
-                &:hover{
-                    background-color: #efefef;
-                }
-                .blockRight{
-                    font-size: 14px;
-                    color: #f7b47f;
-                }
-            }
-        }
-    }
-    .dialog_content{
-        @include flex(center,center);
-        .content_title{
-            font-size:18px;
-        }
-        .content_desc{
-            font-size: 14px;
-            padding-top: 5px;
-            color: #959595;
-        }
-    }
-</style>
+<!--待办为公用样式，统一在common-->
 

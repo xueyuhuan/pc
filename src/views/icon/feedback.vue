@@ -1,7 +1,7 @@
 <template>
     <div id="feedback">
         <subhead>
-            <div><i class="iconfont icon-fankuiwenti"></i>&nbsp;&nbsp;&nbsp;意见反馈&nbsp;<span>Feedback</span></div>
+            <div><i class="iconfont icon-fankuiwenti icon"></i>意见反馈 <span>Feedback</span></div>
         </subhead>
         <cardTemp>
             <ul class="nav"><li v-for="(i,index) in nav" @click="navActive=index" :class="{active:index===navActive}">{{i.name}}</li></ul>
@@ -25,6 +25,7 @@
                 </li></ul>
                 <el-pagination v-show="list.total>0"
                                background
+                               small
                                layout="prev, pager, next"
                                @current-change="handlePageChange"
                                @prev-click="handlePageChange"
@@ -33,17 +34,28 @@
                 </el-pagination>
             </template>
         </cardTemp>
-        <div class="popup" v-show="popupShow">
-            <div class="content">
-                <h3>详情</h3>
-                <ul class="form">
-                    <li>问题类型<input v-model="detail.type" class="left number" disabled/></li>
-                    <li>联系方式<input v-model="detail.tel" class="left number" disabled/></li>
-                    <li>内容描述<textarea v-model="detail.content" class="left number" disabled></textarea></li>
-                </ul>
-                <div class="btn"><button @click="popupShow=false">关闭</button></div>
+        <el-dialog :visible="popupShow" class="enterApp" @close="popupShow=false">
+            <h3 slot="title" class="dialog_h3">详情</h3>
+            <ul class="form">
+                <li>问题类型<input v-model="detail.type" class="left number" disabled/></li>
+                <li>联系方式<input v-model="detail.tel" class="left number" disabled/></li>
+                <li>内容描述<textarea v-model="detail.content" class="left number" disabled></textarea></li>
+            </ul>
+            <div slot="footer" class="dialog_footer">
+                <button @click="popupShow=false">关闭</button>
             </div>
-        </div>
+        </el-dialog>
+        <!--<div class="popup" v-show="popupShow">-->
+            <!--<div class="content">-->
+                <!--<h3>详情</h3>-->
+                <!--<ul class="form">-->
+                    <!--<li>问题类型<input v-model="detail.type" class="left number" disabled/></li>-->
+                    <!--<li>联系方式<input v-model="detail.tel" class="left number" disabled/></li>-->
+                    <!--<li>内容描述<textarea v-model="detail.content" class="left number" disabled></textarea></li>-->
+                <!--</ul>-->
+                <!--<div class="btn"><button @click="popupShow=false">关闭</button></div>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 </template>
 
@@ -200,6 +212,9 @@
                     cursor: pointer;
                     .text{
                         width: 670px;
+                        @media only screen and (max-width:767px) {
+                            width: auto;
+                        }
                         p{
                             @extend %ellipsis;
                             color: #363f44;
@@ -211,6 +226,7 @@
                         }
                     }
                     i{
+                        flex: 0 0 50px;
                         color: #f7b47f;
                     }
                 }

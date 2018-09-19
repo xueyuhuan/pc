@@ -1,85 +1,61 @@
 <template>
-    <div>
+    <div class="todo">
         <subhead>
             <div><i class="fa fa-tv icon"></i>办事中心 <span>Todo List</span></div>
         </subhead>
-        <div class="contain">
-            <CardTemp class="head" v-if="todoType.length > 1">
-                <router-link class="head_btn" :class="{btn_choosen:item.url === '/todo_done'}" v-for="item in todoType" :to="item.url">
-                    {{item.name}}
-                </router-link>
-            </CardTemp>
-            <div class="content">
-                <div class="content_left">
-                    <card>
-                        <template slot="header">条件过滤</template>
-                        <div class="menuDiv_input">
-                            <el-form label-position="right" label-width="80px">
-                                <el-form-item label="来源:">
-                                    <el-select v-model="sourceValue" clearable filterable placeholder="请选择来源"
-                                               style="width:100%;">
-                                        <el-option v-for="item in myDone_select_contain" :label="item.name"
-                                                   :value="item.id" :key="item.value">{{item.name}}
-                                        </el-option>
-                                    </el-select>
-                                </el-form-item>
-                                <el-form-item label="标题:">
-                                    <el-input v-model="title"></el-input>
-                                </el-form-item>
-                                <el-form-item class="hidden-xs-only" label="办理时间:">
-                                    <el-date-picker
-                                            class="dateInput"
-                                            v-model="period"
-                                            type="daterange"
-                                            align="right"
-                                            unlink-panels
-                                            range-separator="-"
-                                            start-placeholder="开始日期"
-                                            end-placeholder="结束日期"
-                                            :picker-options="pickerOptions2">
-                                    </el-date-picker>
-                                </el-form-item>
-                                <el-row style="text-align: center;">
-                                    <el-button @click="clear">清空</el-button>
-                                    <el-button class="_theme" type="primary" @click="getDoneList">查询</el-button>
-                                </el-row>
-                            </el-form>
-                        </div>
-                    </card>
-                </div>
-                <div class="content_right">
-                    <card>
-                        <template slot="header">明细</template>
-                        <div v-for="item in doneList" @click="" class="block">
-                            <div class="blockLeft">
-                                <div class="title">
-                                    <span>【{{item.appname}}】</span>
-                                    <i style="font-style: normal" @click.stop="showTitle(item.title)">{{item.title}}</i>&nbsp;&nbsp;
-                                </div>
-                                <div class="time">
-                                    <span>发起人：{{item.startdept}}{{item.startuser}}</span>
-                                    <span>发起时间：{{item.createtime.substring(0,16)}}</span>
-                                    <span>我的办理时间：{{item.opertime.substring(0,16)}}</span>
-                                </div>
+        <cardTemp class="nav" v-if="$school.todoType">
+            <router-link :class="{choose:item.url === '/todo_done'}" v-for="item in $school.todoType" :to="item.url" @click="chooseType(0)">{{item.name}}</router-link>
+        </cardTemp>
+        <div class="container noborder">
+            <cardTemp class="left">
+                <header slot="header">条件过滤</header>
+                <el-form class="search" label-position="right" label-width="70px">
+                    <el-form-item label="来源">
+                        <el-select class="input" v-model="sourceValue" clearable placeholder="请选择来源">
+                            <el-option v-for="item in myDone_select_contain" :label="item.name" :value="item.id" :key="item.value">
+                                {{item.name}}
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="标题">
+                        <el-input class="input" v-model="title"></el-input>
+                    </el-form-item>
+                    <el-form-item class="hidden-xs-only" label="办理时间">
+                        <el-date-picker class="input" v-model="period" type="daterange" align="right" unlink-panels
+                                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
+                        </el-date-picker>
+                    </el-form-item>
+                    <el-form-item style="text-align: center">
+                        <el-button @click="clear">清空</el-button>
+                        <el-button class="_theme" type="primary" @click="getDoneList">查询</el-button>
+                    </el-form-item>
+                </el-form>
+            </cardTemp>
+            <cardTemp class="right">
+                <header slot="header">明细</header>
+                <ul class="todoList">
+                    <li v-for="i in doneList">
+                        <a>
+                            <div class="left">
+                                <p @click.stop="showTitle(i.title)"><em>【{{i.appname}}】</em>{{i.title}}</p>
+                                <span>发起人：{{i.startdept}} {{i.startuser}}</span>
+                                <span>发起时间：{{i.createtime.substring(0,16)}}</span>
+                                <span>我的办理时间：{{i.opertime.substring(0,16)}}</span>
                             </div>
-                            <div @click="openDoneDetail(item.url)" class="blockRight"><i
-                                    class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;查看
-                            </div>
-                        </div>
-                        <div v-if="doneList.length > 0" style="text-align: center;padding: 10px 23px;">
-                            <el-pagination
-                                    background
-                                    @current-change="handleCurrentChange_1"
-                                    :current-page.sync="page"
-                                    :page-size="limit"
-                                    layout="total, prev, pager, next"
-                                    :total="total">
-                            </el-pagination>
-                        </div>
-                    </card>
-                    <div class="img" v-if="doneList.length === 0"><img src="/img/no_data.png"/></div>
-                </div>
-            </div>
+                            <div class="right" @click="openDoneDetail(i.url)"><i class="fa fa-file-text-o"></i> 查看</div>
+                        </a>
+                    </li>
+                    <li v-if="doneList.length===0"><img src="/img/no_data.png"/></li>
+                </ul>
+                <el-pagination v-show="total>0"
+                        background small
+                        @current-change="handleCurrentChange_1"
+                        :current-page.sync="page"
+                        :page-size="limit"
+                        layout="total, prev, pager, next"
+                        :total="total">
+                </el-pagination>
+            </cardTemp>
         </div>
     </div>
 </template>
@@ -89,7 +65,6 @@
         name: "Todo_done",
         data() {
             return {
-                todoType: this.$school.todoType,
                 //  我的已办-查询条件
                 myDone_select_contain: [],//来源备选项
                 sourceValue: '',//来源
@@ -193,134 +168,4 @@
     }
 </script>
 
-<style scoped lang="scss">
-    .contain {
-        @extend %width;
-        .head {
-            padding: 10px 28px;
-            margin-bottom: 10px;
-            .head_btn {
-                display: inline-block;
-                background: #BFBFBF;
-                height: 30px;
-                line-height: 30px;
-                width: 90px;
-                font-size: 16px;
-                color: white;
-                text-align: center;
-                border-radius: 15px;
-                margin-right: 10px;
-                cursor: pointer;
-            }
-            .btn_choosen {
-                background: #F08625;
-            }
-        }
-        .content {
-            .card {
-                border-top: none;
-            }
-            @include flex(space-between, flex-start);
-            flex-flow: wrap;
-            .content_left {
-                width: 386px;
-                @media only screen and (max-width:767px) {
-                    width: 100%;
-                }
-                background: white;
-                ul {
-                    li {
-                        &.title {
-                            font-size: 18px;
-                            font-weight: 700;
-                            color: #0683c3;
-                            cursor: auto;
-                        }
-                        cursor: pointer;
-                        padding: 12px 23px;
-                        font-size: 14px;
-                        color: #363f44;
-                        border-bottom: 1px dashed #eaeaea;
-                        &:last-child {
-                            border: none;
-                        }
-                        i {
-                            margin-right: 8px;
-                        }
-                    }
-                }
-                .todoSourceActive {
-                    background: #efefef;
-                }
-                .menuDiv_input {
-                    padding: 20px;
-                    .dateInput {
-                        width: 100%;
-                    }
-                }
-            }
-            .content_right {
-                width: 784px;
-                @media only screen and (max-width:767px) {
-                    width: 100%;
-                }
-                background-color: white;
-                .block {
-                    padding: 12px 23px;
-                    font-size: 14px;
-                    border-bottom: 1px dashed #eaeaea;
-                    cursor: pointer;
-                    &:hover {
-                        background-color: #efefef;
-                    }
-                    @include flex(space-between, center);
-                    .title {
-                        width: 650px;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                        span {
-                            color: #0683c3;
-                        }
-                    }
-                    .time {
-                        font-size: 12px;
-                        margin-top: 5px;
-                        color: #a0a0a0;
-                        span {
-                            padding-left: 20px;
-                        }
-                    }
-                    .blockRight {
-                        font-size: 14px;
-                        color: #f7b47f;
-                    }
-                }
-                .img{
-                    text-align: center;
-                    img{
-                        @media only screen and (max-width:767px) {
-                            width: 100%;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    .dialog_content {
-        @include flex(center, center);
-        .content_title {
-            font-size: 18px;
-        }
-        .content_desc {
-            font-size: 14px;
-            padding-top: 5px;
-            color: #959595;
-        }
-    }
-
-    .pad15 {
-        padding: 0 15px;
-    }
-</style>
+<!--待办为公用样式，统一在common-->
