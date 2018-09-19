@@ -43,7 +43,7 @@
                             @current-change="handleCurrentChange"
                             :current-page.sync="page"
                             :page-size="10"
-                            layout="total, prev, pager, next"
+                            layout="prev, pager, next"
                             :total="newsList_length">
                     </el-pagination>
                 </div>

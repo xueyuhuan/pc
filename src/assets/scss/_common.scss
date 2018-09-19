@@ -59,6 +59,7 @@
       }
       padding: 20px 30px;
       .el-carousel{
+        flex: none;
         width: 400px;
         border: 1px solid #bfbfbf;
         .el-carousel__container{
@@ -67,6 +68,9 @@
       }
       p{
         margin: 0 0 0 20px;
+        pre{
+          white-space: normal;
+        }
       }
     }
   }
@@ -161,10 +165,10 @@
 ul.todoList{
   li{
     cursor: pointer;
-    &:hover{
-      background: #efefef;
-    }
     a{
+      &:hover{
+        background: #efefef;
+      }
       @include flex(space-between);
       padding: 15px;
       border-top: 1px solid #edf1f2;

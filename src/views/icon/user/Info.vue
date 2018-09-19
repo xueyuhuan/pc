@@ -25,7 +25,7 @@
                 <header class="_theme_font">绑定邮箱<i>用于收取个人邮件<em>( 仅支持工大邮箱（@*.hit.edu.cn）的绑定 )</em></i></header>
                 <label v-if="user.schoolEmail!==''">
                     <span>已绑邮箱：</span>
-                    <input class="disabled" :value="user.schoolEmail" disabled/><button @click="delEmail">解除绑定</button>
+                    <input class="disabled" :value="user.schoolEmail" disabled/><button class="_theme_darker" @click="delEmail">解除绑定</button>
                 </label>
                 <label v-else>
                     <span>邮箱地址：</span><input v-model="email" placeholder="邮箱名称"/>
@@ -45,7 +45,7 @@
                 </header>
                 <label v-if="user.cardNo!==''">
                     <span>已绑一卡通：</span>
-                    <input class="disabled" :value="user.cardNo" disabled/><button @click="delCard">解除绑定</button>
+                    <input class="disabled" :value="user.cardNo" disabled/><button class="_theme_darker" @click="delCard">解除绑定</button>
                 </label>
                 <label v-else>
                     <span>一卡通账号：</span><input v-model="cardNo" placeholder="一卡通账号/（学）工号"/>
