@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <a class="online" v-if="service.lineAble==='1'" @click="enterService(service)">进入服务</a>
-                    <a class="underline" v-else>该项服务为线下服务<br/>请仔细查看办理流程</a>
+                    <a class="underline hidden-xs-only" v-else>该项服务为线下服务<br/>请仔细查看办理流程</a>
                 </template>
                 <!--服务提供和对象说明-->
                 <div class="explain">
@@ -41,7 +41,7 @@
                         <div class="content">
                             <div class="text"><p class="no" style="padding:0;margin-bottom: 14px;" v-if="service.fwlcsm===''">暂无数据</p><div v-else v-html="service.fwlcsm"></div></div>
                             <!--右侧图片-->
-                            <div class="img" v-if="data.fwlcs&&data.fwlcs.length>0">
+                            <div class="img hidden-xs-only" v-if="data.fwlcs&&data.fwlcs.length>0">
                                 <!--图片大于1时轮播-->
                                 <el-carousel v-if="data.fwlcs.length>1">
                                     <el-carousel-item v-for="i in data.fwlcs" >

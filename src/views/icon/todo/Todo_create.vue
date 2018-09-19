@@ -59,7 +59,7 @@
                                     <small v-if="i.stateno==='4'" class="danger">{{i.state}}</small>
                                 </p>
                                 <span>发起时间：{{i.createtime}}</span>
-                                <span>当前环节：<b style="color: #0683c3;" @click.stop="showLink(i.taskid)">{{i.currentnode}}</b></span>
+                                <span class="hidden-xs-only">当前环节：<b class="_theme_font" @click.stop="showLink(i.taskid)">{{i.currentnode}}</b></span>
                             </div>
                             <div class="right" @click="openDoneDetail(i.url)"><i class="fa fa-file-text-o"></i> 查看</div>
                         </a>
