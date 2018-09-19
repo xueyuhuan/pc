@@ -31,13 +31,13 @@
                 <el-collapse class="collapse" v-model="activeName">
                     <!--办理说明-->
                     <el-collapse-item name="1" v-show="!data.cols||cols.blsm==='Y'">
-                        <template slot="title"><i class="fa fa-file-text-o"></i>办理说明</template>
+                        <template slot="title"><i class="iconfont icon-form"></i>办理说明</template>
                         <div v-if="service.description" class="content" v-html="service.description"></div>
                         <p v-else class="no">暂无数据</p>
                     </el-collapse-item>
                     <!--服务流程-->
                     <el-collapse-item name="2" v-show="!data.cols||cols.fwlc==='Y'">
-                        <template slot="title"><i class="fa fa-object-ungroup"></i>服务流程</template>
+                        <template slot="title"><i class="iconfont icon-yewuliucheng"></i>服务流程</template>
                         <div class="content">
                             <div class="text"><p class="no" style="padding:0;margin-bottom: 14px;" v-if="service.fwlcsm===''">暂无数据</p><div v-else v-html="service.fwlcsm"></div></div>
                             <!--右侧图片-->
@@ -59,7 +59,7 @@
                     </el-collapse-item>
                     <!--所需材料-->
                     <el-collapse-item name="3" v-show="!data.cols||cols.sxcl==='Y'">
-                        <template slot="title"><i class="fa fa-files-o"></i>所需材料</template>
+                        <template slot="title"><i class="iconfont icon-caifang-cailiaoshuoming"></i>所需材料</template>
                         <div class="content" v-if="data.sxcls&&data.sxcls.length>0">
                             <table>
                                 <thead><tr><th colspan="1"></th><th colspan="10">材料名称</th><th colspan="2">下载</th></tr></thead>
@@ -79,7 +79,7 @@
                     </el-collapse-item>
                     <!--用户评价-->
                     <el-collapse-item name="4" v-if="service.isKfpj==='1'&&(!data.cols||cols.yhpj==='Y')">
-                        <template slot="title"><i class="fa fa-comment-o"></i>用户评价<a class="comment" @click="commentShow=true">评价</a></template>
+                        <template slot="title"><i class="iconfont icon-pingjia2"></i>用户评价<a class="comment" @click="commentShow=true">评价</a></template>
                         <div class="content" v-if="comment.length>0">
                             <ul>
                                 <li v-for="i in comment"><img :src="i.PATH?i.PATH:'/img/a0.jpg'"/>
@@ -107,7 +107,7 @@
             <div class="right">
                 <!--基本信息-->
                 <card class="basic" v-show="!data.cols||cols.jbxx==='Y'">
-                    <template slot="header"><div class="left"><i class="fa fa-info-circle"></i>基本信息</div></template>
+                    <template slot="header"><div class="left"><i class="iconfont icon-xinxi"></i>基本信息</div></template>
                     <!--已进驻头部-->
                     <div class="enter" v-if="service.isJzdt==='1'">
                         <img :src="'/img/'+$school.school+'/enter.png'"/>
@@ -145,13 +145,13 @@
                 </card>
                 <!--注意事项-->
                 <card v-show="!data.cols||cols.zysx==='Y'">
-                    <template slot="header"><div class="left"><i class="fa fa-warning"></i>注意事项</div></template>
+                    <template slot="header"><div class="left"><i class="iconfont icon-zhuyishixiang"></i>注意事项</div></template>
                     <div v-if="service.notice" style="font-size: 14px;padding: 0 15px;" v-html="service.notice"></div>
                     <p class="no" v-else>暂无数据</p>
                 </card>
                 <!--收费信息-->
                 <card v-show="!data.cols||cols.sfxx==='Y'">
-                    <template slot="header"><div class="left"><i class="fa fa-money"></i>收费信息</div></template>
+                    <template slot="header"><div class="left"><i class="iconfont icon-sfxx"></i>收费信息</div></template>
                     <div style="font-weight: 600;" v-if="service.sfbz&&service.sfyj">
                         <p>收费标准：{{service.sfbz}}</p>
                         <p>收费依据：{{service.sfyj}}</p>
@@ -160,7 +160,7 @@
                 </card>
                 <!--服务依据-->
                 <card v-show="!data.cols||cols.fwyj==='Y'">
-                    <template slot="header"><div class="left"><i class="fa fa-book"></i>服务依据</div></template>
+                    <template slot="header"><div class="left"><i class="iconfont icon-cc-book"></i>服务依据</div></template>
                     <p v-if="data.fwyjs">
                         <template v-for="i in data.fwyjs">
                             <span v-if="i.path===''">{{i.fileName}}</span>
@@ -431,7 +431,10 @@
                 }
                 .collapse{
                     overflow: hidden;
-                    i{margin: 0 10px;}
+                    i{
+                        font-size: 18px;
+                        margin: 0 10px;
+                    }
                     a.comment{
                         float: right;
                         z-index: 99;
