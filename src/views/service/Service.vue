@@ -233,6 +233,7 @@
                 }
                 ul{
                     @include flex;
+                    flex-flow: wrap;
                     li:hover{
                         background-color: #eee;
                     }
