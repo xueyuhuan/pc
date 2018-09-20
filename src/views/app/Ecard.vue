@@ -37,8 +37,18 @@
                     <span>{{i.transNo}}</span><span>{{i.dealDate}}</span><span>{{i.dealName}}</span><span>{{i.transMoney}}</span><span>{{i.outMoney}}</span><span class="hidden-xs-only">{{i.orgName}}</span>
                 </li>
             </ul>
-            <el-pagination class="page" v-if="total>limit"
+            <el-pagination class="page hidden-xs-only" v-if="total>limit"
                            background
+                           layout="prev, pager, next"
+                           @current-change="handlePageChange"
+                           @prev-click="handlePageChange"
+                           @next-click="handlePageChange"
+                           :page-size="limit"
+                           :total="total">
+            </el-pagination>
+            <el-pagination class="page hidden-sm-and-up" v-if="total>limit"
+                           background
+                           small
                            layout="prev, pager, next"
                            @current-change="handlePageChange"
                            @prev-click="handlePageChange"
