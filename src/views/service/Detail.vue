@@ -91,8 +91,18 @@
                     </el-collapse-item>
                 </el-collapse>
                 <!--分页-->
-                <el-pagination v-show="total>10"
+                <el-pagination class="hidden-xs-only" v-show="total>10"
                                background
+                               layout="prev, pager, next"
+                               @current-change="handlePageChange"
+                               @prev-click="handlePageChange"
+                               @next-click="handlePageChange"
+                               :page-size=pageSize
+                               :total=total>
+                </el-pagination>
+                <el-pagination class="hidden-sm-and-up" v-show="total>10"
+                               background
+                               small
                                layout="prev, pager, next"
                                @current-change="handlePageChange"
                                @prev-click="handlePageChange"
@@ -166,7 +176,6 @@
                             <span v-if="i.path===''">{{i.fileName}}</span>
                             <a v-else :href="i.path.indexOf('http')>-1?i.path:filePath+i.path" target="_blank">{{i.fileName}}</a>
                         </template>
-
                     </p>
                     <p class="no" v-else>暂无数据</p>
                 </card>
@@ -288,7 +297,7 @@
       //进入服务
       enterService(i){
         if(this.data.openServiceErrmsg!==''){
-          this.$notify.error(i.openServiceErrmsg);
+          this.$notify.error(this.data.openServiceErrmsg);
         }
         else {
           if(i.fwfs==='0'){//访问限制
