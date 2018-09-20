@@ -24,7 +24,7 @@
                     <li v-for="item in todoSource">
                         <a v-for="i in item.todoList" @click="openJump(i.url,i.appName)" v-if="todoSourceId === i.appId || todoSourceId ===''">
                             <div class="left">
-                                <p><em>【{{i.appName}}】</em>{{i.title}}</p>
+                                <p><em class="_theme_font">【{{i.appName}}】</em>{{i.title}}</p>
                                 <span v-if="i.currentNode!==''">当前环节：{{i.currentNode}}</span>
                                 <span v-if="i.startUser!==''">发起人：{{i.startUser}}</span>
                                 <span v-if="i.createTime!==''">发起时间：{{i.currentTime}}</span>
