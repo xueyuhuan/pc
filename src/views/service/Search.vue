@@ -2,10 +2,11 @@
     <div class="search">
         <subhead>
             <div class="left">
-                <i class="fa" :class="[{'fa-arrow-left':$school.school==='ccnu'},{'fa-list':$school.school==='hit'}]" style="cursor: pointer" @click="routerBack"></i>&nbsp;&nbsp;&nbsp;服务中心&nbsp;<span>Service&nbsp;Center</span>
+                <template v-if="$school.nav[1].url==='/service'"><i class="fa fa-arrow-left icon" style="cursor: pointer" @click="routerBack"></i>服务中心 <span>Service Center</span></template>
+                <template v-else ><i class="fa fa-list icon"></i>服务中心 <span>Service Center</span></template>
             </div>
             <SubheadInput>
-                <input slot="input" v-model="searchData.key" placeholder="服务搜索"/><button @click="getList"><i class="fa fa-search"></i></button>
+                <input slot="input" v-model="searchData.key" placeholder="服务搜索" @keyup.enter="getList"/><button @click="getList"><i class="fa fa-search"></i></button>
             </SubheadInput>
         </subhead>
         <CardTemp class="menu">
@@ -131,11 +132,20 @@
         get() {
           return this.$route.path.indexOf('icon')>0?'icon':'list';
         },
-        set() {
-
-        }
+        set() {}
+      },
+      key(){
+        return this.$store.state.searchKey;
       }
     },
+    // watch:{
+    //   key(v1,v2){
+    //     console.log(v1);
+    //     console.log(v2)
+    //     this.searchData.key=v2;
+    //     this.getList();
+    //   },
+    // },
     created(){
       if(localStorage.active||localStorage.condition||localStorage.searchData){
         this.active=JSON.parse(localStorage.active);
@@ -143,6 +153,7 @@
         this.searchData=JSON.parse(localStorage.searchData);
         this.searchData.page=1;
       }
+      this.searchData.key=this.key;
       this.getFWLY();
       this.getFZBM();
       this.getFWDX();

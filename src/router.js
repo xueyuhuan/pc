@@ -43,8 +43,8 @@ const router = new Router({
       {path: "/service", component: service,meta:{keepAlive: true}},
       {path: "/service/search", component: serviceSearch,
         children:[
-          {path:'icon', component:serviceSearchIcon,meta:{keepAlive: true}},
-          {path:'list', component:serviceSearchList,meta:{keepAlive: true}},
+          {path:'icon', component:serviceSearchIcon},
+          {path:'list', component:serviceSearchList},
         ]
       },
       {path: "/service/detail/:id", component: serviceDetail},

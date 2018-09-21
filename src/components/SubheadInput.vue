@@ -7,13 +7,14 @@
 
 <style lang="scss">
     .subhead-input{
+        @include flex(flex-start,center);
         height: 30px;
         input{
             width: 160px;
             @media only screen and (max-width:767px) {
                 width: 100px;
             }
-            height: 100%;
+            height: 30px;
             font-size: 12px;
             padding: 5px 15px;
             border-radius: 30px 0 0 30px;
@@ -34,7 +35,7 @@
             color:#bfbfbf;
         }
         button{
-            height: 100%;
+            height: 30px;
             font-size: 12px;
             padding: 5px 10px;
             border-radius: 0 30px 30px 0;

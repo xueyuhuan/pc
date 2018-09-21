@@ -5,7 +5,7 @@
                 <i class="fa fa-list icon"></i>服务中心 <span>Service Center</span>
             </div>
             <SubheadInput>
-                <input slot="input" v-model="key" placeholder="服务搜索"/><router-link to="/service/search/icon"><button><i class="fa fa-search"></i></button></router-link>
+                <input slot="input" v-model="key" @keyup.enter="search" placeholder="服务搜索"/><button @click="search"><i class="fa fa-search"></i></button>
             </SubheadInput>
         </subhead>
         <div class="top">
@@ -117,6 +117,15 @@
       this.getType();
     },
     methods:{
+      //搜索
+      search(){
+        this.$store.commit('set_data',{
+          data:this.key,
+          name:'searchKey'
+        });
+        this.key='';
+        this.$router.push({path: '/service/search/icon'});
+      },
       //进入服务
       enterService(i){
         if(i.lineAble==='1'){//线上
