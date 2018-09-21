@@ -58,6 +58,18 @@
                     </div>
                 </template>
             </li>
+            <li>
+                <a class="left">
+                    <img src="/img/cloud-disk.png"/>
+                    <p>HIT云盘<br/>
+                        <span>124GB/2000GB</span>
+                    </p>
+                </a>
+                <div class="right">
+                    <el-progress color="#149718" :stroke-width="6" :percentage="30.8"></el-progress>
+                </div>
+
+            </li>
         </ul>
     </card>
 </template>
@@ -119,6 +131,9 @@
                         color: #000;
                         padding-left: 10px;
                         cursor: pointer;
+                    }
+                    .el-progress{
+                        width: 160px;
                     }
                 }
             }
