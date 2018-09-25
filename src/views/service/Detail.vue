@@ -318,6 +318,7 @@
       },
       //打开服务
       openService(i){
+        this.$ajax.post('/service_portal/save_visit_log',{id:i.id});
         if(i.openType==='1'){
           this.$router.push({path: '/service/iframe/'+i.id});
         }

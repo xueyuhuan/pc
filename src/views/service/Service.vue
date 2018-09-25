@@ -11,7 +11,7 @@
         <div class="top">
             <card class="recommend">
                 <template slot="header">推荐服务</template>
-                <ul>
+                <ul v-if="list.recommend.length>0">
                     <li v-for="i in list.recommend"><router-link :to="'/service/detail/'+i.id">
                         <img :src="$proxy+imgPath+i.id"/>
                         <p :title="i.name">{{i.name}}</p>
@@ -19,6 +19,7 @@
                         <el-rate v-model="i.score" disabled></el-rate>
                     </router-link></li>
                 </ul>
+                <img v-else src="/img/no_data.png"/>
             </card>
             <card class="deadline">
                 <template slot="header">限时办理</template>
@@ -265,6 +266,11 @@
                             color: #959595;
                         }
                     }
+                }
+                img{
+                    display: block;
+                    height: 200px;
+                    margin: 0 auto;
                 }
             }
             .deadline{
