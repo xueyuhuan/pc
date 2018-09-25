@@ -12,7 +12,7 @@
                     <div class="block_head _theme_font">{{appGroup.name}}</div>
                     <div class="block_body">
                         <div class="app" v-for="app in appGroup.apps">
-                            <a :href="app.url" :title="'进入' + app.name" target="_blank">
+                            <a @click="enterApp(app.id)" :href="app.url" :title="'进入' + app.name" target="_blank">
                                 <img :src="$proxy+'/resource/app?id=' + app.id + '&timestamp=' + app.timestamp"/>
                             </a>
                             <a class="app_title" :title="'进入' + app.name + '详情'" @click="showDetail(app.id)">{{app.name}}</a>
@@ -55,7 +55,7 @@
                         <p>访问限制：{{appDetail_app.fwxz}}</p>
                     </div>
                 </div>
-                <a class="enter" :href="appDetail_app.url" target="_blank">进入应用</a>
+                <a class="enter" @click="enterApp(appDetail_app.id)" :href="appDetail_app.url" target="_blank">进入应用</a>
             </header>
             <div class="content">
                 <el-carousel class="hidden-xs-only">
@@ -135,6 +135,10 @@
                       this.dialogVisible = true;
                     })
             },
+          //进入应用计数
+          enterApp(id){
+            this.$ajax.post('/app_portal/enter_app',{appId:id})
+          },
             //切换展示的app类型
             toggleAppType(id){
                 this.current_app_type_id = id;
