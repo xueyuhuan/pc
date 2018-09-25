@@ -128,7 +128,7 @@
             get_rank(){
                 this.$ajax.post(this.$url.rank_news,{type:this.rank_date_value})
                     .then(res => {
-                       this.rank_news = res.data.news;
+                       this.rank_news = res.data.data;
                     })
             },
             //切换阅读排行
