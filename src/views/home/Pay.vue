@@ -4,7 +4,6 @@
             <router-link to="/pay"><i class="fa fa-ellipsis-h"></i></router-link>
         </header>
         <div class="pay">
-            <span class="no">{{data.errmsg}}</span>
             <template v-if="data.salary">
                 <div class="text">
                     <p>{{data.title}}</p>
@@ -16,6 +15,7 @@
                 </div>
                 <div id="pie"></div>
             </template>
+            <span v-else class="no">服务器连接错误</span>
         </div>
     </CardTemp>
 </template>

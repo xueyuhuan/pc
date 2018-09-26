@@ -294,6 +294,10 @@
     .drag-list{
         flex: 1;
     }
+    .drag-list>span{
+        display: inline-block;
+        min-height: 55px;
+    }
     .drag>span{
         display: flex;
         flex-flow: wrap;

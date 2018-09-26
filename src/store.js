@@ -12,17 +12,17 @@ export default new Vuex.Store({
     homeChange:0,
     homeA:[],
     homeB:[],
-    componentData:{},
-    app:[],//应用布局
-    file:[],
-    notice:[],
-    notice2:[],
+    componentData:{},//组件数据
+    // app:[],//应用布局
+    // file:[],
+    // notice:[],
+    // notice2:[],
     pay:{},
-    ranking:[],
+    // ranking:[],
     type:1,//排行的日期
-    schedule:[],
+    // schedule:[],
     date:0,//日程的日期
-    service:[],//服务布局
+    // service:[],//服务布局
     todo:[],//待办列表，长度为待办数
     unreadCount:0,//未读消息数
     // 个人中心

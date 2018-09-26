@@ -7,10 +7,10 @@
             </div>
         </header>
         <ul>
-            <li v-for="i in data">
+            <li v-for="i in componentData.list">
                 <a @click="enterService(i)"><img :src="$proxy+imgPath+i.id"/>{{i.name}}</a>
             </li>
-            <li class="no" v-if="data.length===0">暂无数据</li>
+            <li class="no" v-if="componentData.list.length===0">暂无数据</li>
         </ul>
     </CardTemp>
 </template>
@@ -23,12 +23,31 @@
     },
     data(){
       return{
-        imgPath:"/resource/service?id="
+        imgPath:"/resource/service?id=",
+        componentData:{
+          name:'',
+          url:'',
+          list:'',
+        }
       }
     },
     computed:{
       data(){
-        return this.$store.state.service;
+        return this.$store.state.componentData[this.id];
+      }
+    },
+    watch:{
+      data(value){
+        this.componentData.name=value.name;
+        this.componentData.url=value.moreLink;
+        this.componentData.list=value.data;
+      },
+    },
+    created(){
+      if(this.data){
+        this.componentData.name=this.data.name;
+        this.componentData.url=this.data.moreLink;
+        this.componentData.list=this.data.data;
       }
     },
     methods:{
@@ -81,11 +100,11 @@
 <style scoped lang="scss">
     header{
         cursor: move;
-    }
-    .right{
-        i{
-            margin-left: 5px;
-            cursor: pointer;
+        .right{
+            i{
+                margin-left: 5px;
+                cursor: pointer;
+            }
         }
     }
     ul{

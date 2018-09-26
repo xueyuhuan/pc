@@ -68,7 +68,6 @@
                 <div class="right">
                     <el-progress color="#149718" :stroke-width="6" :percentage="30.8"></el-progress>
                 </div>
-
             </li>
         </ul>
     </card>

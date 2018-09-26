@@ -1,13 +1,18 @@
 <template>
     <CardTemp>
-        <header class="drag" slot="header">{{componentData.name}}
+        <header class="drag" slot="header">
+            <template v-if="componentData.name">{{componentData.name}}</template>
+            <template v-else>暂无数据</template>
             <a v-if="componentData.url!==''" :href="componentData.url" target="_blank"><i class="fa fa-ellipsis-h"></i></a>
         </header>
-        <ul>
+        <ul v-if="componentData.list">
             <li v-for="i in componentData.list">
                 <a :href="i.url" target="_blank"><p>{{i.title}}</p><time>{{i.publishDate}}</time></a>
             </li>
             <li class="no" v-if="componentData.list.length===0">暂无数据</li>
+        </ul>
+        <ul v-else>
+            <li class="no">未知错误</li>
         </ul>
     </CardTemp>
 </template>
@@ -41,13 +46,10 @@
     },
     created(){
       if(this.data){
-        console.log("data");
-        console.log(this.data);
         this.componentData.name=this.data.name;
         this.componentData.url=this.data.moreLink;
         this.componentData.list=this.data.data;
       }
-
     }
   }
 </script>

@@ -45,7 +45,7 @@ export default {
     'Schedule': () => import('./Schedule'),
     'Service': () => import('./Service'),
     'Notice': () => import('./Notice'),
-    'Notice2': () => import('./Notice2'),
+    // 'Notice2': () => import('./Notice2'),
     'Todo': () => import('./Todo'),
     'User': () => import('./User'),
     'Pay': () => import('./Pay'),
@@ -64,11 +64,11 @@ export default {
   computed:{
     dragOptions(){
       return{
-        animation: 100,
-        group: 'description',
-        disable:true,
-        handle:'.drag',
-        ghostClass: 'ghost'
+        animation: 100, // ms, animation speed moving items when sorting, `0` — without animation
+        group: 'description',// or { name: "...", pull: [true, false, clone], put: [true, false, array] }
+        disable:true,// Disables the sortable if set to true.
+        handle:'.drag',// Drag handle selector within list items
+        ghostClass: 'ghost'// Class name for the drop placeholder
       }
     },
     homeA(){
@@ -102,14 +102,14 @@ export default {
     this.getBanner();
     this.getHome();
     axios.all([
-      this.getApp(),
-      this.getFile(),
+      // this.getApp(),
+      // this.getFile(),
       // this.getNotice(),
       // this.getNotice2(),
       this.getPay(),
-      this.getRanking(),
-      this.getSchedule(),
-      this.getService(),
+      // this.getRanking(),
+      // this.getSchedule(),
+      // this.getService(),
       // this.getTodo(),
       this.getUserModule(),
     ]);
@@ -147,18 +147,23 @@ export default {
           .then(res=>{
             this.home=res.data.page;
             this.A=this.home.columnWidgets.A;
+            //循环获取数据、生成组件名
             for(let i=0;i<this.A.length;i++){
-              this.getComponentData(this.A[i].url,this.A[i].params,this.A[i].id,this.A[i].name,this.A[i].moreLink);
+              if(this.A[i].name!=='个人中心'||this.A[i].name!=='工资查询'){
+                this.getComponentData(this.A[i].url,this.A[i].params,this.A[i].id,this.A[i].name,this.A[i].moreLink);
+              }
               this.A[i].componentName=this.transform(this.A[i].name);
             }
             this.B=this.home.columnWidgets.B;
             for(let i=0;i<this.B.length;i++){
-              this.getComponentData(this.B[i].url,this.B[i].params,this.B[i].id,this.B[i].name,this.B[i].moreLink);
+              if(this.B[i].name!=='个人中心'||this.B[i].name!=='工资查询'){
+                this.getComponentData(this.B[i].url,this.B[i].params,this.B[i].id,this.B[i].name,this.B[i].moreLink);
+              }
               this.B[i].componentName=this.transform(this.B[i].name);
             }
           });
     },
-    getComponentData(url,param,id,name,moreLink){
+    getComponentData(url,param,id,name,moreLink){//请求地址，请求参数，id，组件名，跳转地址
       if(param!=='') param=JSON.parse(param);
       this.$ajax.post(url,param)
           .then(res=>{
@@ -179,7 +184,7 @@ export default {
         case '服务排行':x='ranking';break;
         case '工资查询':x='pay';break;
         case '个人中心':x='user';break;
-        // case '校内通知':x='notice';break;
+        case '校内通知':x='notice';break;
         // case '通知公告':x='notice2';break;
         case '学校公文':x='file';break;
         case '我的待办':x='todo';break;
@@ -202,24 +207,24 @@ export default {
     每个组件数据获取
      **/
 
-    getApp(){
-      return this.$ajax.post(this.$url.homeApp)
-          .then(res=>{
-            this.$store.commit('set_data',{
-              data:res.data.data,
-              name:'app'
-            })
-          });
-    },
-    getFile(){
-      return this.$ajax.post(this.$url.homeFile)
-          .then(res=>{
-            this.$store.commit('set_data',{
-              data:res.data.data,
-              name:'file'
-            })
-          });
-    },
+    // getApp(){
+    //   return this.$ajax.post(this.$url.homeApp)
+    //       .then(res=>{
+    //         this.$store.commit('set_data',{
+    //           data:res.data.data,
+    //           name:'app'
+    //         })
+    //       });
+    // },
+    // getFile(){
+    //   return this.$ajax.post(this.$url.homeFile)
+    //       .then(res=>{
+    //         this.$store.commit('set_data',{
+    //           data:res.data.data,
+    //           name:'file'
+    //         })
+    //       });
+    // },
     // getNotice(){
     //   return this.$ajax.post(this.$url.homeNotice)
     //       .then(res=>{
@@ -242,43 +247,47 @@ export default {
       return this.$ajax.post(this.$url.homePay)
           .then(res=>{
             this.$store.commit('set_data',{
-              data:res.data,
+              data:res.data.data,
               name:'pay'
             })
           });
     },
-    getRanking(){
-      return this.$ajax.post(this.$url.homeServiceRank,{type:this.type})
+    getRanking(){//切换时获取服务排行数据
+      this.$ajax.post(this.$url.homeServiceRank,{type:this.type})
           .then(res=>{
-            this.$store.commit('set_data',{
-              data:res.data.data,
-              name:'ranking'
+            this.$store.commit('setComponentData',{
+              id:'fwph',
+              name:'服务排行',
+              moreLink:'',
+              data:res.data.data
             })
           });
     },
-    getSchedule(){
-      return this.$ajax.post(this.$url.homeSchedule,{date:this.date})
+    getSchedule(){//切换时获取日程排行数据
+      this.$ajax.post(this.$url.homeSchedule,{date:this.date})
           .then(res=>{
-            this.$store.commit('set_data',{
-              data:res.data.events,
-              name:'schedule'
+            this.$store.commit('setComponentData',{
+              id:'schedule',
+              name:'我的日程',
+              moreLink:'',
+              data:res.data.data
             })
           });
     },
-    getService(){
-      return this.$ajax.post(this.$url.homeService)
-          .then(res=>{
-            this.$store.commit('set_data',{
-              data:res.data.services,
-              name:'service'
-            })
-          });
-    },
+    // getService(){
+    //   return this.$ajax.post(this.$url.homeService)
+    //       .then(res=>{
+    //         this.$store.commit('set_data',{
+    //           data:res.data.data,
+    //           name:'service'
+    //         })
+    //       });
+    // },
     getUserModule(){
       return this.$ajax.post(this.$url.homeUser)
           .then(res=>{
             this.$store.commit('set_data',{
-              data:res.data.services,
+              data:res.data.data,
               name:'userModule'
             })
           });

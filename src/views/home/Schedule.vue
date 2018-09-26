@@ -11,10 +11,10 @@
             <router-link to="/schedule"><i class="fa fa-ellipsis-h"></i></router-link>
         </header>
         <ul>
-            <li v-for="i in data">
+            <li v-for="i in componentData.list">
                 <p><span>{{i.title}}</span><span>{{i.info}}</span></p><time>{{i.dtstart}}</time>
             </li>
-            <li class="no" v-if="data.length===0">暂无个人日程安排</li>
+            <li class="no" v-if="componentData.list.length===0">暂无个人日程安排</li>
         </ul>
     </CardTemp>
 </template>
@@ -25,12 +25,35 @@
     props:{
       id:''
     },
+    data(){
+      return{
+        componentData:{
+          name:'',
+          url:'',
+          list:'',
+        }
+      }
+    },
     computed:{
       data(){
-        return this.$store.state.schedule;
+        return this.$store.state.componentData[this.id];
       },
       date(){
         return this.$store.state.date;
+      }
+    },
+    watch:{
+      data(value){
+        this.componentData.name=value.name;
+        this.componentData.url=value.moreLink;
+        this.componentData.list=value.data;
+      },
+    },
+    created(){
+      if(this.data){
+        this.componentData.name=this.data.name;
+        this.componentData.url=this.data.moreLink;
+        this.componentData.list=this.data.data;
       }
     },
     methods:{

@@ -8,10 +8,10 @@
                 <span @click="click(3)" :class="{active:type===3}">本年</span></div>
         </header>
         <ul>
-            <li v-for="i in data">
+            <li v-for="i in componentData.list">
                 <div class="name"><i>{{i.Z_R_N}}</i><img :src='$proxy+imgPath+i.ID'/>{{i.NAME.substring(0,10)}}</div>{{i.VW}}次
             </li>
-            <li class="no" v-if="data.length===0">暂无数据</li>
+            <li class="no" v-if="componentData.list.length===0">暂无数据</li>
         </ul>
     </CardTemp>
 </template>
@@ -24,15 +24,34 @@
     },
     data(){
       return{
-        imgPath:"/resource/service?id="
+        imgPath:"/resource/service?id=",
+        componentData:{
+          name:'',
+          url:'',
+          list:'',
+        }
       }
     },
     computed:{
       data(){
-        return this.$store.state.ranking;
+        return this.$store.state.componentData[this.id];
       },
       type(){
         return this.$store.state.type;
+      }
+    },
+    watch:{
+      data(value){
+        this.componentData.name=value.name;
+        this.componentData.url=value.moreLink;
+        this.componentData.list=value.data;
+      },
+    },
+    created(){
+      if(this.data){
+        this.componentData.name=this.data.name;
+        this.componentData.url=this.data.moreLink;
+        this.componentData.list=this.data.data;
       }
     },
     methods:{

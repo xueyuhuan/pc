@@ -1,13 +1,13 @@
 <template>
     <CardTemp>
-        <header class="drag" slot="header">校内通知
-            <a href="http://fw.ccnu.edu.cn/notice/notify/notifyList" target="_blank"><i class="fa fa-ellipsis-h"></i></a>
+        <header class="drag" slot="header">{{componentData.name}}
+            <a :href="componentData.url" target="_blank"><i class="fa fa-ellipsis-h"></i></a>
         </header>
         <ul>
-            <li v-for="(i,index) in data" v-if="index<7">
+            <li v-for="(i,index) in componentData.list" v-if="index<7">
                 <a :href="i.url" target="_blank"><p>{{i.title}}</p><time>{{i.when_created}}</time></a>
             </li>
-            <li class="no" v-if="data.length===0">暂无数据</li>
+            <li class="no" v-if="componentData.list.length===0">暂无数据</li>
         </ul>
     </CardTemp>
 </template>
@@ -15,9 +15,35 @@
 <script>
   export default {
     name: "Notice",
+    props:{
+      id:''
+    },
+    data(){
+      return{
+        componentData:{
+          name:'',
+          url:'',
+          list:'',
+        }
+      }
+    },
     computed:{
       data(){
-        return this.$store.state.notice;
+        return this.$store.state.componentData[this.id];
+      }
+    },
+    watch:{
+      data(value){
+        this.componentData.name=value.name;
+        this.componentData.url=value.moreLink;
+        this.componentData.list=value.data;
+      },
+    },
+    created(){
+      if(this.data){
+        this.componentData.name=this.data.name;
+        this.componentData.url=this.data.moreLink;
+        this.componentData.list=this.data.data;
       }
     }
   }

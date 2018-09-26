@@ -1,16 +1,16 @@
 <template>
     <CardTemp>
-        <header slot="header" class="drag">我的应用
+        <header slot="header" class="drag">{{componentData.name}}
             <div class="right">
                 <i class="fa fa-cog hidden-xs-only" @click="popup"></i>
                 <router-link to="/app"><i class="fa fa-ellipsis-h"></i></router-link>
             </div>
         </header>
         <ul>
-            <li v-for="i in data">
+            <li v-for="i in componentData.list">
                 <a :href="i.url" target="_blank"><img :src="$proxy+imgPath+i.id"/>{{i.name}}</a>
             </li>
-            <li class="no" v-if="data.length===0">暂无应用</li>
+            <li class="no" v-if="componentData.list.length===0">暂无应用</li>
         </ul>
     </CardTemp>
 </template>
@@ -19,16 +19,35 @@
   export default {
     name: "Application",
     props:{
-      id:''
+      id:'',//获取组件id
     },
     data(){
       return{
-        imgPath:"/resource/app?id="
+        imgPath:"/resource/app?id=",
+        componentData:{
+          name:'',
+          url:'',
+          list:'',
+        }
       }
     },
     computed:{
       data(){
-        return this.$store.state.app;
+        return this.$store.state.componentData[this.id];
+      }
+    },
+    watch:{
+      data(value){
+        this.componentData.name=value.name;
+        this.componentData.url=value.moreLink;
+        this.componentData.list=value.data;
+      },
+    },
+    created(){
+      if(this.data){
+        this.componentData.name=this.data.name;
+        this.componentData.url=this.data.moreLink;
+        this.componentData.list=this.data.data;
       }
     },
     methods:{
