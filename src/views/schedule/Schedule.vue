@@ -36,7 +36,7 @@
         <!--弹窗-->
         <el-dialog :visible="showSchedule" width="900px" @close="showSchedule=false">
             <h3 slot="title" class="dialog_h3">{{dialogName}}日程</h3>
-            <div class="form_body">
+            <div class="form">
                 <el-form :model="formData" ref="formData" :rules="rules" :disabled="readOnly" label-position="right" label-width="150px">
                     <el-form-item label="日程主题" prop="title">
                         <el-input v-model="formData.title"></el-input>
@@ -349,158 +349,17 @@
                 }
                 .row2{
                     span{margin-right: 5px;}
-
                 }
             }
         }
     }
-    .content {
-        padding: 0 0 15px 0;
-        margin: auto;
-        width: 1200px;
-    }
-
-    .head_left {
-        i {
-            cursor: pointer;
-        }
-        span {
-            display: inline-block;
-            width: 120px;
-            text-align: center;
-        }
-    }
-
-    .head_mid {
-        @include flex(flex-start, center);
-        flex-direction: row-reverse;
-        flex-wrap: wrap;
-        .eventType {
-            margin-left: 10px;
-            color: #101010;
-            font-size: 14px;
-            font-weight: normal;
-            span {
-                display: inline-block;
-                margin-left: 5px;
-                width: 10px;
-                height: 10px;
-                border-radius: 30px;
-                cursor: pointer;
-            }
-        }
-    }
-
-    .head_right {
-        font-weight: normal;
-        span {
-            display: inline-block;
-            margin-left: 20px;
-            cursor: pointer;
-            font-size: 14px;
-            line-height: 24px;
-            color: #000;
-        }
-        i {
-            color: #959595;
-        }
-    }
-
-    .body {
-        padding: 10px 23px;
-        @include flex(space-between, flex-start);
-        .body_left {
-            width: 758px;
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                th {
-                    padding: 10px;
-                    text-align: center;
-                    font-size: 14px;
-                    font-weight: normal;
-                    background-color: #eee;
-                    cursor: pointer;
-                }
-                td {
-                    height: 108px;
-                    padding: 10px;
-                    position: relative;
-                    cursor: pointer;
-                    .num {
-                        text-align: left;
-                        position: absolute;
-                        top: 10px;
-                        left: 10px;
-                    }
-                    .dot {
-                        position: absolute;
-                        right: 10px;
-                        bottom: 10px;
-                        span {
-                            display: inline-block;
-                            margin-left: 5px;
-                            width: 12px;
-                            height: 12px;
-                            border-radius: 30px;
-                            cursor: pointer;
-                        }
-
-                    }
-                }
-                .today {
-                    background-color: #eee !important;
-                }
-                .chooseDay {
-                    background-color: #bfbfbf;
-                }
-            }
-        }
-        .body_right {
-            width: 369px;
-            .board {
-                width: 100%;
-                background-color: #eee;
-                margin-bottom: 20px;
-                font-size: 14px;
-                .board_head {
-                    padding: 10px 18px;
-                    @include flex(space-between, center);
-                    i {
-                        cursor: pointer;
-                    }
-                }
-                .board_body {
-                    .board_body_block {
-                        cursor: pointer;
-                        padding: 12px 18px;
-                        border-top: 1px dashed #fff;
-                        .block_time {
-                            color: #959595;
-                            i{
-                                color: #067EBE;
-                            }
-                        }
-                        .block_content {
-                            i {
-                                color: #067EBE;
-                            }
-                        }
-                    }
-                }
-                .noData {
-                    padding: 12px 18px;
-                    border-top: 1px dashed #fff;
-                }
-            }
-        }
-    }
-
-    .form_body {
+    //弹窗表单
+    .form{
         width: 800px;
         margin: 0 auto;
         padding: 30px 100px 0 0;
     }
+    //二维码弹窗
     .qr_div{
         @include flex(flex-start,flex-start);
         &>div{
