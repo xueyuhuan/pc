@@ -18,12 +18,12 @@
                                 <div class="row1">
                                     {{j.dtstart}}
                                     <span v-if="!j.url">
-                                        <i class="fa fa-pencil" @click.stop="editFormData(j.id)"></i>
-                                        <i class="fa fa-trash-o" @click.stop="delSchedule(j.id)"></i>
+                                        <i class="_theme_font fa fa-pencil" @click.stop="editFormData(j.id)"></i>
+                                        <i class="_theme_font fa fa-trash-o" @click.stop="delSchedule(j.id)"></i>
                                     </span>
                                 </div>
                                 <div class="row2">
-                                    <i class="fa fa-bookmark-o fa-fw"></i><span v-html="j.title"></span>
+                                    <i class="_theme_font fa fa-bookmark-o fa-fw"></i><span v-html="j.title"></span>
                                     <span v-if="j.location"><i class="fa fa-location-arrow"></i>{{j.location}}</span>
                                 </div>
                             </li>
@@ -343,12 +343,13 @@
             li{
                 margin-bottom: 10px;
                 cursor: pointer;
+                i{margin-right: 5px;}
                 .row1{
                     @include flex(space-between);
                 }
                 .row2{
                     span{margin-right: 5px;}
-                    i{margin-right: 5px;}
+
                 }
             }
         }
