@@ -17,6 +17,7 @@ export default {
   //服务
   homeService:'/service_portal/list_for_widget',//组件-工作台-服务
   homeServiceAll:'/service_portal/list_for_setting',//获取所有服务列表
+  homeServiceHas:'/service_portal/list_user_service',//获取已有服务
   homeServiceType:'/service_portal/list_manage_dept',//获取所有服务类型
   homeServiceSave:'/service_portal/save_user_service',//保存服务设置
   //其他

@@ -19,14 +19,15 @@
             </li>
         </ul>
         <!--分页-->
-        <el-pagination
-                background
-                layout="prev, pager, next"
-                @current-change="handlePageChange"
-                @prev-click="handlePageChange"
-                @next-click="handlePageChange"
-                :page-size=this.limit
-                :page-count="this.total">
+        <el-pagination v-show="popupType!=='home'"
+                       background
+                       layout="prev, pager, next"
+                       @current-change="handlePageChange"
+                       @prev-click="handlePageChange"
+                       @next-click="handlePageChange"
+                       :page-size=limit
+                       :current-page=page
+                       :page-count=total>
         </el-pagination>
         <!--排序列表-->
         <!--应用和服务-->
@@ -119,8 +120,10 @@
       },
     },
     watch:{
-      popupShow(){
+      popupShow(value){
+        // console.log(value);
         if (this.popupShow){
+          console.log(this.popupShow);
           this.page=1;
           this.key='';
           this.typeID='';
@@ -138,7 +141,7 @@
             this.imgPath="/resource/service?id=";
             this.url.save=this.$url.homeServiceSave;
             this.url.all=this.$url.homeServiceAll;
-            this.url.has=this.$url.homeService;
+            this.url.has=this.$url.homeServiceHas;
             this.getServiceType();
             this.getAll();
             this.getHas();
@@ -255,7 +258,6 @@
             .then(res=>{
               this.list=res.data.page.rows;
               this.total=res.data.page.total;
-
             })
       },
       getHas(){
@@ -287,6 +289,7 @@
     }
   }
 </script>
+
 <style scoped lang="scss">
     .drag{
         width: 100%;
