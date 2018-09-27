@@ -1,6 +1,7 @@
 export default {
   school:'ccnu',
   isWebsocket:true,
+  websocketUrl:'ws://msg.ccnu.edu.cn:8080/msgsocket/websocket?token=',
   url:'/home',
   enterName:'服务中心',
   nav:[

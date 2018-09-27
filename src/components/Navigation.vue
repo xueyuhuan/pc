@@ -171,9 +171,9 @@
           getTodo(){
              this.$ajax.post(this.$url.homeTodo)
                 .then(res=>{
-                  this.todoCount=res.data.todoList.length;
+                  this.todoCount=res.data.data.length;
                   this.$store.commit('set_data',{
-                    data:res.data.todoList,
+                    data:res.data.data,
                     name:'todo'
                   })
                 });
@@ -184,7 +184,7 @@
             }
           },
           websocket () {
-            let ws = new WebSocket('ws://msg.ccnu.edu.cn:8080/msgsocket/websocket?token='+sessionStorage.token);
+            let ws = new WebSocket(this.$school.websocketUrl+sessionStorage.token);
             ws.onmessage = evt => {
               this.unreadCount=JSON.parse(evt.data).unReadTotal;
               this.$store.commit('set_data',{
