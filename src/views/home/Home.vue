@@ -206,7 +206,6 @@ export default {
     /**
     每个组件数据获取
      **/
-
     // getApp(){
     //   return this.$ajax.post(this.$url.homeApp)
     //       .then(res=>{
@@ -243,15 +242,6 @@ export default {
     //         })
     //       });
     // },
-    getPay(){
-      return this.$ajax.post(this.$url.homePay)
-          .then(res=>{
-            this.$store.commit('set_data',{
-              data:res.data.data,
-              name:'pay'
-            })
-          });
-    },
     getRanking(){//切换时获取服务排行数据
       this.$ajax.post(this.$url.homeServiceRank,{type:this.type})
           .then(res=>{
@@ -283,6 +273,15 @@ export default {
     //         })
     //       });
     // },
+    getPay(){
+      return this.$ajax.post(this.$url.homePay)
+          .then(res=>{
+            this.$store.commit('set_data',{
+              data:res.data.data,
+              name:'pay'
+            })
+          });
+    },
     getUserModule(){
       return this.$ajax.post(this.$url.homeUser)
           .then(res=>{

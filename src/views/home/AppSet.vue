@@ -120,10 +120,8 @@
       },
     },
     watch:{
-      popupShow(value){
-        // console.log(value);
-        if (this.popupShow){
-          console.log(this.popupShow);
+      popupShow(){
+        if (this.popupShow){//当其为真即显示时重新请求
           this.page=1;
           this.key='';
           this.typeID='';
@@ -214,32 +212,55 @@
             }
           });
           let layout={A:this.listHasA,B:this.listHasB};
-          this.$ajax.post(this.$url.homePageSave,{layout:JSON.stringify(layout),pageId:this.pageId})
-              .then(res=>{
-                if(res.data.errmsg==='ok'){
-                  this.$store.commit('set_data',{
-                    data:this.listHasA,
-                    name:'homeA'
-                  });
-                  this.$store.commit('set_data',{
-                    data:this.listHasB,
-                    name:'homeB'
-                  });
-                  this.$notify.success('布局已保存');
-                }
-              })
+          if(this.listHasA.length>0||this.listHasB.length>0){
+            this.$ajax.post(this.$url.homePageSave,{layout:JSON.stringify(layout),pageId:this.pageId})
+                .then(res=>{
+                  if(res.data.errmsg==='ok'){
+                    this.$store.commit('set_data',{
+                      data:this.listHasA,
+                      name:'homeA'
+                    });
+                    this.$store.commit('set_data',{
+                      data:this.listHasB,
+                      name:'homeB'
+                    });
+                    this.$notify.success('布局已保存');
+                  }
+                })
+          }
+          else this.$notify.warning('不能保存空');
         }
         else{
-          this.$ajax.post(this.url.save,{layout:JSON.stringify(this.listHas)})
-              .then(res=>{
-                if(res.data.errmsg==='ok'){
-                  this.$store.commit('set_data',{
-                    data:this.listHas,
-                    name:this.popupType
-                  });
-                  this.$notify.success('保存成功');
-                }
-              })
+          console.log(this.listHas);
+          if(this.listHas.length&&this.listHas.length>0){
+            this.$ajax.post(this.url.save,{layout:JSON.stringify(this.listHas)})
+                .then(res=>{
+                  if(res.data.errmsg==='ok'){
+                    this.$store.commit('set_data',{
+                      data:this.listHas,
+                      name:this.popupType
+                    });
+                    if(this.popupType==='app'){
+                      this.$store.commit('setComponentData',{
+                        id:'apps',
+                        name:'我的应用',
+                        moreLink:'',
+                        data:this.listHas
+                      });
+                    }
+                    else if(this.popupType==='service'){
+                      this.$store.commit('setComponentData',{
+                        id:'services',
+                        name:'我的服务',
+                        moreLink:'',
+                        data:this.listHas
+                      });
+                    }
+                    this.$notify.success('保存成功');
+                  }
+                })
+          }
+          else this.$notify.warning('不能保存空');
         }
         this.close();
       },
