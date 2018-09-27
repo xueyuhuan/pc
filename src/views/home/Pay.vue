@@ -1,7 +1,7 @@
 <template>
     <CardTemp>
         <header class="drag" slot="header">工资查询
-            <router-link to="/pay"><i class="fa fa-ellipsis-h"></i></router-link>
+            <router-link :to="'/service/iframe/'+data.serviceId"><i class="fa fa-ellipsis-h"></i></router-link>
         </header>
         <div class="pay">
             <template v-if="data.salary">

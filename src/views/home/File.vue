@@ -6,7 +6,7 @@
         </header>
         <ul>
             <li v-for="(i,index) in componentData.list" v-if="index<7">
-                <a href="'http://oa.ccnu.edu.cn/seeyon/caslogin.jsp?type='+i.url" target="_blank"><p>[{{i.type}}]{{i.title}}</p><time>{{i.createDate}}</time></a>
+                <a :href="'http://oa.ccnu.edu.cn/seeyon/caslogin.jsp?type='+i.url" target="_blank"><p>[{{i.type}}]{{i.title}}</p><time>{{i.createDate}}</time></a>
             </li>
             <li class="no" v-if="componentData.list.length===0">暂无数据</li>
         </ul>
@@ -70,9 +70,12 @@
                 font-size: 14px;
                 color: #000;
                 p{
-                    width: 380px;
                     @extend %ellipsis;
                     margin: 0;
+                }
+                time{
+                    flex:0 0 140px;
+                    margin-left: 20px;
                 }
             }
         }
