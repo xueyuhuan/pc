@@ -35,6 +35,9 @@
         return this.$store.state.pay;
       },
     },
+    created(){
+      console.log(this.data);
+    },
     mounted(){
       if(this.data.salary){
         this.drawPie();

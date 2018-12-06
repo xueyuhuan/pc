@@ -17,13 +17,14 @@
               this.$router.push({path: this.$school.url});
             }
             else{
+              this.$router.push({path: '/login'});
               // window.location.href='http://one.ccnu.edu.cn/index#/app/home/main';
-              if(res.data.casUsing==='true'){
-                window.location.href=process.env.VUE_APP_ServerApi+'/cas/login_portal';
-              }
-              else{
-                this.$router.push({path: '/login'});
-              }
+              // if(res.data.casUsing==='true'){
+              //   window.location.href=process.env.VUE_APP_ServerApi+'/cas/login_portal';
+              // }
+              // else{
+              //   this.$router.push({path: '/login'});
+              // }
             }
           });
     },

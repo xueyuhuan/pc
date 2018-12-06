@@ -7,7 +7,7 @@ const instance=axios.create({
   // `baseURL` 将自动加在 `url` 前面，除非 `url` 是一个绝对 URL。
   baseURL: process.env.NODE_ENV==='production'?process.env.VUE_APP_ServerApi:'/api',
   // `timeout` 指定请求超时的毫秒数(0 表示无超时时间)
-  timeout:10000,
+  timeout:500000,
   // `headers` 是即将被发送的自定义请求头
   headers:{
     'Content-Type':'application/x-www-form-urlencoded'
@@ -28,9 +28,11 @@ instance.interceptors.request.use(
         // 注：若是提交能直接接受json 格式,即可以不用 qs 序列化
       }
       // 判断是否存在token，如果存在将每个页面header都添加token
-      if(sessionStorage.token){
-        config.headers.Authorization= "Bearer "+sessionStorage.token;
-      }
+      // if(sessionStorage.token){
+      //   config.headers.Authorization= "Bearer "+sessionStorage.token;
+      // }
+      sessionStorage.token='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIyMDA0MDEyOSIsImV4cCI6MTU0NDY3ODIxOX0.Y55ADrXnOoYBojr6yG5rk1KX4_-r9nmdZeFmFxoelkM'
+      config.headers.Authorization="Bearer "+'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIyMDA0MDEyOSIsImV4cCI6MTU0NDY3ODIxOX0.Y55ADrXnOoYBojr6yG5rk1KX4_-r9nmdZeFmFxoelkM'
       return config;
       },
     error => {

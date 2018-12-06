@@ -20,8 +20,8 @@
         name: "Login",
         data: function () {
             return {
-              name: "",
-              password: "",
+              name: "2006983633",
+              password: "123456",
               info:''
             }
         },
